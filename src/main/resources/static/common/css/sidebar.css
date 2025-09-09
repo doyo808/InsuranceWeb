@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+}
+
+.sidebar {
+position: fixed;
+top: 0;
+right: 0; /* 오른쪽에 붙이기 */
+width: 200px;
+height: 100%;
+background: white;
+border-left: 1px solid #e6e6e6;
+
+transition: transform 0.8s ease;
+z-index: 2000;
+}
+
+.sidebar ul {
+list-style: none;
+padding: 0 25px;
+}
+
+.sidebar ul li {
+margin: 20px 0;
+}
+
+.sidebar.closed {
+transform: translateX(100%); /* 화면 밖으로 밀어내기 */
+}
+
+.sidebar.open {
+transform: translateX(80px);
+}
+
+.toggle-btn {
+background-color: white;
+position: absolute;
+top: 200px;
+left: -30px;
+transform: translateY(-50%);
+width: fit-content;
+height: fit-content;
+border: none;
+cursor: pointer;
+}
+
+.toggle-btn img {
+    display: block;
+}
+
+.side_menu:before {
+    display: block;
+    content: '';
+    clear: both;
+    margin: 3px 15px ;
+    width: 40px;
+    height: 40px;
+    background-image: url(/project_pr/images/sideBar.png);
+    background-repeat: no-repeat;
+}
+
+#side_menu1:before {
+    background-position: -240px -40px;
+}
+
+#side_menu1:hover:before {
+    background-position: -280px -40px;
+}
+
+#side_menu2:before {
+    background-position: 0px 0px;
+}
+
+#side_menu2:hover:before {
+    background-position: -40px 0px;
+}
+
+#side_menu3:before {
+    background-position: -80px 0px;
+}
+
+#side_menu3:hover:before {
+    background-position: -120px 0px;
+}
+
+#side_menu4:before {
+    background-position: -160px 0px;
+}
+
+#side_menu4:hover:before {
+    background-position: -200px 0px;
+}
+
+#side_menu5:before {
+    background-position: -80px -40px;
+}
+
+#side_menu5:hover:before {
+    background-position: -120px -40px;
+}
+
+.side_menu:hover {
+    font-weight: bold;
+}
+
+.side_menu {
+    width: fit-content;
+    font-size: 13px;
+    text-align: center;
+    align-items: center;
+}
+
+#side_guide {
+    align-content: center;
+    padding: 10px;
+}
+
+#side_guide > div {
+    font-size: 13px;
+    width: 50px;
+    height: 35px;
+    padding-left: 6px;
+    padding-bottom: 20px;
+    margin: 5px 25px;
+    border-bottom: 1PX rgb(179, 179, 179) solid;
+}
+
+a {
+    text-decoration-line: none;
+    color: inherit;
+}
+
+#baseContainer3 {
+    background-color: rgb(255, 236, 212);
+    position: fixed;
+    right: 200px;
+    width: 50%;
+    height: 100%;
+    opacity: 1;
+	z-index: 1999;
+}

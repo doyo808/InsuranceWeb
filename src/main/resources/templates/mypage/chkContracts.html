@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/common/layout.html">
+<head>
+	<meta charset="UTF-8" />
+	<title>계약내용 확인</title>
+	<link rel="stylesheet" th:href="@{/mypage/css/chkContracts.css}" />
+</head>
+<body>
+	<main layout:fragment="content">
+	
+		<div class="base-main">
+			<div class="navi-current">
+				<span>홈</span>
+				<span>계약관리</span>
+				<span>보험계약 확인</span>
+				<span>계약내용 확인</span>	
+			</div>
+			
+			<section class="base-content">
+				
+				<h1>상세 내용을 확인할 <br>계약을 선택해 주세요</h1>
+				
+				<div class="btn_wrap">
+					<div id="status_btn_active" class="btn_clicked">유지</div>
+					<div id="status_btn_all">전체</div>
+				</div>
+				
+				<table class="contract_table">
+					<tr>
+						<th>상품명</th>
+						<th>계약자</th>
+						<th>피보험자</th>
+						<th>보험기간</th>
+						<th>보험료</th>
+						<th>상태</th>
+					</tr>
+				</table>
+					
+				<div class="tipBox">
+					<dl>
+						<dt><img th:src="@{/mypage/images/text-bubble.png}" alt="말풍선 아이콘">확인해 주세요</dt>
+						<dd>· 현재 유지 중인 계약과 최근 3년 이내에 만기 및 효력상실된 계약의 
+							상세 내용을 확인할 수 있습니다.</dd>
+						<dd>· 자동이체 등으로 보험료를 납입한 경우, 결과 반영까지 3일(영업일 기준) 정도 걸리므로 
+							일시적으로 효력상실 상태로 표기될 수 있으나 계약은 정상으로 유지됩니다.</dd>
+						<dd>· 해외여행/유학보험 등 일부 보험상품은 다이렉트에서 가입한 보험계약만 확인할 수 있습니다.</dd>
+						<dd>· 보험료 특별할인이 적용된 계약의 할인 후 보험료는 상세 페이지에서 확인할 수 있습니다.</dd>
+					</dl>
+				</div>
+			</section>
+		</div>
+	<script th:src="@{/mypage/js/chkContracts.js}"></script>
+	</main>
+</body>
+</html>

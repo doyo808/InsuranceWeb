@@ -1,0 +1,59 @@
+body {
+	margin: 0;
+}
+.baseMain {
+	width: 1200px;	
+}
+
+
+.navi-current {
+	border: 1px solid black;
+	text-align: right;
+}
+	.navi-current span {
+		margin: 5px;
+	}
+	.navi-current span:not(:first-child)::before {
+		content: '>';
+		margin-right: 10px;
+	}
+	.navi-current span:last-child {
+		font-weight: 600;
+	}
+	
+	.btn_wrap {
+		display: flex;
+		justify-content: center;
+	}
+	.btn_wrap div {
+		cursor: pointer;
+		width: 30px;
+		height: 40px;
+		color: gray;
+		border-bottom: 3px solid transparent;
+		margin: 15px;
+	}
+	.btn_clicked {
+		color: blue !important;
+		border-bottom: 3px solid blue !important;
+	}
+	
+
+h1 {
+	text-align: center;
+}
+
+dt {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 25px;
+}
+dt img {
+	width: 30px;
+	margin: 10px 10px -5px 0;
+}
+dd {
+	margin: 10px 0;
+	width: 1200px;
+	color: gray;
+}
