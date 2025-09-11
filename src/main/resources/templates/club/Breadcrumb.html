@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Breadcrumb 예시</title>
+    <!-- 아이콘 (Font Awesome CDN) -->
+    <script src="https://kit.fontawesome.com/df2bfc0a98.js" crossorigin="anonymous"></script>
+
+    <style>
+        .breadcrumb-wrap {
+            margin: 16px 0 24px;
+            font-family: 'Noto Sans KR', sans-serif;
+            white-space: nowrap;
+        }
+
+        .breadcrumb {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #7a7f87;
+        }
+
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+
+        .home {
+            text-align: center;
+        }
+
+        .breadcrumb a {
+            color: #7a7f87;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb .home i {
+            font-size: 14px;
+            vertical-align: -1px;
+        }
+
+        .breadcrumb .sep {
+            margin: 0 10px;
+            color: #c2c6cc;
+            font-size: 20px;
+        }
+
+        .breadcrumb .current span {
+            color: #111;
+            font-weight: 600;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-wrap" aria-label="현재 위치">
+        <ol class="breadcrumb">
+            <!-- 홈 -->
+            <li class="home">
+                <a href="/" aria-label="홈으로">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                <span class="sep">›</span>
+            </li>
+
+            <!-- 경로 -->
+            <li><a href="">혜택/서비스</a><span class="sep">›</span></li>
+            <li><a href="">신용카드 혜택</a><span class="sep">›</span></li>
+            <li class="current"><span>포인트 결제</span></li>
+        </ol>
+    </nav>
+
+    <!-- 페이지 제목 -->
+
+</body>
+
+</html>

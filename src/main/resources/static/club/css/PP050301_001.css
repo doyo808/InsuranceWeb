@@ -1,0 +1,374 @@
+* {
+    box-sizing: border-box;
+    /* white-space: nowrap; */
+}
+
+.base-content {
+    float: none;
+    width: 1176px;
+	padding-top: 50px;
+    margin: 0 auto 200px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+ul {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+}
+
+/* ----------- 여기부터 무이자할부 -----------*/
+
+
+
+.card-header img {
+    width: 180px;
+}
+
+.content-title {
+    text-align: center;
+    font-size: 21px;
+    margin: 60px 0;
+    
+}
+
+.content-main {
+    text-align: left;
+    
+    
+}
+
+.tit-con {
+    font-size: 22px;
+    color: #111;
+    line-height: 38px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.tit-wrap-m:after {
+    content: "";
+    display: block;
+}
+
+#tab-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 50px;
+}
+
+#tab-btns .tab-btn {
+    font-size: 17px;
+    font-weight: 600;
+    color: grey;
+    margin: 0 17px;
+    background-color: white;
+    padding-bottom: 8px;
+    border: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent; /* 초기 밑줄 안보이게 */
+}
+
+#tab-btns .tab-btn.active {
+    color: #2C7FDF;
+    border-bottom: 3px solid #2C7FDF;
+}
+
+.card-list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin: 30px auto 50px; 
+    justify-content: center;
+    max-width: 1000px;
+    /* 원하는 최대 폭 지정 */
+
+}
+
+.card-header {
+    padding: 30px 40px 20px;
+    border-bottom: 1px solid #EAEBED;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.card-benefit {
+    font-size: 12px;
+    width: 570px;
+    height: 357px;
+    position: relative;
+    padding: 0 0 40px;
+    border-radius: 12px;
+    border: 1px solid #EAEBED;
+    background-color: #fff;
+}
+
+.tag-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 35px;
+}
+
+.tag-list>li {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.tag-card {
+    display: inline-block;
+    padding: 2px 6px;
+    background-color: #1b91d4;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.tag-card2 {
+    display: inline-block;
+    padding: 2px 6px;
+    background-color: #525252;
+    color: white;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-right: 5px;
+}
+
+.exce-list {
+    margin: 40px 30px 0 40px;
+}
+
+.exce-list>li {
+    display: flex;
+    align-items: flex-start;
+    /* li 내용 상단 기준으로 점 위치 */
+    gap: 8px;
+    
+    /* 점과 텍스트 간격 */
+    margin: 8px 10px;
+    
+    
+}
+
+.card-call-number,
+.exce-list>li {
+    font-size: 15px;
+    line-height: 22px;
+    color: #868686;
+}
+
+
+.exce-list>li:before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background-color: #868686;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+
+/* ---------------여기부터 포인트 결제-------------- */
+
+
+a {
+    text-decoration-line: none;
+    color: inherit;
+}
+
+.ani-point .point-title {
+    font-weight: 500;
+}
+
+.ani-point .point-list-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.main-contents {
+    margin: 0 50px;
+}
+
+.ani-point .card {
+    font-size: 12px;
+    position: relative;
+    padding: 0 0 40px;
+    border-radius: 12px;
+    border: 1px solid #EAEBED;
+    background-color: #fff;
+}
+
+.ani-point .card-body {
+    padding: 0 20px;
+    
+}
+
+.ani-point .benefitJson5>li {
+    padding: 0 0 40px
+}
+
+.card-flex {
+  display: flex;
+  justify-content: space-between; /* 좌우로 벌려 배치 */
+  align-items: flex-start;        /* 상단 정렬 (중요) */
+  gap: 25px;                      /* 좌/우 간격 */
+}
+
+/* 두 칼럼을 '세로 플렉스 컨테이너'로 만들어 내부에서 아래 정렬 가능하게 */
+.card-flex > .grid-wrap{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 1px;             /* 플렉스 수축 이슈 방지 */
+}
+
+.grid-wrap.left{
+  flex: 1;                        /* 두 칼럼이 균등 분배 */
+  
+}
+
+.grid-wrap.right{
+  flex: 2;                        /* 두 칼럼이 균등 분배 */
+}
+
+
+.ani-point .exce-list>li:before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background-color: #868686;
+    border-radius: 50%;
+    margin-right: 6px;   /* 글자와 간격 */
+    vertical-align: top; /* 글자 높이랑 맞추기 */
+    
+}
+
+.fr>.title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.grid-wrap >.btn-small {
+    display: inline-block;
+    color: #2C7FDF;
+    border: 1px solid #2C7FDF;
+    background: #FFFFFF;
+    border-radius: 19px; 
+    align-self: flex-start;       /* 왼쪽 정렬 유지 */
+    margin-left: 30px;
+    max-width: fit-content;
+    padding: 6px 24px 5px;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+
+.ani-point .card {
+    margin: 30px 0 50px;
+    width: 1050px;
+    height: 400px;
+}
+
+.ani-point .exce-list>li {
+    white-space: nowrap;
+    display: block;
+    margin: 0px 10px 50px;
+    font-size: 15px;
+    color: #111;
+}
+
+.ani-point .exce-list p,
+.ani-point .first-list>.exce-list>li {
+    font-size: 14px;
+    color: #757679;
+}
+
+.first-list>.exce-list {
+    margin: 0px 30px 30px 40px;
+}
+
+.grid-wrap .first-list .exce-list > li {
+  margin-bottom: 4px;
+}
+
+.ani-point .tag-list {
+    justify-content: start;
+    margin-left: 50px;
+    
+}
+
+
+
+
+/* ----------- 여기부터 후청구 예시-------------- */
+
+table col {
+    width: 580px;
+}
+
+tr>* {
+    text-align: center; 
+}
+
+table {
+    margin-top: 20px;
+    border-top: 2px solid #545557;   /* 위쪽 굵은 선 */
+    border-bottom: 1px solid #D9DADC; /* 아래쪽 얇은 선 */
+    border-collapse: collapse;       /* 셀 경계선 겹치기 */
+    width: 100%;
+    table-layout: auto;
+    margin-bottom: 60px;
+}
+
+tr > th {
+    height: 67px;
+    padding: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    color: #545557;
+    border-bottom: 1px solid #EAEBED;
+    border-right: 1px solid #EAEBED; /* 가운데 구분선 */
+    background-color: #F9FAFB;
+}
+
+tr > td {
+    height: 87px;
+    padding: 30px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: center;
+    color: #757679;
+    background: #fff;
+    border-bottom: 1px solid #EAEBED;
+    border-right: 1px solid #EAEBED; /* 가운데 구분선 */
+    letter-spacing: -0.25px;
+}
+
+/* 마지막 열(th, td)에서는 오른쪽 선 제거 */
+tr > th:last-child,
+tr > td:last-child {
+    border-right: none;
+}
+
+.exce-list.subClaim {
+    margin: 15px 30px 50px 40px;
+}
+
