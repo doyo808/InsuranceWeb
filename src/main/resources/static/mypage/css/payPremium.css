@@ -1,4 +1,5 @@
 
+
 /* 상단의 현재위치 */
 .navi-current {
 	padding-top: 30px;
@@ -16,7 +17,7 @@
 		font-weight: 500;
 	}
 
-/* 유지, 전체 버튼 */
+/* 선택 버튼 */
 .btn_wrap {
 	display: flex;
 	justify-content: center;
@@ -37,11 +38,13 @@
 	}
 	
 
+/* 제목 */
 h1 {
 	text-align: center;
 	margin: 70px 0 30px 0;
 }
 
+/* 팁박스 */
 dt {
 	font-size: 20px;
 	font-weight: 600;
@@ -93,12 +96,3 @@ dd {
     color: #999;
 }
 
-.status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    background-color: #eef4ff;
-    color: #2962ff;
-    border-radius: 5px;
-    font-size: 13px;
-    font-weight: 500;
-}
