@@ -29,17 +29,4 @@ public class HomeController {
 	    }
 	    return "redirect:/login?logout";
 	}
-	
-	@GetMapping("/public/hello")
-    public String publicHello() {
-        return "Hello Public!";
-    }
-    @GetMapping("/user/hello")
-    public String userHello() {
-        return "Hello User!";
-    }
-    @GetMapping("/admin/hello")
-    public String adminHello() {
-        return "Hello Admin!";
-    }
 }
