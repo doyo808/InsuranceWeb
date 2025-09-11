@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$CONTENT_TITLE - 내 보험 시스템">공통 타이틀</title>
+	<link rel="stylesheet" th:href="@{/common/css/headerbar.css}" />
+	<link rel="stylesheet" th:href="@{/common/css/sidebar.css}" />
+	<script src="https://kit.fontawesome.com/df2bfc0a98.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header th:replace="~{common/fragments/header :: headerFragment}"></header>
+
+    <!-- 사이드바 -->
+    <aside th:replace="~{common/fragments/sidebar :: sidebarFragment}"></aside>
+
+    <!-- 본문 -->
+	<style>
+	    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+	    .title { font-size: 32px; font-weight: bold; }
+	    .badge { background: #e5f0ff; color: #1e73e8; padding: 4px 10px; border-radius: 12px; margin-left: 10px; }
+	    .subtitle { font-size: 18px; margin-top: 10px; }
+	    .description { color: #666; margin-top: 5px; }
+	    .tabs { margin-top: 30px; display: flex; gap: 20px; font-weight: bold; color: #1e73e8; }
+	    .section { margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; }
+	    .section h2 { font-size: 24px; }
+	    .section ul { list-style: none; padding: 0; }
+	    .section li::before { content: '✔ '; color: #1e73e8; }
+	    .bottom-buttons { margin-top: 40px; }
+	    .bottom-buttons button {
+	      background: #1e73e8; color: white; padding: 10px 20px; border: none; border-radius: 6px;
+	      margin-right: 10px; cursor: pointer;
+	    }
+	</style>
+    <main style="margin-top: 137px;" layout:fragment="content" th:replace="~{/mall/insurance-view::.container}">
+        <!-- 개별 콘텐츠 삽입될 자리 -->
+    </main>
+
+    <!-- 푸터 -->
+    <footer th:replace="~{common/fragments/footer :: footerFragment}"></footer>
+	
+	<script th:src="@{/common/js/headerbar.js}"></script>
+	<script th:src="@{/common/js/sidebar.js}"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>보험상품 목록</title></head>
+<body>
+  <h2>보험상품 목록</h2>
+  <a href="/admin/insurance/new">+ 새 상품 등록</a>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th><th>제목</th><th>뱃지</th><th>수정</th><th>삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+		
+      <tr th:each="p : ${products}">
+        <td th:text="${p.p_id}"></td>
+		<td><a th:href="@{'/insurance/' + ${p.p_id}}">[[${p.title}]]</a></td>
+        <td th:text="${p.badge}"></td>
+        <td><a th:href="@{'/admin/insurance/edit/' + ${p.p_id}}">수정</a></td>
+        <td>
+          <form th:action="@{'/admin/insurance/delete/' + ${p.p_id}}" method="POST">
+			<input type="hidden" name="p_id" th:value="${p.p_id}"/>
+            <button type="submit" onclick="return confirm('삭제할까요?')">삭제</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

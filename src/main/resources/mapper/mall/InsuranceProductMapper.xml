@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kd.insuranceweb.mall.vo.mapper.InsuranceProductMapper">
+
+  <select id="findAll" resultType="com.kd.insuranceweb.mall.vo.InsuranceProduct">
+    SELECT * FROM insurance_product ORDER BY p_id DESC
+  </select>
+
+  <select id="findById" resultType="com.kd.insuranceweb.mall.vo.InsuranceProduct">
+    SELECT * FROM insurance_product WHERE p_id = #{p_id}
+  </select>
+
+  <insert id="insert">
+    INSERT INTO insurance_product
+    (title, badge, subtitle, descriptions, breadcrumb, main_button_text, top_image, tabs_json, sections_json, bottom_buttons_json)
+    VALUES
+    (#{title}, #{badge}, #{subtitle}, #{descriptions}, #{breadcrumb}, #{main_button_text}, #{top_image}, #{tabs_json}, #{sections_json}, #{bottom_buttons_json})
+  </insert>
+
+  <update id="update">
+    UPDATE insurance_product SET
+      title = #{title},
+      badge = #{badge},
+      subtitle = #{subtitle},
+      descriptions = #{descriptions},
+      breadcrumb = #{breadcrumb},
+      main_button_text = #{main_button_text},
+      top_image = #{top_image},
+      tabs_json = #{tabs_json},
+      sections_json = #{sections_json},
+      bottom_buttons_json = #{bottom_buttons_json}
+    WHERE p_id = #{p_id}
+  </update>
+
+  <delete id="delete">
+    DELETE FROM insurance_product WHERE p_id = #{p_id}
+  </delete>
+
+</mapper>
