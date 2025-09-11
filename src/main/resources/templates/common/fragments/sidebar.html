@@ -1,9 +1,9 @@
 <!-- sidebar.html -->
 <div th:fragment="sidebarFragment">
 	<section id="sideBar-menu">
-	    <div id="sidebar" class="sidebar open">
+	    <div id="sidebar" class="sidebar closed">
 	        <button id="toggleBtn" class="toggle-btn">
-	            <img src="/project_pr/images/btn_side.png"></img>
+	            <img th:src="@{/common/images/btn_side_off.png}"></img>
 	        </button>
 	            <div id="side_guide">
 	                <div>GUIDE</div>

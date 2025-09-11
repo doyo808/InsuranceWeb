@@ -1,122 +1,48 @@
 <div th:fragment="headerFragment">
 	<div id="header_bar_wrap">
-	        <div>
-	            <div class="spacer-top"></div>
-	            <div class="spacer-nav"></div>
+	    <div>
+	        <div class="header__spacer-top"></div>
+	        <div class="header__spacer-nav"></div>
+	    </div>
+
+	    <div id="header_container">
+	        <div class="header_top">
+	            <a href="https://direct.samsungfire.com/vd/page/VD.MMDB0091.do">인증센터</a>
+	            <a href="https://www.samsungfire.com/vh/page/VH.HPIF0100.do?header={%27tranId%27:%27VH.RNBS0001%27}&body={%27BBS_ID%27:%2700000163%27,%27RTN_KEY%27:%27ETIFNoticeList%27}&main_area=PC_H1_2&_gl=1*p6j5q2*_gcl_aw*R0NMLjE3NTY3OTcwNDUuQ2p3S0NBandxOXJGQmhBSUVpd0FHVkFaUDVSUk5SWm13cWxXc1A5SVNXSUJoeDI5S3NveTl1ckF0SElfRzh1Sl93RkwybmVGb0ZHd3Fob0Nhc01RQXZEX0J3RQ..*_gcl_au*MTE4NjM0OTYwMy4xNzU2NzkzODA4*_ga*MTM5ODg4MTEzNi4xNzU2NzkzODA4*_ga_HCEXHLG6Z4*czE3NTY4NTk1NTMkbzQkZzEkdDE3NTY4NjM3NjMkajM2JGwwJGgw">
+	                공시실
+	            </a>
+	            <a href="https://www.samsungfire.com/?_gl=1*14ovwiy*_gcl_aw*R0NMLjE3NTY3OTcwNDUuQ2p3S0NBandxOXJGQmhBSUVpd0FHVkFaUDVSUk5SWm13cWxXc1A5SVNXSUJoeDI5S3NveTl1ckF0SElfRzh1Sl93RkwybmVGb0ZHd3Fob0Nhc01RQXZEX0J3RQ..*_gcl_au*MTE4NjM0OTYwMy4xNzU2NzkzODA4*_ga*MTM5ODg4MTEzNi4xNzU2NzkzODA4*_ga_HCEXHLG6Z4*czE3NTY4NTk1NTMkbzQkZzEkdDE3NTY4NjM4NDkkajI5JGwwJGgw">
+	                삼성화재 홈페이지</a>
+	            <button id="header__loginBtn">로그인</button>
+	            <button id="header__sessionTimer" class="hidden">V 30:00 로그인연장</button>
+	            <button id="header__logoutBtn" class="hidden">로그아웃</button>
 	        </div>
 
-	        <div id="header_container">
-
-	            <div class="header_top">
-	                <a href="https://direct.samsungfire.com/vd/page/VD.MMDB0091.do">인증센터</a>
-	                <a href="https://www.samsungfire.com/vh/page/VH.HPIF0100.do?header={%27tranId%27:%27VH.RNBS0001%27}&body={%27BBS_ID%27:%2700000163%27,%27RTN_KEY%27:%27ETIFNoticeList%27}&main_area=PC_H1_2&_gl=1*p6j5q2*_gcl_aw*R0NMLjE3NTY3OTcwNDUuQ2p3S0NBandxOXJGQmhBSUVpd0FHVkFaUDVSUk5SWm13cWxXc1A5SVNXSUJoeDI5S3NveTl1ckF0SElfRzh1Sl93RkwybmVGb0ZHd3Fob0Nhc01RQXZEX0J3RQ..*_gcl_au*MTE4NjM0OTYwMy4xNzU2NzkzODA4*_ga*MTM5ODg4MTEzNi4xNzU2NzkzODA4*_ga_HCEXHLG6Z4*czE3NTY4NTk1NTMkbzQkZzEkdDE3NTY4NjM3NjMkajM2JGwwJGgw">
-	                    공시실
-	                </a>
-	                <a href="https://www.samsungfire.com/?_gl=1*14ovwiy*_gcl_aw*R0NMLjE3NTY3OTcwNDUuQ2p3S0NBandxOXJGQmhBSUVpd0FHVkFaUDVSUk5SWm13cWxXc1A5SVNXSUJoeDI5S3NveTl1ckF0SElfRzh1Sl93RkwybmVGb0ZHd3Fob0Nhc01RQXZEX0J3RQ..*_gcl_au*MTE4NjM0OTYwMy4xNzU2NzkzODA4*_ga*MTM5ODg4MTEzNi4xNzU2NzkzODA4*_ga_HCEXHLG6Z4*czE3NTY4NTk1NTMkbzQkZzEkdDE3NTY4NjM4NDkkajI5JGwwJGgw">
-	                    삼성화재 홈페이지</a>
-	                <button id="loginBtn">로그인</button>
-	                <button id="sessionTimer" class="hidden">V 30:00 로그인연장</button>
-	                <button id="logoutBtn" class="hidden">로그아웃</button>
+	        <div class="header_nav">
+	            <div><button class="header__homeBtn">삼성화재 다이렉트 착</button></div>
+	            
+				<div class="header__menu_container">
+					<div th:replace="~{/common/fragments/header_menu_mypage :: menuMypage}"></div>
+					<div th:replace="~{/common/fragments/header_menu_claim :: menuClaim}"></div>
+					<div th:replace="~{/common/fragments/header_menu_mall :: menuMall}"></div>
+					<div th:replace="~{/common/fragments/header_menu_club :: menuClub}"></div>
+					<div th:replace="~{/common/fragments/header_menu_helpdesk :: menuHelpdesk}"></div>
 	            </div>
 
-	            <div class="header_nav">
-	                <div><button class="homeBtn">삼성화재 다이렉트 착</button></div>
-	                <div class="menu_container">
-
-	                    <div class="menu_with_submenu">
-	                    <div class="menu"> 계약관리 </div>
-	                        <div class="submenu hidden">
-	                            <div class="submenu_spacer"></div>
-	                            <div class="submenu_container">
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col">
-
-	                                </div>
-	                                <div class="submenu_col">
-	                                    <div>
-	                                        <div>증명서 발행</div>
-	                                        <a href="https://direct.samsungfire.com/vd/page/VD.MCDE0019.do">보험금 지급내역서</a>
-	                                        
-	                                    </div>
-	                                </div>
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col"></div>
-	                            </div>
-	                            <div class="submenu_spacer"></div>
-	                        </div>
-	                    </div>
-
-	                    <div class="menu"> 보상청구
-	                         <div class="submenu hidden">
-	                            <div class="submenu_spacer"></div>
-	                            <div class="submenu_container">
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col">보험계약 확인</div>
-	                                <div class="submenu_col">보험료 납입</div>
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col"></div>
-	                            </div>
-	                            <div class="submenu_spacer"></div>
-	                        </div>
-	                    </div>
-
-	                    <div class="menu"> 보험상품/대출
-	                         <div class="submenu hidden">
-	                            <div class="submenu_spacer"></div>
-	                            <div class="submenu_container">
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col">보험계약 확인</div>
-	                                <div class="submenu_col">보험료 납입</div>
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col"></div>
-	                            </div>
-	                            <div class="submenu_spacer"></div>
-	                        </div>
-	                    </div>
-
-	                    <div class="menu"> 혜택/서비스
-	                         <div class="submenu hidden">
-	                            <div class="submenu_spacer"></div>
-	                            <div class="submenu_container">
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col">보험계약 확인</div>
-	                                <div class="submenu_col">보험료 납입</div>
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col"></div>
-	                            </div>
-	                            <div class="submenu_spacer"></div>
-	                        </div>
-	                    </div>
-
-	                    <div class="menu"> 이용안내
-	                         <div class="submenu hidden">
-	                            <div class="submenu_spacer"></div>
-	                            <div class="submenu_container">
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col">보험계약 확인</div>
-	                                <div class="submenu_col">보험료 납입</div>
-	                                <div class="submenu_col"></div>
-	                                <div class="submenu_col"></div>
-	                            </div>
-	                            <div class="submenu_spacer"></div>
-	                        </div>
-	                    </div>
+	            <div class="header_icons">
+	                <div id="header_shopping_cart">
+	                    <i class="fa-solid fa-cart-shopping"></i>
 	                </div>
-
-	                <div class="header_icons">
-	                    <div id="header_shopping_cart">
-	                        <i class="fa-solid fa-cart-shopping"></i>
-	                    </div>
-	                    <div id="header_search">
-	                        <i class="fa-solid fa-magnifying-glass"></i>
-	                    </div>
+	                <div id="header_search">
+	                    <i class="fa-solid fa-magnifying-glass"></i>
 	                </div>
-
 	            </div>
-	        </div>
-	        <div>
-	            <div class="spacer-top"></div>
-	            <div class="spacer-nav"></div>
 	        </div>
 	    </div>
+		
+	    <div>
+	        <div class="header__spacer-top"></div>
+	        <div class="header__spacer-nav"></div>
+	    </div>
+	</div>
 </div>

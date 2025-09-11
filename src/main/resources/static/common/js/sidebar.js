@@ -8,9 +8,9 @@ sidebar.classList.toggle('closed');
 sidebar.classList.toggle('open');
 
 if (sidebar.classList.contains('closed')) {
-    toggleBtn.innerHTML = '<img src="/project_pr/images/btn_side_off.png"></img>';
+    toggleBtn.innerHTML = '<img src="/kdInsuranceTeam/common/images/btn_side_off.png"></img>';
 } else {
-    toggleBtn.innerHTML = '<img src="/project_pr/images/btn_side.png"></img>';
+    toggleBtn.innerHTML = '<img src="/kdInsuranceTeam/common/images/btn_side.png"></img>';
 }
 });
 

@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
-	const loginBtn = document.getElementById('loginBtn');
-	const logoutBtn = document.getElementById('logoutBtn');
-	const sessionTimer = document.getElementById('sessionTimer');
+window.addEventListener('load', function() {
+	const loginBtn = document.getElementById('header__loginBtn');
+	const logoutBtn = document.getElementById('header__logoutBtn');
+	const sessionTimer = document.getElementById('header__sessionTimer');
 	
 	loginBtn.addEventListener('click', (e) => {
 	    togglelogin_out();
