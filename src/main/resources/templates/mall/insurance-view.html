@@ -3,41 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <title th:text="${product.title}">보험상품</title>
-  <style>
-    body { font-family: 'Noto Sans KR', sans-serif; margin: 0; padding: 0; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .title { font-size: 32px; font-weight: bold; }
-    .badge { background: #e5f0ff; color: #1e73e8; padding: 4px 10px; border-radius: 12px; margin-left: 10px; }
-    .subtitle { font-size: 18px; margin-top: 10px; }
-    .description { color: #666; margin-top: 5px; }
-    .tabs { margin-top: 30px; display: flex; gap: 20px; font-weight: bold; color: #1e73e8; }
-    .section { margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; }
-    .section h2 { font-size: 24px; }
-    .section ul { list-style: none; padding: 0; }
-    .section li::before { content: '✔ '; color: #1e73e8; }
-    .bottom-buttons { margin-top: 40px; }
-    .bottom-buttons button {
-      background: #1e73e8; color: white; padding: 10px 20px; border: none; border-radius: 6px;
-      margin-right: 10px; cursor: pointer;
-    }
-  </style>
+  <link th:href="@{/mall/css/main.css}">
 </head>
 <body>
-  <div class="container">
-    <div class="title">
-      <span th:text="${product.title}"></span>
-      <span class="badge" th:if="${product.badge} != null" th:text="${product.badge}"></span>
+  <div class="main-container">
+    <div class="main-head">
+      <div class="main-nav" th:text="${product.breadcrumb}"></div>
+      <div class="main-head-title">
+        <span th:text="${product.title}"></span>
+        <span class="main-head-badge" th:if="${product.badge} != null" th:text="${product.badge}"></span>
+      </div>
+      <div class="main-head-subtitle" th:text="${product.subtitle}"></div>
+      <div class="main-head-description" th:text="${product.descriptions}"></div>
     </div>
-    <div class="subtitle" th:text="${product.subtitle}"></div>
-    <div class="description" th:text="${product.descriptions}"></div>
 
     <!-- 탭 목록 -->
-    <div class="tabs" th:if="${tabs} != null">
+    <div class="main-tabs" th:if="${tabs} != null">
       <div th:each="tab : ${tabs}" th:text="${tab}"></div>
     </div>
 
     <!-- 섹션 반복 -->
-    <div class="section" th:if="${sections} != null" th:each="section : ${sections}">
+    <div class="main-section" th:if="${sections} != null" th:each="section : ${sections}">
       <h2 th:text="${section.title}"></h2>
       <ul>
         <li th:each="item : ${section.items}" th:text="${item}"></li>
@@ -47,7 +33,7 @@
     </div>
 
     <!-- 하단 버튼 -->
-    <div class="bottom-buttons" th:if="${buttons} != null">
+    <div class="main-bottom-buttons" th:if="${buttons} != null">
       <button th:each="btn : ${buttons}" th:text="${btn}"></button>
     </div>
   </div>
