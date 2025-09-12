@@ -19,7 +19,7 @@
 
     <!-- 탭 목록 -->
     <div class="main-tabs" th:if="${tabs} != null">
-      <div th:each="tab : ${tabs}" th:text="${tab}"></div>
+      <div th:each="tab : ${tabs}" th:text="${tab.name}"></div>
     </div>
 
     <!-- 섹션 반복 -->
@@ -34,7 +34,7 @@
 
     <!-- 하단 버튼 -->
     <div class="main-bottom-buttons" th:if="${buttons} != null">
-      <button th:each="btn : ${buttons}" th:text="${btn}"></button>
+      <button th:each="btn : ${buttons}" th:text="${btn.name}"></button>
     </div>
   </div>
 </body>

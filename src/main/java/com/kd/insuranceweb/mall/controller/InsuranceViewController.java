@@ -37,10 +37,9 @@ public class InsuranceViewController {
 
         System.out.println(product.getTabs_json());
         // JSON -> 객체 변환
-        List<String> tabs;
-		tabs = objectMapper.readValue(product.getTabs_json(), new TypeReference<List<String>>() {});
+		List<Map<String, Object>> tabs = objectMapper.readValue(product.getTabs_json(), new TypeReference<List<Map<String, Object>>>() {});
 		List<Map<String, Object>> sections = objectMapper.readValue(product.getSections_json(), new TypeReference<List<Map<String, Object>>>() {});
-        List<String> buttons = objectMapper.readValue(product.getBottom_buttons_json(), new TypeReference<List<String>>() {});
+		List<Map<String, Object>> buttons = objectMapper.readValue(product.getBottom_buttons_json(), new TypeReference<List<Map<String, Object>>>() {});
 
         model.addAttribute("product", product);
         model.addAttribute("tabs", tabs);
