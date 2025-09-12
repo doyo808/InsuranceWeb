@@ -23,4 +23,9 @@ public class ClubController {
 	public String anipoint() {
 		return "/club/VD.MPDG0295";
 	}
+	
+	@GetMapping("/PP060701_001")
+	public String event() {
+		return "/club/PP060701_001";
+	}
 }

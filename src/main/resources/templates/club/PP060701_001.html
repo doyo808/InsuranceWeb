@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
 
 <head>
     <meta charset="UTF-8">
@@ -10,6 +12,7 @@
 </head>
 
 <body>
+	<main layout:fragment="content">
     <div class="ui-tab-pnls">
         <section class="base-content">
             <div class="content-layout"> <!--content 부분-->
@@ -70,6 +73,7 @@
         // 처음 페이지 로드 시 첫 번째 탭 보여주기
         showTab(1);
     </script>
+	</main>
 </body>
 
 </html>

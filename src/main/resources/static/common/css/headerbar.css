@@ -160,7 +160,7 @@
                 padding: 25px 0;
                 border-right: solid 1px black;
             }
-
+			
             .submenu_col  a,
             .submenu_col  a:link,
             .submenu_col  a:visited,
@@ -171,14 +171,39 @@
             }
 
             .submenu_col  a:hover {
-                background-color: #62a8ea;
+				background: #eef5fb;
                 color: var(--main-color);
             }
+			
+			.submenu_col_menu {
+				padding: 0 4px 0 4px;
+			}
+			
+			.submenu_col  a {
+				display: inline-block;
+				width: 100%;
+				padding: 5px 5px 3px 5px;
+			}
+			
+			
 			
 				/* 각 하위메뉴 속 */
 				.submenu_col_title {
 					font-weight: 600;
+					margin: 0 0 10px;
+					padding: 0 0 0 10px;
 				}
+				
+				
+				.submenu_col_frag:nth-child(n+2) {
+					padding: 40px 0 0;
+				}
+				
+			
+				
+				
+				
+				
 
 
 #header_shopping_cart, #header_search {
