@@ -1,12 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
 <head>
 	<meta charset="UTF-8" />
-	<title>여기는 보험 홈</title>
+	<title>보험 홈</title>
 </head>
 <body>
-	<h3>보험 홈입니다.</h3>
 	
-	<a th:href="@{/mypage/MPDG0070}">임시링크</a>
+	<main layout:fragment="content">
+	
+		<h1>보험 홈입니다.</h1>
+		<a th:href="@{/mypage/MPDG0070}">임시링크</a>
+		<p>
+		  안녕하세요,
+		  <span th:if="${#authentication != null and #authentication.name != null}" th:text="${#authentication.name}">User</span>
+		  <span th:unless="${#authentication != null and #authentication.name != null}">Guest</span>님!
+		</p>
+		<p>
+		  인증객체: <span th:text="${#authentication}">null</span><br>
+		  사용자명: <span th:text="${#authentication != null} ? ${#authentication.name} : 'Guest'">Guest</span>
+		</p>
+
+		<a th:href="@{/signup}">회원가입 링크</a>
+		
+	</main>
+	
 </body>
 </html>

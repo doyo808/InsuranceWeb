@@ -23,6 +23,9 @@
     <!-- 푸터 -->
     <footer th:replace="~{common/fragments/footer :: footerFragment}"></footer>
 	
+	<script th:inline="javascript">
+	  const contextPath = /*[[@{/}]]*/ '';
+	</script>
 	<script th:src="@{/common/js/headerbar.js}"></script>
 	<script th:src="@{/common/js/sidebar.js}"></script>
 </body>

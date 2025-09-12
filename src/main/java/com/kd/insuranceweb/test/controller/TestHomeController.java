@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class HomeController {
+public class TestHomeController {
 	
 	@GetMapping(value = {"/test/home", "/test", "/test/index"}) 
 	public String index() {
@@ -19,14 +19,5 @@ public class HomeController {
 	public String sample() {
 		return "/test/sample";
 	}
-	
-	// 스프링시큐리티 테스트
-	@GetMapping("/test/forceLogout")
-	public String forceLogout(HttpServletRequest request) {
-	    HttpSession session = request.getSession(false);
-	    if (session != null) {
-	        session.invalidate();
-	    }
-	    return "redirect:/login?logout";
-	}
+
 }
