@@ -6,6 +6,7 @@
 	
   <typeAliases>
   	<typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
+  	<typeAlias type="com.kd.insuranceweb.common.dto.Person" alias="person"></typeAlias>
   </typeAliases>
   
 </configuration>

@@ -1,24 +1,26 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/common/layout.html}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/common/layout.html}">
+
 <head>
 	<meta charset="UTF-8" />
 	<title>로그인</title>
 </head>
+
 <body>
-	
+
 	<main layout:fragment="content">
 		<div style="text-align: center; font-size:50px">
 			<form th:action="@{/login}" method="POST">
-			    <input type="text" name="username" placeholder="아이디">
-			    <input type="password" name="password" placeholder="비밀번호">
-			    <button type="submit">로그인</button>
+				<input type="text" name="username" placeholder="아이디">
+				<input type="password" name="password" placeholder="비밀번호">
+				<button type="submit">로그인</button>
 			</form>
-			
+
 			<a th:href="@{/signup}">회원가입 링크</a>
 		</div>
 	</main>
-	
+
 </body>
+
 </html>
