@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>포인트 제도 안내 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
+	<link rel="stylesheet" th:href="@{/club/css/club_common.css}">
 	<link rel="stylesheet" th:href="@{/club/css/PP050401_001.css}">
 	<link rel="stylesheet" th:href="@{/club/css/tip-box.css}">
 </head>
@@ -80,9 +81,9 @@
                                             (애니핏 플러스 회원 가입 필요)</p>
                                     </div>
                                 </a>
-                                <a href=""> <!-- 개별 박스-->
+                                <a th:href="@{/club/PP060701_001}"> <!-- 개별 박스-->
                                     <div class="way-box">
-                                        <p class="img   img05"></p>
+                                        <p class="img img05"></p>
                                         <p class="title">이벤트 참여</p>
                                         <p>다양한 포인트 적립 이벤트 참여</p>
                                     </div>
@@ -99,7 +100,7 @@
                                     <p class="title">보험료 납입</p>
                                     <p>신규 및 계속분 보험료 납입</p>
                                     <div class="btn-wrap">
-                                        <a href="" class="btn-small-dark btn-line btn-round">자세히 보기</a>
+                                        <a href="https://www.samsungfire.com/v2/html/customer/03/F_030_020_001.html?_gl=1*q2ia9a*_gcl_aw*R0NMLjE3NTc4OTcwMzMuQ2p3S0NBand6NW5HQmhCQkVpd0EtVzZYUk9nMHBNZ2xUOEQ1eW02bmluREc3SzU0bEc2T0YzVHhPdGJwd1hhcGVlcTJUYy1kZ0ZqOEhSb0NjZzRRQXZEX0J3RQ..*_gcl_au*MTg3NTkzMTI4OS4xNzU3NjM4MDk0*_ga*ODY3NzU2MTk1LjE3NTc2MzgwOTU.*_ga_HCEXHLG6Z4*czE3NTc5MjU0NjYkbzEwJGcxJHQxNzU3OTI1NDgzJGo0MyRsMCRoMA.." class="btn-small-dark btn-line btn-round">자세히 보기</a>
                                     </div>
                                 </div>
 
@@ -109,7 +110,7 @@
                                     <p class="title">애니포인트몰 이용</p>
                                     <p>전용몰에서 상품 및 서비스 구매</p>
                                     <div class="btn-wrap">
-                                        <a href="" class="btn-small-dark btn-line btn-round">자세히 보기</a>
+                                        <a href="https://www.samsungfire.com/vh/page/VH.HPBN0101.do?_gl=1*q2ia9a*_gcl_aw*R0NMLjE3NTc4OTcwMzMuQ2p3S0NBand6NW5HQmhCQkVpd0EtVzZYUk9nMHBNZ2xUOEQ1eW02bmluREc3SzU0bEc2T0YzVHhPdGJwd1hhcGVlcTJUYy1kZ0ZqOEhSb0NjZzRRQXZEX0J3RQ..*_gcl_au*MTg3NTkzMTI4OS4xNzU3NjM4MDk0*_ga*ODY3NzU2MTk1LjE3NTc2MzgwOTU.*_ga_HCEXHLG6Z4*czE3NTc5MjU0NjYkbzEwJGcxJHQxNzU3OTI1NDgzJGo0MyRsMCRoMA.." class="btn-small-dark btn-line btn-round">자세히 보기</a>
                                     </div>
                                 </div>
 
@@ -131,7 +132,11 @@
                     <div>확인해 주세요</div>
                     <ul>
                         <li>애니포인트의 제공 내용은 삼성화재 내부 규정에 따라 변경될 수 있습니다.</li>
-                        <div class="btn-small-dark btn-line btn-round">포인트제도 운영기준</div>
+                        
+							<button type="button" class="point-terms btn-small-dark btn-line btn-round" th:data-url="@{/club/terms/point_terms.txt}">
+								포인트제도 운영기준
+							</button>
+						
                         <li>애니포인트 적립 대상은 삼성화재 계약자 및 피보험자입니다.(미성년자 제외)</li>
                         <li>애니포인트 관련 문의는 삼성화재 서비스 상담콜센터(1600-8204, 평일 09:00~18:00)를 이용해 주세요</li>
                         <li>애니포인트 유효기간은 36개월이며, 사용하지 않은 포인트는 적립된 날로부터 36개월이 지난 시점에 자동 소멸됩니다.</li>
@@ -140,6 +145,39 @@
             </div>
         </section>
     </div>
+	
+	<dialog id="termsModal">
+	  <form method="dialog" class="modal-head">
+	    <h1>포인트제도 운영기준</h1>
+	    <button class="x_btn" aria-label="Close" value="close">✕</button>
+	  </form>
+	  <div class="modal-body">
+	    <pre id="termsBox">로딩중...</pre>
+	  </div>
+	</dialog>
+	
+
+	<script>
+		  const modal = document.getElementById('termsModal');
+		  const trigger = document.querySelector('.point-terms');
+		  const box = document.getElementById('termsBox');
+		  
+		  trigger.addEventListener('click', async () => {
+		    try {
+		      const url = trigger.dataset.url; // 예: /{context}/club/terms/point_terms.txt
+		      const res = await fetch(url, { cache: 'no-store' });
+		      if (!res.ok) throw new Error('약관 로드 실패');
+		      const txt = await res.text();
+		      box.textContent = txt;
+		    } catch (e) {
+		      box.textContent = '약관을 불러오는 중 오류가 발생했습니다.';
+		      console.error(e);
+		    }
+		    modal.showModal();
+		  });
+
+
+	</script>
 	</main>
 </body>
 
