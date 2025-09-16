@@ -14,31 +14,47 @@
     <!-- 기본 정보 -->
     <div class="form-section">
       <label>제목</label>
+	  <span class="form-desc"></span>
       <input type="text" name="title" th:value="${product.title}" />
 
       <label>뱃지</label>
+	  <span class="form-desc">선택적으로 제목 옆에 뱃지를 달수있는 부분입니다.<br>특별한게 없으면 비워두심됩니다.</span>
       <input type="text" name="badge" th:value="${product.badge}" />
 
       <label>서브 타이틀</label>
+	  <span class="form-desc"></span>
       <input type="text" name="subtitle" th:value="${product.subtitle}" />
 
       <label>설명</label>
+	  <span class="form-desc"></span>
       <textarea name="descriptions" rows="3" th:text="${product.descriptions}"></textarea>
 
       <label>브레드크럼</label>
+	  <span class="form-desc"></span>
       <input type="text" name="breadcrumb" th:value="${product.breadcrumb}" />
 
       <label>메인버튼</label>
+	  <span class="form-desc"></span>
       <input type="text" name="main_button_text" th:value="${product.main_button_text}" />
 
       <label>이미지 URL</label>
+	  <span class="form-desc"></span>
       <input type="text" name="top_image" th:value="${product.top_image}" />
     </div>
 
     <!-- 탭 목록 -->
     <div class="form-section">
       <label>탭 목록</label>
-      <div id="tabsContainer"></div>
+	  <span class="form-desc">
+		해당 탭에 내용을 적는 곳입니다.<br>
+		탭 이름과 본문을 적어 두시면 됩니다.<br>
+		내용이 하나라면 탭명은 넘어가셔도 됩니다.
+	  </span>
+      <div id="tabsContainer">
+		<label>탭 이름</label>
+	      <input type="text" value="${tab.name || ''}" onchange="importTabs().then(m => m.tabsData[`${index}`].name = this.value)" />
+	      <button type="button" class="btn-outline" onclick="importTabs().then(m => { m.removeTab(`${index}`); })">삭제</button>
+	  </div>
       <button type="button" class="btn-outline" onclick="addTab()">+ 탭 추가</button>
       <input type="hidden" name="tabs_json" id="tabs_json" />
     </div>
@@ -46,6 +62,7 @@
     <!-- 섹션 목록 -->
     <div class="form-section">
       <label>섹션 목록</label>
+	  <span class="form-desc"></span>
       <div id="sectionsContainer"></div>
       <button type="button" class="btn-outline" onclick="addSection()">+ 섹션 추가</button>
       <input type="hidden" name="sections_json" id="sections_json" />
@@ -54,6 +71,7 @@
     <!-- 하단 버튼 목록 -->
     <div class="form-section">
       <label>하단 버튼 목록</label>
+	  <span class="form-desc"></span>
       <div id="buttonsContainer"></div>
       <button type="button" class="btn-outline" onclick="addButton()">+ 버튼 추가</button>
       <input type="hidden" name="bottom_buttons_json" id="bottom_buttons_json" />

@@ -7,34 +7,40 @@
 </head>
 <body>
   <div class="main-container">
+	<!-- 간단 페이지 소개-->
     <div class="main-head">
-      <div class="main-nav" th:text="${product.breadcrumb}"></div>
-      <div class="main-head-title">
-        <span th:text="${product.title}"></span>
-        <span class="main-head-badge" th:if="${product.badge} != null" th:text="${product.badge}"></span>
+      <div class="main-head-box">
+          <div class="main-nav" th:text="${product.breadcrumb}"></div>
+          <div class="main-head-title">
+            <span th:text="${product.title}"></span>
+            <span class="main-head-badge" th:if="${product.badge} != null" th:text="${product.badge}"></span>
+          </div>
+          <div class="main-head-subtitle" th:text="${product.subtitle}"></div>
+          <div class="main-head-description" th:text="${product.descriptions}"></div>
+        <div class="main-head-button" th:text="${product.main_button_text}"></div>		
       </div>
-      <div class="main-head-subtitle" th:text="${product.subtitle}"></div>
-      <div class="main-head-description" th:text="${product.descriptions}"></div>
     </div>
 
-    <!-- 탭 목록 -->
-    <div class="main-tabs" th:if="${tabs} != null">
-      <div th:each="tab : ${tabs}" th:text="${tab.name}"></div>
-    </div>
-
-    <!-- 섹션 반복 -->
-    <div class="main-section" th:if="${sections} != null" th:each="section : ${sections}">
-      <h2 th:text="${section.title}"></h2>
-      <ul>
-        <li th:each="item : ${section.items}" th:text="${item}"></li>
-      </ul>
-      <p th:if="${section.note} != null" th:text="${section.note}" style="color: #888;"></p>
-      <img th:if="${section.image} != null" th:src="@{/${section.image}}" alt="" style="max-width: 200px;" />
-    </div>
-
-    <!-- 하단 버튼 -->
-    <div class="main-bottom-buttons" th:if="${buttons} != null">
-      <button th:each="btn : ${buttons}" th:text="${btn.name}"></button>
+    <div class="main-content">
+      <!-- 탭 목록 -->
+      <div class="main-tabs" th:if="${tabs} != null">
+        <div th:each="tab, idx : ${tabs}" th:class="${idx.index == 0} ? 'tab-active' : ''" th:text="${tab.name}"></div>
+      </div>
+  
+      <!-- 섹션 반복 -->
+      <div class="main-section" th:if="${sections} != null" th:each="section : ${sections}">
+        <h2 th:text="${section.title}"></h2>
+          <ul>
+            <li th:each="item : ${section.items}" th:text="${item}"></li>
+          </ul>
+        <p th:if="${section.note} != null" th:text="${section.note}" style="color: #888;"></p>
+        <img th:if="${section.image} != null" th:src="@{/${section.image}}" alt="" style="max-width: 200px;" />
+      </div>
+  
+      <!-- 하단 버튼 -->
+      <div class="main-bottom-buttons" th:if="${buttons} != null">
+        <button th:each="btn : ${buttons}" th:text="${btn.name}"></button>
+      </div>
     </div>
   </div>
 </body>

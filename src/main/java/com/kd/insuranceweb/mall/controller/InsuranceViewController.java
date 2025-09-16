@@ -32,7 +32,7 @@ public class InsuranceViewController {
         InsuranceProduct product = productMapper.findById(id);
         System.out.println(product);
         if (product == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "보험 상품이 존재하지 않습니다");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "보험 상품페이지가 존재하지 않습니다");
         }
 
         System.out.println(product.getTabs_json());
