@@ -47,7 +47,7 @@
 								<!-- 삼성카드 -->
 								<div class="card-benefit">
 									<div class="card-header">
-										<img th:src="@{/club/images/img_card_logo_samsung.png}" alt="삼성카드 로고">
+										<img th:src="@{/club/images/card/img_card_logo_samsung.png}" alt="삼성카드 로고">
 										<span class="card-call-number">
 											1588-8700
 										</span>
@@ -77,7 +77,7 @@
 								<!-- 현대카드 -->
 								<div class="card-benefit">
 									<div class="card-header">
-										<img th:src="@{/club/images/img_card_logo_hyundai.png}" alt="현대카드 로고">
+										<img th:src="@{/club/images/card/img_card_logo_hyundai.png}" alt="현대카드 로고">
 										<span class="card-call-number">
 											1577-6000
 										</span>
@@ -107,7 +107,7 @@
 								<!-- 롯데카드 -->
 								<div class="card-benefit">
 									<div class="card-header">
-										<img th:src="@{/club/images/img_card_logo_lotte.png}" alt="롯데카드 로고">
+										<img th:src="@{/club/images/card/img_card_logo_lotte.png}" alt="롯데카드 로고">
 										<span class="card-call-number">
 											1588-8100
 										</span>
@@ -132,7 +132,7 @@
 								<!-- KB카드 -->
 								<div class="card-benefit">
 									<div class="card-header">
-										<img th:src="@{/club/images/img_card_logo_kb.png}" alt="kb카드 로고">
+										<img th:src="@{/club/images/card/img_card_logo_kb.png}" alt="kb카드 로고">
 										<span class="card-call-number">
 											1588-1688
 										</span>
@@ -166,7 +166,7 @@
 								<!-- 신한카드 -->
 								<div class="card-benefit">
 									<div class="card-header">
-										<img th:src="@{/club/images/img_card_logo_shinhan.png}" alt="신한카드 로고">
+										<img th:src="@{/club/images/card/img_card_logo_shinhan.png}" alt="신한카드 로고">
 										<span class="card-call-number">
 											1544-8780
 										</span>
@@ -224,7 +224,7 @@
 											<!-- <li>가 카드박스 하나 -->
 											<li>
 												<div class="card-header">
-													<img th:src="@{/club/images/img_card_logo_samsung2.png}"
+													<img th:src="@{/club/images/card/img_card_logo_samsung2.png}"
 														alt="삼성화재 로고">
 													<div class="fr">
 														<span class="title">애니포인트</span>
@@ -248,7 +248,10 @@
 																	<li>이외 다른 상품 : 1P부터 사용 가능</li>
 																</ul>
 															</div>
-															<a href="" class="btn-small">사용 안내</a>
+															<button type="button" class="btn-small"
+																th:data-url="@{/club/terms/ani_point_terms.txt}">
+																사용 안내
+															</button>
 														</div>
 
 														<div class="grid-wrap right">
@@ -277,10 +280,19 @@
 
 
 													<!-- 사용 안내 눌러 링크로 들어갈때 -->
-													<dl class="hidden">
-														<dt>애니포인트 사용안내</dt>
+													<dialog id="ani_point_termsModal">
+														<form method="dialog" class="modal-head">
+															<h1>포인트제도 운영기준</h1>
+															<button class="x_btn" aria-label="Close"
+																value="close">✕</button>
+														</form>
+														<div class="modal-body">
+															<pre id="termsBox">로딩중...</pre>
+														</div>
+													</dialog>
 
-													</dl>
+
+
 												</div>
 											</li>
 										</ul>
@@ -297,8 +309,8 @@
 										<ul class="benefitJson5">
 											<li>
 												<div class="card-header">
-													<img th:src="@{/club/images/img_card_logo_samsung.png}"
-														alt="삼성카드 로고">
+													<img th:src="@{/club/images/card/img_card_logo_samsung.png}"
+														alt="삼성카드 로고"> 
 													<div class="fr">
 														<span class="title">삼성카드 보너스 포인트</span>
 														<span class="card-call-number">1588-8700</span>
@@ -350,7 +362,7 @@
 										<ul class="benefitJson5">
 											<li>
 												<div class="card-header">
-													<img th:src="@{/club/images/img_card_logo_shinhan.png}"
+													<img th:src="@{/club/images/card/img_card_logo_shinhan.png}"
 														alt="신한카드 로고">
 													<div class="fr">
 														<span class="title">신한카드 마이신한포인트</span>
@@ -404,7 +416,7 @@
 										<ul class="benefitJson5">
 											<li>
 												<div class="card-header">
-													<img th:src="@{/club/images/img_card_logo_hyundai.png}"
+													<img th:src="@{/club/images/card/img_card_logo_hyundai.png}"
 														alt="현대카드 로고">
 													<div class="fr">
 														<span class="title">현대카드 M 포인트</span>
@@ -457,7 +469,8 @@
 										<ul class="benefitJson5">
 											<li>
 												<div class="card-header">
-													<img th:src="@{/club/images/img_card_logo_hana.png}" alt="하나카드 로고">
+													<img th:src="@{/club/images/card/img_card_logo_hana.png}"
+														alt="하나카드 로고">
 													<div class="fr">
 														<span class="title">하나카드 하나머니 포인트</span>
 														<span class="card-call-number">1800-1111</span>
@@ -496,7 +509,7 @@
 															</ul>
 														</div>
 													</div>
-													
+
 													<!-- 사용 안내 눌러 링크로 들어갈때 -->
 													<dl class="hidden">
 														<dt>하나카드 하나머니포인트 사용안내</dt>
@@ -516,7 +529,7 @@
 												<!-- <li>가 카드박스 하나 -->
 												<li>
 													<div class="card-header">
-														<img th:src="@{/club/images/img_card_logo_samsung.png}"
+														<img th:src="@{/club/images/card/img_card_logo_samsung.png}"
 															alt="삼성카드 로고">
 														<div class="fr">
 															<span class="title">U 포인트</span>
@@ -584,6 +597,7 @@
 								</div>
 							</div>
 						</div>
+
 						<!-- 후청구 서비스 tab -->
 						<div class="content-main">
 							<div class="section-group">

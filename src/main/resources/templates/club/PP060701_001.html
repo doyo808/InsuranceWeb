@@ -1,79 +1,144 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/common/layout.html}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/common/layout.html}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>무이자 할부 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>무이자 할부 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
 	<link rel="stylesheet" th:href="@{/club/css/club_common.css}">
-	<link rel="stylesheet" href="./css/PP060701_001.css">
+	<link rel="stylesheet" th:href="@{/club/css/PP060701_001.css}">
 
 </head>
 
 <body>
 	<main layout:fragment="content">
-    <div class="ui-tab-pnls">
-        <section class="base-content">
-            <div class="content-layout"> <!--content 부분-->
+		<div class="ui-tab-pnls">
+			<section class="base-content">
+				<div class="content-layout"> <!--content 부분-->
 
-                <div class="content-title"> <!-- 제목 -->
-                    <h1>
-                        다이렉트의 다양한 이벤트를<br> 만나보세요
-                    </h1>
-                </div>
+					<div class="content-title"> <!-- 제목 -->
+						<h1>
+							다이렉트의 다양한 이벤트를<br> 만나보세요
+						</h1>
+					</div>
 
-                <div id="tab-btns"> <!-- 버튼 -->
-                    <button id="tab-btn1" class="tab-btn">
-                        진행 중 이벤트
-                    </button>
-                    <button id="tab-btn2" class="tab-btn">
-                        당첨자 확인
-                    </button>
-                    
-                </div>
+					<div id="tab-btns">
+						<button id="tab-btn1" class="tab-btn">
+							진행 중 이벤트
+						</button>
+						<button id="tab-btn2" class="tab-btn">
+							당첨자 확인
+						</button>
+					</div>
 
-               
+					<div class="main-contents">
 
-               
+						<!-- 이벤트 tab -->
+						<div class="content-main event">
+							<div class="ui-tab-pnls">
+								<section>
+									<ul class="benefit-event" id="event-list">
+										<!--<li>진행 중인 이벤트가 없습니다.<br> 더욱 알찬 이벤트를 준비하겠습니다.</li>-->
+										<li>
+											<a href="">
+												<div class="event-box event-list0"
+													style="background: rgb(17, 166, 113);"></div>
+												<p class="tag">
+													<span>계산이벤트</span>
+													<span>친구소개</span>
+													<span>자동차보험</span>
+												</p>
+												<p class="l-title">자동차보험 소개하고 스타벅스 커피 2잔도 쏘자!</p>
+												<p class="sub-title">(자동차보험료 확인 시)</p>
+												<p class="period">진행 중</p>
+											</a>
+										</li>
 
-            </div>
-        </section>
-    </div>
+										<li>
+											<a href="">
+												<div class="event-box event-list1"
+													style="background: rgb(119, 56, 255);"></div>
+												<p class="tag">
+													<span>이벤트</span>
+													<span>스타벅스 아이스 아메리카노(T)1잔 (500명 추첨)</span>
+												</p>
+												<p class="l-title">내 보험 괜찮은 걸까? 보장분석 서비스 이벤트</p>
+												<p class="period">진행 중</p>
+											</a>
+										</li>
 
-    <script>
-        const tabs = document.querySelectorAll(".content-main");
-        const buttons = document.querySelectorAll(".tab-btn");
+										<li>
+											<a href="">
+												<div class="event-box event-list2" style="background: #05A64D;"></div>
+												<p class="tag">
+													<span>국제 강아지의 날 맞이</span>
+													<span>착한펫 보험</span>
+													<span>가입이벤트</span>
+												</p>
+												<p class="l-title">지금 착한펫보험 가입하면 네이버페이 최대 3만원!</p>
+												<p class="period">진행 중</p>
+											</a>
+										</li>
 
-        function showTab(index) {
-            XMLHttpRequest
+										<li>
+											<a href="">
+												<div class="event-box event-list3" style="background: #1A81FF;"></div>
+												<p class="tag">
+													<span>가입이벤트</span>
+													<span>신세계이마트 상품권 최대 3만원</span>
+												</p>
+												<p class="l-title">자동차보험 삼성카드 결제 이벤트 참여해요!</p>
+												<p class="sub-title">(대상카드로 30만원 이상 결제 시)</p>
+												<p class="period">진행 중</p>
+											</a>
+										</li>
 
-            tabs.forEach((tab, i) => {
-                if (i === index) {
-                    tab.classList.remove("hidden"); // 보여주기
-                } else {
-                    tab.classList.add("hidden"); // 숨기기
-                }
-            });
+									</ul>
+								</section>
+							</div>
+						</div>
 
-            buttons.forEach((btn, i) => {
-                if (i === index) {
-                    btn.classList.add("active"); // 선택된 버튼 스타일
-                } else {
-                    btn.classList.remove("active");
-                }
-            });
-        }
+						<!--당첨자 확인 tab-->
+						<div class="content-main eventWinners">
+							<div class="search-form">
+								<form id="searchForm" method="POST">
+									<input type="text" class="inp-base" id="boardSearchText" title="검색어 입력"
+										placeholder="검색어를 입력해 주세요">
+									<button type="button" id="searchFormButton" class="btn-postsrch">
+										<span class="hidden">검색</span>
+									</button>
+								</form>
+							</div>
 
-        // 버튼 클릭 이벤트 등록
-        buttons.forEach((btn, i) => {
-            btn.addEventListener("click", () => showTab(i));
-        });
+							<div class="tbl-wrap" id="bbsArticle">
+								<table class="tbl-base tbl-link">
+									<caption></caption>
+									<colgroup>
+										<col class="col-auto">
+										<col class="col-date">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>
+												<a class="tit-link">25년 8월 다이렉트 가입후기 이벤트</a>
+											</th>
+											<td>
+												<span>2025.08.01~08.31</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 
-        // 처음 페이지 로드 시 첫 번째 탭 보여주기
-        showTab(0);
-    </script>
+							<div class="paging-wrap" id="bbsPaging"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<script th:src="@{/club/js/PP060701_001.js}"></script>
 	</main>
 </body>
 

@@ -7,15 +7,134 @@
     gap: 10px
 }
 
-
-
-.card-list-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    margin: 30px auto 50px; 
-    justify-content: center;
-    max-width: 1000px;
-    /* 원하는 최대 폭 지정 */
-
+#tab-btns .tab-btn:active {
+    color: #2C7FDF;
+    border-bottom: 3px solid #2C7FDF;
 }
+
+p {
+    margin: 0;
+}
+
+.benefit-event {
+    display: flex;
+    flex-wrap: wrap;
+	
+	justify-content: space-between;
+	/*row-gap:25px;
+	column-gap: 40px;*/
+}
+
+.benefit-event li {
+	margin: 0 12px 76px 12px;	
+}
+
+
+.benefit-event li a .event-box {
+    display: block;
+	width: 350px;
+    height: 240px;
+    border-radius: 24px;
+    margin: 0 0 24px;
+	position: relative;    
+  	overflow: hidden; 	
+}
+
+.benefit-event li a .event-box::after {
+    display: block;
+    position: absolute;
+    top: 40px;
+    left: calc(50% - 80px);
+    content: '';
+    width: 160px;
+    height: 160px;
+    background-size: 160px;
+}
+
+.event-list0::after {
+    background: url(../images/event/event-car-insurance.png) no-repeat center 0;
+}
+.event-list1::after {
+    background: url(../images/event/event-analysis.png) no-repeat center 0;
+}
+.event-list2::after {
+    background: url(../images/event/event-pet-insurance.png) no-repeat center 0;
+}
+.event-list3::after {
+    background: url(../images/event/event-samsungcard.png) no-repeat center 0;
+}
+
+
+
+.benefit-event li .l-title {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: -0.18px;
+    color: #111;
+    word-break: keep-all;
+}
+
+.benefit-event li .tag {
+    display: block;
+    margin: 4px 0 8px;
+}
+
+.benefit-event li .tag span {
+    padding: 6px 8px;
+    background: #f0f8ff;
+    border-radius: 4px;
+    margin-right: 8px;
+    color: #2c7fdf;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+    letter-spacing: -0.7px;
+}
+
+.benefit-event li .period {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: 0px;
+    color: #757679;
+    margin-top: 8px;
+}
+
+
+/* -------- 이벤트 당첨자 확인 --------- */ 
+
+.search-form {
+    position: relative;
+    width: 800px;
+    margin: 0 auto;
+    background-color: #f3f4f6;
+    padding: 23px 80px 23px 40px;
+    border-radius: 38px;
+}
+
+.search-form .inp-base {
+    width: 100%;
+    color: #111;
+    height: 30px;
+    padding: 0;
+    border: none;
+	outline: none; 
+    font-size: 20px;
+    line-height: 30px;
+    background-color: #f3f4f6;
+}
+
+.search-form .btn-postsrch {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+	border: none;
+    background: url("../images/icon/search.svg") no-repeat;
+    cursor: pointer;
+    content: "";
+}
+

@@ -4,12 +4,11 @@ const buttons = document.querySelectorAll(".tab-btn");
 // 2) URL의 탭 키 ↔ 내부 인덱스 매핑 표
 //   - 주소창 ?tab=interest-free 처럼 들어오면 0번 탭을 보여준다.
 const TAB_INDEX = {
-	"interest-free": 0,
-	"points": 1,
-	"post-charge": 2
+	"event": 0,
+	"eventWinners": 1
 };
-//   - 반대로, 현재 0/1/2번 탭을 주소창에 반영할 때 쓸 키 목록
-const INDEX_TAB = ["interest-free", "points", "post-charge"];
+//   - 반대로, 현재 0/1번 탭을 주소창에 반영할 때 쓸 키 목록
+const INDEX_TAB = ["event", "eventWinners"];
 
 // 3) 실제로 "i번째 탭을 보여줘"를 수행하는 함수
 //    두 번째 인자는 옵션 객체이고, { updateUrl=true }가 기본값이다.
@@ -46,7 +45,7 @@ window.addEventListener('popstate', (e) => {
 // 6) "현재 URL"을 읽어 초기에 어떤 탭을 보여줄지 결정하는 함수
 function initFromUrl({ updateUrl = false } = {}) {
 	const params = new URLSearchParams(window.location.search); // ?뒤의 쿼리 문자열 파싱 객체
-	const key = params.get('tab') || 'interest-free';           // ?tab=값이 없으면 기본 'interest-free'
+	const key = params.get('tab') || 'event';           // ?tab=값이 없으면 기본 'interest-free'
 	const index = TAB_INDEX[key] ?? 0;                          // 매핑표에 없으면 0번(첫 탭)
 	showTab(index, { updateUrl });                                // 초기 표시(대개 URL 갱신은 안 함)
 }
@@ -55,4 +54,3 @@ function initFromUrl({ updateUrl = false } = {}) {
 document.addEventListener('DOMContentLoaded', () => {
 	initFromUrl();
 });
-
