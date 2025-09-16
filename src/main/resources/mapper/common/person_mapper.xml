@@ -6,4 +6,14 @@
   <select id="selectByEmail" resultType="person" parameterType="String">
   	SELECT * FROM persons WHERE email = #{email}
   </select>
+  <insert id="insertPerson">
+    <selectKey keyProperty="person_id" resultType="int" order="AFTER">
+        SELECT person_seq.CURRVAL FROM DUAL
+    </selectKey>
+    
+  	INSERT INTO persons 
+  		(person_id, person_name, email, personal_id, phone_number)
+  	values
+  		(person_seq.nextval, #{person_name}, #{email}, #{personal_id}, #{phone_number})
+  </insert>
 </mapper>

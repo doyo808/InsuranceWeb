@@ -3,7 +3,7 @@ package com.kd.insuranceweb.common.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.kd.insuranceweb.common.dto.Person;
+import com.kd.insuranceweb.common.dto.PersonDTO;
 
 @Mapper
 public interface PersonMapper {
@@ -13,5 +13,6 @@ public interface PersonMapper {
      * @param email 조회할 사용자의 이메일
      * @return 조회된 사용자 정보. 없을 경우 null.
      */
-    Person selectByEmail(@Param("email") String email);
+    PersonDTO selectByEmail(@Param("email") String email);
+    int insertPerson(PersonDTO person);
 }

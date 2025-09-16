@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.common.mapper.CustomerMapper">
+  <select id="selectById" resultType="customer" parameterType="String">
+  	SELECT * FROM customers WHERE login_id = #{login_id}
+  </select>
+  <insert id="insertCustomer">
+ 	<selectKey keyProperty="customer_id" resultType="int" order="AFTER">
+        SELECT customer_seq.CURRVAL FROM DUAL
+    </selectKey>
+  	INSERT INTO customers 
+  		(customer_id, person_id, login_id, password_hash, marketing_agree_yn)
+  	values 
+  		(customer_seq.nextval, #{person_id}, #{login_id}, #{password_hash}, #{marketing_agree_yn})
+  </insert>
+</mapper>

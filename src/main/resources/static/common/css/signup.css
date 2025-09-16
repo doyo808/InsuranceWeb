@@ -41,7 +41,7 @@ h1 {
     border-radius: 5px;
     padding: 12px;
     font-size: 15px;
-    width: 100%;
+    width: 400px;
 }
 
 .form-group input::placeholder {
@@ -151,22 +151,22 @@ h1 {
 }
 
 /* 최종 '다음' 버튼 */
-#signup_next_btn1 {
-    width: 100%;
+#signup-next-btn {
+    width: 300px;
     padding: 15px;
     font-size: 18px;
     font-weight: bold;
     color: #fff;
-    background-color: #333; /* 이미지와 유사한 어두운 색상 */
+    background-color: #3b92e5; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 40px;
     transition: background-color 0.2s;
 }
-
-#signup_next_btn1:hover {
-    background-color: #555;
+#signup-next-btn:disabled {
+	background-color: gray;
+	cursor: not-allowed;
 }
 
 .modal-wrapper {
