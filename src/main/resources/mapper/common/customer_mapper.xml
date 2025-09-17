@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kd.insuranceweb.common.mapper.CustomerMapper">
   <select id="selectById" resultType="customer" parameterType="String">
-  	SELECT * FROM customers WHERE login_id = #{login_id}
+  	SELECT * FROM customers WHERE login_id = #{login_id} AND deleted_at IS NULL
   </select>
   <insert id="insertCustomer">
  	<selectKey keyProperty="customer_id" resultType="int" order="AFTER">

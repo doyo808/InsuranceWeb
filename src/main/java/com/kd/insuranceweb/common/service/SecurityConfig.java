@@ -4,12 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -20,7 +16,7 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	String[] whiteList = {
     			"/", "/index.html", "/login", "/common/login.html", 
-    			"/signup/**",
+    			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
     			"/api/auth/status"
     	};
@@ -34,8 +30,8 @@ public class SecurityConfig {
     	        )
     	        .formLogin(form -> form
     	            .loginPage("/login")			// 컨트롤러의 매핑경로
-    	            .loginProcessingUrl("/login")	// 로그인 form의 action
-    	            .failureUrl("/common/login.html?error")
+    	            .loginProcessingUrl("/login-process")	// 로그인 form의 action
+    	            .failureUrl("/login?error=true")
     	            .defaultSuccessUrl("/", true)	// true는 항상 해당 url, false면 로그인전 요청 페이지
     	            .permitAll()
     	        ).logout(logout -> logout
@@ -46,27 +42,11 @@ public class SecurityConfig {
     	        )
     	        .build();
     }
-
-    // 이부분 application.properties로 옮기자!!!
-    @Bean
-    UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-            .username("user1")
-            .password(passwordEncoder().encode("password"))
-            .roles("USER")
-            .build();
-
-        UserDetails admin = User.builder()
-            .username("admin")
-            .password(passwordEncoder().encode("1234"))
-            .roles("ADMIN")
-            .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
+    
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

@@ -45,28 +45,49 @@ public class SignupService {
      */
 	@Transactional
 	public int insertPersonAndCustomer(SignupStep1DTO dto1, SignupStep2DTO dto2) {
-		// persons 테이블에 데이터 넣기
+		// 1. Person 정보를 생성하고 저장하는 private 메서드 호출
+		PersonDTO person = createAndInsertPerson(dto1);
+		
+		// 2. Customer 정보를 생성하고 저장하는 private 메서드 호출
+		CustomerDTO customer = createAndInsertCustomer(person, dto2);
+		
+		// 3. 최종 결과인 customer_id 반환
+		return customer.getCustomer_id();
+	}
+	
+	/**
+	 * [Private] Person 정보를 가공하여 DB에 저장하고, 생성된 객체를 반환합니다.
+	 */
+	private PersonDTO createAndInsertPerson(SignupStep1DTO dto1) {
 		String personal_id = dto1.getJumin6() + "-" + dto1.getJumin7();
 		String phone_number = dto1.getPhoneNumber().replaceAll("(\\d{3})(\\d{4})(\\d{4})", "$1-$2-$3");
 		
 		PersonDTO person = new PersonDTO();
-			person.setPerson_name(dto1.getKorName());
-			person.setEmail(dto1.getEMail());
-			person.setPersonal_id(personal_id);
-			person.setPhone_number(phone_number);
+		person.setPerson_name(dto1.getKorName());
+		person.setEmail(dto1.getEMail());
+		person.setPersonal_id(personal_id);
+		person.setPhone_number(phone_number);
+		
 		personMapper.insertPerson(person);
 		
-		// customers 테이블에 데이터 넣기
+		return person; // 생성된 person_id가 담긴 객체 반환
+	}
+	
+	/**
+	 * [Private] Customer 정보를 가공하여 DB에 저장하고, 생성된 객체를 반환합니다.
+	 */
+	private CustomerDTO createAndInsertCustomer(PersonDTO person, SignupStep2DTO dto2) {
 		String encodedPassword = passwordEncoder.encode(dto2.getPassword());
 		String marketingYN = dto2.isMarketingAgree() ? "Y" : "N";
 		
 		CustomerDTO customer = new CustomerDTO();
-			customer.setLogin_id(dto2.getLogin_id());
-			customer.setPassword_hash(encodedPassword);
-			customer.setPerson_id(person.getPerson_id());
-			customer.setMarketing_agree_yn(marketingYN);
+		customer.setLogin_id(dto2.getLogin_id());
+		customer.setPassword_hash(encodedPassword);
+		customer.setPerson_id(person.getPerson_id()); // Person 객체에서 person_id를 가져옴
+		customer.setMarketing_agree_yn(marketingYN);
+		
 		customerMapper.insertCustomer(customer);
 		
-		return customer.getCustomer_id();
+		return customer; // 생성된 customer_id가 담긴 객체 반환
 	}
 }
