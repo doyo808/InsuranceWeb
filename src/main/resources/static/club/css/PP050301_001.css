@@ -114,6 +114,7 @@
     font-size: 15px;
     line-height: 24px;
     margin-left: 40px;
+	cursor: pointer;
 }
 
 
@@ -206,4 +207,120 @@ tr > td:last-child {
 .exce-list.subClaim {
     margin: 15px 30px 50px 40px;
 }
+
+
+/* ------------ modal -------------*/
+
+#termsModal {
+	width: 600px;
+}
+
+#termsTitle {
+	font-size: 30px;
+}
+
+dialog {
+	max-width: 90vw;
+	border: none;
+	border-radius: 12px;
+}
+
+dialog::backdrop {
+	background: rgba(0, 0, 0, .45);
+}
+
+.x_btn {
+	cursor: pointer;
+	font-size: 30px;
+	font-weight: 600;
+	background: none;
+	border: none;
+}
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.modal-header > h1 {
+	margin: 0;
+}
+
+.body-img {
+	text-align: center;
+	margin: 30px 0 60px;
+}
+
+#termsImg {
+	width: auto;
+	height: 150px;
+}
+
+.modal-body {
+	
+	max-height: 70vh;
+	overflow: auto;
+}
+
+pre {
+	font-size: 14px;
+	white-space: pre-wrap;
+	padding: 0 40px;
+	font-family: 'Noto Sans KR', sans-serif;
+	line-height: 2.3;
+	
+	
+}
+
+.modal-footer {
+	display: flex;
+	justify-content: center;
+    padding: 30px 40px;
+    border: none;
+    box-shadow: none;
+}
+
+#termsCta {
+	font-size: 15px;
+	width: 200px;
+	height: 40px;
+	color: #545557;
+	border: 1px solid #D9DADC;
+	background: #FFFFFF;
+	min-width: auto;
+	display: inline-block;
+	padding: 5px 24px 5px;
+	border-radius: 19px;
+	vertical-align: middle;
+	margin: 0 40px;
+}
+
+.btn-arr span::after {
+    content: "";
+	background: url(../images/exclamation.svg) no-repeat 0 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.btn-primary {
+	cursor: pointer;
+	font-size: 18px;
+	text-align: center;
+	color: #FFFFFF;
+    border: 1px solid #2C7FDF;
+    background: #2C7FDF;
+	padding: 14px 20px;
+	min-width: 250px;
+	line-height: 28px;
+	border-radius: 6px;
+	font-size: 18px;
+}
+
+    
+
 

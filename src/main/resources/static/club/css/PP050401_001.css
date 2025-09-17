@@ -546,6 +546,8 @@ input[type=radio]:checked+label::before {
 	background: url(../images/exclamation.svg) no-repeat center;
 }
 
+/*------- modal ---------*/
+
 #termsModal {
 	width: 960px;
 }
@@ -569,7 +571,7 @@ dialog::backdrop {
 	
 }
 
-.modal-head {
+.modal-header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -577,7 +579,7 @@ dialog::backdrop {
 	border-bottom: 1px solid #eee;
 }
 
-.modal-head > h1 {
+.modal-header > h1 {
 	margin: 0;
 }
 

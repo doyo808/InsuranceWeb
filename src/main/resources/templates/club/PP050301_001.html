@@ -17,7 +17,6 @@
 			<section class="base-content">
 				<div class="content-layout"> <!--content 부분-->
 
-
 					<div class="content-title"> <!-- 제목 -->
 						<h1>
 							무이자할부, 포인트결제 등 <br>
@@ -248,7 +247,11 @@
 																	<li>이외 다른 상품 : 1P부터 사용 가능</li>
 																</ul>
 															</div>
-															<button type="button" class="btn-small"
+															<button type="button" class="btn-small terms-trigger"
+																data-title="애니포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_anypoint.png}"
+																data-cta-text="애니포인트 자세히 보기"
+																th:data-cta-href="@{/club/PP050401_001}"
 																th:data-url="@{/club/terms/ani_point_terms.txt}">
 																사용 안내
 															</button>
@@ -277,22 +280,6 @@
 															</ul>
 														</div>
 													</div>
-
-
-													<!-- 사용 안내 눌러 링크로 들어갈때 -->
-													<dialog id="ani_point_termsModal">
-														<form method="dialog" class="modal-head">
-															<h1>포인트제도 운영기준</h1>
-															<button class="x_btn" aria-label="Close"
-																value="close">✕</button>
-														</form>
-														<div class="modal-body">
-															<pre id="termsBox">로딩중...</pre>
-														</div>
-													</dialog>
-
-
-
 												</div>
 											</li>
 										</ul>
@@ -310,7 +297,7 @@
 											<li>
 												<div class="card-header">
 													<img th:src="@{/club/images/card/img_card_logo_samsung.png}"
-														alt="삼성카드 로고"> 
+														alt="삼성카드 로고">
 													<div class="fr">
 														<span class="title">삼성카드 보너스 포인트</span>
 														<span class="card-call-number">1588-8700</span>
@@ -331,7 +318,12 @@
 																	<li>포인트 전액 사용 필수(일부 사용 불가, 한도 없음)</li>
 																</ul>
 															</div>
-															<a href="" class="btn-small">사용 안내</a>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="삼성카드 보너스포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_samsung.png}"
+																th:data-url="@{/club/terms/samsung_point_terms.txt}">
+																사용 안내
+															</button>
 														</div>
 
 														<div class="grid-wrap right">
@@ -347,12 +339,6 @@
 															</ul>
 														</div>
 													</div>
-
-
-													<!-- 사용 안내 눌러 링크로 들어갈때 -->
-													<dl class="hidden">
-														<dt>삼성카드 보너스 포인트 사용안내</dt>
-													</dl>
 												</div>
 											</li>
 										</ul>
@@ -384,7 +370,12 @@
 																	<li>사용 포인트 직접 지정(한도 없음)</li>
 																</ul>
 															</div>
-															<a href="" class="btn-small">사용 안내</a>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="신한카드 마이신한포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_shinhan.png}"
+																th:data-url="@{/club/terms/shinhan_point_terms.txt}">
+																사용 안내
+															</button>
 														</div>
 
 														<div class="grid-wrap right">
@@ -401,12 +392,6 @@
 															</ul>
 														</div>
 													</div>
-
-
-													<!-- 사용 안내 눌러 링크로 들어갈때 -->
-													<dl class="hidden">
-														<dt>신한카드 마이신한포인트 사용안내</dt>
-													</dl>
 												</div>
 											</li>
 										</ul>
@@ -438,7 +423,12 @@
 																	<li>포인트 전액 사용 필수(일부 사용 불가)</li>
 																</ul>
 															</div>
-															<a href="" class="btn-small">사용 안내</a>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="현대카드 M포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_hyundai.png}"
+																th:data-url="@{/club/terms/hyundai_point_terms.txt}">
+																사용 안내
+															</button>
 														</div>
 
 														<div class="grid-wrap right">
@@ -455,11 +445,6 @@
 															</ul>
 														</div>
 													</div>
-
-													<!-- 사용 안내 눌러 링크로 들어갈때 -->
-													<dl class="hidden">
-														<dt>현대카드 M포인트 사용안내</dt>
-													</dl>
 												</div>
 											</li>
 										</ul>
@@ -492,7 +477,12 @@
 																	<li>포인트 전액 사용 필수(일부 사용 불가)</li>
 																</ul>
 															</div>
-															<a href="" class="btn-small">사용 안내</a>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="하나카드 하나머니포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_hana.png}"
+																th:data-url="@{/club/terms/hana_point_terms.txt}">
+																사용 안내
+															</button>
 														</div>
 
 														<div class="grid-wrap right">
@@ -509,11 +499,6 @@
 															</ul>
 														</div>
 													</div>
-
-													<!-- 사용 안내 눌러 링크로 들어갈때 -->
-													<dl class="hidden">
-														<dt>하나카드 하나머니포인트 사용안내</dt>
-													</dl>
 												</div>
 											</li>
 										</ul>
@@ -552,7 +537,12 @@
 																		<li>1,000P부터 사용 가능</li>
 																	</ul>
 																</div>
-																<a href="" class="btn-small">사용 안내</a>
+																<button type="button" class="btn-small terms-trigger"
+																	data-title="삼성카드 U포인트 사용 안내"
+																	th:data-img="@{/club/images/point/img_card_samsungU.png}"
+																	th:data-url="@{/club/terms/samsungpoint_point_terms.txt}">
+																	사용 안내
+																</button>
 															</div>
 
 															<div class="grid-wrap right">
@@ -574,12 +564,6 @@
 																</ul>
 															</div>
 														</div>
-
-
-														<!-- 사용 안내 눌러 링크로 들어갈때 -->
-														<dl class="hidden">
-															<dt>삼성카드 U포인트 사용 안내</dt>
-														</dl>
 													</div>
 												</li>
 											</ul>
@@ -597,6 +581,24 @@
 								</div>
 							</div>
 						</div>
+
+						<!-- 모달창 -->
+						<dialog id="termsModal" class="terms-modal">
+							<div class="modal-header">
+								<h1 id="termsTitle"></h1>
+								<button id="termsX" class="x_btn" aria-label="Close" value="close">✕</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="body-img"><img id="termsImg" alt="" /></div>
+								<pre id="termsContent"></pre>
+								<a id="termsCta" class="btn btn-outline" target="_blank" rel="noopener"></a>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" id="termsOk" class="btn btn-primary">확인</button>
+							</div>
+						</dialog>
 
 						<!-- 후청구 서비스 tab -->
 						<div class="content-main">
@@ -679,6 +681,109 @@
 			</section>
 		</div>
 		<script th:src="@{/club/js/PP050301_001.js}"></script>
+
+		<script>
+			const modal = document.getElementById('termsModal');
+			const titleEl = document.getElementById('termsTitle');
+			const imgEl = document.getElementById('termsImg');
+			const contEl = document.getElementById('termsContent');
+			const ctaEl = document.getElementById('termsCta');
+			const termsClose = document.getElementById('termsX');
+
+
+			document.querySelectorAll('.terms-trigger').forEach(btn => {
+				btn.addEventListener('click', async () => {
+					// 제목
+					titleEl.textContent = btn.dataset.title || '사용 안내';
+
+					// 이미지
+					if (btn.dataset.img) {
+						imgEl.src = btn.dataset.img;
+						imgEl.hidden = false;
+					} else {
+						imgEl.hidden = true;
+					}
+
+					// 본문 (txt/html fetch)
+					if (btn.dataset.url) {
+						try {
+							const res = await fetch(btn.dataset.url, {cache: 'no-store'});
+							if (!res.ok) throw new Error('로드 실패');
+							contEl.innerHTML = await res.text();
+						} catch (e) {
+							contEl.textContent = '약관을 불러오는 중 오류가 발생했습니다.';
+						}
+					} else {
+						contEl.textContent = '';
+					}
+
+					// CTA 버튼
+					if (btn.dataset.ctaText && btn.dataset.ctaHref) {
+						ctaEl.textContent = btn.dataset.ctaText;
+						ctaEl.href = btn.dataset.ctaHref;
+						ctaEl.hidden = false;
+					} else {
+						ctaEl.hidden = true;
+					}
+
+					modal.showModal();
+				});
+			});
+
+			// 닫기 버튼
+			termsOk.onclick = termsClose.onclick = () => modal.close();
+
+
+			document.querySelectorAll('.terms-trigger').forEach(btn => {
+				btn.addEventListener('click', async () => {
+					// 제목
+					titleEl.textContent = btn.dataset.title || '사용 안내';
+
+					// 이미지
+					if (btn.dataset.img) {
+						imgEl.src = btn.dataset.img;
+						imgEl.hidden = false;
+					} else {
+						imgEl.hidden = true;
+						imgEl.removeAttribute('src');
+					}
+
+					// 본문
+					if (btn.dataset.url) {
+						try {
+							const res = await fetch(btn.dataset.url, {cache: 'no-store'});
+							if (!res.ok) throw new Error('로드 실패');
+							contEl.innerHTML = await res.text();
+						} catch (e) {
+							contEl.textContent = '약관을 불러오는 중 오류가 발생했습니다.';
+						}
+					} else {
+						contEl.textContent = '';
+					}
+
+					// ---- CTA: 항상 먼저 초기화 ----
+					ctaEl.hidden = true;               // 안 보이게
+					ctaEl.textContent = '';            // 이전 문구 제거
+					ctaEl.removeAttribute('href');     // 이전 링크 제거
+					ctaEl.setAttribute('aria-hidden', 'true');
+
+					// 값이 '모두' 있을 때만 다시 세팅
+					const text = btn.dataset.ctaText?.trim();
+					const href = btn.dataset.ctaHref?.trim();
+					if (text && href) {
+						ctaEl.textContent = text;
+						ctaEl.href = href;
+						ctaEl.hidden = false;
+						ctaEl.removeAttribute('aria-hidden');
+					}
+					// -------------------------------
+
+					modal.showModal();
+				});
+			});
+
+		</script>
+
 	</main>
 </body>
 

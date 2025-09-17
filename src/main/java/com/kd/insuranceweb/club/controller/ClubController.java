@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.club;
+package com.kd.insuranceweb.club.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
