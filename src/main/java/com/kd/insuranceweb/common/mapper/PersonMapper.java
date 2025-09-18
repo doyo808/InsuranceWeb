@@ -14,5 +14,6 @@ public interface PersonMapper {
      * @return 조회된 사용자 정보. 없을 경우 null.
      */
     PersonDTO selectByEmail(@Param("email") String email);
+    PersonDTO selectById(@Param("person_id") Integer person_id);
     int insertPerson(PersonDTO person);
 }

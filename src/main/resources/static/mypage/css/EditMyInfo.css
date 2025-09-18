@@ -1,0 +1,17 @@
+.main__wrapper {
+	width: 1200px;
+	text-align: center;
+}
+
+.blue-span {
+	background-color: #2c7fdf1a;
+	color: #2C7FDF;
+	margin-left: 12px;
+	width: 52px;
+	height: 28px;
+	text-align: center;
+	padding: 5px 12px;
+	border-radius: 16px;
+	font-size: 16px;
+	font-weight: 500;
+}

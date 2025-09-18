@@ -6,6 +6,10 @@
   <select id="selectByEmail" resultType="person" parameterType="String">
   	SELECT * FROM persons WHERE email = #{email}
   </select>
+  <select id="selectById" resultType="person" parameterType="Integer">
+  	SELECT * FROM persons WHERE person_id=#{person_id}
+  </select>
+  
   <insert id="insertPerson">
     <selectKey keyProperty="person_id" resultType="int" order="AFTER">
         SELECT person_seq.CURRVAL FROM DUAL

@@ -17,4 +17,9 @@ public class MypageController {
 	public String payPremium() {
 		return "/mypage/payPremium.html";
 	}
+	
+	@GetMapping("/MPDG0093")
+	public String editMyInfo() {
+		return "/mypage/EditMyInfo.html";
+	}
 }

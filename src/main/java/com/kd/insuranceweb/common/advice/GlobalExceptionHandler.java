@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.common.controller;
+package com.kd.insuranceweb.common.advice;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

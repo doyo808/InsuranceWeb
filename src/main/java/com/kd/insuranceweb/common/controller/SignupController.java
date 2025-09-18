@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kd.insuranceweb.common.dto.PersonDTO;
 import com.kd.insuranceweb.common.dto.SignupStep1DTO;
 import com.kd.insuranceweb.common.dto.SignupStep2DTO;
 import com.kd.insuranceweb.common.service.SignupService;

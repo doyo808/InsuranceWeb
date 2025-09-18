@@ -11,18 +11,14 @@
 	<main layout:fragment="content">
 	
 		<h1>보험 홈입니다.</h1>
-		<a th:href="@{/mypage/MPDG0070}">임시링크</a>
-		<p>
-		  안녕하세요,
-		  <span th:if="${#authentication != null and #authentication.name != null}" th:text="${#authentication.name}">User</span>
-		  <span th:unless="${#authentication != null and #authentication.name != null}">Guest</span>님!
+		<p th:if="${loginUser != null}">
+		    환영합니다, <span th:text="${loginUser.customer.person_name}">사용자</span>님!
 		</p>
-		<p>
-		  인증객체: <span th:text="${#authentication}">null</span><br>
-		  사용자명: <span th:text="${#authentication != null} ? ${#authentication.name} : 'Guest'">Guest</span>
+		<p th:unless="${loginUser != null}">
+		    로그인 해주세요.
+			<br>
+			<a th:href="@{/signup}">회원가입 링크</a>
 		</p>
-
-		<a th:href="@{/signup}">회원가입 링크</a>
 		
 	</main>
 	

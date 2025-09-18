@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>내 정보 확인/변경</title>
+	<link rel="stylesheet" th:href="@{/common/css/customTable.css}" />
+	<link rel="stylesheet" th:href="@{/mypage/css/EditMyInfo.css}" />
+</head>
+<body>
+	<main layout:fragment="content">
+		
+		<div class="main__wrapper">
+			<h1>내 정보를<br>변경할 수 있어요</h1>
+			
+			<h2 class="custom-table-title">기본정보<span class="blue-span">필수</span></h2>
+			<table class="custom-table">
+				<tr>
+					<th>휴대폰 번호</th>
+					<td>
+						<input type="text" placeholder="010-0000-0000" maxlength="11" 
+						th:value="${loginUser.customer.phone_number}">
+					</td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+					<td>
+						<input type="text" placeholder="example@ex.com" 
+						th:value="${loginUser.customer.email}">
+						<button>중복 확인</button>
+					</td>
+				</tr>
+			</table>
+			
+			<h2 class="custom-table-title">집정보</h2>
+			<table class="custom-table">
+				<tr>
+					<th>주소</th>
+					<td>
+						<input class="address" type="text" placeholder="도로명, 지번, 건물명으로 검색" maxlength="11">
+					</td>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<td>
+						<input type="text" placeholder="010-0000-0000" maxlength="13"
+						th:value="${loginUser.customer.home_number}">
+					</td>
+				</tr>
+			</table>
+			
+			<h2 class="custom-table-title">직장정보</h2>
+			<table class="custom-table">
+				<tr>
+					<th>주소</th>
+					<td>
+						<input class="address" type="text" placeholder="도로명, 지번, 건물명으로 검색" maxlength="11">
+					</td>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<td>
+						<input type="text" placeholder="010-0000-0000" maxlength="11"
+						th:value="${loginUser.customer.job_phone_number}">
+					</td>
+				</tr>
+			</table>
+			
+			<button>변경</button>
+		</div>
+	</main>
+</body>
+</html>

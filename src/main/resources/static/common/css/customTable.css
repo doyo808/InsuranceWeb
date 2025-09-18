@@ -1,0 +1,49 @@
+.custom-table-title {
+	width: 1000px;
+	margin: 50px auto 25px auto;
+	text-align: left;
+}
+
+.custom-table {
+	border-top: 1px solid black;
+	border-collapse: collapse;
+	width: 1000px;
+	margin: 0 auto;
+}
+
+	.custom-table th,
+	.custom-table td {
+		text-align: left;
+		border-bottom: 1px solid lightgray;
+		font-weight: 500;
+	}
+	
+	.custom-table th {
+		padding: 35px 0 35px 20px;
+		width: 220px;
+	}
+	
+	.custom-table td input {
+		border: 1px solid lightgray;
+		border-radius: 5px;
+		padding: 0 15px 0 15px;
+		width: 375px;
+		height: 45px;
+		font-size: 16px
+	}
+	
+	.custom-table td input.address {
+		width: 550px;
+	}
+	
+	.custom-table td button {
+		border: 1px solid lightgray;
+		border-radius: 5px;
+		width: 120px;
+		height: 43px;
+		background-color: white;
+		margin-left: 10px;
+		font-size: 15px
+	}
+	
+	
