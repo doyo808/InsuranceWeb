@@ -1,6 +1,10 @@
 package com.kd.insuranceweb.common.advice;
 
+import java.util.List;
+
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -9,6 +13,19 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public String handleValidationException(MethodArgumentNotValidException ex, Model model) {
+	    List<String> errors = ex.getBindingResult()
+	                            .getAllErrors()
+	                            .stream()
+	                            .map(DefaultMessageSourceResolvable::getDefaultMessage)
+	                            .toList();
+
+	    model.addAttribute("validationErrors", errors);
+	    return "common/error/commonError";
+	}
+	
 	
 	@ExceptionHandler(Exception.class)
 	public String handleAllUncaughtException(Exception ex, Model model) {

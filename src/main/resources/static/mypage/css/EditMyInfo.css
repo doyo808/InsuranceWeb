@@ -15,3 +15,21 @@
 	font-size: 16px;
 	font-weight: 500;
 }
+
+
+td .fa-magnifying-glass {
+	cursor: pointer;
+	color: gray;
+}
+
+
+#email-check-btn {
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	width: 120px;
+	height: 43px;
+	background-color: white;
+	margin-left: 10px;
+	font-size: 15px;
+	cursor: pointer;
+}

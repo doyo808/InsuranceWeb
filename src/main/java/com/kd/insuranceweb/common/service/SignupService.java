@@ -32,7 +32,7 @@ public class SignupService {
 	}
 	
 	public boolean isloginIdAvailable(String login_id) {
-		CustomerDTO customer = customerMapper.selectById(login_id);
+		CustomerDTO customer = customerMapper.selectByLoginId(login_id);
 		return customer == null;
 	}
 	

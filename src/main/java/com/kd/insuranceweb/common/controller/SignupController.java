@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.kd.insuranceweb.common.service.SignupService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -28,7 +30,14 @@ public class SignupController {
 
 	// 이름, 주민등록번호, 전화번호, 이메일 <폼>
 	@PostMapping("/step1")
-	public String processSignupStep1(SignupStep1DTO dto, HttpServletRequest request) {
+	public String processSignupStep1(
+			@Valid SignupStep1DTO dto,
+			BindingResult br,
+			HttpServletRequest request) {
+		
+		if (br.hasErrors()) {
+			return "/common/signup";
+		}
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("signupDataStep1", dto);

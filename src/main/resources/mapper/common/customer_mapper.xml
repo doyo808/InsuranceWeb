@@ -3,9 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kd.insuranceweb.common.mapper.CustomerMapper">
-  <select id="selectById" resultType="customer" parameterType="String">
+  <select id="selectByLoginId" resultType="customer" parameterType="String">
   	SELECT * FROM customers WHERE login_id = #{login_id} AND deleted_at IS NULL
   </select>
+  
   <insert id="insertCustomer">
  	<selectKey keyProperty="customer_id" resultType="int" order="AFTER">
         SELECT customer_seq.CURRVAL FROM DUAL
@@ -15,4 +16,19 @@
   	values 
   		(customer_seq.nextval, #{person_id}, #{login_id}, #{password_hash}, #{marketing_agree_yn})
   </insert>
+  
+  <update id="updateCustomer">
+  	UPDATE customers
+  	SET zip_code = #{zip_code},
+        address_1 = #{address_1},
+        address_2 = #{address_2},
+        home_number = #{home_number},
+        job = #{job},
+        company_name = #{company_name},
+        job_zip_code = #{job_zip_code},
+        job_address1 = #{job_address1},
+        job_address2 = #{job_address2},
+        job_phone_number = #{job_phone_number}
+  	WHERE customer_id = #{customer_id}
+  </update>
 </mapper>

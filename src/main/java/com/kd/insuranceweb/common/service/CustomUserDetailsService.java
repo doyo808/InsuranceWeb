@@ -36,19 +36,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 		
         // 로그인시도한 id로 고객을 찾는 과정
-		CustomerDTO customer = customerMapper.selectById(login_id);
+		CustomerDTO customer = customerMapper.selectByLoginId(login_id);
 		if (customer == null) {
 			throw new UsernameNotFoundException("사용자를 찾을 수 없습니다." + login_id);
 		}
 		
-		// customer에 있는 person_id로 고객명을 찾고, 주입
-		PersonDTO person = personMapper.selectById(customer.getPerson_id());
-		customer.setPerson_name(person.getPerson_name());
-		customer.setPhone_number(person.getPhone_number());
-		customer.setEmail(person.getEmail());
-		System.out.println(customer);
-		
-		return new CustomUserDetails(customer);
+		return new CustomUserDetails(customer.getCustomer_id(),
+								customer.getPerson_id(),
+								customer.getLogin_id(),
+								customer.getPassword_hash());
 	}
 	
 }

@@ -20,4 +20,11 @@
   	values
   		(person_seq.nextval, #{person_name}, #{email}, #{personal_id}, #{phone_number})
   </insert>
+  
+  <update id="updatePerson">
+  	UPDATE persons
+  	SET email = #{email},
+  		phone_number = #{phone_number}
+  	WHERE person_id = #{person_id}
+  </update>
 </mapper>

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 
+
 @ControllerAdvice
 public class GlobalUserInfoAdvice {
 	

@@ -16,4 +16,7 @@ public interface PersonMapper {
     PersonDTO selectByEmail(@Param("email") String email);
     PersonDTO selectById(@Param("person_id") Integer person_id);
     int insertPerson(PersonDTO person);
+    int updatePerson(@Param("email") String email,
+    				 @Param("phone_number") String phone_number,
+    				 @Param("person_id") Integer person_id);
 }
