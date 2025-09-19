@@ -16,7 +16,7 @@
 		<div class="ui-tab-pnls">
 			<section class="base-content">
 				<div class="content-layout"> <!--content 부분-->
-
+					<nav th:replace="~{/common/fragments/breadcrumb :: trail(${bcLabels})}"></nav>
 					<div class="content-title"> <!-- 제목 -->
 						<h1>
 							무이자할부, 포인트결제 등 <br>
@@ -43,155 +43,44 @@
 								<h2 class="tit-con">9월 신용카드 혜택</h2>
 							</div>
 							<div class="card-list-grid">
-								<!-- 삼성카드 -->
-								<div class="card-benefit">
+								<!-- 각 카드박스ㅡ -->
+								<div class="card-benefit" th:each="b : ${benefitInterestFree}">
 									<div class="card-header">
-										<img th:src="@{/club/images/card/img_card_logo_samsung.png}" alt="삼성카드 로고">
-										<span class="card-call-number" th:text="${phone_number}">
+										<img th:src="@{${b.img_src}}" th:alt="${b.card_company_name + ' 로고'}">
+										<span class="card-call-number" th:text="${b.phone_number}">
 											0000-0000
 										</span>
 									</div>
 									<div class="card-benefit-body">
 										<ul class="tag-list">
-											<li>
+											<li th:classappend="${#strings.isEmpty(b.interest_free_months)} ? 'ghost'">
 												<span class="tag-card">무이자</span>
-												2 ~ 5개월
+												<span
+													th:text="${#strings.isEmpty(b.interest_free_months) ? '' : b.interest_free_months + '개월'}"></span>
 											</li>
-											<li>
+
+											<li
+												th:classappend="${#strings.isEmpty(b.partial_interest_months)} ? 'ghost'">
 												<span class="tag-card2">부분 무이자</span>
-												7, 11, 18, 24개월
+												<span
+													th:text="${#strings.isEmpty(b.partial_interest_months) ? '' : b.partial_interest_months + '개월'}"></span>
 											</li>
 										</ul>
-										<ul class="exce-list">
-											<li>6,8,9,10,12개월은 무이자 적용 제외</li>
-											<li>7개월 부분 무이자(1~3회차 이자 고객부담),<br>
-												11개월 부분 무이자(1~5회차 이자 고객부담),<br>
-												18개월 부분 무이자(1~7회차 이자 고객부담),<br>
-												24개월 부분 무이자(1~9회차 이자 고객부담)
-											</li>
+										<ul class="exce-list"
+											th:if="${b.months_details != null and !#strings.isEmpty(b.months_details)}"
+											th:with="
+										      raw=${b.months_details},
+										      step1=${#strings.replace(raw, '\r\n', '\n')},
+										      step2=${#strings.replace(#strings.replace(step1, '<br/>', '\n'), '<br>', '\n')},
+										      lines=${#strings.arraySplit(step2, '\n')}
+										    ">
+											<li th:each="line : ${lines}"
+												th:if="${!#strings.isEmpty(#strings.trim(line))}"
+												th:text="${#strings.trim(line)}"></li>
 										</ul>
+
 									</div>
 								</div>
-
-								<!-- 현대카드 -->
-								<div class="card-benefit">
-									<div class="card-header">
-										<img th:src="@{/club/images/card/img_card_logo_hyundai.png}" alt="현대카드 로고">
-										<span class="card-call-number">
-											1577-6000
-										</span>
-									</div>
-									<div class="card-benefit-body">
-										<ul class="tag-list">
-											<li>
-												<span class="tag-card">무이자</span>
-												2 ~ 3개월
-											</li>
-											<li>
-												<span class="tag-card2">부분 무이자</span>
-												10, 12, 18, 24개월
-											</li>
-										</ul>
-										<ul class="exce-list">
-											<li>4,5,6,7,8,9,11개월은 무이자 적용 제외</li>
-											<li>10개월 부분 무이자(1~5회차 이자 고객부담),<br>
-												12개월 부분 무이자(1~6회차 이자 고객부담),<br>
-												18개월 부분 무이자(1~9회차 이자 고객부담),<br>
-												24개월 부분 무이자(1~12회차 이자 고객부담)
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<!-- 롯데카드 -->
-								<div class="card-benefit">
-									<div class="card-header">
-										<img th:src="@{/club/images/card/img_card_logo_lotte.png}" alt="롯데카드 로고">
-										<span class="card-call-number">
-											1588-8100
-										</span>
-									</div>
-									<div class="card-benefit-body">
-										<ul class="tag-list">
-											<li>
-												<span class="tag-card">무이자</span>
-												2 ~ 5개월
-											</li>
-											<li style="visibility: hidden">
-												<span class="tag-card2">부분 무이자</span>
-												7, 11, 18, 24개월
-											</li>
-										</ul>
-										<ul class="exce-list">
-
-										</ul>
-									</div>
-								</div>
-
-								<!-- KB카드 -->
-								<div class="card-benefit">
-									<div class="card-header">
-										<img th:src="@{/club/images/card/img_card_logo_kb.png}" alt="kb카드 로고">
-										<span class="card-call-number">
-											1588-1688
-										</span>
-									</div>
-									<div class="card-benefit-body">
-										<ul class="tag-list">
-											<li>
-												<span class="tag-card">무이자</span>
-												2 ~ 5개월
-											</li>
-											<li>
-												<span class="tag-card2">부분 무이자</span>
-												6, 10, 12개월
-											</li>
-										</ul>
-										<ul class="exce-list">
-											<li>
-												7,8,9,11개월 무이자 적용 제외,<br>
-												간편결제(네이버/토스/카카오/스마일페이 등) 이용 시<br>
-												7,8,9,11,12개월 무이자 적용 제외
-											</li>
-											<li>KB국민 BC카드는 무이자/부분무이자 적용 제외</li>
-											<li>
-												6개월 부분 무이자(1~3회차 이자 고객부담),<br>
-												10, 12개월 부분 무이자(1~5회차 이자 고객부담)
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<!-- 신한카드 -->
-								<div class="card-benefit">
-									<div class="card-header">
-										<img th:src="@{/club/images/card/img_card_logo_shinhan.png}" alt="신한카드 로고">
-										<span class="card-call-number">
-											1544-8780
-										</span>
-									</div>
-									<div class="card-benefit-body">
-										<ul class="tag-list">
-											<li>
-												<span class="tag-card">무이자</span>
-												2 ~ 5개월
-											</li>
-											<li>
-												<span class="tag-card2">부분 무이자</span>
-												7, 11, 18, 24개월
-											</li>
-										</ul>
-										<ul class="exce-list">
-											<li>6,8,9,10,12월은 무이자 적용 제외</li>
-											<li>7개월 부분 무이자(1~3회차 이자 고객부담),<br>
-												11개월 부분 무이자(1~5회차 이자 고객부담),<br>
-												18개월 부분 무이자(1~7회차 이자 고객부담),<br>
-												24개월 부분 무이자(1~9회차 이자 고객부담)
-											</li>
-										</ul>
-									</div>
-								</div>
-
 							</div>
 
 							<div class="tip-box">
@@ -682,107 +571,7 @@
 		</div>
 		<script th:src="@{/club/js/PP050301_001.js}"></script>
 
-		<script>
-			const modal = document.getElementById('termsModal');
-			const titleEl = document.getElementById('termsTitle');
-			const imgEl = document.getElementById('termsImg');
-			const contEl = document.getElementById('termsContent');
-			const ctaEl = document.getElementById('termsCta');
-			const termsClose = document.getElementById('termsX');
-
-
-			document.querySelectorAll('.terms-trigger').forEach(btn => {
-				btn.addEventListener('click', async () => {
-					// 제목
-					titleEl.textContent = btn.dataset.title || '사용 안내';
-
-					// 이미지
-					if (btn.dataset.img) {
-						imgEl.src = btn.dataset.img;
-						imgEl.hidden = false;
-					} else {
-						imgEl.hidden = true;
-					}
-
-					// 본문 (txt/html fetch)
-					if (btn.dataset.url) {
-						try {
-							const res = await fetch(btn.dataset.url, {cache: 'no-store'});
-							if (!res.ok) throw new Error('로드 실패');
-							contEl.innerHTML = await res.text();
-						} catch (e) {
-							contEl.textContent = '약관을 불러오는 중 오류가 발생했습니다.';
-						}
-					} else {
-						contEl.textContent = '';
-					}
-
-					// CTA 버튼
-					if (btn.dataset.ctaText && btn.dataset.ctaHref) {
-						ctaEl.textContent = btn.dataset.ctaText;
-						ctaEl.href = btn.dataset.ctaHref;
-						ctaEl.hidden = false;
-					} else {
-						ctaEl.hidden = true;
-					}
-
-					modal.showModal();
-				});
-			});
-
-			// 닫기 버튼
-			termsOk.onclick = termsClose.onclick = () => modal.close();
-
-
-			document.querySelectorAll('.terms-trigger').forEach(btn => {
-				btn.addEventListener('click', async () => {
-					// 제목
-					titleEl.textContent = btn.dataset.title || '사용 안내';
-
-					// 이미지
-					if (btn.dataset.img) {
-						imgEl.src = btn.dataset.img;
-						imgEl.hidden = false;
-					} else {
-						imgEl.hidden = true;
-						imgEl.removeAttribute('src');
-					}
-
-					// 본문
-					if (btn.dataset.url) {
-						try {
-							const res = await fetch(btn.dataset.url, {cache: 'no-store'});
-							if (!res.ok) throw new Error('로드 실패');
-							contEl.innerHTML = await res.text();
-						} catch (e) {
-							contEl.textContent = '약관을 불러오는 중 오류가 발생했습니다.';
-						}
-					} else {
-						contEl.textContent = '';
-					}
-
-					// ---- CTA: 항상 먼저 초기화 ----
-					ctaEl.hidden = true;               // 안 보이게
-					ctaEl.textContent = '';            // 이전 문구 제거
-					ctaEl.removeAttribute('href');     // 이전 링크 제거
-					ctaEl.setAttribute('aria-hidden', 'true');
-
-					// 값이 '모두' 있을 때만 다시 세팅
-					const text = btn.dataset.ctaText?.trim();
-					const href = btn.dataset.ctaHref?.trim();
-					if (text && href) {
-						ctaEl.textContent = text;
-						ctaEl.href = href;
-						ctaEl.hidden = false;
-						ctaEl.removeAttribute('aria-hidden');
-					}
-					// -------------------------------
-
-					modal.showModal();
-				});
-			});
-
-		</script>
+	
 
 	</main>
 </body>

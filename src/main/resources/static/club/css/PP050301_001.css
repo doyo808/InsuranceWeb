@@ -6,10 +6,6 @@
     margin: 50px;
 }
 
-
-
-
-
 .card-list-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -18,11 +14,9 @@
     justify-content: center;
     max-width: 1000px;
     /* 원하는 최대 폭 지정 */
-
 }
 
 /* ---------------여기부터 포인트 결제-------------- */
-
 
 .point .point-title {
     font-weight: 500;
@@ -84,7 +78,7 @@
 }
 
 
-.point .exce-list>li:before {
+.point .exce-list>li::before {
     content: "";
     display: inline-block;
     width: 3px;
@@ -129,7 +123,7 @@
 }
 
 .point .exce-list p,
-.point .first-list>.exce-list>li {
+.point .first-list>.exce-list>li,#termsContent {
     font-size: 14px;
     color: #757679;
 }
@@ -229,6 +223,8 @@ dialog::backdrop {
 	background: rgba(0, 0, 0, .45);
 }
 
+
+
 .x_btn {
 	cursor: pointer;
 	font-size: 30px;
@@ -236,6 +232,23 @@ dialog::backdrop {
 	background: none;
 	border: none;
 }
+
+/* 모달 내부 포커스 테두리 제거 */
+.terms-modal *:focus,
+.terms-modal *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* X 버튼 추가 보호 */
+.x_btn:focus,
+.x_btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 모바일 탭 하이라이트 제거 (선택) */
+.terms-modal * { -webkit-tap-highlight-color: transparent; }
 
 .modal-header {
 	display: flex;
@@ -321,6 +334,12 @@ pre {
 	font-size: 18px;
 }
 
-    
+.ghost { 
+	visibility: hidden; 
+}    
 
-
+/* 모달 CTA가 hidden이면 무조건 안 보이게 */
+#termsCta[hidden],
+#termsCta.is-hidden { 
+	display: none !important; 
+}

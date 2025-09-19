@@ -7,7 +7,7 @@
   <typeAliases>
   	<typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
   	<typeAlias type="com.kd.insuranceweb.club.dto.Card_company" alias="cardCompany"></typeAlias>
-  	<typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit" alias="cardBenefit"></typeAlias>
+  	<typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit_interest_free" alias="cardBenefitInterestFree"></typeAlias>
   </typeAliases>
   
   

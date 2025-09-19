@@ -56,3 +56,68 @@ document.addEventListener('DOMContentLoaded', () => {
 	initFromUrl();
 });
 
+
+// ----------------- modal --------------------
+const modal = document.getElementById('termsModal');
+const titleEl = document.getElementById('termsTitle');
+const imgEl = document.getElementById('termsImg');
+const contEl = document.getElementById('termsContent');
+const ctaEl = document.getElementById('termsCta');
+const termsClose = document.getElementById('termsX');
+const termsOk = document.getElementById('termsOk');
+
+
+document.querySelectorAll('.terms-trigger').forEach(btn => {
+	btn.addEventListener('click', async () => {
+		// 제목
+		titleEl.textContent = btn.dataset.title || '사용 안내';
+
+		// 이미지: 먼저 초기화
+		imgEl.hidden = true;
+		imgEl.removeAttribute('src');
+		if (btn.dataset.img) {
+			imgEl.src = btn.dataset.img;
+			imgEl.hidden = false;
+		}
+
+		// 본문
+		contEl.textContent = '';        // 초기화
+		if (btn.dataset.url) {
+			try {
+				const res = await fetch(btn.dataset.url, { cache: 'no-store' });
+				if (!res.ok) throw new Error('로드 실패');
+				contEl.innerHTML = await res.text();
+			} catch {
+				contEl.textContent = '약관을 불러오는 중 오류가 발생했습니다.';
+			}
+		}
+
+		// CTA: 항상 먼저 초기화
+		ctaEl.hidden = true;
+		ctaEl.style.display = 'none';     // ← 강제 비표시
+		ctaEl.classList.add('is-hidden'); // ← 보호용 클래스 (위 CSS와 매칭)
+		ctaEl.textContent = '';
+		ctaEl.removeAttribute('href');
+		ctaEl.setAttribute('aria-hidden', 'true');
+
+		// 둘 다 있을 때만 노출
+		const text = btn.dataset.ctaText?.trim();
+		const href = btn.dataset.ctaHref?.trim();
+		if (text && href) {
+			ctaEl.textContent = text;
+			ctaEl.href = href;
+			ctaEl.hidden = false;
+			ctaEl.style.display = '';       // ← 원래대로
+			ctaEl.classList.remove('is-hidden');
+			ctaEl.removeAttribute('aria-hidden');
+		}
+
+		modal.showModal();
+	});
+});
+
+// 닫기
+termsOk.onclick = termsClose.onclick = () => modal.close();
+
+
+

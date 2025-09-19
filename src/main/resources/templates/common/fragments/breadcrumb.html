@@ -8,22 +8,23 @@
     <script src="https://kit.fontawesome.com/df2bfc0a98.js" crossorigin="anonymous"></script>
 
     <style>
+		
         .breadcrumb-wrap {
+			display: flex;
+			width: 100%;
             margin: 16px 0 24px;
-            font-family: 'Noto Sans KR', sans-serif;
             white-space: nowrap;
         }
 
         .breadcrumb {
+			margin-left: auto;
             list-style: none;
             padding: 0;
-            margin: 0;
-            display: flex;
             align-items: center;
             font-size: 14px;
             color: #7a7f87;
         }
-
+	
         .breadcrumb li {
             display: flex;
             align-items: center;
@@ -38,10 +39,6 @@
             text-decoration: none;
         }
 
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
         .breadcrumb .home i {
             font-size: 14px;
             vertical-align: -1px;
@@ -54,7 +51,7 @@
         }
 
         .breadcrumb .current span {
-            color: #111;
+            color: #868686;
             font-weight: 600;
         }
     </style>
@@ -63,25 +60,23 @@
 
 <body>
 
-    <!-- Breadcrumb -->
-    <nav class="breadcrumb-wrap" aria-label="현재 위치">
-        <ol class="breadcrumb">
-            <!-- 홈 -->
-            <li class="home">
-                <a href="/" aria-label="홈으로">
-                    <i class="fa-solid fa-house"></i>
-                </a>
-                <span class="sep">›</span>
-            </li>
+	<nav class="breadcrumb-wrap" aria-label="현재 위치" th:fragment="trail(labels)">
+	  <ol class="breadcrumb">
+	    <li class="home">
+	      <a th:href="@{/}" aria-label="홈으로">
+	        <i class="fa-solid fa-house"></i>
+	      </a>
+	      <!-- labels가 있을 때만 구분자 표시 -->
+	      <span class="sep" th:if="${labels != null and !#lists.isEmpty(labels)}">›</span>
+	    </li>
 
-            <!-- 경로 -->
-            <li><a href="">혜택/서비스</a><span class="sep">›</span></li>
-            <li><a href="">신용카드 혜택</a><span class="sep">›</span></li>
-            <li class="current"><span>포인트 결제</span></li>
-        </ol>
-    </nav>
-
-    <!-- 페이지 제목 -->
+	    <li th:each="label, iter : ${labels}">
+	      <!-- 현재(마지막) 라벨만 굵게 -->
+	      <span th:text="${label}" th:classappend="${iter.last} ? 'current' : ''">라벨</span>
+	      <span class="sep" th:if="${!iter.last}">›</span>
+	    </li>
+	  </ol>
+	</nav>
 
 </body>
 
