@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kd.insuranceweb.club.mapper.AnypointMapper">
+
+  <resultMap id="TxnMap" type="com.kd.insuranceweb.club.dto.AnypointTransaction">
+    <id     property="txnId"       column="txn_id"/>
+    <result property="customerId"  column="customer_id"/>
+    <result property="txnType"     column="txn_type"/>
+    <result property="amount"      column="amount"/>
+    <result property="description" column="description"/>
+    <result property="txnDate"     column="txn_date"/>
+  </resultMap>
+
+	<select id="selectTxns" resultMap="TxnMap">
+	  <![CDATA[
+	    SELECT txn_id, customer_id, txn_type, amount, description, txn_date
+	    FROM ANYPOINT_TRANSACTION
+	    WHERE customer_id = #{customerId}
+	      AND txn_date >= TRUNC(#{start})
+	      AND txn_date <  TRUNC(#{end}) + 1
+	    ORDER BY txn_date DESC, txn_id DESC
+	  ]]>
+	</select>
+
+  <select id="selectBalance" resultType="long">
+    SELECT NVL(SUM(CASE WHEN txn_type='EARN' THEN amount ELSE -amount END),0)
+    FROM ANYPOINT_TRANSACTION
+    WHERE customer_id = #{customerId}
+  </select>
+
+</mapper>
