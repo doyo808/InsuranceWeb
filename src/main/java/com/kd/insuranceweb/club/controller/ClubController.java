@@ -44,7 +44,6 @@ public class ClubController {
         };
         model.addAttribute("bcLabels",
                 java.util.List.of("혜택/서비스", "신용카드 혜택", current));
-    	
         return "club/PP050301_001";
     }
     
@@ -54,13 +53,19 @@ public class ClubController {
 	}
 
 	@GetMapping("/VD.MPDG0295")
-	public String anipoint(Model model) {
+	public String anypoint(Model model) {
 		return "club/VD.MPDG0295";
 	}
 
 	@GetMapping("/PP060701_001")
 	public String eventList() {
 		return "club/PP060701_001";
+	}
+	
+	// 이벤트 상세 페이지
+	@GetMapping("/event/index")
+	public String eventPage() {
+		return "club/event/index";
 	}
 
 }
