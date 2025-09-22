@@ -1,0 +1,162 @@
+* {
+    box-sizing: border-box;
+    /* white-space: nowrap; */
+}
+
+.base-content {
+    float: none;
+    width: 1176px;
+	padding-top: 50px;
+    margin: 0 auto 200px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+ul {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+}
+
+
+.card-header img {
+    width: 180px;
+}
+
+.content-title {
+    text-align: center;
+    font-size: 21px;
+    margin: 60px 0;
+    
+}
+
+tit-con {
+    font-size: 22px;
+    color: #111;
+    line-height: 38px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.content-main {
+    text-align: left;
+    
+}
+
+.tit-wrap-m:after {
+    content: "";
+    display: block;
+}
+
+.content-title > h1 {
+	font-size: 36px;
+}
+
+#tab-btns .tab-btn {
+    font-size: 20px;
+    font-weight: 600;
+    color: grey;
+    margin: 0 17px;
+    background-color: white;
+    padding-bottom: 8px;
+    border: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent; /* 초기 밑줄 안보이게 */
+}
+
+#tab-btns .tab-btn.active {
+    color: #2C7FDF;
+    border-bottom: 3px solid #2C7FDF;
+}
+
+.card-header {
+    padding: 30px 40px 20px;
+    border-bottom: 1px solid #EAEBED;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.card-benefit {
+    font-size: 12px;
+    width: 570px;
+    height: 357px;
+    position: relative;
+    padding: 0 0 40px;
+    border-radius: 12px;
+    border: 1px solid #EAEBED;
+    background-color: #fff;
+}
+
+.tag-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 35px;
+}
+
+.tag-list>li {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+.tag-card {
+    display: inline-block;
+    padding: 2px 6px;
+    background-color: #1b91d4;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.tag-card2 {
+    display: inline-block;
+    padding: 2px 6px;
+    background-color: #525252;
+    color: white;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-right: 5px;
+}
+
+.exce-list {
+    margin: 40px 30px 0 40px;
+}
+
+.exce-list>li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 8px 10px;
+}
+
+.card-call-number,
+.exce-list>li {
+    font-size: 15px;
+    line-height: 22px;
+    color: #868686;
+}
+
+.exce-list>li:before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background-color: #868686;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+a {
+    text-decoration-line: none;
+    color: inherit;
+}
+

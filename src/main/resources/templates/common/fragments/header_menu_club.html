@@ -1,33 +1,69 @@
 <div th:fragment="menuClub">
 	<div class="header__menu_with_submenu">
 		<div class="header__menu"> 혜택/서비스 </div>
-        <div class="submenu hidden">
-            <div class="submenu_spacer"></div>
-            <div class="submenu_container">
-				
-                <div class="submenu_col"></div>
-				
-                <div class="submenu_col">
+		<div class="submenu hidden">
+			<div class="submenu_spacer"></div>
+			<div class="submenu_container">
+
+				<div class="submenu_col">
+						<img th:src="@{/common/images/gnb_banner1.png}">
+						<img th:src="@{/common/images/gnb_banner2.png}">
+				</div>
+
+				<div class="submenu_col">
 					<div class="submenu_col_frag">
-						<div class="submenu_col_title">보험계약 확인</div>
-                        <a th:href="@{/mypage/MPDG0070}">계약내용 확인</a>
+						<div class="submenu_col_title">신용카드 혜택</div>
+						<div class="submenu_col_menu"><a th:href="@{/club/PP050301_001(tab='interest-free')}">무이자 할부</a>
+						</div>
+						<div class="submenu_col_menu"><a th:href="@{/club/PP050301_001(tab='points')}">포인트 결제</a></div>
+						<div class="submenu_col_menu"><a th:href="@{/club/PP050301_001(tab='post-charge')}">후청구 서비스</a>
+						</div>
 					</div>
 					<div class="submenu_col_frag">
-						<div class="submenu_col_title">보험료 납입</div>
-						<a th:href="@{/mypage/MPDG0080}">장기보험 보험료납입</a>
+						<div class="submenu_col_title">애니포인트</div>
+						<div class="submenu_col_menu"><a th:href="@{/club/PP050401_001}">포인트 제도 안내</a></div>
+						<div class="submenu_col_menu"><a th:href="@{/club/VD.MPDG0295}">포인트 적립/사용내역 확인</a></div>
 					</div>
-                </div>
-				
-                <div class="submenu_col">
-                    <div class="submenu_col_frag">
-                        <div class="submenu_col_title">증명서 발행</div>
-                    </div>
-                </div>
-				
-                <div class="submenu_col"></div>
-                <div class="submenu_col"></div>
-            </div>
-            <div class="submenu_spacer"></div>
-        </div>
-    </div>
+					<div class="submenu_col_frag">
+						<div class="submenu_col_title">마일리지 포인트백 서비스</div>
+						<div class="submenu_col_menu"><a>마일리지 포인트백 서비스</a></div>
+					</div>
+				</div>
+
+				<div class="submenu_col">
+					<div class="submenu_col_frag">
+						<div class="submenu_col_title">착!한생활 시리즈</div>
+						<div class="submenu_col_menu"><a>착!라운지</a></div>
+						<div class="submenu_col_menu"><a>착!한드라이브</a></div>
+						<div class="submenu_col_menu"><a>착!한걷기</a></div>
+						<div class="submenu_col_menu"><a>착!한건강관리</a></div>
+						<div class="submenu_col_menu"><a>착!한펫</a></div>
+						<div class="submenu_col_menu"><a>착!한대중교통</a></div>
+						<div class="submenu_col_menu"><a>자주하는 질문(착!시리즈)</a></div>
+					</div>
+				</div>
+
+				<div class="submenu_col">
+					<div class="submenu_col_frag">
+						<div class="submenu_col_title">Car케어 서비스</div>
+						<div class="submenu_col_menu"><a>서비스 이용안내</a></div>
+					</div>
+					<div class="submenu_col_frag">
+						<div class="submenu_col_title">애니핏 플러스</div>
+						<div class="submenu_col_menu"><a>애니핏 플러스</a></div>
+					</div>
+				</div>
+
+				<div class="submenu_col">
+					<div class="submenu_col_frag">
+						<div class="submenu_col_title">이벤트</div>
+						<div class="submenu_col_menu"><a th:href="@{/club/PP060701_001(tab='event')}">이벤트</a></div>
+						<div class="submenu_col_menu"><a th:href="@{/club/PP060701_001(tab='eventWinners')}">당첨자 확인</a></div>
+					</div>
+				</div>
+
+			</div>
+			<div class="submenu_spacer"></div>
+		</div>
+	</div>
 </div>

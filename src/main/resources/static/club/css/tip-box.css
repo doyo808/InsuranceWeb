@@ -1,0 +1,66 @@
+
+
+/* 컨테이너 */
+.tip-box {
+  max-width: 1000px;  /* 카드 폭과 맞추는 용도 */
+  width: 100%;
+  text-align: left;
+  white-space: nowrap; /* 줄바꿈 방지 — 필요하면 normal 로 바꿔도 됨 */
+  margin: 30px auto 100px 0; /* 왼쪽 정렬 기준 */
+}
+
+/* 타이틀 라인 */
+.tip-box > div {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* 타이틀 왼쪽 아이콘 */
+.tip-box > div::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  line-height: 24px;
+  vertical-align: text-top;
+  background: no-repeat center / 24px;
+  background-image: url(../images/icon_noti.png);
+}
+
+/* 리스트 기본 */
+.tip-box > ul {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+}
+
+/* 리스트 항목 */
+.tip-box > ul > li {
+  display: flex;
+  align-items: flex-start; /* 점과 텍스트 상단 맞춤 */
+  gap: 8px;                /* 점과 텍스트 간격 */
+  margin: 8px 10px;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.25px;
+  font-weight: 400;
+  color: #757679;
+}
+
+/* 리스트 점(•) */
+.tip-box > ul > li::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background-color: #868686;
+  border-radius: 50%;
+  margin-top: 10px; /* 텍스트 첫 줄과 수직 정렬 */
+}
+
+/* (선택) 이미지 아이콘을 직접 넣을 때 크기 통일 */
+.tip-box img {
+  width: 22px;
+  margin-right: 10px;
+}

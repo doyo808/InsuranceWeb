@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포인트 적립/사용내역 확인 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
+	<link rel="stylesheet" th:href="@{/club/css/club_common.css}">
+	<link rel="stylesheet" th:href="@{/club/css/PP050401_001.css}">
+	<link rel="stylesheet" th:href="@{/club/css/tip-box.css}">
+</head>
+
+<body>
+	<main layout:fragment="content">
+    <div class="ui-tab-pnls">
+        <section class="base-content">
+            <div class="content-layout ani-point"> <!--content 부분-->
+
+                <div class="content-title"> <!-- 제목 -->
+                    <h1>
+                        애니포인트 적립/사용내역을<br>
+                        확인해 보세요
+                    </h1>
+                </div>
+
+                <div class="content-main">
+
+
+                    <div class="point-box">
+                        <dl>
+                            <dt>보유포인트</dt>
+                            <dd id="rmdrPoint">0P</dd>
+                        </dl>
+
+                        <div class="btn-wrap btn-main">
+                            <a href="" class="btn-main btn-line">
+                                <span>포인트로 장기보험료 납입</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="tit-wrap-m">
+                        <h2 class="tit-con">포인트 적립/사용내역</h2>
+                    </div>
+
+                    <div class="tbl-wrap type-search date-search">
+                        <table class="tbl-base-ver">
+                            <colgroup>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">조회기간</th>
+                                    <td>
+                                        <div class="form-wrap">
+                                            <input type="radio" id="month-radio-minus3" class="month-radio"
+                                                name="month_select" onclick="" checked="checked">
+                                            <label for="month-radio-minus3" class="btn-radio checked">3개월</label>
+
+                                            <input type="radio" id="month-radio-minus6" class="month-radio"
+                                                name="month_select" onclick="">
+                                            <label for="month-radio-minus6" class="btn-radio">6개월</label>
+
+                                            <input type="radio" id="month-radio-minusyear" class="month-radio"
+                                                name="month_select" onclick="">
+                                            <label for="month-radio-minusyear" class="btn-radio">1년</label>
+
+                                            <input type="radio" id="month-radio-minusSelect" class="month-radio"
+                                                name="month_select" onclick="">
+                                            <label for="month-radio-minusSelect" class="btn-radio">직접입력</label>
+                                        </div>
+
+                                        <div class="form-wrap date-wrap">
+
+                                            <!-- 시작일 -->
+                                            <div class="ui-datepicker inp-date-wrap only-pick">
+                                                <input type="date" class="inp-base" title="시작일 입력" id="start-datepicker"
+                                                    placeholder="YYYY-MM-DD" min="2010-01-01">
+                                            </div>
+                                            <!-- 종료일 -->
+                                            <div class="ui-datepicker inp-date-wrap only-pick">
+                                                <input type="date" class="inp-base" title="종료일 입력" id="end-datepicker"
+                                                    placeholder="YYYY-MM-DD">
+                                            </div>
+
+                                            <button type="button" class="btn-normal" onclick="">
+                                                확인
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <table class="tbl-base col4">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+
+                        <thead>
+                            <tr>
+                                <th>이용일</th>
+                                <th>유형</th>
+                                <th>포인트</th>
+                                <th>구분</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="none none-icon">
+                                    적립/사용한 포인트 내역이 없습니다.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tip-box">
+                    <div>확인해 주세요</div>
+                    <ul>
+                        <li>애니포인트의 제공 내용은 삼성화재 내부 규정에 따라 변경될 수 있습니다.</li>
+                        <li>애니포인트 적립 대상은 삼성화재 계약자 및 피보험자입니다.(미성년자 제외)</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+	<script>
+	  // --- 엘리먼트 참조
+	  const startInput = document.getElementById('start-datepicker');
+	  const endInput   = document.getElementById('end-datepicker');
+
+	  const radios = {
+	    'month-radio-minus3': 3,
+	    'month-radio-minus6': 6,
+	    'month-radio-minusyear': 12,
+	    'month-radio-minusSelect': null   // 직접입력
+	  };
+
+	  // --- 유틸
+	  const pad = n => String(n).padStart(2, '0');
+	  const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+	  // 말일 보정 포함: 3/31 - 1개월 => 2/29(윤년)/2/28(평년)
+	  function shiftMonths(fromDate, months) {
+	    const y = fromDate.getFullYear();
+	    const m = fromDate.getMonth();    // 0~11
+	    const d = fromDate.getDate();
+	    const t = new Date(y, m - months, 1); // 목표월의 1일
+	    const lastDay = new Date(t.getFullYear(), t.getMonth()+1, 0).getDate();
+	    t.setDate(Math.min(d, lastDay));
+	    return t;
+	  }
+
+	  function todayStr() {
+	    return fmt(new Date());
+	  }
+
+	  function clampDates() {
+	    // end는 오늘을 넘지 않게
+	    const today = todayStr();
+	    if (endInput.value && endInput.value > today) endInput.value = today;
+
+	    // start <= end 보장
+	    if (startInput.value && endInput.value && startInput.value > endInput.value) {
+	      // 사용자가 시작일을 뒤로 보냈다면 종료일을 맞춰줌
+	      endInput.value = startInput.value;
+	    }
+	  }
+
+	  function setRangeByMonths(months) {
+	    const end = new Date();
+	    const start = shiftMonths(end, months);
+
+	    endInput.max   = fmt(end);
+	    endInput.value = fmt(end);
+	    startInput.value = fmt(start);
+	    clampDates();
+	  }
+
+	  function updateRadioStyles() {
+	    document.querySelectorAll('.month-radio').forEach(r => {
+	      const label = document.querySelector(`label[for="${r.id}"]`);
+	      if (!label) return;
+	      label.classList.toggle('checked', r.checked);
+	    });
+	  }
+
+	  // --- 초기 세팅
+	  document.addEventListener('DOMContentLoaded', () => {
+	    // 종료일 max=오늘, 값 비어있으면 오늘로
+	    const today = todayStr();
+	    if (!endInput.value) endInput.value = today;
+	    endInput.max = today;
+	    if (!startInput.value) startInput.value = today;
+
+	    // 처음 체크된 라디오 기준으로 날짜 세팅(기본: 3개월)
+	    const checked = document.querySelector('.month-radio:checked')?.id || 'month-radio-minus3';
+	    const months = radios[checked];
+	    if (months) setRangeByMonths(months);
+	    updateRadioStyles();
+
+	    // date 클릭 시 네이티브 피커 열기(지원 브라우저에서만)
+	    const tryOpen = el => () => { try { el.showPicker(); } catch(_) {} };
+	    startInput.addEventListener('focus', tryOpen(startInput));
+	    startInput.addEventListener('click',  tryOpen(startInput));
+	    endInput.addEventListener('focus',   tryOpen(endInput));
+	    endInput.addEventListener('click',   tryOpen(endInput));
+	  });
+
+	  // --- 라디오 변경 시 날짜 자동 맞춤
+	  document.querySelectorAll('.month-radio').forEach(r => {
+	    r.addEventListener('change', (e) => {
+	      const months = radios[e.target.id];
+	      if (months) setRangeByMonths(months);
+	      // 직접입력은 날짜를 건드리지 않음
+	      updateRadioStyles();
+	    });
+	  });
+
+	  // --- 날짜를 직접 바꾸면 '직접입력' 라디오로 전환
+	  function onManualDateChange() {
+	    clampDates();
+	    const custom = document.getElementById('month-radio-minusSelect');
+	    if (!custom.checked) {
+	      custom.checked = true;
+	      updateRadioStyles();
+	    }
+	  }
+	  startInput.addEventListener('input', onManualDateChange);
+	  startInput.addEventListener('change', onManualDateChange);
+	  endInput.addEventListener('input', onManualDateChange);
+	  endInput.addEventListener('change', onManualDateChange);
+	</script>
+
+	</main>
+</body>
+
+</html>

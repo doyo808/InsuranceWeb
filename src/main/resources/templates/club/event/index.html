@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/common/layout.html}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>이벤트 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
+	<link rel="stylesheet" th:href="@{/club/css/club_common.css}">
+	<link rel="stylesheet" th:href="@{/club/css/event_index.css}">
+</head>
+
+<body>
+	<main layout:fragment="content">
+		<section>
+
+			<div class="event_wrap">
+				<div class="evt_visual">
+					<h2 class="event_header">
+						<img class="img_logo" th:src="@{/club/images/event/img_logo.png}" alt="삼성화재 다이렉트 착">
+					</h2>
+					<h3>
+						<img th:src="@{/club/images/event/analysis/img_title.png}" alt="내 보험 괜찮은걸까? ~~~">
+					</h3>
+				</div>
+
+				<div class="evt_area_wrap">
+					<div class="event_area">
+						<h3>
+							<img th:src="@{/club/images/event/analysis/evt_title.png}" alt="AI보장 분석 받고 내 보험 확인하면 ~~~">
+						</h3>
+						<a href=""> <!-- 고객 정보 입력하는 페이지로 이동-->
+							<img th:src="@{/club/images/event/analysis/img_btn.png}">
+						</a>
+						<p class="event_info_text1">
+							<img th:src="@{/club/images/event/analysis/event_info_text1.png}"
+								alt="AI보장분석 테스트 이런 정보를 ~~">
+						</p>
+						<p class="event_info_text2">
+							<img th:src="@{/club/images/event/analysis/event_info_text2.png}" alt="보장분석 ~~~">
+						</p>
+					</div>
+				</div>
+				<div class="info_area">
+					<div class="info_event">
+						<ul class="bul-round">
+							<li>여기에 event_info에 관한 리스트값이 들어와야한다..</li>
+						</ul>
+					</div>
+				</div>
+				<div class="noti_area">
+					<div class="info_noti">
+						<p>가입시 알아두실 사항이 여기 들어갑니다~</p>
+					</div>
+				</div>
+				<div class="btn-wrap single"></div>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>
