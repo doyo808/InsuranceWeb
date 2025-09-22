@@ -51,12 +51,12 @@ public class MypageController {
 			}
 		}
 		
-		return "/mypage/EditMyInfo.html";
+		return "mypage/EditMyInfo.html";
 	}
 	@PostMapping("/edit")
 	public String doEditMyInfo(CustomerDTO customer) {
 		mypageService.EditPersonAndCustomer(customer);
-		return "redirect:/mypage/MPDG0093"; // 수정 완료 후 다시 내 정보 페이지로 리다이렉트
+		return "redirect:mypage/MPDG0093"; // 수정 완료 후 다시 내 정보 페이지로 리다이렉트
 	}
 	
 	// 마케팅 정보 활용 동의/철회

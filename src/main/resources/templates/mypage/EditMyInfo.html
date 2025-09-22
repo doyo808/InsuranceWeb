@@ -15,6 +15,7 @@
 		<div class="main__wrapper">
 			<h1>내 정보를<br>변경할 수 있어요</h1>
 			
+			<div th:if="${loginUser != null && loginUser.person != null && loginUser.customer != null}">
 			<h2 class="custom-table-title">기본정보<span class="blue-span">필수</span></h2>
 			<table class="custom-table">
 				<tr>
@@ -107,7 +108,7 @@
 			<input type="hidden" name="customer_id" th:value="${loginUser.customer.customer_id}"/>
 			<input type="hidden" name="person_id" th:value="${loginUser.customer.person_id}" />
 			<button type="submit">변경</button>
-			
+			</div>
 		</div>
 		</form>
 		
