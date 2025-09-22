@@ -5,7 +5,6 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>내 정보 확인/변경</title>
-	<link rel="stylesheet" th:href="@{/common/css/customTable.css}" />
 	<link rel="stylesheet" th:href="@{/mypage/css/EditMyInfo.css}" />
 </head>
 <body>
@@ -21,7 +20,7 @@
 				<tr>
 					<th>휴대폰 번호</th>
 					<td>
-						<input type="text" placeholder="010-0000-0000" maxlength="11" name="phone_number"
+						<input type="text" placeholder="-없이 입력" maxlength="11" name="phone_number"
 						th:value="${loginUser.person.phone_number}">
 					</td>
 				</tr>
@@ -61,7 +60,7 @@
 				<tr>
 					<th>전화번호</th>
 					<td>
-						<input type="text" placeholder="010-0000-0000" maxlength="11" name="home_number"
+						<input type="text" placeholder="-없이 입력" maxlength="11" name="home_number"
 						th:value="${loginUser.customer.home_number}">
 					</td>
 				</tr>
@@ -100,7 +99,7 @@
 				<tr>
 					<th>전화번호</th>
 					<td>
-						<input type="text" placeholder="010-0000-0000" maxlength="11" name="job_phone_number"
+						<input type="text" placeholder="-없이 입력" maxlength="11" name="job_phone_number"
 						th:value="${loginUser.customer.job_phone_number}">
 					</td>
 				</tr>

@@ -24,16 +24,19 @@ public class MypageController {
 	private final PersonMapper personMapper;
 	private final CustomerMapper customerMapper;
 	
+	// 계약내용 확인
 	@GetMapping("/MPDG0070")
 	public String chkContracts() {
 		return "/mypage/chkContracts.html";
 	}
 	
+	// 보험료 납입
 	@GetMapping("/MPDG0080")
 	public String payPremium() {
 		return "/mypage/payPremium.html";
 	}
 	
+	// 내 정보 확인/변경
 	@GetMapping("/MPDG0093")
 	public String openEditMyInfo(@AuthenticationPrincipal CustomUserDetails loginUser, Model model) {
 		if (loginUser != null) {
@@ -50,14 +53,15 @@ public class MypageController {
 		
 		return "/mypage/EditMyInfo.html";
 	}
-	
 	@PostMapping("/edit")
 	public String doEditMyInfo(CustomerDTO customer) {
-		
-        // TODO: 여기서 customer 객체를 서비스 레이어로 전달하여 DB 업데이트 로직 수행
 		mypageService.EditPersonAndCustomer(customer);
-		
-		
 		return "redirect:/mypage/MPDG0093"; // 수정 완료 후 다시 내 정보 페이지로 리다이렉트
+	}
+	
+	// 마케팅 정보 활용 동의/철회
+	@GetMapping("/MPDG0247")
+	public String marketingAgreement() {
+		return "/mypage/marketingAgreement.html";
 	}
 }

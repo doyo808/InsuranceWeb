@@ -17,7 +17,6 @@ public class PersonDTO {
     // ======================
     private static final String NAME_PATTERN = "^[가-힣]{2,}$";
     private static final String PERSONAL_ID_PATTERN = "^\\d{6}-[1-4]\\d{6}$";
-    private static final String PHONE_PATTERN = "01[016789]-\\d{4}-\\d{4}";
 
     // ======================
     // 필드 정의
@@ -58,10 +57,5 @@ public class PersonDTO {
     // ----------------------
     // 전화번호
     // ----------------------
-    @NotBlank(message = "전화번호는 필수 입력 값입니다.")
-    @Pattern(
-        regexp = PHONE_PATTERN,
-        message = "전화번호는 010-0000-0000 형식이어야 합니다."
-    )
     private String phone_number;
 }

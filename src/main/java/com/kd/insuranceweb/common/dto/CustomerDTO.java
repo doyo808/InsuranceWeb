@@ -27,10 +27,7 @@ public class CustomerDTO {
 	Date deleted_at;
 	
 	// 전화번호 정규식 상수
-	private static final String PHONE_PATTERN = "^(01[016789]-\\d{3,4}-\\d{4})|(0\\d{1,2}-\\d{3,4}-\\d{4})$";
-	@Pattern(regexp = PHONE_PATTERN, message = "전화번호 형식이 올바르지 않습니다. (예: 010-0000-0000, 02-123-4567)")
 	String home_number;
-	@Pattern(regexp = PHONE_PATTERN, message = "전화번호 형식이 올바르지 않습니다. (예: 010-0000-0000, 02-123-4567)")
 	String job_phone_number;
 	
 	// 우편번호 정규식 상수

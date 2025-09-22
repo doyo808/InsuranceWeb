@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class CustomUserDetailsService implements UserDetailsService {
 	
 	private final CustomerMapper customerMapper;
-	private final PersonMapper personMapper;
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override

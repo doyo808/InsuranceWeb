@@ -58,15 +58,14 @@ public class SignupService {
 	/**
 	 * [Private] Person 정보를 가공하여 DB에 저장하고, 생성된 객체를 반환합니다.
 	 */
-	private PersonDTO createAndInsertPerson(SignupStep1DTO dto1) {
-		String personal_id = dto1.getJumin6() + "-" + dto1.getJumin7();
-		String phone_number = dto1.getPhoneNumber().replaceAll("(\\d{3})(\\d{4})(\\d{4})", "$1-$2-$3");
-		
+	private PersonDTO createAndInsertPerson(SignupStep1DTO dto1) {	
 		PersonDTO person = new PersonDTO();
 		person.setPerson_name(dto1.getKorName());
 		person.setEmail(dto1.getEMail());
+		person.setPhone_number(dto1.getPhoneNumber());
+
+		String personal_id = dto1.getJumin6() + "-" + dto1.getJumin7();
 		person.setPersonal_id(personal_id);
-		person.setPhone_number(phone_number);
 		
 		personMapper.insertPerson(person);
 		

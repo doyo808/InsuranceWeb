@@ -34,10 +34,7 @@ public class SignupStep1DTO {
     // ----------------------
     // 전화번호: 한국 휴대폰 / 일반전화
     // ----------------------
-    private static final String PHONE_PATTERN = "^(01\\d-\\d{3,4}-\\d{4})|(0\\d{1,2}-\\d{3,4}-\\d{4})$";
 
-    @NotBlank(message = "전화번호는 필수 입력 값입니다.")
-    @Pattern(regexp = PHONE_PATTERN, message = "전화번호 형식이 올바르지 않습니다. (예: 010-0000-0000, 02-123-4567)")
     private String phoneNumber;
 
     // ----------------------

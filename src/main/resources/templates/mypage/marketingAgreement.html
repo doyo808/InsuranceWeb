@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>마케팅 정보 활용 동의/철회</title>
+	<link rel="stylesheet" th:href="@{/mypage/css/marketingAgreement.css}" />
+</head>
+<body>
+	<main layout:fragment="content">
+		<div class="main-wrapper">
+			<h1>마케팅 정보 활용에 동의하면<br>다양한 정보를 받을 수 있어요</h1>
+			
+			
+			<div class="content-wrapper">
+				<div class="agree-all">
+					<div class="agree-all__text">[선택] 상품소개 등을 위한 개인(신용)정보 제공 동의</div>
+					<div><label><input type="checkbox">모두 동의하기</label></div>
+				</div>	
+				
+				
+				<div class="content-box">
+					<div class="content-box__title">1.수집·이용에 관한 사항</div>
+					
+					<div class="content-box__main">
+						<div class="content-box__main__image">
+							<img th:src="@{/mypage/images/safetyBar2.png}">
+							<p>※위 등급은 사생활 침해 위험, 혜택, 명확성 등을 종합적으로 고려하여 동의내용의 평가등급을 제공하는 제도입니다.</p>
+						</div>
+						
+						<ul class="info-list">
+						  <li class="list-item">
+						    <h3 class="list-item-title">수집·이용 목적</h3>
+						    <p>-상품·서비스 소개 및 판매, 사은·판촉행사 안내, 시장조사, 자동차보험 만기알림 서비스 제공</p>
+						  </li>
+
+						  <li class="list-item item-with-sublist">
+						    <h3 class="list-item-title">보유 및 이용기간</h3>
+						    <ul>
+						      <li>-보험계약 체결실적이 있는 경우 : 동의일로부터 5년</li>
+						      <li>
+						        -보험계약 체결실적이 없는 경우 : 동의일로부터 2년<br>(단, 비대면채널은 동의일로부터 3년)
+						      </li>
+						    </ul>
+						  </li>
+
+						  <li class="list-item">
+						    <h3 class="list-item-title">거부 권리 및 불이익</h3>
+						    <p>-귀하는 위 개인(신용)정보 수집·이용에 관한 동의를 거부하실 수 있습니다. 다만, 동의하지 않으실 경우 상품·서비스 소개 및 판매, 사은·판촉행사 안내 등의 혜택을 받지 못할 수 있습니다.</p>
+						  </li>
+
+						  <li class="list-item item-with-table">
+						    <table class="custom-table">
+								<tr>
+									<th>개인(신용)정보</th>
+									<td>일반개인정보: 성명, DI, 생년월일, 주소, 직업, 유무선 전화번호, 이메일, 차량번호, 성별, 위치정보</td>
+								</tr>
+							</table>
+							
+							<p>-상기 내용에 동의하시는 경우 당사 임직원 또는 업무수탁자가 상품·서비스 소개 및 판매 안내연락(TM 등)을 드릴 수 있습니다.</p>
+						  </li>
+
+						</ul>
+					</div>
+					
+					<div class="agree-line"><div>ㆍ위 개인(신용)정보 수집·이용에 동의하십니까?</div>
+						<div>
+							<label><input type="radio" name="agree1" value="false">비동의</label>
+							<label><input type="radio" name="agree1" value="true">동의</labe>
+						</div>
+					</div>
+					
+					<div class="agree-line">ㆍ전자적 전송매체를 통한 광고성 정보 수신을 동의하시겠습니까?
+						<div>
+							<label><input type="radio" name="agree2" value="false">비동의</label>
+							<label><input type="radio" name="agree2" value="true">동의</labe>
+						</div>
+					</div>
+					
+					<div class="agree2__detail">
+						<label><input type="checkbox">전체</label>
+						<label><input type="checkbox" name="phone_call">전화(ARS)</label>
+						<label><input type="checkbox" name="text">문자(모바일 메시지 포함)</label>
+						<label><input type="checkbox" name="email">이메일</label>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</main>
+</body>
+</html>
