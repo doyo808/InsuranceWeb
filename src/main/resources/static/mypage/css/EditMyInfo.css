@@ -1,0 +1,35 @@
+.main__wrapper {
+	width: 1200px;
+	text-align: center;
+}
+
+.blue-span {
+	background-color: #2c7fdf1a;
+	color: #2C7FDF;
+	margin-left: 12px;
+	width: 52px;
+	height: 28px;
+	text-align: center;
+	padding: 5px 12px;
+	border-radius: 16px;
+	font-size: 16px;
+	font-weight: 500;
+}
+
+
+td .fa-magnifying-glass {
+	cursor: pointer;
+	color: gray;
+}
+
+
+#email-check-btn {
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	width: 120px;
+	height: 43px;
+	background-color: white;
+	margin-left: 10px;
+	font-size: 15px;
+	cursor: pointer;
+}

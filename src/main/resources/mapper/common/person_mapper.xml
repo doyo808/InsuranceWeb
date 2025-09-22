@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.common.mapper.PersonMapper">
+  <select id="selectByEmail" resultType="person" parameterType="String">
+  	SELECT * FROM persons WHERE email = #{email}
+  </select>
+  <select id="selectById" resultType="person" parameterType="Integer">
+  	SELECT * FROM persons WHERE person_id=#{person_id}
+  </select>
+  
+  <insert id="insertPerson">
+    <selectKey keyProperty="person_id" resultType="int" order="AFTER">
+        SELECT person_seq.CURRVAL FROM DUAL
+    </selectKey>
+    
+  	INSERT INTO persons 
+  		(person_id, person_name, email, personal_id, phone_number)
+  	values
+  		(person_seq.nextval, #{person_name}, #{email}, #{personal_id}, #{phone_number})
+  </insert>
+  
+  <update id="updatePerson">
+  	UPDATE persons
+  	SET email = #{email},
+  		phone_number = #{phone_number}
+  	WHERE person_id = #{person_id}
+  </update>
+</mapper>

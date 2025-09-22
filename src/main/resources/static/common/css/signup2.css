@@ -1,0 +1,152 @@
+/* =================================================== */
+/* 기본 레이아웃 및 폰트
+/* =================================================== */
+#signup__wrap {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+/* =================================================== */
+/* 폼 요소 스타일 
+/* =================================================== */
+
+/* 폼 그룹 (라벨 + 입력창 한 줄) */
+.form-group {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.form-group label {
+    width: 160px; /* 라벨 너비 고정으로 정렬 효과 */
+    font-weight: 500;
+    font-size: 15px;
+    flex-shrink: 0;
+    color: #555;
+}
+
+/* 공통 입력창 스타일 */
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 15px;
+    width: 100%;
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+/* 중복 확인 등 폼 그룹 내 버튼 */
+.form-group button {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 12px 15px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s;
+}
+
+.form-group button:hover {
+    background-color: #f5f5f5;
+}
+
+/* 유효성 검사 메시지 (아이디 중복, 비밀번호 불일치 등) */
+.message {
+    font-size: 14px;
+    margin-top: 8px;
+    margin-left: 160px; /* 라벨 너비만큼 왼쪽 여백 */
+}
+.message.success {
+    color: green;
+}
+.message.error {
+    color: red;
+}
+
+/* =================================================== */
+/* 마케팅 동의 섹션  */
+/* =================================================== */
+.agreement-section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
+}
+
+.agreement-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #e9e9e9;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.agreement-box label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+.agreement-box input[type="checkbox"] {
+    margin-right: 15px;
+    width: 18px;
+    height: 18px;
+}
+
+.agreement-box button {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+
+/* =================================================== */
+/* 최종 '가입 완료' 버튼 */
+/* =================================================== */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #555;
+}
+
+.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

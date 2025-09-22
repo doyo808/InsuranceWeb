@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>회원가입</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/common/css/signup.css}">
+</head>
+<body>
+	
+	<main layout:fragment="content">
+		<div id="signup__wrap">
+			<h1>회원가입을 위해<br>정보를 입력해 주세요</h1>	
+				
+			<form id="signup-form" th:action="@{/signup/step1}" 
+			      th:data-check-email-url="@{/signup/check-email}" 
+			      method="POST">
+			    <div class="form-group">
+			        <label for="korName">이름</label>
+			        <input type="text" id="korName" name="korName" maxlength="5" title="이름">
+			    </div>
+			    <div class="form-group">
+			        <label>주민등록번호</label>
+			        <div class="jumin-group">
+			            <input type="text" id="jumin6" name="jumin6" maxlength="6" placeholder="앞 6자리">
+			            <span>-</span>
+			            <div class="input-icon-wrapper">
+			                <input type="password" id="jumin7" name="jumin7" maxlength="7" placeholder="뒤 7자리" autocomplete="off">
+			                <span id="keypad-toggle-icon" class="keypad-icon" title="보안 키패드 열기">
+			                    <i class="fa-regular fa-keyboard"></i>
+			                </span>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="form-group">
+			        <label for="phoneNumber">휴대폰번호</label>
+			        <input type="tel" id="phoneNumber" name="phoneNumber" maxlength="11" placeholder="-없이 입력" title="핸드폰번호">
+			    </div>
+			    <div class="form-group">
+			        <label for="email">이메일</label>
+			        <input type="text" id="email" name="eMail" maxlength="30" placeholder="example@example.com" title="이메일">
+			        <button type="button" id="email-check-btn">중복 확인</button>
+			    </div>
+			    <p id="email-message" class="message"></p>
+			    
+			    <h2 class="agreement-section-title">다음 항목에 동의해주세요</h2>
+			    
+			    <div class="agreement-box">
+			        <label for="main-agreement" class="agreement-label">
+			            <input type="checkbox" id="main-agreement">
+			            <div class="agreement-text">
+			                <p class="title">[필수] 회원가입 구분을 위한 개인(신용)정보 처리 동의</p>
+			                <p class="subtitle">고유식별정보, 개인(신용)정보</p>
+			            </div>
+			        </label>
+			        <button type="button" id="view-details-btn" class="view-btn">보기 &gt;</button>
+			    </div>
+
+			    <div id="agreement-modal" class="modal-wrapper hidden">
+			           <div class="modal-overlay"></div>
+			           <div class="modal-content">
+			               <div class="modal-header">
+			                   <h2>회원가입 구분을 위한 개인(신용)정보처리 동의</h2>
+			                   <button type="button" class="close-btn">&times;</button>
+			               </div>
+			               <div class="modal-body">
+			                   <h3>수집 · 이용 항목</h3>
+			                   <div class="consent-table">
+			                       <div class="consent-row">
+			                           <div class="consent-title">고유식별정보</div>
+			                           <div class="consent-details">
+			                               <p>주민등록번호, 외국인등록번호</p>
+			                               <span>위 개인(신용)정보 수집·이용에 동의하십니까?</span>
+			                           </div>
+			                           <div class="consent-options">
+			                               <label><input type="radio" name="consent-id" value="disagree" checked> 비동의</label>
+			                               <label><input type="radio" name="consent-id" value="agree"> 동의</label>
+			                           </div>
+			                       </div>
+			                       <div class="consent-row">
+			                           <div class="consent-title">일반개인정보</div>
+			                           <div class="consent-details">
+			                               <p>이름, 본인확인정보(CI, DI)</p>
+			                               <span>위 개인(신용)정보 수집·이용에 동의하십니까?</span>
+			                           </div>
+			                           <div class="consent-options">
+			                               <label><input type="radio" name="consent-pi" value="disagree" checked> 비동의</label>
+			                               <label><input type="radio" name="consent-pi" value="agree"> 동의</label>
+			                           </div>
+			                       </div>
+			                   </div>
+			               </div>
+			               <div class="modal-footer">
+			                   <button type="button" id="confirm-btn" disabled>확인</button>
+			               </div>
+			           </div>
+			       </div>
+			   
+			   <input id="signup-next-btn" type="submit" value="다음" disabled>
+		   </form>
+		</div>
+		<script th:src="@{/common/js/signup.js}"></script>
+	</main>
+	
+</body>
+</html>
