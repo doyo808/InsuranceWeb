@@ -135,40 +135,114 @@
         </section>
     </div>
 
-    <script>
-        const start_date = document.getElementById('start-datepicker');
-        const end_date = document.getElementById('end-datepicker');
+	<script>
+	  // --- 엘리먼트 참조
+	  const startInput = document.getElementById('start-datepicker');
+	  const endInput   = document.getElementById('end-datepicker');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const d = new Date();
-            const yyyy = d.getFullYear();
-            const mm = String(d.getMonth() + 1).padStart(2, '0');
-            const dd = String(d.getDate()).padStart(2, '0');
-            const today = `${yyyy}-${mm}-${dd}`;
+	  const radios = {
+	    'month-radio-minus3': 3,
+	    'month-radio-minus6': 6,
+	    'month-radio-minusyear': 12,
+	    'month-radio-minusSelect': null   // 직접입력
+	  };
 
-            if (!start_date.value) start_date.value = today;
-            if (!end_date.value) {
-                end_date.value = today;
-                end_date.max = today;
-            }
-        });
+	  // --- 유틸
+	  const pad = n => String(n).padStart(2, '0');
+	  const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const start_open = () => start_date.showPicker();
-            start_date.addEventListener('click',
-                start_open,
-                start_date.classList
+	  // 말일 보정 포함: 3/31 - 1개월 => 2/29(윤년)/2/28(평년)
+	  function shiftMonths(fromDate, months) {
+	    const y = fromDate.getFullYear();
+	    const m = fromDate.getMonth();    // 0~11
+	    const d = fromDate.getDate();
+	    const t = new Date(y, m - months, 1); // 목표월의 1일
+	    const lastDay = new Date(t.getFullYear(), t.getMonth()+1, 0).getDate();
+	    t.setDate(Math.min(d, lastDay));
+	    return t;
+	  }
 
-            );
-            start_date.addEventListener('focus', start_open);
+	  function todayStr() {
+	    return fmt(new Date());
+	  }
 
-            const end_open = () => end_date.showPicker();
-            end_date.addEventListener('click', end_open);
-            end_date.addEventListener('focus', end_open);
+	  function clampDates() {
+	    // end는 오늘을 넘지 않게
+	    const today = todayStr();
+	    if (endInput.value && endInput.value > today) endInput.value = today;
 
-        });
+	    // start <= end 보장
+	    if (startInput.value && endInput.value && startInput.value > endInput.value) {
+	      // 사용자가 시작일을 뒤로 보냈다면 종료일을 맞춰줌
+	      endInput.value = startInput.value;
+	    }
+	  }
 
-    </script>
+	  function setRangeByMonths(months) {
+	    const end = new Date();
+	    const start = shiftMonths(end, months);
+
+	    endInput.max   = fmt(end);
+	    endInput.value = fmt(end);
+	    startInput.value = fmt(start);
+	    clampDates();
+	  }
+
+	  function updateRadioStyles() {
+	    document.querySelectorAll('.month-radio').forEach(r => {
+	      const label = document.querySelector(`label[for="${r.id}"]`);
+	      if (!label) return;
+	      label.classList.toggle('checked', r.checked);
+	    });
+	  }
+
+	  // --- 초기 세팅
+	  document.addEventListener('DOMContentLoaded', () => {
+	    // 종료일 max=오늘, 값 비어있으면 오늘로
+	    const today = todayStr();
+	    if (!endInput.value) endInput.value = today;
+	    endInput.max = today;
+	    if (!startInput.value) startInput.value = today;
+
+	    // 처음 체크된 라디오 기준으로 날짜 세팅(기본: 3개월)
+	    const checked = document.querySelector('.month-radio:checked')?.id || 'month-radio-minus3';
+	    const months = radios[checked];
+	    if (months) setRangeByMonths(months);
+	    updateRadioStyles();
+
+	    // date 클릭 시 네이티브 피커 열기(지원 브라우저에서만)
+	    const tryOpen = el => () => { try { el.showPicker(); } catch(_) {} };
+	    startInput.addEventListener('focus', tryOpen(startInput));
+	    startInput.addEventListener('click',  tryOpen(startInput));
+	    endInput.addEventListener('focus',   tryOpen(endInput));
+	    endInput.addEventListener('click',   tryOpen(endInput));
+	  });
+
+	  // --- 라디오 변경 시 날짜 자동 맞춤
+	  document.querySelectorAll('.month-radio').forEach(r => {
+	    r.addEventListener('change', (e) => {
+	      const months = radios[e.target.id];
+	      if (months) setRangeByMonths(months);
+	      // 직접입력은 날짜를 건드리지 않음
+	      updateRadioStyles();
+	    });
+	  });
+
+	  // --- 날짜를 직접 바꾸면 '직접입력' 라디오로 전환
+	  function onManualDateChange() {
+	    clampDates();
+	    const custom = document.getElementById('month-radio-minusSelect');
+	    if (!custom.checked) {
+	      custom.checked = true;
+	      updateRadioStyles();
+	    }
+	  }
+	  startInput.addEventListener('input', onManualDateChange);
+	  startInput.addEventListener('change', onManualDateChange);
+	  endInput.addEventListener('input', onManualDateChange);
+	  endInput.addEventListener('change', onManualDateChange);
+	</script>
+
 	</main>
 </body>
 
