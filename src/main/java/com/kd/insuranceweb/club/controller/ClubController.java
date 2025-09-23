@@ -29,31 +29,30 @@ public class ClubController {
 	private final AnypointService anypointService;
 
 	@GetMapping("/PP050301_001")
-	public String creditCardBenefit1(@RequestParam(name = "tab", defaultValue = "interest") String tab, Model model) {
+	public String creditCardBenefit1(
+	        @RequestParam(name = "tab", defaultValue = "interest-free") String tab, // ← 통일
+	        Model model) {
 
-		String[] cards = { "삼성카드", "현대카드", "롯데카드", "KB국민카드", "신한카드" };
-		List<Card_benefit_interest_free> all = new ArrayList<>();
+	    String[] cards = {"삼성카드","현대카드","롯데카드","KB국민카드","신한카드"};
+	    List<Card_benefit_interest_free> all = new ArrayList<>();
+	    for (String name : cards) {
+	        all.addAll(cardBenefitService.selectBenefitInterestFree(name));
+	    }
+	    model.addAttribute("benefitInterestFree", all);
 
-		for (String name : cards) {
-			all.addAll(cardBenefitService.selectBenefitInterestFree(name));
-		}
-
-		model.addAttribute("benefitInterestFree", all);
-
-		// 2) breadcrumb 라벨만 주입 (마지막 라벨은 탭/상태에 따라 변경 가능)
-		String current = switch (tab) {
-		case "interest-free" -> "무이자 할부";
-		case "points" -> "포인트 결제";
-		case "post-charge" -> "후청구 서비스";
-		default -> "무이자 할부";
-		};
-		model.addAttribute("bcLabels", java.util.List.of("혜택/서비스", "신용카드 혜택", current));
-		return "club/PP050301_001";
+	    String current = switch (tab) {
+	        case "interest-free"  -> "무이자 할부";   // 혹시 옛 키로 들어와도 커버
+	        case "points"         -> "포인트 결제";
+	        case "post-charge"    -> "후청구 서비스";
+	        default               -> "무이자 할부";
+	    };
+	    model.addAttribute("bcLabels", java.util.List.of("혜택/서비스", "신용카드 혜택", current));
+	    return "club/creditCardBenefits";
 	}
 
 	@GetMapping("/PP050401_001")
 	public String creditCardBenefit2() {
-		return "club/PP050401_001";
+		return "club/anyPointGuide";
 	}
 
 	@GetMapping("/VD.MPDG0295")
@@ -100,12 +99,12 @@ public class ClubController {
 	    model.addAttribute("end", end);
 	    model.addAttribute("months", months);
 
-	    return "club/VD.MPDG0295";
+	    return "club/anyPointHistory";
 	}
 
 	@GetMapping("/PP060701_001")
 	public String eventList() {
-		return "club/PP060701_001";
+		return "club/event";
 	}
 
 	// 이벤트 상세 페이지

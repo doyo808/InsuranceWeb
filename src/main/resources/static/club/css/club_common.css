@@ -6,7 +6,7 @@
 .base-content {
     float: none;
     width: 1176px;
-	padding-top: 50px;
+	padding-top: 20px;
     margin: 0 auto 200px;
 }
 
@@ -140,7 +140,7 @@ tit-con {
 
 .card-call-number,
 .exce-list>li {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 22px;
     color: #868686;
 }
