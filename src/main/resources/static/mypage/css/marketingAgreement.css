@@ -1,3 +1,6 @@
+/* ==========================================================================
+   기본 및 레이아웃
+   ========================================================================== */
 :root {
 	--border-color: #EAEBED;
 	--gray-text: #757679;
@@ -14,60 +17,142 @@
 	margin: 70px 0;
 }
 
+
+/* ==========================================================================
+   전체 동의 영역 (.agree-all)
+   ========================================================================== */
 .agree-all {
 	display: flex;
 	justify-content: space-between;
 	padding: var(--content-box-padding);
 	border-bottom: 1px solid var(--border-color);
 }
-	.agree-all__text {
-		font-size: 20px;
-		font-weight: 500;
-	}
-	
+
+.agree-all__text {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+
+/* ==========================================================================
+   콘텐츠 박스 (.content-box)
+   ========================================================================== */
 .content-box {
 	text-align: left;
 	padding: var(--content-box-padding);
 }
-	.content-box__title {
-		font-size: 18px;
-		font-weight: 600;
-	}
-	
-	.content-box__main {
-		border: 1px solid var(--border-color);
-		border-radius: 8px;
-		margin: 20px 0;
-	}
-	.content-box__main__image {
-		border-bottom: 1px solid var(--border-color);
-		text-align: center;
-		padding: var(--content-box-padding) 0;
-		color: var(--gray-text);
-		font-size: 15px;
-	}
-	
-	.agree-line {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 20px;
-	}
-	.agree-line label {margin-left: 18px;}
-	.agree-line label input {margin-right: 12px;}
-	
-	
-	
-		.agree2__detail{
-			background-color: #F3F4F8;
-			padding: 20px;
-			margin: 20px 0;
-			border-radius: 10px;
-		}
-		.agree2__detail label {margin-right: 30px;}
-		.agree2__detail label input[type="checkbox"] {
-			margin-right: 10px;
-		}
-		
-		
-		
-		
+
+.content-box__title {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.content-box__main {
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	margin: 20px 0;
+}
+
+.content-box__main__image {
+	border-bottom: 1px solid var(--border-color);
+	text-align: center;
+	padding: var(--content-box-padding);
+	color: var(--gray-text);
+	font-size: 15px;
+}
+
+.content-box__main__list {
+	padding: var(--content-box-padding);
+}
+
+/* 콘텐츠 박스 내부 리스트 및 문단 여백 조절 */
+.content-box__main__list li {
+	margin-bottom: 50px;
+}
+
+.content-box__main__list li:last-of-type {
+	margin-bottom: 0px;
+}
+
+.content-box__main__list p {
+	margin-bottom: -8px;
+}
+
+.content-box__main__list p:last-of-type {
+	margin-bottom: 0;
+}
+
+/* 콘텐츠 박스 내부 커스텀 테이블 */
+.content-box__main__list .custom-table {
+	margin-left: 0px;
+}
+
+.content-box__main__list .custom-table th {
+	border-right: 1px solid var(--border-color);
+}
+
+.content-box__main__list .custom-table td {
+	padding: 20px;
+	color: var(--gray-text);
+}
+
+
+/* ==========================================================================
+   동의 항목 라인 (.agree-line)
+   ========================================================================== */
+.agree-line {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.agree-line label {
+	margin-left: 18px;
+}
+
+.agree-line label input {
+	margin-right: 12px;
+}
+
+/* 마케팅 채널 상세 선택 영역 */
+.marketing-channels-detail {
+	background-color: #F3F4F8;
+	padding: 20px;
+	margin: 20px 0;
+	border-radius: 10px;
+}
+
+.marketing-channels-detail label {
+	margin-right: 30px;
+}
+
+.marketing-channels-detail label input[type="checkbox"] {
+	margin-right: 10px;
+}
+
+
+/* ==========================================================================
+   기타 컴포넌트
+   ========================================================================== */
+
+/* 심플 리스트 (소비자 권익보호 사항) */
+.info-list--simple {
+	color: var(--gray-text);
+	margin-bottom: 10px !important; 
+}
+
+/* 개인정보 처리방침 보기 버튼 */
+.personal-info-using-guide {
+	border: 2px solid var(--border-color);
+	border-radius: 20px;
+	color: var(--gray-text);
+	background-color: white;
+	font-size: 18px;
+	margin: 20px 0 0 10px;
+	padding: 5px 25px;
+	cursor: pointer;
+}
+
+.personal-info-using-guide:hover {
+	border: 2px solid var(--gray-text);
+}
