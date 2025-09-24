@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kd.insuranceweb.claim.ClaimMapper">
+
+    <resultMap id="claimResultMap" type="com.kd.insuranceweb.claim.Claim">
+        <id property="claimId" column="claim_id"/>
+        <result property="contractId" column="contract_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="claimType" column="claim_type"/>
+        <result property="claimDate" column="claim_date"/>
+        <result property="accidentDate" column="accident_date"/>
+        <result property="compensationType" column="compensation_type"/>
+        <result property="diagnosisCd" column="diagnosis_cd"/>
+        <result property="accidentDescription" column="accident_description"/>
+        <result property="beneficiaryName" column="beneficiary_name"/>
+        <result property="bankAccount" column="bank_account"/>
+        <result property="bankName" column="bank_name"/>
+        <result property="email" column="email"/>
+        <result property="claimStatus" column="claim_status"/>
+        <result property="completionDate" column="completion_date"/>
+        <result property="totalPaidAmount" column="total_paid_amount"/>
+        <result property="detailFilePath" column="detail_file_path"/>
+        <result property="receiptFilePath" column="receipt_file_path"/>
+        <result property="etcFilePath" column="etc_file_path"/>
+        <result property="documentStatus" column="document_status"/>
+    </resultMap>
+
+    <insert id="insertClaim" parameterType="com.kd.insuranceweb.claim.Claim">
+        INSERT INTO CLAIMS (
+            claim_id, contract_id, customer_id, claim_type, claim_date,
+            accident_date, compensation_type, diagnosis_cd, accident_description,
+            beneficiary_name, bank_account, bank_name, email,
+            claim_status, completion_date, total_paid_amount,
+            detail_file_path, receipt_file_path, etc_file_path, document_status
+        )
+        VALUES (
+            CLAIMS_SEQ.NEXTVAL,   <!-- 시퀀스 사용 -->
+            #{contractId}, #{customerId}, #{claimType}, #{claimDate},
+            #{accidentDate}, #{compensationType}, #{diagnosisCd}, #{accidentDescription},
+            #{beneficiaryName}, #{bankAccount}, #{bankName}, #{email},
+            #{claimStatus}, #{completionDate}, #{totalPaidAmount},
+            #{detailFilePath}, #{receiptFilePath}, #{etcFilePath}, #{documentStatus}
+        )
+    </insert>
+
+    <select id="selectClaim" parameterType="long" resultType="com.kd.insuranceweb.claim.Claim">
+        SELECT *
+        FROM CLAIMS
+        WHERE claim_id = #{claimId}
+    </select>
+
+    <select id="selectClaimById" resultMap="claimResultMap" parameterType="long">
+        SELECT * FROM CLAIMS WHERE claim_id = #{claimId}
+    </select>
+
+    <select id="selectAllClaims" resultMap="claimResultMap">
+        SELECT * FROM CLAIMS ORDER BY claim_date DESC
+    </select>
+
+    <update id="updateClaim" parameterType="com.kd.insuranceweb.claim.Claim">
+        UPDATE CLAIMS
+        SET
+            contract_id = #{contractId},
+            customer_id = #{customerId},
+            claim_type = #{claimType},
+            claim_date = #{claimDate},
+            accident_date = #{accidentDate},
+            compensation_type = #{compensationType},
+            diagnosis_cd = #{diagnosisCd},
+            accident_description = #{accidentDescription},
+            beneficiary_name = #{beneficiaryName},
+            bank_account = #{bankAccount},
+            bank_name = #{bankName},
+            email = #{email},
+            claim_status = #{claimStatus},
+            completion_date = #{completionDate},
+            total_paid_amount = #{totalPaidAmount},
+            detail_file_path = #{detailFilePath},
+            receipt_file_path = #{receiptFilePath},
+            etc_file_path = #{etcFilePath},
+            document_status = #{documentStatus}
+        WHERE claim_id = #{claimId}
+    </update>
+
+    <delete id="deleteClaim" parameterType="long">
+        DELETE FROM CLAIMS WHERE claim_id = #{claimId}
+    </delete>
+
+</mapper>

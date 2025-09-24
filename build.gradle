@@ -40,6 +40,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.1.1.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'com.google.cloud:google-cloud-vision:3.65.0'
 }
 
 tasks.named('test') {
