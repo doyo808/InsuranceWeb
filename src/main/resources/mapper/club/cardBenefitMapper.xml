@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.club.mapper.CardBenefitMapper">
+  <select id="selectBenefitInterestFree" resultType="cardBenefitInterestFree" parameterType="String">
+  	SELECT c.card_company_name, bi.img_src, c.phone_number, bi.interest_free_months, bi.partial_interest_months, bi.months_details 
+	FROM card_benefits_interest_free bi
+	JOIN card_company c ON c.card_company_id = bi.card_company_id
+	WHERE c.card_company_name = #{card_company_name}
+  </select>
+</mapper>

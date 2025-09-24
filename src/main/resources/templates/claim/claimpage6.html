@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$CONTENT_TITLE - 내 보험 시스템">공통 타이틀</title>
+	<style>
+		header {
+		  background: #fff;
+		  padding: 16px;
+		  border-bottom: 1px solid #ddd;
+		}
+		header h1 {
+		  font-size: 18px;
+		  margin: 0;
+		}
+		.container {
+		      max-width: 900px;
+		      margin: 0 auto;
+		      padding: 20px;
+		}
+	    h2 {
+	      font-size: 18px;
+	      margin-bottom: 16px;
+	    }
+		/* 동의 그룹 박스 */
+		.agreement-box {
+		  border: 1px solid #ddd;
+		  border-radius: 12px;
+		  padding: 16px;
+		  margin-top: 20px;
+		  background: #fafafa;
+		}
+
+		/* 그룹 제목 */
+		.agreement-title {
+		  display: block;
+		  font-size: 15px;
+		  font-weight: bold;
+		  margin-bottom: 12px;
+		  color: #222;
+		}
+
+		/* 개별 항목 */
+		.agreement-item {
+		  display: flex;
+		  align-items: center;
+		  margin-bottom: 10px;
+		}
+
+		.agreement-item input[type="checkbox"] {
+		  width: 18px;
+		  height: 18px;
+		  margin-right: 10px;
+		  accent-color: #007bff; /* 체크박스 컬러 */
+		}
+
+		.agreement-item label {
+		  font-size: 14px;
+		  color: #333;
+		  cursor: pointer;
+		}
+
+		/* 설명 텍스트 */
+		.desc {
+		  font-size: 13px;
+		  color: #666;
+		  margin: 12px 0 20px;
+		  line-height: 1.5;
+		}
+		
+		.button-area {
+		  text-align: center;
+		  margin: 40px 0;
+		}
+		.btn-primary {
+		  display: inline-block;
+		  background: #007bff;
+		  color: white;
+		  font-size: 16px;
+		  font-weight: bold;
+		  padding: 14px 28px;
+		  border-radius: 8px;
+		  border: none;
+		  cursor: pointer;
+		}
+		.btn-primary:hover {
+		  background: #0056b3;
+		}
+	</style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header th:replace="common/fragments/header :: headerFragment"></header>
+
+    <!-- 사이드바 -->
+    <aside th:replace="common/fragments/sidebar :: sidebarFragment"></aside>
+
+    <!-- 본문 -->
+    <main layout:fragment="content" style="width: 1200px; margin: 0 auto;">
+		<header>
+		  <h1>질병/상해 보험금청구</h1>
+		</header>
+		
+		<div class="container">
+		  <section class="section">
+		    <h2>보험금청구를 위해<br>다음 항목에 동의해 주세요</h2>
+		    <p class="desc">
+		      관련 법률 및 규정에 따라 개인(신용)정보의 수집·이용·조회·제공 동의가 필요합니다.
+		    </p>
+
+		    <!-- ✅ 전체 동의 -->
+		    <div class="agreement-box">
+		      <div class="agreement-item">
+		        <input type="checkbox" id="agreeAll">
+		        <label for="agreeAll"><strong>전체 동의</strong></label>
+		      </div>
+		    </div>
+
+		    <!-- 필수 동의 -->
+		    <div class="agreement-box">
+		      <label class="agreement-title">[필수] 개인(신용)정보 조회, 수집·이용 및 제공 동의</label>
+
+		      <div class="agreement-item">
+		        <input type="checkbox" class="agree-item required" id="agree1" name="agree1">
+		        <label for="agree1">수집·이용에 관한 사항</label>
+				<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+		      </div>
+
+		      <div class="agreement-item">
+		        <input type="checkbox" class="agree-item required" id="agree2" name="agree2">
+		        <label for="agree2">제공에 관한 사항</label>
+				<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+		      </div>
+
+		      <div class="agreement-item">
+		        <input type="checkbox" class="agree-item required" id="agree3" name="agree3">
+		        <label for="agree3">조회에 관한 사항</label>
+				<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+		      </div>
+
+		      <div class="agreement-item">
+		        <input type="checkbox" class="agree-item required" id="agree4" name="agree4">
+		        <label for="agree4">소비자 권익보호에 관한 사항</label>
+				<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+		      </div>
+		    </div>
+			
+			<form th:action="@{/claim/finish}" method="post">
+				<!-- 선택 동의 -->
+				<div class="agreement-box">
+				  <label class="agreement-title">[선택] 의료기관 진료비 이성여부 확인을 위한 개인(신용) 정보 동의</label>
+
+				  <div class="agreement-item">
+				    <input type="checkbox" class="agree-item" id="agree5" name="agree5">
+				    <label for="agree5">제공에 관한 사항</label>
+				  </div>
+				</div>
+				
+				<!-- 버튼 -->
+				<div class="button-area">
+				  <button type="submit" id="nextBtn" class="btn-primary" disabled>완료</button>
+				</div>				
+			</form>
+			
+
+		  </section>
+		</div>
+
+		<script>
+		  const agreeAll = document.getElementById('agreeAll');
+		  const agreeItems = document.querySelectorAll('.agree-item');
+		  const requiredItems = document.querySelectorAll('.agree-item.required');
+		  const nextBtn = document.getElementById('nextBtn');
+
+		  // 전체 선택/해제
+		  agreeAll.addEventListener('change', () => {
+		    agreeItems.forEach(item => item.checked = agreeAll.checked);
+		    checkRequired(); // 필수 확인
+		  });
+
+		  // 개별 체크 상태 감시
+		  agreeItems.forEach(item => {
+		    item.addEventListener('change', () => {
+		      // 전체동의 상태 업데이트
+		      const allChecked = [...agreeItems].every(el => el.checked);
+		      agreeAll.checked = allChecked;
+
+		      // 필수 체크 확인
+		      checkRequired();
+		    });
+		  });
+
+		  // 필수 체크 여부 확인 → 버튼 활성/비활성
+		  function checkRequired() {
+		    const requiredChecked = [...requiredItems].every(el => el.checked);
+		    nextBtn.disabled = !requiredChecked;
+		  }
+		  
+		  const modalContents = {
+		    collect: `
+		      <h3>수집·이용에 관한 사항</h3>
+		      <p><strong>수집ㆍ이용목적</strong><br>
+		      보험사고 조사 및 보험금 지급·심사(손해사정 포함) 등</p>
+		      <p><strong>보유 및 이용기간</strong><br>
+		      동의일로부터 거래 종료 후 5년까지 ...</p>
+		    `,
+		    provide: `
+		      <h3>제공에 관한 사항</h3>
+		      <p>이곳에 제공 동의 상세내용을 넣으면 됩니다.</p>
+		    `,
+		    inquiry: `
+		      <h3>조회에 관한 사항</h3>
+		      <p>이곳에 조회 동의 상세내용을 넣으면 됩니다.</p>
+		    `,
+		    rights: `
+		      <h3>소비자 권익보호에 관한 사항</h3>
+		      <p>이곳에 권익보호 동의 상세내용을 넣으면 됩니다.</p>
+		    `
+		  };
+		  
+		  document.querySelectorAll(".detail-btn").forEach(btn => {
+		    btn.addEventListener("click", () => {
+		      const key = btn.getAttribute("data-content");
+		      modalText.innerHTML = modalContents[key] || "내용 준비 중";
+		      modal.style.display = "block";
+		    });
+		  });
+		</script>
+    </main>
+
+    <!-- 푸터 -->
+    <footer th:replace="common/fragments/footer :: footerFragment"></footer>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>질병/상해 보험금청구 - 대상/유형 선택</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Pretendard", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #222;
+    }
+    header {
+      background: #fff;
+      padding: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    .form-section {
+      margin-bottom: 32px;
+    }
+    .form-section h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .radio-group label {
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      width: 18px;
+      height: 18px;
+    }
+    .info-box {
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #555;
+      background: #f9f9f9;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .button-area {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 14px 28px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<header>
+		    <h1>질병/상해 보험금청구</h1>
+		  </header>
+
+		  <div class="container">
+		    <h2>청구대상과 유형을 선택해 주세요</h2>
+
+		    <!-- ✅ 폼 시작 -->
+		    <form th:action="@{/claim/claimpage3}" method="POST">
+		      <!-- 청구대상 -->
+		      <div class="form-section">
+		        <h3>청구대상</h3>
+		        <div class="radio-group">
+		          <label><input type="radio" name="target" value="본인" checked> 본인</label>
+		          <label><input type="radio" name="target" value="자녀"> 미성년 자녀</label>
+		          <label><input type="radio" name="target" value="대리청구"> 보험금 대리청구</label>
+		        </div>
+		      </div>
+
+		      <!-- 청구유형 -->
+		      <div class="form-section">
+		        <h3>청구유형</h3>
+		        <div class="radio-group">
+		          <label><input type="radio" name="type" value="추가접수"> 추가접수 <span style="color:#777;">(기존 청구내용과 같은 사유로 청구)</span></label>
+		          <label><input type="radio" name="type" value="신규접수"> 신규접수 <span style="color:#777;">(새로운 질병/상해로 청구)</span></label>
+		        </div>
+		      </div>
+
+		      <!-- 안내 -->
+		      <div class="info-box">
+		        ▸ 보험금청구권자는 본인 및 미성년 자녀의 보험금을 청구하실 수 있습니다.<br>
+		        ▸ 보험금청구권자의 위임을 받아 대리 청구도 가능하나, 다른 사람의 미성년 자녀나 타인의 보험금을 대리해 청구할 수는 없습니다.<br>
+		        ▸ 추가 접수 시 동일한 사고정보 입력 없이 서류 등록만으로 간편하게 보험금을 청구하실 수 있습니다.
+		      </div>
+
+		      <!-- 버튼 -->
+		      <div class="button-area">
+		        <button type="submit" class="btn-primary">다음</button>
+		      </div>
+		    </form>
+		    <!-- ✅ 폼 끝 -->
+		  </div>
+	</main>
+</body>
+</html>

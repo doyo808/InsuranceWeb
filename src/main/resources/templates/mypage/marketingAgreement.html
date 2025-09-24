@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>마케팅 정보 활용 동의/철회</title>
+	<link rel="stylesheet" th:href="@{/mypage/css/marketingAgreement.css}" />
+</head>
+<body>
+	<main layout:fragment="content">
+		<div class="main-wrapper">
+			<h1>마케팅 정보 활용에 동의하면<br>다양한 정보를 받을 수 있어요</h1>
+			
+			<form id="marketing-consent-form">
+			<div class="content-wrapper">
+				
+				<!-- ===================================================== -->
+				<!-- [전체 동의 영역]                                         -->
+				<!-- ===================================================== -->
+				<div class="agree-all">
+					<div class="agree-all__text">[선택] 상품소개 등을 위한 개인(신용)정보 제공 동의</div>
+					<div><label><input type="checkbox" name="consent-all" id="consent-all">모두 동의하기</label></div>
+				</div>	
+				
+				<!-- ===================================================== -->
+				<!-- [컨텐츠 박스 #1] 수집·이용 관련 안내/동의                     -->
+				<!-- ===================================================== -->
+				<div class="content-box">
+					<div class="content-box__title">1. 수집·이용에 관한 사항</div>
+					
+					<!-- 안내 이미지 & 설명 -->
+					<div class="content-box__main">
+						<div class="content-box__main__image">
+							<img th:src="@{/mypage/images/safetyBar2.png}">
+							<p>※위 등급은 사생활 침해 위험, 혜택, 명확성 등을 종합적으로 고려하여 동의내용의 평가등급을 제공하는 제도입니다.</p>
+						</div>
+						
+						<!-- 안내 목록 -->
+						<div class="content-box__main__list">
+						<ul class="info-list">
+						  <li class="list-item">
+						    <h3 class="list-item-title">수집·이용 목적</h3>
+						    <p>- 상품·서비스 소개 및 판매, 사은·판촉행사 안내, 시장조사, 자동차보험 만기알림 서비스 제공</p>
+						  </li>
+
+						  <li class="list-item">
+						    <h3 class="list-item-title">보유 및 이용기간</h3>
+						      <p>- 보험계약 체결실적이 있는 경우 : 동의일로부터 5년</p>
+						      <p>- 보험계약 체결실적이 없는 경우 : 동의일로부터 2년
+								<br>&nbsp;&nbsp;(단, 비대면채널은 동의일로부터 3년)</p>
+						  </li>
+
+						  <li class="list-item">
+						    <h3 class="list-item-title">거부 권리 및 불이익</h3>
+						    <p>- 귀하는 위 개인(신용)정보 수집·이용에 관한 동의를 거부하실 수 있습니다. 다만, 동의하지 않으실 경우 상품·서비스 소개 및 판매, 사은·판촉행사
+								<br>&nbsp;&nbsp;안내 등의 혜택을 받지 못할 수 있습니다.</p>
+						  </li>
+
+						  <li class="list-item">
+							<h3 class="list-item-title">수집·이용 항목</h3>
+						    <table class="custom-table" >
+								<tr>
+									<th rowspan="2">개인(신용)정보</th>
+									<td>일반개인정보: 성명, DI, 생년월일, 주소, 직업, 유무선 전화번호, 이메일, 차량번호, 성별, 위치정보</td>
+								</tr>
+								<tr>
+									<td>신용거래정보: 보험 및 대출계약 정보, 보험금지급 관련 정보, 자동차보험 만기일자, 당사 고객포인트</td>
+								</tr>
+							</table>
+							<p>- 상기 내용에 동의하시는 경우 당사 임직원 또는 업무수탁자가 상품·서비스 소개 및 판매 안내연락(TM 등)을 드릴 수 있습니다.</p>
+						  </li>
+						</ul>
+						</div>
+					</div>
+					
+					<!-- 동의 여부 선택 -->
+					<div class="agree-line">
+						<div>ㆍ위 개인(신용)정보 수집·이용에 동의하십니까?</div>
+						<div>
+							<label><input type="radio" name="consent-for-collection" value="false">비동의</label>
+							<label><input type="radio" name="consent-for-collection" value="true">동의</label>
+						</div>
+					</div>
+					
+					<div class="agree-line">
+						ㆍ전자적 전송매체를 통한 광고성 정보 수신을 동의하시겠습니까?
+						<div>
+							<label><input type="radio" name="consent-for-marketing" value="false">비동의</label>
+							<label><input type="radio" name="consent-for-marketing" value="true">동의</label>
+						</div>
+					</div>
+					
+					<!-- 광고성 정보 상세 선택 -->
+					<div class="marketing-channels-detail">
+						<label><input type="checkbox" name="marketing-channel-all">전체</label>
+						<label><input type="checkbox" name="marketing-channel-phone">전화(ARS)</label>
+						<label><input type="checkbox" name="marketing-channel-sms">문자(모바일 메시지 포함)</label>
+						<label><input type="checkbox" name="marketing-channel-email">이메일</label>
+					</div>
+				</div>
+				
+				<!-- ===================================================== -->
+				<!-- [컨텐츠 박스 #2] 개인(신용)정보 제공 안내/동의                                     -->
+				<!-- ===================================================== -->
+				<div class="content-box">
+					<div class="content-box__title">2. 제공에 관한 사항</div>
+					
+					<!-- 안내 이미지 & 설명 -->
+					<div class="content-box__main">
+						<div class="content-box__main__image">
+							<img th:src="@{/mypage/images/safetyBar2.png}">
+							<p>※위 등급은 사생활 침해 위험, 혜택, 명확성 등을 종합적으로 고려하여 동의내용의 평가등급을 제공하는 제도입니다.</p>
+						</div>
+						
+						<!-- 안내 목록 -->
+						<div class="content-box__main__list">
+						<ul class="info-list">
+						  <li class="list-item">
+						    <h3 class="list-item-title">제공받는 자(2개)</h3>
+						    <p>- 당사와 모집위탁계약을 체결한 자(설계사, 대리점 등)</p>
+							<p>- NICE평가정보(주)</p>
+						  </li>
+
+						  <li class="list-item">
+						    <h3 class="list-item-title">제공받는 자의 이용 목적</h3>
+						      <p>- 모집수탁자: 당사 상품·서비스 소개 및 판매, 사은·판촉행사 안내, 시장조사</p>
+						      <p>- NICE평가정보(주): 공공정보 조회</p>
+						  </li>
+
+						  <li class="list-item">
+						    <h3 class="list-item-title">보유 및 이용기간</h3>
+						    <p>- 보험계약 체결실적이 있는 경우: 동의일로부터 5년</p>
+							<p>- 보험계약 체결실적이 없는 경우: 동의일로부터 2년
+								<br>&nbsp;&nbsp;(단, 비대면채널은 동의일로부터 3년, NICE평가정보로 전송한 정보는 공공정부 조회 후 즉시 파기)</p>
+						  </li>
+						  
+						  <li class="list-item">
+  						    <h3 class="list-item-title">거부 권리 및 불이익</h3>
+  						    <p>- 귀하는 위 개인(신용)정보 제공에 관한 동의를 거부하실 수 있습니다. 다만, 동의하지 않으실 경우 상품·서비스 소개 및 판매, 사은·판촉행사 안내 등의
+								<br>&nbsp;&nbsp; 혜택을 받지 못할 수 있습니다.</p>
+  						  </li>
+
+						  <li class="list-item">
+							<h3 class="list-item-title">제공항목</h3>
+						    <table class="custom-table" >
+								<tr>
+									<th rowspan="2">개인(신용)정보</th>
+									<td>일반개인정보: 성명, DI, 생년월일, 주소, 직업, 유무선 전화번호, 이메일, 차량번호, 성별, 위치정보</td>
+								</tr>
+								<tr>
+									<td>신용거래정보: 보험 및 대출계약 정보, 보험금지급 관련 정보, 자동차보험 만기일자, 당사 고객포인트</td>
+								</tr>
+							</table>
+						  </li>
+						</ul>
+						</div>
+					</div>
+					
+					<!-- 동의 여부 선택 -->
+					<div class="agree-line">
+						<div>ㆍ위 개인(신용)정보 제공에 동의하십니까?</div>
+						<div>
+							<label><input type="radio" name="consent-for-sharing" value="false">비동의</label>
+							<label><input type="radio" name="consent-for-sharing" value="true">동의</label>
+						</div>
+					</div>
+				</div>
+
+				<!-- ===================================================== -->
+				<!-- [컨텐츠 박스 #3] 개인(신용)정보 조회 안내/동의                                     -->
+				<!-- ===================================================== -->
+				<div class="content-box">
+					<div class="content-box__title">3. 조회에 관한 사항</div>
+					
+					<!-- 안내 이미지 & 설명 -->
+					<div class="content-box__main">
+						<div class="content-box__main__image">
+							<img th:src="@{/mypage/images/safetyBar1.png}">
+							<p>※위 등급은 사생활 침해 위험, 혜택, 명확성 등을 종합적으로 고려하여 동의내용의 평가등급을 제공하는 제도입니다.</p>
+						</div>
+						
+						<!-- 안내 목록 -->
+						<div class="content-box__main__list">
+						<ul class="info-list">
+						  <li class="list-item">
+						    <h3 class="list-item-title">조회 대상 기관(1개)</h3>
+							<p>- NICE평가정보</p>
+						  </li>
+
+						  <li class="list-item">
+						    <h3 class="list-item-title">조회 목적</h3>
+						      <p>- 상품·서비스 소개 및 판매, 사은·판촉행사 안내, 시장조사를 위한 공공정보 조회</p>
+						  </li>
+
+						  <li class="list-item">
+						    <h3 class="list-item-title">조회 동의의 효력기간</h3>
+						    <p>- 보험계약 체결실적이 있는 경우: 동의일로부터 5년</p>
+							<p>- 보험계약 체결실적이 없는 경우: 동의일로부터 2년
+								<br>&nbsp;&nbsp;(단, 비대면채널은 동의일로부터 3년, NICE평가정보로 전송한 정보는 공공정부 조회 후 즉시 파기)</p>
+						  </li>
+						  
+						  <li class="list-item">
+						    <h3 class="list-item-title">거부 권리 및 불이익</h3>
+						    <p>- 귀하는 위 개인(신용)정보 조회에 관한 동의를 거부하실 수 있습니다. 다만, 동의하지 않으실 경우 상품·서비스 소개 및 판매, 사은·판촉행사 안내 등을
+								<br>&nbsp;&nbsp; 위한 공공정보 조회는 불가할 수 있습니다.</p>
+						  </li>
+
+						  <li class="list-item">
+							<h3 class="list-item-title">제공항목</h3>
+						    <table class="custom-table" >
+								<tr>
+									<th>개인(신용)정보</th>
+									<td>공공정보: 신용도, 신용등급, 개인신용평점, 신용평가일자</td>
+								</tr>
+							</table>
+						  </li>
+						</ul>
+						</div>
+					</div>
+					
+					<!-- 동의 여부 선택 -->
+					<div class="agree-line">
+						<div>ㆍ위 개인(신용)정보 조회에 동의하십니까?</div>
+						<div>
+							<label><input type="radio" name="consent-for-lookup" value="false">비동의</label>
+							<label><input type="radio" name="consent-for-lookup" value="true">동의</label>
+						</div>
+					</div>
+				</div>
+				
+				<!-- ===================================================== -->
+				<!-- [컨텐츠 박스 #4] 소비자 권익보호에 관한 사항                                     -->
+				<!-- ===================================================== -->
+				<div class="content-box">
+					<div class="content-box__title">4. 소비자 권익보호에 관한 사항</div>
+					
+					<div class="content-box__main">
+						
+						<!-- 안내 목록 -->
+						<div class="content-box__main__list">
+						<ul>
+						  <li class="info-list--simple">본 동의는 보험계약 체결에 필수적이지 않으며 동의를 거부하실 수 있습니다.</li>
+
+						  <li class="info-list--simple">또한, 동의하시더라도 당사 홈페이지 및 고객센터를 통해 철회하거나 가입권유 목적의 연락에 대한 중단을 요청하실 수 있으며, 
+							<br>연락중지청구시스템(Do not Call 센터, www.donotcall.or.kr)을 통해 언제든지 마케팅활동에 대한 중지를 요청할 수 있습니다.</li>
+
+						  <li class="info-list--simple">동의하시는 경우 상품이나 서비스의 홍보 및 판매권유 등의 목적으로 개인정보를 이용하여 연락을 드릴 수 있습니다.</li>
+						</ul>
+						</div>
+					</div>
+					
+					<!-- 개인정보처리방침 안내 및 링크 -->
+					<div class="agree-line">
+						<div>ㆍ개인정보보호 규정에 대한 전체 내용은 개인정보처리방침을 확인해 주세요.</div>
+					</div>
+					
+					<button class="personal-info-using-guide">개인정보처리방침 보기</button>
+				</div>
+			</div>
+				
+			<button class="consent-submit-button" type="submit">
+				동의내용 저장하기</button>
+			</form>
+			
+		</div>
+		<script th:src="@{/mypage/js/marketingAgreement.js}"></script>
+	</main>
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/common/layout.html}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>무이자 할부 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
+	<link rel="stylesheet" th:href="@{/club/css/club_common.css}">
+	<link rel="stylesheet" th:href="@{/club/css/PP050301_001.css}">
+	<link rel="stylesheet" th:href="@{/club/css/tip-box.css}">
+</head>
+
+<body>
+	<main layout:fragment="content">
+		<div class="ui-tab-pnls">
+			<section class="base-content">
+				<div class="content-layout"> <!--content 부분-->
+					<nav th:replace="~{/common/fragments/breadcrumb :: trail(${bcLabels})}"></nav>
+					<div class="content-title"> <!-- 제목 -->
+						<h1>
+							무이자할부, 포인트결제 등 <br>
+							신용카드로 누리는 실속 보험생활
+						</h1>
+					</div>
+
+					<div id="tab-btns"> <!-- 버튼 -->
+						<button id="tab-btn1" class="tab-btn">
+							무이자할부
+						</button>
+						<button id="tab-btn2" class="tab-btn">
+							포인트결제
+						</button>
+						<button id="tab-btn3" class="tab-btn">
+							후청구 서비스
+						</button>
+					</div>
+
+					<div class="main-contents">
+						<!-- 무이자할부 tab -->
+						<div class="content-main">
+							<div class="tit-wrap-m">
+								<h2 class="tit-con">9월 신용카드 혜택</h2>
+							</div>
+							<div class="card-list-grid">
+								<!-- 각 카드박스ㅡ -->
+								<div class="card-benefit" th:each="b : ${benefitInterestFree}">
+									<div class="card-header">
+										<img th:src="@{${b.img_src}}" th:alt="${b.card_company_name + ' 로고'}">
+										<span class="card-call-number" th:text="${b.phone_number}">
+											0000-0000
+										</span>
+									</div>
+									<div class="card-benefit-body">
+										<ul class="tag-list">
+											<li th:classappend="${#strings.isEmpty(b.interest_free_months)} ? 'ghost'">
+												<span class="tag-card">무이자</span>
+												<span
+													th:text="${#strings.isEmpty(b.interest_free_months) ? '' : b.interest_free_months + '개월'}"></span>
+											</li>
+
+											<li
+												th:classappend="${#strings.isEmpty(b.partial_interest_months)} ? 'ghost'">
+												<span class="tag-card2">부분 무이자</span>
+												<span
+													th:text="${#strings.isEmpty(b.partial_interest_months) ? '' : b.partial_interest_months + '개월'}"></span>
+											</li>
+										</ul>
+										<ul class="exce-list"
+											th:if="${b.months_details != null and !#strings.isEmpty(b.months_details)}"
+											th:with="
+										      raw=${b.months_details},
+										      step1=${#strings.replace(raw, '\r\n', '\n')},
+										      step2=${#strings.replace(#strings.replace(step1, '<br/>', '\n'), '<br>', '\n')},
+										      lines=${#strings.arraySplit(step2, '\n')}
+										    ">
+											<li th:each="line : ${lines}"
+												th:if="${!#strings.isEmpty(#strings.trim(line))}"
+												th:text="${#strings.trim(line)}"></li>
+										</ul>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="tip-box">
+								<div>확인해 주세요</div>
+								<ul>
+									<li>
+										위 서비스는 해당 신용카드회사에서 제공하며, 카드사 사정에 따라 서비스 기간 중도에 변경되거나 종료될 수 있습니다.
+									</li>
+									<li>
+										무이자 및 부분 무이자할부는 개인신용카드만 가능합니다.(법인, 체크, 기프트, 올앳 카드 제외)
+									</li>
+									<li>
+										삼성화재 다이렉트 자동차보험(이륜차 포함), 해외유학보험 5만원 이상, 영업배상책임보험 20만원 이상 결제 시 위 무이자 혜택이 적용됩니다.
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<!-- 포인트결제 tab -->
+						<div class="content-main">
+							<div class="point-list-flex point">
+								<!-- 애니포인트 -->
+								<div class="point-list">
+									<div class="tit-wrap-m">
+										<h2 class="tit-con">애니포인트</h2>
+									</div>
+									<div class="card">
+										<ul class="benefitJson5">
+											<!-- <li>가 카드박스 하나 -->
+											<li>
+												<div class="card-header">
+													<img th:src="@{/club/images/card/img_card_logo_samsung2.png}"
+														alt="삼성화재 로고">
+													<div class="fr">
+														<span class="title">애니포인트</span>
+														<span class="card-call-number">1600-8204</span>
+													</div>
+												</div>
+												<div class="card-body">
+													<div class="card-flex">
+														<div class="grid-wrap left">
+
+															<ul class="tag-list">
+																<li>
+																	<span class="tag-card">포인트 결제</span>
+																	한도 없음
+																</li>
+															</ul>
+
+															<div class="first-list">
+																<ul class="exce-list">
+																	<li>자동차보험 : 1,000P부터 사용 가능</li>
+																	<li>이외 다른 상품 : 1P부터 사용 가능</li>
+																</ul>
+															</div>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="애니포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_anypoint.png}"
+																data-cta-text="애니포인트 자세히 보기"
+																th:data-cta-href="@{/club/PP050401_001}"
+																th:data-url="@{/club/terms/ani_point_terms.txt}">
+																사용 안내
+															</button>
+														</div>
+
+														<div class="grid-wrap right">
+															<ul class="exce-list">
+																<li>
+																	적용상품
+																	<p>
+																		자동차보험(신규/갱신 모두), 장기보험 첫 회 보험료(건강보험, 암보험, 어린이보험,
+																		운전자보험,<br>
+																		주택화재보험, 치아보험), 국내여행보험, 해외여행보험(개인형), 반려견보험,
+																		반려묘보험, 골프보험
+																	</p>
+																</li>
+																<li>
+																	사용방법
+																	<p>
+																		- 보유포인트 확인 후 사용<br>
+																		- 신용카드와 애니포인트로 같이 결제하는 경우, 신용카드 결제금액 최소 10원 이상
+																		필요<br>
+																		- 실시간 계좌이체 및 무통장입금 시 포인트 사용 불가
+																	</p>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- 신용카드 -->
+								<div class="point-list">
+									<div class="tit-wrap-m">
+										<h2 class="tit-con">신용카드</h2>
+									</div>
+									<!-- 삼성카드 -->
+									<div class="card">
+										<ul class="benefitJson5">
+											<li>
+												<div class="card-header">
+													<img th:src="@{/club/images/card/img_card_logo_samsung.png}"
+														alt="삼성카드 로고">
+													<div class="fr">
+														<span class="title">삼성카드 보너스 포인트</span>
+														<span class="card-call-number">1588-8700</span>
+													</div>
+												</div>
+												<div class="card-body">
+													<div class="card-flex">
+														<div class="grid-wrap left">
+															<ul class="tag-list">
+																<li>
+																	<span class="tag-card">포인트 결제</span>
+																	보유포인트 전액
+																</li>
+															</ul>
+
+															<div class="first-list">
+																<ul class="exce-list">
+																	<li>포인트 전액 사용 필수(일부 사용 불가, 한도 없음)</li>
+																</ul>
+															</div>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="삼성카드 보너스포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_samsung.png}"
+																th:data-url="@{/club/terms/samsung_point_terms.txt}">
+																사용 안내
+															</button>
+														</div>
+
+														<div class="grid-wrap right">
+															<ul class="exce-list">
+																<li>
+																	적용상품
+																	<p>자동차보험(신규/갱신 모두), 운전자보험 첫 회 보험료, 해외여행보험</p>
+																</li>
+																<li>
+																	사용방법
+																	<p>- '삼성카드' 선택 후 보너스 포인트 사용여부 체크</p>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<!-- 신한카드 -->
+									<div class="card">
+										<ul class="benefitJson5">
+											<li>
+												<div class="card-header">
+													<img th:src="@{/club/images/card/img_card_logo_shinhan.png}"
+														alt="신한카드 로고">
+													<div class="fr">
+														<span class="title">신한카드 마이신한포인트</span>
+														<span class="card-call-number">1544-7000</span>
+													</div>
+												</div>
+												<div class="card-body">
+													<div class="card-flex">
+														<div class="grid-wrap left">
+															<ul class="tag-list">
+																<li>
+																	<span class="tag-card">포인트 결제</span>
+																	보유포인트 전액
+																</li>
+															</ul>
+
+															<div class="first-list">
+																<ul class="exce-list">
+																	<li>사용 포인트 직접 지정(한도 없음)</li>
+																</ul>
+															</div>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="신한카드 마이신한포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_shinhan.png}"
+																th:data-url="@{/club/terms/shinhan_point_terms.txt}">
+																사용 안내
+															</button>
+														</div>
+
+														<div class="grid-wrap right">
+															<ul class="exce-list">
+																<li>
+																	적용상품
+																	<p>자동차보험(신규/갱신 모두)</p>
+																</li>
+																<li>
+																	사용방법
+																	<p>- '신한카드' 선택 후 마이신한포인트 사용여부 체크하여 포인트 직접 지정</p>
+																	<p>- 신한BC카드 제외</p>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<!-- 현대카드 -->
+									<div class="card">
+										<ul class="benefitJson5">
+											<li>
+												<div class="card-header">
+													<img th:src="@{/club/images/card/img_card_logo_hyundai.png}"
+														alt="현대카드 로고">
+													<div class="fr">
+														<span class="title">현대카드 M 포인트</span>
+														<span class="card-call-number">1577-6000</span>
+													</div>
+												</div>
+												<div class="card-body">
+													<div class="card-flex">
+														<div class="grid-wrap left">
+															<ul class="tag-list">
+																<li>
+																	<span class="tag-card">포인트 결제</span>
+																	최대 3만 M포인트(보험계약 1건당)
+																</li>
+															</ul>
+
+															<div class="first-list">
+																<ul class="exce-list">
+																	<li>포인트 전액 사용 필수(일부 사용 불가)</li>
+																</ul>
+															</div>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="현대카드 M포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_hyundai.png}"
+																th:data-url="@{/club/terms/hyundai_point_terms.txt}">
+																사용 안내
+															</button>
+														</div>
+
+														<div class="grid-wrap right">
+															<ul class="exce-list">
+																<li>
+																	적용상품
+																	<p>자동차보험(삼성화재 신규가입 차량만 사용 가능)</p>
+																</li>
+																<li>
+																	사용방법
+																	<p>- '현대카드' 선택 후 M포인트 사용여부 체크</p>
+																	<p>- 24개월 할부 이용 시 사용 불가</p>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<!-- 하나카드 -->
+									<div class="card">
+										<ul class="benefitJson5">
+											<li>
+												<div class="card-header">
+													<img th:src="@{/club/images/card/img_card_logo_hana.png}"
+														alt="하나카드 로고">
+													<div class="fr">
+														<span class="title">하나카드 하나머니 포인트</span>
+														<span class="card-call-number">1800-1111</span>
+													</div>
+												</div>
+												<div class="card-body">
+													<div class="card-flex">
+														<div class="grid-wrap left">
+
+															<ul class="tag-list">
+																<li>
+																	<span class="tag-card">포인트 결제</span>
+																	보유포인트 전액
+																</li>
+															</ul>
+
+															<div class="first-list">
+																<ul class="exce-list">
+																	<li>포인트 전액 사용 필수(일부 사용 불가)</li>
+																</ul>
+															</div>
+															<button type="button" class="btn-small terms-trigger"
+																data-title="하나카드 하나머니포인트 사용 안내"
+																th:data-img="@{/club/images/point/img_card_hana.png}"
+																th:data-url="@{/club/terms/hana_point_terms.txt}">
+																사용 안내
+															</button>
+														</div>
+
+														<div class="grid-wrap right">
+															<ul class="exce-list">
+																<li>
+																	적용상품
+																	<p>자동차 보험(신규/갱신 모두)</p>
+																</li>
+																<li>
+																	사용방법
+																	<p>- '하나카드' 선택 후 하나머니 사용여부 체크</p>
+																	<p>- 하나BC카드 제외</p>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+
+									<!-- 포인트카드 -->
+									<div class="point-list">
+										<div class="tit-wrap-m">
+											<h2 class="tit-con">포인트카드</h2>
+										</div>
+										<div class="card">
+											<ul class="benefitJson5">
+												<!-- <li>가 카드박스 하나 -->
+												<li>
+													<div class="card-header">
+														<img th:src="@{/club/images/card/img_card_logo_samsung.png}"
+															alt="삼성카드 로고">
+														<div class="fr">
+															<span class="title">U 포인트</span>
+															<span class="card-call-number">1588-8700</span>
+														</div>
+													</div>
+													<div class="card-body">
+														<div class="card-flex">
+															<div class="grid-wrap left">
+
+																<ul class="tag-list">
+																	<li>
+																		<span class="tag-card">포인트 결제</span>
+																		1,000P부터 사용 가능
+																	</li>
+																</ul>
+
+																<div class="first-list">
+																	<ul class="exce-list">
+																		<li>1,000P부터 사용 가능</li>
+																	</ul>
+																</div>
+																<button type="button" class="btn-small terms-trigger"
+																	data-title="삼성카드 U포인트 사용 안내"
+																	th:data-img="@{/club/images/point/img_card_samsungU.png}"
+																	th:data-url="@{/club/terms/samsungpoint_point_terms.txt}">
+																	사용 안내
+																</button>
+															</div>
+
+															<div class="grid-wrap right">
+																<ul class="exce-list">
+																	<li>
+																		적용상품
+																		<p>
+																			자동차보험(신규/갱신 모두)
+																		</p>
+																	</li>
+																	<li>
+																		사용방법
+																		<p>
+																			- 보유포인트 확인 후 사용<br>
+																			- 신용카드 포인트와 함께 사용하는 경우, 신용카드 결제금액 최소 10원 이상
+																			필요<br>
+																		</p>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+
+									<div class="tip-box">
+										<div>확인해 주세요</div>
+										<ul>
+											<li>
+												보유포인트 및 포인트 적립/사용 상세내역은 해당 카드사 홈페이지에서 확인해 주세요.
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- 모달창 -->
+						<dialog id="termsModal" class="terms-modal">
+							<div class="modal-header">
+								<h1 id="termsTitle"></h1>
+								<button id="termsX" class="x_btn" aria-label="Close" value="close">✕</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="body-img"><img id="termsImg" alt="" /></div>
+								<pre id="termsContent"></pre>
+								<a id="termsCta" class="btn btn-outline" target="_blank" rel="noopener"></a>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" id="termsOk" class="btn btn-primary">확인</button>
+							</div>
+						</dialog>
+
+						<!-- 후청구 서비스 tab -->
+						<div class="content-main">
+							<div class="section-group">
+								<div class="tit-wrap-m">
+									<h2 class="tit-con">
+										보험 가입은 했는데 보장은 나중에?<br>
+										이럴 때는 카드대금 천천히 내세요
+									</h2>
+								</div>
+
+								<ul class="exce-list subClaim">
+									<li>대상 고객: 삼성화재 다이렉트 자동차보험 가입고객</li>
+									<li>
+										대상 카드: 삼성, 현대, 신한, BC, 롯데, 우리, 하나, KB국민카드(법인카드 제외)<br>
+										*여러 대의 자동차 보험료를 한꺼번에 결제하거나, 장기/일반/이륜차보험을 가입하는 경우는 이용 제외
+									</li>
+								</ul>
+							</div>
+
+							<div class="section-group">
+								<div class="tit-wrap-m">
+									<h2 class="tit-con">후청구 서비스란?</h2>
+								</div>
+
+								<ul class="exce-list subClaim">
+									<li>자동차보험의 시작일보다 미리 보험에 가입하는 경우, 보험료 청구를 지연시켜 주는 서비스</li>
+									<li>자동차보험 시작일보다 7~30일 빨리 가입하는 경우 이용 가능</li>
+								</ul>
+							</div>
+
+							<div class="section-group">
+								<div class="tit-wrap-m">
+									<h2 class="tit-con">카드대금 후청구 예시</h2>
+								</div>
+
+								<ul class="exce-list subClaim">
+									<li>카드대금 청구지연은 최대 30일까지 가능하며, 보험 가입시점별 청구지연 기간은 아래 표 참조</li>
+								</ul>
+
+								<table>
+									<colgroup>
+										<col>
+										<col>
+									</colgroup>
+
+									<thead>
+										<tr>
+											<th>보험 가입시점</th>
+											<th>카드대금 청구기준일</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr>
+											<td>보험시작일보다 30일 이상 미리 가입</td>
+											<td>보험시작일보다 7~30일 미리 가입</td>
+										</tr>
+										<tr>
+											<td>가입일로부터 30일째 되는 날 청구</td>
+											<td>보험시작일에 청구</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="tip-box">
+								<div>확인해 주세요</div>
+								<ul>
+									<li>
+										카드대금 청구기준일은 고객님의 계좌에서 보험료가 인출되는 날짜가 아니라 삼성화재가 카드사에 대금을 청구하는 날입니다.
+									</li>
+									<li>
+										계좌에서 보험료가 인출되는 날짜는 카드사와 결제일마다 다르므로, 카드사에서 확인해 주세요.
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+			</section>
+		</div>
+		<script th:src="@{/club/js/PP050301_001.js}"></script>
+
+	
+
+	</main>
+</body>
+
+</html>

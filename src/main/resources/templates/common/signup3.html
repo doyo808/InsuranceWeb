@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>회원가입 완료</title>
+	<style>
+		.container {
+			text-align: center;			
+			margin-top: 200px;
+		}
+       /* 메인 축하 메시지 */
+       h1 {
+           font-size: 26px;
+           font-weight: 700;
+           color: #333;
+           margin: 0 0 15px 0;
+       }
+
+       /* 보조 메시지 */
+       p {
+           font-size: 16px;
+           color: #666;
+           margin-bottom: 35px;
+           line-height: 1.6;
+       }
+
+       /* 로그인 버튼 */
+       #login-btn {
+           padding: 15px;
+           font-size: 18px;
+           font-weight: 600;
+           color: #fff;
+           background-color: #007bff; 
+           border: none;
+           border-radius: 8px;
+           cursor: pointer;
+       }
+   </style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div class="container">
+		    <h1>회원가입이 완료되었습니다!</h1>
+		    <p>환영합니다! 지금 바로 로그인하여<br>모든 서비스를 이용해 보세요.</p>
+		    <button id="login-btn" th:data-login-url="@{/login}">로그인 페이지로 이동</button>
+		</div>
+
+		<script>
+		    const loginButton = document.getElementById('login-btn');
+
+		    loginButton.addEventListener('click', () => {
+				const loginUrl = loginButton.dataset.loginUrl;
+		        window.location.href = loginUrl;
+		    });
+		</script>
+	</main>
+</body>
+</html>

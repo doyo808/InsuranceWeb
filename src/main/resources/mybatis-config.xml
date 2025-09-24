@@ -4,8 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	
-  <typeAliases>
-  	<typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
-  </typeAliases>
+	<typeAliases>
+          <typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.common.dto.PersonDTO" alias="person"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.club.dto.Card_company" alias="cardCompany"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit_interest_free" alias="cardBenefitInterestFree"></typeAlias>
+  	</typeAliases>
+
   
+  	
 </configuration>

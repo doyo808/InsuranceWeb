@@ -1,0 +1,345 @@
+/* ----------- 무이자할부 -----------*/
+#tab-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 50px;
+}
+
+.card-list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin: 30px auto 50px; 
+    justify-content: center;
+    max-width: 1000px;
+    /* 원하는 최대 폭 지정 */
+}
+
+/* ---------------여기부터 포인트 결제-------------- */
+
+.point .point-title {
+    font-weight: 500;
+}
+
+.point .point-list-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.main-contents {
+    margin: 0 50px;
+}
+
+.point .card {
+	margin: 30px 0 50px;
+    width: 1100px;
+    height: 390px;
+    font-size: 12px;
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid #EAEBED;
+    background-color: #fff;
+}
+
+.point .card-body {
+    padding: 0 20px;
+    
+}
+
+.card-flex {
+  display: flex;
+  align-items: flex-start;        /* 상단 정렬 */
+  justify-content: flex-start;    /* 왼쪽 정렬 (좌우로 벌리려면 space-between) */
+  gap: 25px;                      /* 좌/우 간격 */
+  height: auto;                   /* fit-content 대신 auto 추천 */
+}
+
+.card-flex > .grid-wrap{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;  /* ← 이거면 내부 아이템이 왼쪽 정렬됨 */
+	flex: 1;
+	min-height: 1px;
+}
+
+.grid-wrap.left{
+  flex: 1;         
+  white-space: nowrap;
+  margin-top: 20px;
+  
+}
+
+.grid-wrap.right{
+  flex: 2;          
+  white-space: nowrap;
+}
+
+
+.point .exce-list>li::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background-color: #868686;
+    border-radius: 50%;
+    margin-right: 6px;   /* 글자와 간격 */
+    vertical-align: top; /* 글자 높이랑 맞추기 */
+    
+}
+
+.fr>.title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.grid-wrap >.btn-small {
+    display: inline-block;
+    color: #2C7FDF;
+    border: 1px solid #2C7FDF;
+    background: #FFFFFF;
+    border-radius: 19px; 
+    align-self: flex-start;         
+    max-width: fit-content;
+    padding: 6px 24px 5px;
+    font-size: 15px;
+    line-height: 24px;
+    margin-left: 40px;
+	cursor: pointer;
+}
+
+
+
+
+.point .exce-list>li {
+    white-space: nowrap;
+    display: block;
+    margin: 0px 10px 50px;
+    font-size: 15px;
+    color: #111;
+}
+
+.point .exce-list p,
+.point .first-list>.exce-list>li,#termsContent {
+    font-size: 14px;
+    color: #757679;
+}
+
+.first-list>.exce-list {
+    margin: 0 0 30px 40px;
+}
+
+.grid-wrap .first-list .exce-list > li {
+  margin-bottom: 4px;
+}
+
+.point .tag-list {
+    justify-content: start;
+    margin-left: 50px;
+    
+}
+
+
+
+
+
+/* ----------- 여기부터 후청구 예시-------------- */
+
+table col {
+    width: 580px;
+}
+
+tr>* {
+    text-align: center; 
+}
+
+table {
+    margin-top: 20px;
+    border-top: 2px solid #545557;   /* 위쪽 굵은 선 */
+    border-bottom: 1px solid #D9DADC; /* 아래쪽 얇은 선 */
+    border-collapse: collapse;       /* 셀 경계선 겹치기 */
+    width: 100%;
+    table-layout: auto;
+    margin-bottom: 60px;
+}
+
+tr > th {
+    height: 67px;
+    padding: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    color: #545557;
+    border-bottom: 1px solid #EAEBED;
+    border-right: 1px solid #EAEBED; /* 가운데 구분선 */
+    background-color: #F9FAFB;
+}
+
+tr > td {
+    height: 87px;
+    padding: 30px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: center;
+    color: #757679;
+    background: #fff;
+    border-bottom: 1px solid #EAEBED;
+    border-right: 1px solid #EAEBED; /* 가운데 구분선 */
+    letter-spacing: -0.25px;
+}
+
+/* 마지막 열(th, td)에서는 오른쪽 선 제거 */
+tr > th:last-child,
+tr > td:last-child {
+    border-right: none;
+}
+
+.exce-list.subClaim {
+    margin: 15px 30px 50px 40px;
+}
+
+
+/* ------------ modal -------------*/
+
+#termsModal {
+	width: 600px;
+}
+
+#termsTitle {
+	font-size: 30px;
+}
+
+dialog {
+	max-width: 90vw;
+	border: none;
+	border-radius: 12px;
+}
+
+dialog::backdrop {
+	background: rgba(0, 0, 0, .45);
+}
+
+
+
+.x_btn {
+	cursor: pointer;
+	font-size: 30px;
+	font-weight: 600;
+	background: none;
+	border: none;
+}
+
+/* 모달 내부 포커스 테두리 제거 */
+.terms-modal *:focus,
+.terms-modal *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* X 버튼 추가 보호 */
+.x_btn:focus,
+.x_btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 모바일 탭 하이라이트 제거 (선택) */
+.terms-modal * { -webkit-tap-highlight-color: transparent; }
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.modal-header > h1 {
+	margin: 0;
+}
+
+.body-img {
+	text-align: center;
+	margin: 30px 0 60px;
+}
+
+#termsImg {
+	width: auto;
+	height: 150px;
+}
+
+.modal-body {
+	
+	max-height: 70vh;
+	overflow: auto;
+}
+
+pre {
+	font-size: 14px;
+	white-space: pre-wrap;
+	padding: 0 40px;
+	font-family: 'Noto Sans KR', sans-serif;
+	line-height: 2.3;
+	
+	
+}
+
+.modal-footer {
+	display: flex;
+	justify-content: center;
+    padding: 30px 40px;
+    border: none;
+    box-shadow: none;
+}
+
+#termsCta {
+	font-size: 15px;
+	width: 200px;
+	height: 40px;
+	color: #545557;
+	border: 1px solid #D9DADC;
+	background: #FFFFFF;
+	min-width: auto;
+	display: inline-block;
+	padding: 5px 24px 5px;
+	border-radius: 19px;
+	vertical-align: middle;
+	margin: 0 40px;
+}
+
+.btn-arr span::after {
+    content: "";
+	background: url(../images/exclamation.svg) no-repeat 0 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.btn-primary {
+	cursor: pointer;
+	font-size: 18px;
+	text-align: center;
+	color: #FFFFFF;
+    border: 1px solid #2C7FDF;
+    background: #2C7FDF;
+	padding: 14px 20px;
+	min-width: 250px;
+	line-height: 28px;
+	border-radius: 6px;
+	font-size: 18px;
+}
+
+.ghost { 
+	visibility: hidden; 
+}    
+
+/* 모달 CTA가 hidden이면 무조건 안 보이게 */
+#termsCta[hidden],
+#termsCta.is-hidden { 
+	display: none !important; 
+}

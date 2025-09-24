@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>보험금 청구 - 사고 정보</title>
+  <link rel="stylesheet" th:href="@{/css/claim.css}">
+  <style>
+    .section { margin: 20px 0; }
+    .label { font-weight: bold; margin-bottom: 8px; display: block; }
+    .input-box { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    .category-box { display: flex; gap: 10px; margin-top: 10px; }
+    .category-btn {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #f9f9f9;
+    }
+    .category-btn.active {
+      border: 2px solid #007bff;
+      background-color: #eaf3ff;
+      font-weight: bold;
+    }
+    .hidden { display: none; }
+    .radio-group { margin-top: 10px; }
+    .radio-group label { margin-right: 20px; }
+    .btn-primary {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn-primary:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div class="container">
+		  <h2>사고 정보 입력</h2>
+
+		  <!-- ✅ form submit -->
+		  <form th:action="@{/claim/claimpage4}" method="post">
+
+		    <!-- 1. 사고발병일 -->
+		    <div class="section">
+		      <label class="label">사고일/발병일</label>
+		      <input type="date" id="dateSelector" name="accidentDate" class="input-box" required>
+		    </div>
+
+		    <!-- 2. 사고유형 -->
+		    <div class="section">
+		      <label class="label">사고유형</label>
+		      <div class="category-box">
+		        <div class="category-btn" data-type="injury">상해</div>
+		        <div class="category-btn" data-type="disease">질병</div>
+		        <div class="category-btn" data-type="traffic">교통사고</div>
+				<input type="hidden" id="accidentType" name="accidentType" required>
+		      </div>
+		      
+		      <!-- 상해/교통사고 사고내용 -->
+		      <textarea id="accidentDesc" name="accidentDesc" class="input-box hidden" 
+		                placeholder="사고내용을 입력하세요"></textarea>
+
+		      <!-- 질병 선택 -->
+		      <select id="diseaseSelect" name="diseaseType" class="input-box hidden">
+		        <option value="">주요진단을 선택하세요</option>
+				<option value="감기">감기</option>
+				<option value="기관지염">기관지염</option>
+				<option value="허리통증">허리통증</option>
+				<option value="목통증">목통증</option>
+				<option value="무릎통증">무릎통증</option>
+				<option value="어깨통증">어깨통증</option>
+				<option value="장염">장염</option>
+				<option value="위염">위염</option>
+				<option value="자궁경부염증">자궁경부염증</option>
+				<option value="질염증">질염증</option>
+				<option value="고혈압">고혈압</option>
+				<option value="두통">두통</option>
+				<option value="치아우식">치아우식</option>
+				<option value="피부질환">피부질환</option>
+				<option value="근육통">근육통</option>
+				<option value="기타">기타</option>
+		      </select>
+
+		      <!-- 질병 진단내용 -->
+		      <textarea id="diseaseDetail" name="diseaseDetail" class="input-box hidden" 
+		                placeholder="진단내용을 입력하세요"></textarea>
+		    </div>
+
+		    <!-- 3. 의료급여 수급권자 -->
+		    <div class="section">
+		      <label class="label">의료급여 수급권자 여부</label>
+		      <div class="radio-group">
+		        <label><input type="radio" name="medicalSupport" value="yes"> 예 (의료급여 1·2종에 해당)</label>
+		        <label><input type="radio" name="medicalSupport" value="no" checked> 아니요</label>
+		      </div>
+		    </div>
+
+		    <!-- 다음 버튼 -->
+		    <button type="submit" class="btn-primary">다음</button>
+		  </form>
+		</div>
+		
+		<script>
+		function claimpage3 () {	
+			const buttons = document.querySelectorAll('.category-btn');
+			const accidentDesc = document.getElementById('accidentDesc');
+			const diseaseSelect = document.getElementById('diseaseSelect');
+			const diseaseDetail = document.getElementById('diseaseDetail');
+			
+			// 사고유형 선택
+			buttons.forEach(btn => {
+			  btn.addEventListener('click', () => {
+			    buttons.forEach(b => b.classList.remove('active'));
+			    btn.classList.add('active');
+			
+			    if (btn.dataset.type === 'injury' || btn.dataset.type === 'traffic') {
+			      accidentDesc.classList.remove('hidden');
+			      diseaseSelect.classList.add('hidden');
+			      diseaseDetail.classList.add('hidden');
+			    } else if (btn.dataset.type === 'disease') {
+			      diseaseSelect.classList.remove('hidden');
+			      accidentDesc.classList.add('hidden');
+			      diseaseDetail.classList.add('hidden');
+			    }
+			  });
+			});
+			
+			// 질병 select 선택 시 진단내용 textarea 표시
+			diseaseSelect.addEventListener('change', () => {
+			  if (diseaseSelect.value !== "") {
+			    diseaseDetail.classList.remove('hidden');
+			  } else {
+			    diseaseDetail.classList.add('hidden');
+			  }
+			});
+			 
+			const dateInput = document.getElementById('dateSelector');
+			// 클릭했을 때 바로 캘린더 열기
+			dateInput.addEventListener('click', function() {
+			  this.showPicker();
+			});
+		  
+			document.querySelectorAll('.category-btn').forEach(btn => {
+		      btn.addEventListener('click', function () {
+		        // 모든 버튼 초기화
+		        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+		        // 현재 버튼 활성화
+		        this.classList.add('active');
+		        // hidden input에 값 넣기
+		        document.getElementById('accidentType').value = this.dataset.type;
+		      });
+		    });
+		  
+		  }
+		  claimpage3();
+		  
+		  
+		</script>
+	</main>
+</body>
+</html>

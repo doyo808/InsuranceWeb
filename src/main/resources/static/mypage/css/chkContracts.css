@@ -1,0 +1,104 @@
+
+/* 상단의 현재위치 */
+.navi-current {
+	padding-top: 30px;
+	text-align: right;
+	color: gray;
+}
+	.navi-current span {
+		margin: 5px;
+	}
+	.navi-current span:not(:first-child)::before {
+		content: '>';
+		margin-right: 10px;
+	}
+	.navi-current span:last-child {
+		font-weight: 500;
+	}
+
+/* 유지, 전체 버튼 */
+.btn_wrap {
+	display: flex;
+	justify-content: center;
+}
+	.btn_wrap div {
+		cursor: pointer;
+		width: fit-content;
+		height: 45px;
+		font-size: 18px;
+		font-weight: 600;
+		color: gray;
+		border-bottom: 3px solid transparent;
+		margin: 15px;
+	}
+	.btn_wrap .btn_clicked {
+		color: #3b92e5;
+		border-bottom: 3px solid #3b92e5;
+	}
+	
+
+h1 {
+	text-align: center;
+	margin: 70px 0 30px 0;
+}
+
+dt {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 25px;
+}
+dt img {
+	width: 30px;
+	margin: 10px 10px -5px 0;
+}
+dd {
+	margin: 10px 0;
+	width: 1200px;
+	color: gray;
+}
+
+
+/* 테이블 */
+.contract_table {
+    width: 1200px;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #333;
+	margin-bottom: 70px;
+}
+
+.contract_table thead th {
+    border-bottom: 1px solid #aaa;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.contract_table tbody td {
+    border-bottom: 1px solid #eee;
+    padding: 12px 10px;
+    vertical-align: top;
+}
+
+.contract_table tbody td .subtext {
+    display: block;
+    color: #888;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.contract_table .no-data {
+    text-align: center;
+    padding: 30px 0;
+    color: #999;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #eef4ff;
+    color: #2962ff;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+}
