@@ -1,0 +1,105 @@
+<!-- common/fragments/footer_menu.html -->
+<div th:fragment="footerMenu">
+	<footer class="footer">
+		
+		
+		<!-- 상단 메뉴 (흰색 영역) -->
+		<div class="footer-nav">
+			<div class="footer-menu">
+				<div class="menu-inner">
+					<div class="menu-item"><a href="#">소비자보호</a></div>
+					<div class="menu-item"><a href="#">신고센터</a></div>
+					<div class="menu-item"><a href="#">패밀리사이트</a></div>
+					<div class="menu-item"><a href="#">다이렉트 SNS</a></div>
+				</div>
+			</div>
+
+			<!-- ✅ 모든 서브메뉴를 감싸는 하나의 wrapper -->
+			<div class="sub-menu-wrapper">
+				<div class="sub-col">
+					<a href="#">휴면보험금 조회</a>
+					<a href="#">자동차간접손해보험 안내</a>
+					<a href="#">과오납보험료 환급신청</a>
+					<a href="#">서민금융1332</a>
+					<a href="#">자동차리콜정보 안내</a>
+					<a href="#">신용정보활용체제공시</a>
+					<a href="#">전자금융거래유의사항</a>
+					<a href="#">이메일무단수집거부</a>
+				</div>
+				<div class="sub-col">
+					<a href="#">보험가입 신고</a>
+					<a href="#">모집질서 신고</a>
+					<a href="#">보험가입차별 신고</a>
+					<a href="#">불법사금융신고센터</a>
+					<a href="#">방카슈랑스부조리신고</a>
+					<a href="#">준법/윤리경영 신고(호루라기)</a>
+				</div>
+				<div class="sub-col">
+					<a href="#">삼성화재 홈페이지</a>
+					<a href="#">삼성화재 모바일뮤지엄</a>
+					<a href="#">삼성화재 교통안전문화연구소</a>					
+					<a href="#">삼성화재 기업안전연구소</a>
+					<a href="#">삼성화재애니카손사</a>
+					<a href="#">삼성화재서비스</a>
+					<a href="#">삼성화재금융서비스</a>
+					<a href="#">삼성화재안내견학교</a>
+				</div>
+				<div class="sub-col">
+					<a href="#">YouTube</a>
+					<a href="#">카카오플러스</a>
+					<a href="#">네이버블로그</a>
+					<a href="#">페이스북</a>
+					<a href="#">인스타그램</a>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 검은색 내용 영역 -->
+		<div class="footer-top">
+			<div class="footer-category">
+				<a href="#">상품공시 ㅣ</a>
+				<a href="#">보험가격공시 ㅣ</a>
+				<a href="#">보호금융상품등록부 ㅣ</a>
+				<a href="#">회원가입약관 ㅣ</a>
+				<a href="#">소비자포털 ㅣ</a>
+				<a href="#">개인정보관리책임자 ㅣ</a>
+				<a href="#"><strong>개인정보처리방침</strong></a>
+			</div>
+			<div class="footer-logos">
+				<img th:src="@{/common/images/logo1.png}" alt="logo1">
+				<img th:src="@{/common/images/logo2.png}" alt="logo2">
+				<img th:src="@{/common/images/logo3.png}" alt="logo3">
+				<img th:src="@{/common/images/logo4.png}" alt="logo4">
+				<img th:src="@{/common/images/logo5.png}" alt="logo5">
+			</div>
+		</div>
+		
+		<div class="footer-middle">
+			<p>삼성화재해상보험주식회사 ㅣ 대표이사 이윤하 ㅣ 서울특별시 서초구 서초대로 74길 14 ㅣ 사업자등록번호 202-81-45617</p>
+			<p>©Samsung Fire & Marine Insurance Co.,Ltd. All Rights Reserved.</p>	   
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="footer-brand">
+				<img th:src="@{/common/images/bi_samsung.png}">
+			</div>
+			<div class="footer-contacts">
+				<div class="contact">
+					<p>삼성화재 고객콜센터<br><span>긴급출동/사고접수</span></p>
+					<strong>1588-5114</strong>
+					<p class="time">365일 24시간</p>
+				</div>
+				<div class="contact">
+					<p>다이렉트 고객센터<br><span>인터넷가입/계약변경</span></p>
+					<strong>1577-3339</strong>
+					<p class="time">평일 09:00~18:00</p>
+				</div>
+				<div class="contact">
+					<p>전화가입 상담센터<br><span>자동차보험 가입전용</span></p>
+					<strong>1600-5008</strong>
+					<p class="time">평일 09:00~18:00</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
