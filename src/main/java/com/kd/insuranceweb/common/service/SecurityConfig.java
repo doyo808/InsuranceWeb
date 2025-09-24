@@ -16,7 +16,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	String[] whiteList = {
-    			"/", "/index.html", "/login", "/common/login.html", 
+    			"/", "/index.html", "/login", "/common/login.html", "/home",
     			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
     			"/api/auth/status"
