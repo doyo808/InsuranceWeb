@@ -1,0 +1,417 @@
+/* ===== 색/톤을 조금 밝게 ===== */
+:root {
+	--bg: #0f1626;
+	/* 기존보다 밝은 남청색 */
+	--panel: #171f2f;
+	--panel-2: #1b2538;
+	--text: #e9edf3;
+	--text-muted: #a8b3c4;
+	--primary: #2C7FDF;
+	--success: #22c55e;
+	--warning: #f59e0b;
+	--danger: #ef4444;
+	--border: #2a3a56;
+	--chip: #20304a;
+	--shadow: 0 8px 24px rgba(5, 10, 20, .35);
+}
+
+* {
+	box-sizing: border-box
+}
+
+html,
+body {
+	height: 100%
+}
+
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--text);
+	font: 14px/1.5 "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+}
+
+/* ===== 상단바 ===== */
+.topbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 18px;
+	background: #101829;
+	border-bottom: 1px solid var(--border);
+}
+
+.topbar h1 {
+	margin: 0;
+	font-size: 18px;
+	letter-spacing: .2px
+}
+
+.top-actions {
+	display: flex;
+	gap: 8px;
+	align-items: center
+}
+
+.avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #2C7FDF, #7aa8ff);
+	display: grid;
+	place-items: center;
+	font-weight: 700;
+	color: #0b0d12
+}
+
+/* 총 폭 확장 + 왼쪽 목록 폭 확장 */
+/* ① 페이지 컨테이너: 가운데 정렬 복구 */
+.page {
+	width: 1440px;
+	margin: 24px auto;
+}
+
+/* ② 푸터 폭도 페이지와 맞추기(또는 .page와 동일 변수 사용) */
+.footer {
+	width: 1440px;
+	/* 1280px → 1440px */
+	margin: 20px auto;
+	color: var(--text-muted);
+	text-align: center;
+}
+
+/* 1280 → 1440 */
+.grid {
+	display: grid;
+	grid-template-columns: 640px 1fr;
+	/* 520 → 640 */
+	gap: 20px;
+}
+
+/* 반응형 무력화 구간도 동일 값으로 맞추기 */
+@media (max-width:2000px) {
+	.grid {
+		grid-template-columns: 640px 1fr !important;
+	}
+
+	.page {
+		width: 1440px !important;
+	}
+}
+
+/* ===== 패널 ===== */
+.panel {
+	background: var(--panel);
+	border: 1px solid var(--border);
+	border-radius: 16px;
+	box-shadow: var(--shadow);
+	overflow: hidden;
+}
+
+.panel-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	padding: 14px 16px;
+	border-bottom: 1px solid var(--border);
+	background: var(--panel-2);
+	gap: 8px;
+}
+
+.panel-header h2 {
+	margin: 0;
+	font-size: 16px;
+	white-space: nowrap;
+	/* 줄바꿈 금지 */
+	word-break: keep-all;
+	/* 한글 단어 쪼개지 않음 */
+
+}
+
+.panel-header .muted {
+	color: var(--text-muted);
+	margin: .25rem 0 0
+}
+
+/* ===== 필터 ===== */
+.filters {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap
+}
+
+.filters select,
+.filters input[type="date"],
+.filters input[type="text"] {
+	background: #121a2b;
+	color: var(--text);
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	padding: 8px 10px;
+	outline: none;
+}
+
+/* ===== 테이블 ===== */
+.table-wrap {
+	overflow: auto
+}
+
+.table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	min-width: 520px
+}
+
+.table th,
+.table td {
+	padding: 12px 12px;
+	border-bottom: 1px solid var(--border)
+}
+
+.table thead th {
+	position: sticky;
+	top: 0;
+	background: var(--panel-2);
+	text-align: left;
+	font-weight: 600
+}
+
+.table .right {
+	text-align: right
+}
+
+.table tbody tr {
+	transition: background .15s
+}
+
+.table tbody tr:hover {
+	background: #141e31
+}
+
+.table tbody tr.active {
+	background: #15213a
+}
+
+/* ===== 배지 ===== */
+.badge {
+	display: inline-block;
+	padding: 4px 8px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 700;
+	background: var(--chip);
+	border: 1px solid var(--border)
+}
+
+.badge.review {
+	color: #fde68a;
+	border-color: #b5892e
+}
+
+.badge.approved {
+	color: #86efac;
+	border-color: #2f7a50
+}
+
+.badge.paid {
+	color: #93c5fd;
+	border-color: #3b82f6
+}
+
+.badge.rejected {
+	color: #fca5a5;
+	border-color: #b91c1c
+}
+
+/* ===== 카드 ===== */
+.cards {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 12px;
+	padding: 12px 12px 0
+}
+
+.card {
+	background: #121a2b;
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	padding: 12px
+}
+
+.card-title {
+	font-weight: 700;
+	margin-bottom: 8px
+}
+
+.kv {
+	display: flex;
+	justify-content: space-between;
+	margin: 6px 0
+}
+
+.kv.big strong {
+	font-size: 18px
+}
+
+.divider {
+	height: 1px;
+	background: var(--border);
+	margin: 10px 0
+}
+
+/* ===== 문서 리스트 ===== */
+.section-title {
+	margin: 18px 12px 10px;
+	font-size: 15px
+}
+
+.docs {
+	list-style: none;
+	margin: 0 12px 12px;
+	padding: 0;
+	display: grid;
+	gap: 8px
+}
+
+.docs li {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	padding: 10px 12px;
+	border: 1px dashed var(--border);
+	border-radius: 10px;
+}
+
+.doc-type {
+	font-size: 12px;
+	padding: 4px 8px;
+	border-radius: 8px;
+	background: #132038;
+	border: 1px solid var(--border)
+}
+
+/* ===== 버튼 ===== */
+.btn {
+	appearance: none;
+	border: none;
+	cursor: pointer;
+	background: var(--primary);
+	color: white;
+	padding: 8px 12px;
+	border-radius: 10px;
+	font-weight: 700;
+	box-shadow: 0 4px 12px rgba(44, 127, 223, .25);
+	transition: transform .05s ease, opacity .2s
+}
+
+.btn:active {
+	transform: translateY(1px)
+}
+
+.btn[disabled] {
+	opacity: .5;
+	cursor: not-allowed
+}
+
+.btn.ghost {
+	background: transparent;
+	color: var(--text);
+	border: 1px solid var(--border);
+	box-shadow: none
+}
+
+.btn.primary {
+	background: var(--primary)
+}
+
+.btn.danger {
+	background: var(--danger)
+}
+
+.topbar .btn.ghost {
+	border-color: #334766
+}
+
+.action-bar {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	padding: 12px;
+	border-top: 1px solid var(--border);
+	background: var(--panel-2);
+	position: sticky;
+	bottom: 0
+}
+
+.action-bar .spacer {
+	flex: 1
+}
+
+.hint {
+	color: var(--text-muted);
+	margin: 10px 12px
+}
+
+/* ===== 푸터 ===== */
+.footer {
+	width: 1280px;
+	margin: 20px auto;
+	color: var(--text-muted);
+	text-align: center
+}
+
+/* ===== 기타 ===== */
+.muted {
+	color: var(--text-muted)
+}
+
+/* 목록 테이블: 줄바꿈 방지 (고객명/사고일/청구금액/접수일 모두 한 줄) */
+.table-claims th,
+.table-claims td {
+	white-space: nowrap;
+	/* 세로로 깨지지 않게 */
+}
+
+/* 컬럼별 최소 폭(너무 붙지 않도록 약간만 여유) */
+.table-claims .col-claim {
+	min-width: 140px;
+}
+
+.table-claims .col-customer {
+	min-width: 90px;
+}
+
+.table-claims .col-date {
+	min-width: 100px;
+}
+
+.table-claims .col-amount {
+	min-width: 110px;
+	text-align: right;
+}
+
+.table-claims .col-status {
+	min-width: 120px;
+}
+
+/* 페이지네이션: 가운데 정렬 + 위쪽 마진 */
+.pagination-center {
+	display: flex;
+	justify-content: center;
+	gap: 6px;
+	margin-top: 10px;
+	/* 살짝 위 여백 */
+}
+
+.claim-link {
+	color: #9ec5ff;
+	text-decoration: none;
+}
+
+.claim-link:hover {
+	text-decoration: underline;
+}

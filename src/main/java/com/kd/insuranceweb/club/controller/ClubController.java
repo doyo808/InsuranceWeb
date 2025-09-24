@@ -112,5 +112,11 @@ public class ClubController {
 	public String eventPage() {
 		return "club/event/index";
 	}
+	
+	@GetMapping("/event/analysis")
+	public String analysisEvent() {
+		return "club/event/aiAnalysis"; 
+			
+	}
 
 }
