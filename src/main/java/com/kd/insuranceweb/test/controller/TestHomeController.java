@@ -3,9 +3,6 @@ package com.kd.insuranceweb.test.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class TestHomeController {
 	
@@ -19,5 +16,10 @@ public class TestHomeController {
 	public String sample() {
 		return "/test/sample";
 	}
-
+	
+	
+	@GetMapping("/helpdesk/link")
+	public String test() {
+		return "/helpdesk/PP060801_001.html";
+	}
 }
