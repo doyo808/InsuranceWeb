@@ -50,7 +50,6 @@ public class MypageController {
 	            model.addAttribute("loginUser", loginUser);
 			}
 		}
-		
 		return "/mypage/EditMyInfo.html";
 	}
 	@PostMapping("/edit")

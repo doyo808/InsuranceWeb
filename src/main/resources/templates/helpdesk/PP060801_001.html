@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" th:href="@{/helpdesk/css/PP060801_001.css}">
+</head>
+<body>	
+	<main layout:fragment="content">
+	<div class="container">
+		<div class="breadcrumb">홈 > 이용안내 > 유용한보험사이트 안내 > 자동차보험 정보사이트</div>	
+			
+		<h1>자동차보험 관련<br>유용한 사이트를 알려드릴게요</h1>
+		
+		<h2>자동차보험 가입할 때</h2>
+		<div class="cards"> 
+			<div class="card">
+				<a href="https://www.e-insmarket.or.kr" target="_blank">			
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite01.png}" alt="새창열림">
+					<div class="text-container">				
+						<h3 class="title">보험다모아</h3>
+						<p class="description">자동차보험 등 보험상품의 가격을 비교하여 가입할 수 있습니다.</p>
+					</div>
+					<button>></button>
+				</div>
+				</a>
+			</div>
+			<div class="card">
+				<a href="https://www.kidi.or.kr/user/car/carprice.do" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite03.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">차량기준가액 조회</h3>
+						<p class="description">보험에 가입할 자동차의 차량기준가액을 확인할 수 있습니다.</p>
+					</div>
+					<button>></button>
+				</div>
+				</a>
+			</div>
+			<div class="card">
+				<a href="https://www.kidi.or.kr/user/carsch/carList.do" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite03.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">자동차모델등급조회</h3>
+						<p class="description">자기차량 손해담보의 보험료 산정시 적용되는 자동차모델 별 등급을 확인 할 수 있습니다.</p>
+					</div>
+					<button>></button>
+				</div>
+				</a>
+			</div>			
+			<div class="card">
+				<a href="https://consumer.knia.or.kr" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite07.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">손해보험협회 소비자포털</h3>
+						<p class="description">자동차보험 상품 및 가입 등에 대한 안내를 받을 수 있습니다.</p>
+					</div>
+					<button>></button>
+				</div>
+				</a>
+			</div>
+		</div>
+		
+		<h2>자동차 사고 발생했을 때</h2>
+		<div class="cards"> 
+			<div class="card">
+				<a href="https://accident.knia.or.kr" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite04.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">과실비율정보포털</h3>
+						<p class="description">자동차사고 과실비율을 빠르고 간편하게 확인할 수 있습니다</p>
+					</div>
+					<button>></button>
+				</div>
+				</a>
+			</div>
+		</div>
+		
+		<h2>숨은 보험금 찾을 때</h2>
+		<div class="cards">			
+			<div class="card">
+				<a href="https://cont.insure.or.kr" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite05.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">내보험찾아줌</h3>
+						<p class="description">내가 가입한 모든 보험계약과 숨은 보험금을 한번에 확인할 수 있습니다</p>						
+					</div>							
+					<button>></button>
+				</div>		
+				</a>
+			</div>
+			<div class="card">
+				<a href="https://fine.fss.or.kr" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite06.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">파인</h3>
+						<p class="description">보험,은행,카드 등의 금융 관련 유용한 정보를 확인할 수 있습니다.</p>
+					</div>					
+					<button>></button>
+				</div>
+				</a>
+			</div>
+			<div class="card">
+				<a href="https://consumer.knia.or.kr" target="_blank">
+				<div class="info"> 
+					<img th:src="@{/helpdesk/images/img_infosite08.png}" alt="새창열림">				
+					<div class="text-container">
+						<h3 class="title">과납보험료 환급신청</h3>
+						<p class="description">자동차보험 가입 시 더 맨 보험료가 있는지 확인하고 돌려받을 수 있습니다.</p>
+					</div>				
+					<button>></button>
+				</div>				
+				</a>
+			</div>		
+		</div>
+		
+		<h2>중고차 매매할 때</h2>
+		<div class="cards">
+			<div class="card">
+				<a href="https://consumer.knia.or.kr" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite09.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">자동차 365</h3>
+						<p class="description">자동차 구입부터 중고매매 및 폐차까지 각종 정보를 안내 받을 수 있습니다.</p>
+					</div>				
+					<button>></button>					
+				</div>				
+				</a>
+			</div>
+			<div class="card">
+				<a href="https://www.carhistory.or.kr" target="_blank">
+				<div class="info">
+					<img th:src="@{/helpdesk/images/img_infosite02.png}" alt="새창열림">
+					<div class="text-container">
+						<h3 class="title">카히스토리</h3>
+						<p class="description">자동차 구입 시 자동창의 사고이력 및 침수여부를 확인할 수 있습니다</p>
+					</div>				
+					<button>></button>
+				</div>				
+				</a>
+			</div>			
+		</div>							
+	</div>
+	</main>
+</body>
+</html>

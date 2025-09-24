@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.CustomerDTO;
-import com.kd.insuranceweb.common.dto.PersonDTO;
 import com.kd.insuranceweb.common.mapper.CustomerMapper;
-import com.kd.insuranceweb.common.mapper.PersonMapper;
 
 import lombok.RequiredArgsConstructor;
 

@@ -27,7 +27,7 @@ window.addEventListener('load', function() {
 	logoutBtn.addEventListener('click', handleLogout);
 
     homeBtn.addEventListener('click', () => {
-		location.href = contextPath;
+		location.href = `${contextPath}home`;
 	});
 
     // 타이머(버튼) 클릭 시 세션 연장

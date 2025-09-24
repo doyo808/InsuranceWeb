@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>질병/상해 보험금청구 - 피보험자 및 수익자 정보</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Pretendard", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #222;
+    }
+    header {
+      background: #fff;
+      padding: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    .form-section {
+      margin-bottom: 32px;
+    }
+    .form-section h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 12px 20px;
+      align-items: center;
+    }
+    label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    input[type="text"], input[type="date"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .info-box {
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #555;
+      background: #f9f9f9;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .button-area {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 14px 28px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+	<!-- 헤더 -->
+	<header th:replace="common/fragments/header :: headerFragment"></header>
+
+	<!-- 사이드바 -->
+	<aside th:replace="common/fragments/sidebar :: sidebarFragment"></aside>
+
+	<!-- 본문 -->
+	<main layout:fragment="content" style="width: 1200px; margin: 0 auto;">
+		<header>
+		  <h1>질병/상해 보험금청구</h1>
+		</header>
+
+		<div class="container">
+		  <h2>피보험자 및 수익자 정보 입력</h2>
+
+		  <!-- ✅ 폼 시작 -->
+		  <form th:action="@{/claim/claimpage6}" method="post">
+		    <!-- 피보험자 정보 -->
+		    <div class="form-section">
+		      <h3>피보험자 정보</h3>
+		      <div class="form-grid">
+		        <label for="insuredName">성명</label>
+		        <input type="text" id="insuredName" name="insuredName" required>
+
+		        <label for="insuredId1">주민등록번호</label>
+		        <div style="display: flex; align-items: center;">
+		          <input type="text" id="insuredId1" name="insuredId1" maxlength="6" style="width: 45%;">
+		          <span style="margin: 0 8px;">-</span>
+		          <input type="password" id="insuredId2" name="insuredId2" maxlength="7" style="width: 55%;">
+		        </div>
+
+		        <label for="insuredJob">직업</label>
+		        <input type="text" id="insuredJob" name="insuredJob">
+
+		        <label for="insuredCompany">회사명</label>
+		        <input type="text" id="insuredCompany" name="insuredCompany">
+
+		      </div>
+		    </div>
+
+		    <!-- 수익자 정보 -->
+		    <div class="form-section">
+		      <h3>수익자 정보 (예금주/안내대상자)</h3>
+		      <div class="form-grid">
+		        <label for="beneficiaryName">성명</label>
+		        <input type="text" id="beneficiaryName" name="beneficiaryName" required>
+
+		        <label for="beneficiaryId1">주민등록번호</label>
+		        <div style="display: flex; align-items: center;">
+		          <input type="text" id="beneficiaryId1" name="beneficiaryId1" maxlength="6" style="width: 45%;">
+		          <span style="margin: 0 8px;">-</span>
+		          <input type="password" id="beneficiaryId2" name="beneficiaryId2" maxlength="7" style="width: 55%;">
+		        </div>
+
+		        <label for="relation">피보험자와 관계</label>
+		        <input type="text" id="relation" name="relation" placeholder="예: 본인, 배우자, 자녀" required>
+
+		        <label for="email1">이메일</label>
+		        <div style="display: flex; align-items: center;">
+		          <input type="text" id="email1" name="email1" style="width: 45%;">
+		          <span style="margin: 0 8px;">@</span>
+		          <input type="text" id="email2" name="email2" style="width: 55%;">
+		        </div>
+
+		        <label for="beneficiaryAddress">주소</label>
+		        <div>
+		          <input type="text" id="postcode" name="beneficiaryAddress" placeholder="우편번호" style="width: 100px; margin-bottom: 5px;">
+		          <button type="button" id="addressSearchBtn" style="margin-left: 5px;">우편번호 찾기</button>
+		          <input type="text" id="address" name="beneficiaryAddress" placeholder="기본 주소" style="width: 100%; margin-bottom: 5px;">
+		          <input type="text" id="detailAddress" name="beneficiaryAddress" placeholder="상세 주소" style="width: 100%;">
+		        </div>
+
+			  
+			  <label for="bank">입금계좌</label>
+			  <div>
+			    <!-- 은행 선택 -->
+			    <select id="bank" name="bank">
+			      <option value="">은행 선택</option>
+			      <option value="kookmin">국민은행</option>
+			      <option value="woori">우리은행</option>
+			      <option value="shinhan">신한은행</option>
+			      <option value="ibk">기업은행</option>
+			    </select>
+
+			    <!-- 계좌 소유자 -->
+			    <input type="text" id="owner" name="owner" placeholder="예금주명">
+
+			    <!-- 계좌번호 -->
+			    <input type="text" id="account" name="account" placeholder="계좌번호">
+			  </div>
+			  
+			  
+		      </div>
+		    </div>
+
+		    <!-- 안내 -->
+		    <div class="info-box">
+		      ▸ 보험금 수익자는 피보험자 본인 또는 법적으로 지정된 관계자여야 합니다.<br>
+		      ▸ 입력된 개인정보는 보험금 청구 심사를 위해서만 사용됩니다.<br>
+		      ▸ 잘못된 정보 입력 시 보험금 지급이 지연될 수 있습니다.
+		    </div>
+
+		    <!-- 버튼 -->
+		    <div class="button-area">
+		      <button type="submit" class="btn-primary">다음</button>
+		    </div>
+		  </form>
+		  <!-- ✅ 폼 끝 -->
+		</div>
+		<script>
+		  function toggleIdFields() {
+		    var idType = document.getElementById('id_type').value;
+		    document.getElementById('resident_fields').style.display = (idType === 'resident') ? 'grid' : 'none';
+		    document.getElementById('driver_fields').style.display = (idType === 'driver') ? 'grid' : 'none';
+		  }
+		</script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script>
+
+		 const addressBtn = document.getElementById('addressSearchBtn');
+		 addressBtn.addEventListener('click', (e) => {
+			new daum.Postcode({
+		         oncomplete: function(data) {
+				var addr = ''; // 주소 변수
+		         	var extraAddr = ''; // 참고항목 변수
+
+		        	//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		         	if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		             addr = data.roadAddress;
+		         	} else { // 사용자가 지번 주소를 선택했을 경우(J)
+		             addr = data.jibunAddress;
+		         	}
+
+		         	// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		         	if(data.userSelectedType === 'R'){
+		             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		             // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		             if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                 extraAddr += data.bname;
+		             }
+		             // 건물명이 있고, 공동주택일 경우 추가한다.
+		             if(data.buildingName !== '' && data.apartment === 'Y'){
+		                 extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		             }
+		             // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		             if(extraAddr !== ''){
+		                 extraAddr = ' (' + extraAddr + ')';
+		             }
+		             // 조합된 참고항목을 해당 필드에 넣는다.
+		             //document.getElementById("sample6_extraAddress").value = extraAddr;
+		         
+		         	} else {
+		         	    //document.getElementById("sample6_extraAddress").value = '';
+		         	}
+
+		         	// 우편번호와 주소 정보를 해당 필드에 넣는다.
+		        	 document.getElementById('postcode').value = data.zonecode;
+		         	document.getElementById("address").value = addr;
+		         	// 커서를 상세주소 필드로 이동한다.
+		         	document.getElementById("detailAddress").focus();
+		         	}
+		     	}).open();
+		 });
+
+		    
+		</script>
+	</main>
+
+	<!-- 푸터 -->
+	<footer th:replace="common/fragments/footer :: footerFragment"></footer>
+
+</body>
+</html>
