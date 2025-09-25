@@ -65,7 +65,7 @@ public class SignupService {
 		person.setPhone_number(dto1.getPhoneNumber());
 
 		String personal_id = dto1.getJumin6() + "-" + dto1.getJumin7();
-		person.setPersonal_id(personal_id);
+		person.setPersonal_id(passwordEncoder.encode(personal_id));
 		
 		personMapper.insertPerson(person);
 		
