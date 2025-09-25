@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/common/layout}">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>관리자 로그인</title>
+
+	
+</head>
+
+<body class="page">
+	<main layout:fragment="adminContent">
+		<!-- 본문 -->
+		<main class="main" id="main-content">
+			<section class="login">
+				<div class="login__card" role="region" aria-labelledby="login-title">
+					<header class="login__header">
+						<h1 id="login-title" class="login__title">관리자 로그인</h1>
+						<p class="login__subtitle">시스템에 접근하려면 로그인해주세요.</p>
+					</header>
+
+
+					<form class="login__form" action="#" method="post" novalidate>
+						<input type="hidden" name="remember" value="true" />
+
+
+						<div class="field">
+							<label for="email" class="field__label">이메일</label>
+							<input id="email" name="email" type="email" class="field__control" autocomplete="email"
+								required placeholder="example@company.com" />
+							<p class="field__error" aria-live="polite"></p>
+						</div>
+
+
+						<div class="field">
+							<label for="password" class="field__label">비밀번호</label>
+							<input id="password" name="password" type="password" class="field__control"
+								autocomplete="current-password" required placeholder="••••••••" />
+							<p class="field__error" aria-live="polite"></p>
+						</div>
+
+
+						<div class="login__row">
+							<label class="checkbox">
+								<input id="remember-me" name="remember-me" type="checkbox" class="checkbox__control" />
+								<span class="checkbox__label">로그인 상태 유지</span>
+							</label>
+							<a href="#" class="link">비밀번호 찾기</a>
+						</div>
+						<!-- 레이아웃 확인용-->
+						<button type="button"
+						        class="btn btn--primary btn--block"
+						        th:onclick="|location.href='@{/admin/main}'|">로그인</button>
+					</form>
+
+					<footer class="login__footer">
+						<p>아직 계정이 없으신가요? <a href="#" class="link">지금 가입하세요</a></p>
+					</footer>
+				</div>
+			</section>
+		</main>
+	</main>
+</body>
+
+</html>

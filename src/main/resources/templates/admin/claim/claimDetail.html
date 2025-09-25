@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>보험금 청구 상세 내역</title>
+
+	<th:block layout:fragment="extraHead">
+		<link rel="stylesheet" th:href="@{/admin/css/claimDetail.css}" />
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="adminContent">
+		<section class="claim-detail">
+			<!-- 타이틀 -->
+			<div class="title-row">
+				<h2 class="page-title">보험금 청구 상세 내역 <span class="muted">(#C20240015)</span></h2>
+				<!-- 필요 시 우측 액션 자리 -->
+			</div>
+
+			<!-- 고객 정보 -->
+			<article class="panel section">
+				<header class="section-head">
+					<h3>고객 정보</h3>
+					<p class="sub">청구인의 개인 정보입니다.</p>
+				</header>
+
+				<div class="kv">
+					<div class="item">
+						<label>고객명</label>
+						<div class="value">김철수</div>
+					</div>
+					<div class="item">
+						<label>보험 계약 번호</label>
+						<div class="value">20230101-A01</div>
+					</div>
+					<div class="item">
+						<label>보험 상품 명</label>
+						<div class="value">다이렉트 실손의료비보장보험</div>
+					</div>
+					<div class="item">
+						<label>연락처</label>
+						<div class="value">010-9876-5432</div>
+					</div>
+					<div class="item span-2">
+						<label>이메일</label>
+						<div class="value">cheolsu.kim@example.com</div>
+					</div>
+				</div>
+			</article>
+
+			<!-- 청구 정보 -->
+			<article class="panel section">
+				<header class="section-head">
+					<h3>청구 정보</h3>
+					<p class="sub">보험금 청구 관련 상세 내역입니다.</p>
+				</header>
+
+				<div class="kv">
+					<div class="item">
+						<label>청구 대상</label>
+						<div class="value">본인</div>
+					</div>
+					<div class="item">
+						<label>청구 유형</label>
+						<div class="value">신규 접수</div>
+					</div>
+					<div class="item">
+						<label>사고일/발병일</label>
+						<div class="value">2024-07-25</div>
+					</div>
+					<div class="item">
+						<label>사고 유형</label>
+						<div class="value">질병</div>
+					</div>
+					<div class="item span-2">
+						<label>사고 내용</label>
+						<div class="value">급성 위염으로 인한 병원 통원 치료</div>
+					</div>
+					<div class="item">
+						<label>의료급여 수급권자 여부</label>
+						<div class="value">아니요</div>
+					</div>
+					<div class="item">
+						<label>청구 금액</label>
+						<div class="value">₩ 150,000</div>
+					</div>
+					<div class="item">
+						<label>접수 날짜</label>
+						<div class="value">2024-07-28</div>
+					</div>
+					<div class="item">
+						<label>현재 상태</label>
+						<!-- 상태 뱃지는 공통 CSS/컴포넌트 재사용 가정 -->
+						<div class="value"><span class="badge badge--processing">처리중</span></div>
+					</div>
+				</div>
+			</article>
+
+			<!-- 첨부 문서 -->
+			<article class="panel section">
+				<header class="section-head">
+					<h3>첨부 문서</h3>
+					<p class="sub">제출된 관련 서류입니다.</p>
+				</header>
+
+				<ul class="doc-list">
+					<li>
+						<div class="doc-name">
+							<span class="icon">description</span>
+							<span>진료비_영수증.pdf</span>
+						</div>
+						<button type="button" class="btn ghost">다운로드</button>
+					</li>
+					<li>
+						<div class="doc-name">
+							<span class="icon">description</span>
+							<span>진료비_세부내역서.pdf</span>
+						</div>
+						<button type="button" class="btn ghost">다운로드</button>
+					</li>
+					<li>
+						<div class="doc-name">
+							<span class="icon">description</span>
+							<span>약제비_영수증.jpg</span>
+						</div>
+						<button type="button" class="btn ghost">다운로드</button>
+					</li>
+				</ul>
+			</article>
+
+			<!-- 하단 버튼 -->
+			<div class="btn-bar">
+				<button type="button" class="btn outline">
+					<span class="icon">arrow_back</span> 이전
+				</button>
+
+				<div class="btn-row">
+					<button type="button" class="btn success">
+						<span class="icon">check_circle</span> 승인
+					</button>
+					<button type="button" class="btn danger">
+						<span class="icon">cancel</span> 거절
+					</button>
+				</div>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>

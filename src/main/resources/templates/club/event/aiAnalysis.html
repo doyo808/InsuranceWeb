@@ -3,344 +3,421 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI 보장분석 서비스 (데모)</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>AI 보장분석 서비스 (데모)</title>
 
-  <!-- 기존 공통 CSS만 유지 -->
-  <link rel="stylesheet" href="/club/css/club_common.css" />
+	<!-- 기존 공통 CSS만 유지 -->
+	<link rel="stylesheet" th:href="@{/club/css/club_common.css}" />
 
-  <style>
-	
-	:root { scrollbar-gutter: stable; }
-	
-    /* ===== 상단 헤더 ===== */
-	.topbar {
-	  position: sticky;
-	  top: 0;
-	  z-index: 100;
-	  background: transparent;          /* <-- 전체폭 색 제거 */
-	  border-bottom: none;
-	}
-	
-	.topbar-inner {
-	  max-width: 1180px;
-	  margin: 0 auto;
-	  height: 52px;
-	  display: flex;
-	  align-items: center;
-	  justify-content: space-between;
-	  padding: 0 16px;
-	  box-sizing: border-box;
+	<style>
+		:root {
+			scrollbar-gutter: stable;
+		}
 
-	  background: #2b3a4a;              /* <-- 여기로 배경 이동 */
-	  color: #fff;
-	  border-radius: 8px;                /* 선택: 둥근 모서리 */
-	  border: 1px solid rgba(255,255,255,0.08);
-	}
-	
-    .topbar h1 {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -.02em;
-      margin: 0;
-    }
-    .topbar .btn-exit {
-      appearance: none;
-      border: 0;
-      background: transparent;
-      color: #fff;
-      font-size: 14px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .topbar .btn-exit:focus { outline: none; }
-    .topbar .btn-exit:hover {
-      background: rgba(255,255,255,0.08);
-    }
+		/* ===== 상단 헤더 ===== */
+		.topbar {
+			position: sticky;
+			top: 0;
+			z-index: 100;
+			background: transparent;
+			/* <-- 전체폭 색 제거 */
+			border-bottom: none;
+		}
 
-    /* ===== 페이지 전용 레이아웃 ===== */
-    body { background: #f5f7fb; }
+		.topbar-inner {
+			max-width: 1180px;
+			margin: 0 auto;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 16px;
+			box-sizing: border-box;
+			background: #2b3a4a;
+			/* <-- 여기로 배경 이동 */
+			color: #fff;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+		}
 
-    .page-wrap {
-      max-width: 1180px;
-      margin: 24px auto 40px;
-      padding: 0 16px;
-      box-sizing: border-box;
-    }
+		.topbar h1 {
+			font-size: 15px;
+			font-weight: 600;
+			letter-spacing: -.02em;
+			margin: 0;
+		}
 
-    .hero {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 32px;
-      align-items: start;
-      overflow: hidden;
-    }
+		.topbar .btn-exit {
+			appearance: none;
+			border: 0;
+			background: transparent;
+			color: #fff;
+			font-size: 14px;
+			padding: 8px 12px;
+			border-radius: 8px;
+			cursor: pointer;
+		}
 
-    .hero-left img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-    }
+		.topbar .btn-exit:focus {
+			outline: none;
+		}
 
-    .panel {
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
-    }
+		.topbar .btn-exit:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
 
-    .field { margin-bottom: 16px; }
-    .field label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
+		/* ===== 페이지 전용 레이아웃 ===== */
+		body {
+			background: #f5f7fb;
+		}
 
-    .row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .row label { font-weight: 400; }
+		.page-wrap {
 
-    .muted { color: #667085; font-size: 0.9rem; }
-    .error { color: #D92D20; margin-bottom: 8px; }
-    .success { color: #067647; margin-bottom: 8px; }
+			max-width: 1180px;
+			margin: 0 auto 0;
+			box-sizing: border-box;
+		}
 
-    .btn.primary {
-      width: 100%;
-      height: 48px;
-      background: #2C7FDF;
-      color: #fff;
-      border: 0;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .btn.primary:focus { outline: none; }
+		.hero {
+			display: grid;
+			grid-template-columns: 1.2fr 1fr;
+			gap: 32px;
+			align-items: start;
+			overflow: hidden;
+		}
 
-    .preview {
-      margin-top: 16px;
-      background: #f6f8fa;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 12px;
-    }
-    .preview h3 { margin: 0 0 8px; font-size: 16px; }
+		.hero-left img {
+			width: 100%;
+			height: auto;
+			display: block;
+			border-radius: 12px;
+		}
 
-    @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; }
-    }
+		.panel {
+			background: #fff;
+			border-radius: 12px;
+			padding: 24px;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
+		}
 
-    /* ===== 기본 입력 UI ===== */
-    input[type="text"] {
-      width: 100%;
-      height: 40px;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 0 12px;
-      font-size: 14px;
-      box-sizing: border-box;
-      background: #fff;
-    }
-    input[type="text"]::placeholder { color: #9aa2af; }
-    input[type="radio"], input[type="checkbox"] { margin-right: 6px; }
+		.field {
+			margin-bottom: 16px;
+		}
 
-    /* 작은 인풋(주민번호 파트) */
-    .row input[name="rrnPart1"] { width: 120px; }
-    .row input[name="rrnPart2Last"] {
-      width: 48px; text-align: center;
-    }
+		.field label {
+			display: block;
+			font-weight: 600;
+			margin-bottom: 6px;
+		}
 
-    .hero h2 { margin: 0 0 4px; }
+		.row {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			flex-wrap: wrap;
+		}
 
-    /* ===== 하단 푸터 ===== */
-	.site-footer {
-	  background: transparent;          /* <-- 전체폭 색 제거 */
-	  border-top: 0;
-	  color: #475467;
-	}
-	/* 푸터 안쪽 컨테이너에 배경/테두리 */
-	.site-footer .footer-inner {
-	  max-width: 1180px;
-	  margin: 0 auto 24px;              /* 선택: 아래 여백 */
-	  padding: 16px;
-	  display: flex;
-	  justify-content: space-between;
-	  align-items: center;
-	  gap: 16px;
-	  box-sizing: border-box;
+		.row label {
+			font-weight: 400;
+		}
 
-	  background: #ffffff;              /* <-- 여기로 배경 이동 */
-	  border: 1px solid #e8edf3;
-	  border-radius: 8px;               /* 선택: 둥근 모서리 */
-	  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-	}
-    .site-footer .cs {
-      font-weight: 700;
-      color: #2C7FDF;
-    }
-    .site-footer small { color: #667085; }
-    @media (max-width: 720px) {
-      .site-footer .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+		.muted {
+			color: #667085;
+			font-size: 0.9rem;
+		}
+
+		.error {
+			color: #D92D20;
+			margin-bottom: 8px;
+		}
+
+		.success {
+			color: #067647;
+			margin-bottom: 8px;
+		}
+
+		.btn.primary {
+			width: 100%;
+			height: 48px;
+			background: #2C7FDF;
+			color: #fff;
+			border: 0;
+			border-radius: 8px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.btn.primary:focus {
+			outline: none;
+		}
+
+		.preview {
+			margin-top: 16px;
+			background: #f6f8fa;
+			border: 1px solid #e5e7eb;
+			border-radius: 8px;
+			padding: 12px;
+		}
+
+		.preview h3 {
+			margin: 0 0 8px;
+			font-size: 16px;
+		}
+
+		@media (max-width: 960px) {
+			.hero {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		/* ===== 기본 입력 UI ===== */
+		input[type="text"] {
+			width: 100%;
+			height: 40px;
+			border: 1px solid #e5e7eb;
+			border-radius: 8px;
+			padding: 0 12px;
+			font-size: 14px;
+			box-sizing: border-box;
+			background: #fff;
+		}
+
+		input[type="text"]::placeholder {
+			color: #9aa2af;
+		}
+
+		input[type="radio"],
+		input[type="checkbox"] {
+			margin-right: 6px;
+		}
+
+		/* 작은 인풋(주민번호 파트) */
+		.row input[name="rrnPart1"] {
+			width: 120px;
+			text-align: center;
+		}
+		
+		.row input[name="phoneNum"] {
+			width: 60px;
+			text-align: center;
+		}
+		
+
+		.row input[name="rrnPart2Last"] {
+			width: 48px;
+			text-align: center;
+		}
+
+		.hero h2 {
+			margin: 0 0 4px;
+		}
+
+		/* ===== 하단 푸터 ===== */
+		.site-footer {
+			background: transparent;
+			/* <-- 전체폭 색 제거 */
+			border-top: 0;
+			color: #475467;
+		}
+
+		/* 푸터 안쪽 컨테이너에 배경/테두리 */
+		.site-footer .footer-inner {
+			max-width: 1180px;
+			margin: 0 auto 24px;
+			/* 선택: 아래 여백 */
+			padding: 16px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 16px;
+			box-sizing: border-box;
+
+			background: #ffffff;
+			/* <-- 여기로 배경 이동 */
+			border: 1px solid #e8edf3;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+		}
+
+		.site-footer .cs {
+			font-weight: 700;
+			color: #2C7FDF;
+		}
+
+		.site-footer small {
+			color: #667085;
+		}
+
+		@media (max-width: 720px) {
+			.site-footer .footer-inner {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+		}
+	</style>
 </head>
 
 <body>
-  <!-- ===== 헤더 ===== -->
-  <header class="topbar" role="banner">
-    <div class="topbar-inner">
-      <h1>삼성화재 다이렉트 AI 보장분석 서비스</h1>
-      <button type="button" class="btn-exit" id="btnExit" aria-label="창 닫기">종료</button>
-    </div>
-  </header>
+	<!-- ===== 헤더 ===== -->
+	<header class="topbar" role="banner">
+		<div class="topbar-inner">
+			<h1>삼성화재 다이렉트 AI 보장분석 서비스</h1>
+			<button type="button" class="btn-exit" id="btnExit" aria-label="창 닫기">종료</button>
+		</div>
+	</header>
 
- 
-<main layout:fragment="content">
-    <section class="page-wrap">
-      <div class="hero">
-        <!-- 왼쪽: 소개 이미지 -->
-        <div class="hero-left">
-          <img th:src="@{/club/images/event/application/ai-warranty-analysis.png}" alt="AI 보장분석 서비스 소개 이미지" />
-        </div>
 
-        <!-- 오른쪽: 데모용 폼 -->
-        <div class="panel" role="region" aria-labelledby="formTitle">
-          <h2 id="formTitle">가입중인 모든 보험 내역을 점검해 드립니다.</h2>
-          <p class="muted">아래 정보를 입력해 주세요. (데모 페이지입니다. 서버 전송 없음)</p>
+	<main layout:fragment="content">
+		<section class="page-wrap">
+			<div class="hero">
+				<!-- 왼쪽: 소개 이미지 -->
+				<div class="hero-left">
+					<img th:src="@{/club/images/event/application/ai-warranty-analysis.png}" alt="AI 보장분석 서비스 소개 이미지" />
+				</div>
 
-          <div id="msg" class="success" style="display:none;">입력값을 아래 미리보기 영역에 표시했어요.</div>
-          <div id="err" class="error" style="display:none;"></div>
+				<!-- 오른쪽: 데모용 폼 -->
+				<div class="panel" role="region" aria-labelledby="formTitle">
+					<h2 id="formTitle">가입중인 모든 보험 내역을 점검해 드립니다.</h2>
+					<p class="muted">아래 정보를 입력해 주세요.</p>
 
-          <form id="analysisForm" action="#" method="post" novalidate>
-            <div class="field">
-              <label>분석 대상</label>
-              <div class="row" role="radiogroup" aria-label="분석 대상">
-                <label><input type="radio" name="subjectType" value="본인" checked> 본인</label>
-                <label><input type="radio" name="subjectType" value="미성년자녀"> 미성년자녀</label>
-              </div>
-            </div>
+					<div id="msg" class="success" style="display:none;">입력값을 아래 미리보기 영역에 표시했어요.</div>
+					<div id="err" class="error" style="display:none;"></div>
 
-            <div class="field">
-              <label for="nameKor">이름</label>
-              <input id="nameKor" name="nameKor" type="text" required maxlength="50" placeholder="예: 홍길동" />
-            </div>
+					<form id="analysisForm" action="#" method="post" novalidate>
+						<div class="field">
+							<label>분석 대상</label>
+							<div class="row" role="radiogroup" aria-label="분석 대상">
+								<label><input type="radio" name="subjectType" value="본인" checked> 본인</label>
+								<label><input type="radio" name="subjectType" value="미성년자녀"> 미성년자녀</label>
+							</div>
+						</div>
 
-            <div class="field">
-              <label>주민등록번호 (데모: 앞6자리 + 뒷1자리)</label>
-              <div class="row">
-                <input name="rrnPart1" type="text" inputmode="numeric" pattern="\\d{6}" maxlength="6" placeholder="예: 990101" required />
-                <span aria-hidden="true">-</span>
-                <input name="rrnPart2Last" type="text" inputmode="numeric" pattern="\\d" maxlength="1"  required />
-              </div>
-              <div class="muted">※ 데모용 형식입니다. 실제 서비스에서는 전체 저장 금지 또는 암호화가 필요합니다.</div>
-            </div>
+						<div class="field">
+							<label for="nameKor">이름</label>
+							<input id="nameKor" name="nameKor" type="text" required maxlength="50"
+								placeholder="예: 홍길동" />
+						</div>
 
-            <div class="field">
-              <label>운전정보</label>
-              <div class="row" role="radiogroup" aria-label="운전정보">
-                <label><input type="radio" name="driverType" value="자가용" checked> 자가용</label>
-                <label><input type="radio" name="driverType" value="영업용"> 영업용</label>
-                <label><input type="radio" name="driverType" value="운전안함"> 운전안함</label>
-              </div>
-            </div>
+						<div class="field">
+							<label>주민등록번호 (앞 6자리 + 뒷 1자리)</label>
+							<div class="row">
+								<input name="rrnPart1" type="text" inputmode="numeric" pattern="\\d{6}" maxlength="6"
+									placeholder="예: 990101" required />
+								<span aria-hidden="true">-</span>
+								<input name="rrnPart2Last" type="text" inputmode="numeric" pattern="\\d" maxlength="1"
+									required />
+							</div>
+							<div class="muted">※ 데모용 형식입니다. 실제 서비스에서는 전체 저장 금지 또는 암호화가 필요합니다.</div>
+						</div>
 
-            <div class="field">
-              <label>
-                <input type="checkbox" name="consentYn" value="Y" required />
-                [필수] 개인정보 처리 동의
-              </label>
-            </div>
+						<div class="field">
+							<label>전화번호 (데모: 앞6자리 + 뒷1자리)</label>
+							<div class="row">
+								<input name="phoneNum" type="text" inputmode="numeric" pattern="010" maxlength="3" placeholder="010">
+								<span aria-hidden="true">-</span>
+								<input name="phoneNum" type="text" inputmode="numeric" pattern="\\d{4}" maxlength="4" required />
+								<span aria-hidden="true">-</span>
+								<input name="phoneNum" type="text" inputmode="numeric" pattern="\\d{4}" maxlength="4" required />
+							</div>
+						</div>
 
-            <button class="btn primary" type="submit">정보를 입력해 주세요</button>
+						<div class="field">
+							<label>운전정보</label>
+							<div class="row" role="radiogroup" aria-label="운전정보">
+								<label><input type="radio" name="driverType" value="자가용" checked> 자가용</label>
+								<label><input type="radio" name="driverType" value="영업용"> 영업용</label>
+								<label><input type="radio" name="driverType" value="운전안함"> 운전안함</label>
+							</div>
+						</div>
 
-            <!-- 미리보기(데모): 제출 시 입력값을 여기 출력 -->
-            <div class="preview" id="preview" style="display:none;">
-              <h3>입력값 미리보기 (데모)</h3>
-              <pre id="previewJson" style="margin:0; white-space:pre-wrap;"></pre>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
+						<div class="field">
+							<label>
+								<input type="checkbox" name="consentYn" value="Y" required />
+								[필수] 개인정보 처리 동의
+							</label>
+						</div>
 
-    <script>
-      // 종료 버튼: 히스토리 뒤로가기가 가능하면 사용, 아니면 창 닫기 시도
-      document.getElementById('btnExit')?.addEventListener('click', () => {
-        if (window.history.length > 1) {
-          window.history.back();
-        } else {
-          window.close();
-        }
-      });
+						<button class="btn primary" type="submit">정보를 입력해 주세요</button>
 
-      // 아주 가벼운 클라이언트 검증 & 화면 표시(데모)
-      const form = document.getElementById('analysisForm');
-      const msg = document.getElementById('msg');
-      const err = document.getElementById('err');
-      const preview = document.getElementById('preview');
-      const previewJson = document.getElementById('previewJson');
+						<!-- 미리보기(데모): 제출 시 입력값을 여기 출력 -->
+						<div class="preview" id="preview" style="display:none;">
+							<h3>입력값 미리보기 (데모)</h3>
+							<pre id="previewJson" style="margin:0; white-space:pre-wrap;"></pre>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        err.style.display = 'none';
-        msg.style.display = 'none';
+		<script>
+			// 종료 버튼: 히스토리 뒤로가기가 가능하면 사용, 아니면 창 닫기 시도
+			document.getElementById('btnExit')?.addEventListener('click', () => {
+				if (window.history.length > 1) {
+					window.history.back();
+				} else {
+					window.close();
+				}
+			});
 
-        const fd = new FormData(form);
-        const p1 = (fd.get('rrnPart1') || '').trim();
-        const p2 = (fd.get('rrnPart2Last') || '').trim();
+			// 아주 가벼운 클라이언트 검증 & 화면 표시(데모)
+			const form = document.getElementById('analysisForm');
+			const msg = document.getElementById('msg');
+			const err = document.getElementById('err');
+			const preview = document.getElementById('preview');
+			const previewJson = document.getElementById('previewJson');
 
-        if (!/^\d{6}$/.test(p1) || !/^\d$/.test(p2)) {
-          err.textContent = '주민등록번호 형식(앞6 + 뒷1)을 확인해 주세요.';
-          err.style.display = 'block';
-          preview.style.display = 'none';
-          return;
-        }
-        if (!fd.get('nameKor')) {
-          err.textContent = '이름을 입력해 주세요.';
-          err.style.display = 'block';
-          preview.style.display = 'none';
-          return;
-        }
-        if (!fd.get('consentYn')) {
-          err.textContent = '[필수] 개인정보 처리 동의가 필요합니다.';
-          err.style.display = 'block';
-          preview.style.display = 'none';
-          return;
-        }
+			form.addEventListener('submit', (e) => {
+				e.preventDefault();
+				err.style.display = 'none';
+				msg.style.display = 'none';
 
-        // 데모 표시용 데이터 구성 (민감정보는 실제 저장 금지!)
-        const data = {
-          subjectType: fd.get('subjectType'),
-          nameKor: fd.get('nameKor'),
-          rrnDemo: `${p1}-${p2} (데모)`,
-          driverType: fd.get('driverType'),
-          consentYn: fd.get('consentYn') ? 'Y' : 'N'
-        };
+				const fd = new FormData(form);
+				const p1 = (fd.get('rrnPart1') || '').trim();
+				const p2 = (fd.get('rrnPart2Last') || '').trim();
 
-        previewJson.textContent = JSON.stringify(data, null, 2);
-        preview.style.display = 'block';
-        msg.style.display = 'block';
-      });
-    </script>
-  </main>
+				if (!/^\d{6}$/.test(p1) || !/^\d$/.test(p2)) {
+					err.textContent = '주민등록번호 형식(앞6 + 뒷1)을 확인해 주세요.';
+					err.style.display = 'block';
+					preview.style.display = 'none';
+					return;
+				}
+				if (!fd.get('nameKor')) {
+					err.textContent = '이름을 입력해 주세요.';
+					err.style.display = 'block';
+					preview.style.display = 'none';
+					return;
+				}
+				if (!fd.get('consentYn')) {
+					err.textContent = '[필수] 개인정보 처리 동의가 필요합니다.';
+					err.style.display = 'block';
+					preview.style.display = 'none';
+					return;
+				}
 
-  <!-- ===== 푸터 ===== -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">
-      <div>
-        <strong class="cs">고객센터 1577-3339</strong>
-      </div>
-      <small>평일: 오전 9시 ~ 오후 6시 / 토요일 및 공휴일 휴무</small>
-    </div>
-  </footer>
+				// 데모 표시용 데이터 구성 (민감정보는 실제 저장 금지!)
+				const data = {
+					subjectType: fd.get('subjectType'),
+					nameKor: fd.get('nameKor'),
+					rrnDemo: `${p1}-${p2} (데모)`,
+					driverType: fd.get('driverType'),
+					consentYn: fd.get('consentYn') ? 'Y' : 'N'
+				};
+
+				previewJson.textContent = JSON.stringify(data, null, 2);
+				preview.style.display = 'block';
+				msg.style.display = 'block';
+			});
+		</script>
+	</main>
+
+	<!-- ===== 푸터 ===== -->
+	<footer class="site-footer" role="contentinfo">
+		<div class="footer-inner">
+			<div>
+				<strong class="cs">고객센터 1577-3339</strong>
+			</div>
+			<small>평일: 오전 9시 ~ 오후 6시 / 토요일 및 공휴일 휴무</small>
+		</div>
+	</footer>
 </body>
+
 </html>

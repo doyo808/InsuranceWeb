@@ -1,0 +1,166 @@
+/* /static/admin/css/claimDetail.css */
+/* 공통(variables, reset, btn, badge, panel 등)은 재정의하지 않음 */
+
+/* 레이아웃 컨테이너 & 타이틀 정렬 */
+.claim-detail {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 24px 16px;
+}
+
+.claim-detail .title-row {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 24px;
+}
+
+.claim-detail .page-title {
+	margin: 0;
+}
+
+.claim-detail .page-title .muted {
+	opacity: .7;
+	font-weight: 600;
+}
+
+/* 섹션 래퍼(박스는 공통 .panel 사용 가정) */
+.claim-detail .section {
+	display: grid;
+	gap: 16px 24px;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+	.claim-detail .section {
+		grid-template-columns: 240px 1fr;
+		align-items: start;
+	}
+}
+
+/* 섹션 간격 (인접 섹션 사이 여백) */
+.claim-detail .section+.section {
+	margin-top: 20px;
+}
+
+/* 섹션 헤더 */
+.claim-detail .section-head {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.claim-detail .section-head .sub {
+	font-size: .875rem;
+	color: var(--color-text-weak);
+}
+
+/* Key-Value 그리드 */
+.claim-detail .kv {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+	.claim-detail .kv {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.claim-detail .kv .item {
+	display: grid;
+	gap: 6px;
+}
+
+.claim-detail .kv .item.span-2 {
+	grid-column: 1 / -1;
+}
+
+/* 레이블/값 타이포(공통 타이포 침범 X) */
+.claim-detail .kv .item>label {
+	font-size: .875rem;
+	color: var(--color-text-weak);
+	font-weight: 600;
+}
+
+.claim-detail .kv .item>.value {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--color-text);
+}
+
+/* 소제목과 내용 사이 구분선(옵션) */
+.claim-detail .divider {
+	height: 1px;
+	background: var(--color-border);
+	margin: 8px 0;
+}
+
+/* 첨부 문서 리스트 */
+.claim-detail .doc-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 12px;
+}
+
+.claim-detail .doc-list li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 14px;
+	border: 1px solid var(--color-border);
+	border-radius: 10px;
+	background: var(--color-surface);
+}
+
+.claim-detail .doc-name {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.claim-detail .doc-name .icon {
+	font-family: 'Material Symbols Outlined', sans-serif;
+	font-size: 18px;
+	line-height: 1;
+}
+
+/* 하단 버튼 영역 */
+.claim-detail .btn-bar {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-top: 24px;
+	border-top: 1px solid var(--color-border);
+	padding-top: 16px;
+}
+
+.claim-detail .btn-row {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+@media (min-width: 640px) {
+	.claim-detail .btn-bar {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.claim-detail .btn-row {
+		flex-direction: row;
+	}
+}
+
+/* 상태 배지 컨테이너(공통 배지 사용 가정, 간격만) */
+.claim-detail .status-wrap {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
