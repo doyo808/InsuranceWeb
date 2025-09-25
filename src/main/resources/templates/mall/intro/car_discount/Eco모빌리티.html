@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Eco 모빌리티 이용</title>
+	<link rel="stylesheet" th:href="@{/css/commonPage.css}" />
+	<link rel="stylesheet" th:href="@{/css/table.css}" />
+	<link rel="stylesheet" th:href="@{/css/custom-button.css}" />
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+	<main th:fragment="main">
+		<div class="header-cover main-section">
+			<!-- 상단 자동차 보험 소개 -->
+			<div class="breadcrumb container">홈 > 보험상품/대출 > 자동차보험 할인특약 안내 > <strong>Eco 모빌리티 이용</strong></div>
+			<div class="top-section container">
+				<div class="text-section">
+					<div class="title">
+						Eco 모빌리티 이용 할인 특약
+					</div>
+					<div class="desc">
+						<div class="desc-text">Eco 모빌리티 이용 고객님께</div>
+						<div clas="desc-text">보험료 8~10% 할인 혜택 제공</div>
+					</div>
+					<button class="btn">자동차보험료 계산</button>
+				</div>
+				<div class="image-section">
+					<img src="" alt="Eco 일러스트">
+				</div>
+			</div>
+		</div>
+
+		<div class="container main-section">
+			<div class="section">
+				<div class="content">
+					<h2>Eco 모빌리티 이용하면, 8~10% 보험료 특약 할인</h2>
+					<ul class="check-ul">
+						<li>적용상품: 개인 승용 자동차보험</li>
+						<li>가입대상: 기명 1인 및 부부 한정특약 가입 운전자</li>
+						<li>
+							직전 2개월간 모빌리티를 25일 이상 이용한 경우<br>
+							(단, 기명피보험자 명의 1개 카드 실적만 인정)
+							<p class="note">모빌리티: 지하철, 전철, 버스, 택시, 서울 공공자전거(따릉이)<br>
+								(기차, 공항철도, 전세버스, 공항버스 미포함)</p>
+						</li>
+					</ul>
+				</div>
+
+				<table class="section-flex-row custom-table">
+					<caption>[보험료 할인율]</caption>
+					<thead>
+						<th>할인 적용 시기</th>
+						<th>할인율</th>
+					</thead>
+					<tbody>
+						<tr>
+							<th>가입 시</th>
+							<td>8%</td>
+						</tr>
+						<tr>
+							<th>만기 시<br>(마일리지 특약 환급금 발생 시)</th>
+							<td>추가 2%</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<ul class="list-round section-flex-row">
+					<li>'25.01.16 보험시작일 기준</li>
+				</ul>
+
+				<div class="notice section-flex-row">
+					<dl class="info-list">
+						<dt>꼭 확인하세요</dt>
+						<dd>
+							<ul class="list-round">
+								<li>직전 2개월은 가입요청 시점의 전전달 말일부터 과거 2개월을 말합니다.</li>
+								<li>Eco 모빌리티 이용 할인 특약은 긴급출동서비스와 특약 보험료를 제외한 보험료에 적용됩니다.</li>
+								<li>추가 할인은 Eco 모빌리티 이용 할인 특약과 마일리지 할인 특약 중복 가입기간에 한해 일할 계산하여 보험료를 환급해드립니다.</li>
+								<li>보험 가입 시 가입 조건을 충족하지 못했더라도 보험 가입 후 가입 조건을 충족하셨다면, 삼성화재 다이렉트 고객센터(1577-3339)를 통해
+									특약 추가가입이 가능합니다.</li>
+								<li>보험기간 중도에 추가한 경우, 가입일 기준으로 보험종료일까지 일할 계산하여 보험료를 환급해 드립니다.<br>
+									(단, 잔여 보험기간이 3개월 이상인 경우에만 보험기간 중도에 가입 가능)</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+				<div class="image">
+					<img src="" alt="에코 아이콘">
+				</div>
+				<div class="section-flex-row">
+					<h2>착!한대중교통 서비스란?</h2>
+					<ul class="list-round">
+						<li>착!한대중교통 서비스는 고객님의 대중교통 이용을 위한 서비스로 삼성화재 다이렉트 착!한 생활 시리즈 중 하나입니다.</li>
+						<li>착!한대중교통 서비스로 대중교통 이용에 따른 실적(이용 일수/금액/건수 등)을 확인하고 다양한 대중교통 관련 정보도 볼 수 있습니다.</li>
+						<li>착!한대중교통 서비스는 삼성화재 다이렉트 모바일 앱에서 서비스 가입 후 이용 가능합니다.
+							<br><button class="btn-round">자세히 보기 > </button>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="section-plus">
+				<p>준법감시인확인필 제25-1-0182호 (0801,'25.01.15~'26.01.14)</p>
+				<div class="btn-wrap">
+					<button class="btn-round">가입 시 유의사항</button>
+				</div>
+			</div>
+			<div class="call-box">
+				전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 동일하게 특약 가입이 가능합니다.
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

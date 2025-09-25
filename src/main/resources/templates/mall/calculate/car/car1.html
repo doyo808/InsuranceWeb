@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            margin: 10px auto;
+            width: 600px;
+            height: 90%;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .in-content {
+            height: 90%;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+
+        .close-btn {
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+    </style>
+
+    <!-- 입력받는 곳 -->
+    <style>
+        .user-form {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+            border-bottom: 2px silver solid;
+        }
+
+        .user-form>dt {
+            font-weight: bold;
+            width: 100px;
+        }
+
+        .user-form>dd {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .user-form>div {
+            width: 100%;
+        }
+
+        .column {
+            flex-direction: column;
+        }
+
+        .btn-function {
+            background-color: deepskyblue;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 0;
+            padding: 10px 20px;
+            color: white;
+            font-weight: bolder;
+
+        }
+
+        .disabled {
+            background-color: darkgray;
+        }
+
+        .disabledEle {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title" style="width: 700px; margin: 0 auto;">
+        <div class="title-head" style="display: flex; justify-content: space-between;">
+            <span>치아보험</span>
+            <button style="border: 0; background-color: rgb(0, 128, 255); color: white;"
+                onclick="location.href='/home';">종료</button>
+        </div>
+        <div style="display: flex;">
+            <div style="width: 400px; height: 500px;">
+                이미지 들어가는 칸
+            </div>
+            <div>
+                <form id="dental-input">
+                    <h3>보장 받으실 분의 정보를 입력해주세요</h3>
+                    <button type="button">계산기록</button>
+                    <hr>
+                    <dl class="user-form">
+                        <dt>가입대상</dt>
+                        <dd>
+                            <label>
+                                <input type="radio" name="join-target">
+                                본인
+                            </label>
+                            <label>
+                                <input type="radio" name="join-target">
+                                배우자/부모 등
+                            </label>
+                            <label>
+                                <input type="radio" name="join-target">
+                                미성년 자녀
+                            </label>
+                        </dd>
+                        <div class="error-msg disabled disabledEle" id="targetError">가입대상을 선택해주세요.</div>
+                    </dl>
+                    <dl class="user-form">
+                        <dt>생년월일</dt>
+                        <dd>
+                            <input type="text" id="birth" placeholder="예) 20250917" />
+                        </dd>
+                        <div class="error-msg disabled disabledEle" id="birthError">8자리 형식(YYYYMMDD)으로 정확한 생년월일을 입력해주세요.
+                        </div>
+                    </dl>
+                    <dl class="user-form">
+                        <dt>성별</dt>
+                        <dd>
+                            <label>
+                                <input type="radio" name="gender" value="men" />
+                                남자
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="women" />
+                                여자
+                            </label>
+                        </dd>
+                        <div class="error-msg disabled disabledEle" id="genderError">성별을 선택해주세요.</div>
+                    </dl>
+                    <dl class="user-form">
+                        <dt>직업</dt>
+                        <dd>
+                            <input type="text" id="job" disabled />
+                            <button type="button" onclick="" class="btn-function">직업 찾기</button>
+                        </dd>
+                    </dl>
+                    <div style="padding: 10px 0 50px 0; border-bottom: 2px silver solid;">
+                        <button type="button" id="submitBtn" style="width: 100%;" class="btn-function disabled"
+                            onclick="nextPage();">정보를 입력해주세요</button>
+                    </div>
+                </form>
+                <div>
+                    <!-- 모달 트리거 -->
+                    <ul>
+                        <li onclick="openModal()">안내1</li>
+                        <li>안내2</li>
+                        <li>안내3</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 모달 구조 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="in-subject" style="display: flex; justify-content: space-between;">
+                <h2>상세안내</h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="in-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates autem reiciendis accusamus
+                    sapiente non officia ratione qui illo possimus nobis incidunt ipsa vero esse ab quae eaque sequi
+                    accusantium eum.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 폼입력 유효 값 검사-->
+    <script>
+        const submitBtn = document.getElementById("submitBtn");
+        const inputs = {
+            target: document.getElementsByName("join-target"),
+            birth: document.getElementById("birth"),
+            gender: document.getElementsByName("gender"),
+        };
+
+        // 생년월일 입력 시 숫자만 남기기
+        inputs.birth.addEventListener("input", function () {
+            this.value = this.value.replace(/[^0-9]/g, "").slice(0, 8);
+        });
+
+        function isValidBirthdate(dateStr) {
+            // 1. 8자리 숫자인지 확인
+            if (!/^\d{8}$/.test(dateStr)) {
+                return false;
+            }
+
+            const year = parseInt(dateStr.slice(0, 4), 10);
+            const month = parseInt(dateStr.slice(4, 6), 10);
+            const day = parseInt(dateStr.slice(6, 8), 10);
+
+            // 2. 유효한 월/일인지 확인
+            if (month < 1 || month > 12 || day < 1 || day > 31) {
+                return false;
+            }
+
+            // 3. 실제로 존재하는 날짜인지 확인 (Date 객체 활용)
+            const date = new Date(year, month - 1, day);
+            if (
+                date.getFullYear() !== year ||
+                date.getMonth() !== month - 1 ||
+                date.getDate() !== day
+            ) {
+                return false;
+            }
+
+            // 4. 미래 날짜인지 확인 (옵션)
+            const today = new Date();
+            if (date > today) {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        // 검증 함수
+        function validateForm(showError = false, birthCheck = false) {
+            let valid = true;
+
+            // 가입대상 체크
+            const isTargetChecked = [...inputs.target].some(r => r.checked);
+            if (!isTargetChecked) valid = false;
+
+            // 생년월일
+            const birthValue = inputs.birth.value.trim();
+            const isBirthValid = isValidBirthdate(birthValue);
+
+            if (!isBirthValid) valid = false;
+
+            // 성별 체크
+            const isGenderChecked = [...inputs.gender].some(r => r.checked);
+            if (!isGenderChecked) valid = false;
+
+            if (showError) {
+                document.getElementById("targetError").style.display = (!isTargetChecked) ? "block" : "none";
+                if (birthCheck) document.getElementById("birthError").style.display = (!isBirthValid) ? "block" : "none";
+                document.getElementById("genderError").style.display = (!isGenderChecked) ? "block" : "none";
+            }
+
+            return valid;
+        }
+    </script>
+
+    <!-- submit 버튼을 클릭했을때 다음페이지로 넘겨줌-->
+    <script>
+        const dental_form = document.getElementById('dental-input');
+        dental_form.method = 'POST';
+        dental_form.action = './';
+        dental_form.addEventListener('change', e => {
+            const isValid = validateForm(true, true);
+            console.log(isValid);
+            submitBtn.classList.toggle("disabled", !isValid);
+            submitBtn.textContent = isValid ? "보험료 계산하기" : "정보를 입력해주세요";
+        });
+
+        function nextPage() {
+            if (submitBtn.classList.contains('disabled')) {
+                validateForm(true, true);
+            } else {
+                dental_form.submit();
+            }
+        }
+    </script>
+    <!-- 모달창 열기-->
+    <script>
+        function openModal() {
+            document.getElementById("modal").style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+            document.body.style.overflow = "";
+        }
+    </script>
+</body>
+
+</html>

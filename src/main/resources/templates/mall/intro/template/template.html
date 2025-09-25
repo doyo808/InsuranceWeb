@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" th:href="@{/css/commonPage.css}" />
+	<link rel="stylesheet" th:href="@{/css/table.css}" />
+	<link rel="stylesheet" th:href="@{/css/custom-button.css}" />
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+	<main th:fragment="main">
+		<div class="header-cover main-section">
+			<!-- 상단 타이틀 -->
+			<div class="breadcrumb container">
+				홈 > 보험상품/대출 > 자동차 > <strong>자동차보험(인터넷가입)</strong>
+			</div>
+			<div class="top-section container">
+				<div class="text-section">
+					<div class="title">
+						자동차보험 <span class="badge">인터넷가입</span>
+					</div>
+					<div class="desc">
+						<div class="desc-text">다이렉트 자동차보험 가입 1위</div>
+						<div class="desc-subtext">(14년~24년, 수입보험료 기준)</div>
+					</div>
+					<button class="btn">보험료 계산</button>
+				</div>
+				<div class="image-section">
+					<img src="" alt="자동차보험 일러스트">
+				</div>
+			</div>
+		</div>
+
+		<div class="container main-section">
+			<!-- 탭 메뉴 -->
+			<div class="tabs active">
+				<div class="tab-menu active" data-tab="tab1">상품소개</div>
+				<div class="tab-menu" data-tab="tab2">보장내용</div>
+			</div>
+
+			<!-- 탭 메뉴 아이템 -->
+			<div class="tab" id="tab1">
+				<div class="section">
+					<div class="content">
+						<h2>인터넷으로 직접 가입해서 개인용 평균 21.1% 저렴한 보험료</h2>
+						<ul class="check-ul">
+							<li>자사 오프라인 상품 가입 대비 개인용 평균 21.1% 저렴</li>
+							<li>인터넷으로 직접 설계하고 가입하여 판매수수료 0원</li>
+						</ul>
+
+					</div>
+					<div class="image">
+						<img src="" alt="온라인 체크 아이콘">
+					</div>
+
+					<!-- 꼭 확인 컴포넌트 -->
+					<div class="section-flex-row notice">
+						<dl class="info-list">
+							<dt>꼭 확인하세요</dt>
+							<dd>
+								<ul class="list-round">
+									<li>마일리지 할인 특약: 연간1천~1만5천km운행 시, 2~42%보험료 환급 (차종별 상이)</li>
+									<li>블랙박스 할인 특약: 블랙박스 장착 시 1.1~7.9% 특약 할인</li>
+									<li>자녀사랑 할인 특약: 태아 또는 만 18세 이하 자녀가 있는 경우 1~20% 특약 할인</li>
+									<li>첨담안전장치 할인 특약: 전방충돌방지장치와 차선이탈경고장치 장착 시, 평균 0.5~13.8%특약 할인</li>
+								</ul>
+								<p class="note">단, 안내된 할인특약은 '긴급출동서비스와 특약 보험료를 제외한 보험료에 적용됩니다</p>
+							</dd>
+						</dl>
+					</div>
+
+					<!-- 테이블 컴포넌트 -->
+					<table class="section-flex-row custom-table">
+						<caption></caption>
+						<thead>
+							th*3
+						</thead>
+						<tbody>
+							(tr>th+td*2)*1
+						</tbody>
+					</table>
+
+					<!-- 팁 박스 컴포넌트 -->
+					<div class="section-flex-row tip-box">
+                        <h3>
+                            <span class="tag-tip">TIP</span>
+                            따로 살고 계신 부모님 등 소중한 분을 위해 내가 대신 가입할 수 있습니다!
+                        </h3>
+                        <ul class="list-round">
+                            <li>인터넷/스마트폰 사용이 익숙하지 않은 부모님을 위해서 바쁜 배우자를 대신해서 고객님께서 직접 보험가입을 간편하게 진행해 보세요!</li>
+                            <li>해당 프로세스는 모바일에서만 진행되며 피보험자의 동의가 필요합니다.</li>
+                        </ul>
+                    </div>
+				</div>
+			</div>
+
+			<div class="section-plus">
+				<p>준법감시인확인필 제25-1-0182호 (0801,'25.01.15~'26.01.14)</p>
+				<div class="btn-wrap">
+					<button class="btn-round">가입 시 유의사항</button>
+				</div>
+			</div>
+			<div class="call-box">
+				전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 동일하게 특약 가입이 가능합니다.
+			</div>
+		</div>
+
+		<script th:src="@{/js/product/product.js}"></script>
+	</main>
+</body>
+
+</html>

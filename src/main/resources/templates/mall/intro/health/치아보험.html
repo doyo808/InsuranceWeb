@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{/common/layout.html}">
+<head>
+	<meta charset="UTF-8">
+	<title>치아보험</title>
+	<link rel="stylesheet" th:href="@{/mall/css/commonPage.css}" />
+	<link rel="stylesheet" th:href="@{/mall/css/table.css}" />
+	<link rel="stylesheet" th:href="@{/mall/css/custom-button.css}" />
+	<script th:src="@{/mall/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+	<main layout:fragment="content" style="width:100%; margin:137px auto 0;">
+		<div class="header-cover main-section">
+			<!-- 상단 자동차 보험 소개 -->
+			<div class="breadcrumb container">
+                홈 > 보험상품/대출 > 건강 > <strong>치아보험</strong>
+            </div>
+			<div class="top-section container">
+				<div class="text-section">
+					<div class="title">
+						치아보험
+					</div>
+					<div class="desc">
+						<div class="desc-text">충치치료, 보철치료, 임플란트도 보장</div>
+						<div class="desc-subtext">(특약)</div>
+					</div>
+					<button class="btn">보험료 계산</button>
+				</div>
+				<div class="image-section">
+					<img src="" alt="치아 검진 일러스트">
+				</div>
+			</div>
+		</div>
+
+		<div class="container main-section">
+			<div class="section">
+				<div class="content">
+					<h2>때우고 씌우는 충치치료를 꼼꼼하게 보장!</h2>
+					<ul class="check-ul">
+						<li>충치 또는 잇몸질환 등으로 인한 치아보존 치료비 보장</li>
+						<li>금, 세라믹 등 재료에 상관없이, 치아 개수도 제한없이 보장 가능</li>
+                        <li>치아보존 치료지원금(상해 및 질병)(유치∙영구치)(크라운 무제한), 충치치료와 병행되는 치수치료(신경치료)비(상해 및 질병 유치∙영구치)도 추가 보장</li>
+                        <li>해당 특약 가입 시</li>
+					</ul>
+
+				</div>
+				<div class="image">
+					<img src="" alt="충치치료 아이콘">
+				</div>
+
+				<div class="section-flex-row notice">
+					<dl class="info-list">
+						<dt>꼭 확인하세요</dt>
+						<dd>
+							<ul class="list-round">
+								<li>치아보존치료 : 아말감, 글래스아이노머(G.I), 레진, 인레이, 온레이, 크라운 치료</li>
+								<li>질병 91일 이후 보장, 보존치료 1년 미만 50%감액 (단, 상해는 계약일부터 가입금액 100% 보장)</li>
+								<li>한 치아에 질병으로 동일한 치료 2회 시행 시, 치료가 종료된 날부터 그날을 포함하여 180일 이후부터 보장</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+
+            <div class="section">
+				<div class="content">
+					<h2>임플란트, 틀니 등 치료비 부담되는 보철치료는 든든하게 보장!</h2>
+					<ul class="check-ul">
+						<li>임플란트, 브릿지는 치아 개수 제한없이 보장</li>
+						<li>전체 틀니, 부분 틀니는 보철물당 매년 1회씩 보장</li>
+                        <li>특정 임플란트에는 치조골 이식술 보장으로 더욱 든든하게</li>
+                        <li>해당 특약 가입 시</li>
+					</ul>
+
+				</div>
+				<div class="image">
+					<img src="" alt="임플란트 아이콘">
+				</div>
+
+				<div class="section-flex-row notice">
+					<dl class="info-list">
+						<dt>꼭 확인하세요</dt>
+						<dd>
+							<ul class="list-round">
+								<li>해당 특약 가입 시</li>
+								<li>특정 임플란트 치조골 이식 : 골이식술, 치조골이식술, 골유도재생술,상악동거상술</li>
+								<li>질병 91일 이후 보장, 보철치료, 특정 임플란트 치조골 이식술 치료비 2년 미만 50%감액 (단, 상해는 계약일부터 가입금액 100% 보장)</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+
+            <div class="section">
+				<div class="content">
+					<h2>치아관련 질환의 예방, 발치, 신경치료도 알차게 보장!</h2>
+					<ul class="check-ul">
+						<li>매년 치아관리를 위한 치석제거(스케일링) 보장 (연 1회)</li>
+						<li>유치,사랑니 등의 발치 치료비도 치아 개수 제한없이 보장</li>
+                        <li>충치 또는 치주질환으로 인한 치수치료(신경치료)비 보장</li>
+                        <li>해당 특약 가입 시</li>
+					</ul>
+
+				</div>
+				<div class="image">
+					<img src="" alt="진단서 아이콘">
+				</div>
+
+				<div class="section-flex-row notice">
+					<dl class="info-list">
+						<dt>꼭 확인하세요</dt>
+						<dd>
+							<ul class="list-round">
+								<li>발치 치료비, 치수치료(신경치료)비의 보장개시일은 최초 계약일부터 90일이 지난 날의 다음날 (단, 상해는 계약일부터 보장)</li>
+								<li>치석제거(스케일링)치료비의 보장개시일은 최초 계약일부터 90일이 지난 날의 다음날이며, 치주질환으로 인하여 급여 적용 치석제거 치료받은 경우 연간 1회한 보장</li>
+								<li>발치 치료비 : 단순 발치 - 보험가입금액의 25% 감액(전기간), 정교한 발치 – 보함가입금액의 50% 감액(전기간), 완전 매복된 치아의 발치 – 보험가입금액의 100% 감액(전기간)</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+
+            <div class="section">
+				<div class="content">
+					<h2>2세부터 만 64세까지 가입 가능, 최대 20년간 보험료 인상없이 그대로!</h2>
+					<ul class="check-ul">
+						<li>2세부터 만 64세까지 가입 가능하며, 최대 100세 까지 보장(자동갱신형)</li>
+						<li>10년, 15년 또는 20년간 동일한 보험료로 보장 가능</li>
+					</ul>
+                    <p class="alert-p">갱신 시 보험료가 인상될 수 있음</p>
+				</div>
+				<div class="image">
+					<img src="" alt="아기,노인 아이콘">
+				</div>
+			</div>
+
+            <div class="section">
+				<div class="content">
+					<h2>치아보험도 역시 삼성화재 다이렉트</h2>
+					<ul class="check-ul">
+						<li>판매수수료가 없어 저렴한 보험료</li>
+						<li>저렴하게 가입해도 보상서비스는 삼성화재 그대로!</li>
+                        <li>딱 3가지 치아관련 고지만으로 간편하게 가입 가능</li>
+					</ul>
+
+				</div>
+				<div class="image">
+					<img src="" alt="리뷰만점 아이콘">
+				</div>
+
+				<div class="section-flex-row notice">
+					<dl class="info-list">
+						<dt>꼭 확인하세요</dt>
+						<dd>
+							<ul class="list-round">
+								<li>궁금한 내용은 다이렉트 고객센터(1577-3339)에서 간편하게 해결하세요</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+
+                <div class="section-flex-row tip-box">
+                    <h3>
+                        <span class="tag-tip">TIP</span>
+                        따로 살고 계신 부모님 등 소중한 분을 위해 내가 대신 가입할 수 있습니다!
+                    </h3>
+                    <ul class="list-round">
+                        <li>인터넷/스마트폰 사용이 익숙하지 않은 부모님을 위해서 바쁜 배우자를 대신해서 고객님께서 직접 보험가입을 간편하게 진행해 보세요!</li>
+                        <li>해당 프로세스는 모바일에서만 진행되며 피보험자의 동의가 필요합니다.</li>
+                    </ul>
+                </div>
+			</div>
+
+            <div class="section">
+                <ul class="list-round">
+                    <li>이 상품의 이름은 무배당 삼성화재 다이렉트 치아보험(2404.9)(자동갱신형) 입니다.</li>
+                    <li>2024년 4월 개정으로 적용이율이 변경 되었습니다.</li>
+                    <li>보험계약 전 상품설명서 및 약관을 읽어보시기 바랍니다.</li>
+                </ul>
+			</div>
+		</div>
+
+        <div class="section-plus">
+            <p>준법감시인확인필 제25-1-1411호 (4078,'25.03.13~'26.03.12)</p>
+            <div class="btn-wrap">
+                <button class="btn-round">보험금 지급 제한 사항 > </button>
+                <button class="btn-round">가입 시 유의사항 > </button>
+                <button class="btn-round">상품 약관 </button>
+            </div>
+        </div>
+        <div class="call-box">
+            전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 동일하게 특약 가입이 가능합니다.
+        </div>
+
+		<script th:src="@{/mall/js/product.js}"></script>
+	</main>
+
+</body>
+
+</html>

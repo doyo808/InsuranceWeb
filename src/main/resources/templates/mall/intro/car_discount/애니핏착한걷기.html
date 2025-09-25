@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<title>애니핏 착한걷기</title>
+	<link rel="stylesheet" th:href="@{/css/commonPage.css}" />
+	<link rel="stylesheet" th:href="@{/css/table.css}" />
+	<link rel="stylesheet" th:href="@{/css/custom-button.css}" />
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+	<main th:fragment="main">
+		<div class="header-cover main-section">
+			<!-- 상단 자동차 보험 소개 -->
+			<div class="breadcrumb container">홈 > 보험상품/대출 > 자동차보험 할인특약 안내 > <strong>애니핏 착한걷기</strong></div>
+			<div class="top-section container">
+				<div class="text-section">
+					<div class="title">
+						애니핏 착한걷기 할인 특약
+					</div>
+					<div class="desc">
+						<div class="desc-text">착!한걷기 또는 애니핏 플러스 서비스 이용 고객님께</div>
+						<div class="desc-text">보험료 평균 5~9% 할인 혜택 제공</div>
+					</div>
+					<button class="btn">자동차보험료 계산</button>
+				</div>
+				<div class="image-section">
+					<img src="" alt="걸은날짜 체크 달력 일러스트">
+				</div>
+			</div>
+		</div>
+
+		<div class="container main-section">
+			<div class="section">
+				<div class="content">
+					<h2>5,000걸음 이상 걸으면, 5~9% 보험료 특약 할인</h2>
+					<ul class="check-ul">
+						<li>적용상품: 개인 승용, 개인 업무용 자동차보험</li>
+						<li>가입대상: 회사가 인정하는 걸음측정장치를 이용 중이며,<br>
+							특약가입일로부터 직전 30일을 평가하여 5,000걸음 이상 걸은 날이 17일 이상인 고객님</li>
+						<li>회사가 인정하는 걸음측정장치란 : '삼성화재 애니핏 플러스', '삼성화재 착!한 걷기'를 말합니다.</li>
+						<li>자녀운전자 한정특약과 중복가입 불가</li>
+						<li>가입 조건에 해당하면 자동으로 보험료 특약 할인</li>
+					</ul>
+				</div>
+				<div class="image">
+					<img src="" alt="온라인 체크 아이콘">
+				</div>
+
+				<table class="section-flex-row custom-table">
+					<caption>[보험료 할인율]</caption>
+					<thead>
+						<th>대상 차종</th>
+						<th>할인율</th>
+					</thead>
+					<tbody>
+						<tr>
+							<th>개인 승용</th>
+							<td>평균 6~9%</td>
+						</tr>
+						<tr>
+							<th>개인 업무용</th>
+							<td>평균 5~8%</td>
+						</tr>
+					</tbody>
+				</table>
+				<ul class="section-flex-row list-round">
+					<li>'25.07.26 보험시작일 기준</li>
+				</ul>
+
+				<div class="notice section-flex-row">
+					<dl class="info-list">
+						<dt>꼭 확인하세요</dt>
+						<dd>
+							<ul class="list-round">
+								<li>애니핏 착한걷기 할인 특약은 긴급출동서비스와 특약 보험료를 제외한 보험료에 적용됩니다.</li>
+								<li>걸음수 정보는 기명피보험자(자동차 소유자)의 정보만 인정됩니다. (부부한정으로 가입 시에도 기명피보험자의 걸음수만 인정)</li>
+								<li>보험 가입 시 가입 조건을 충족하지 못했더라도 보험 가입 후 가입 조건을 충족하셨다면, 삼성화재 다이렉트 고객센터(1577-3339)를 통해 특약
+									추가가입이 가능합니다.</li>
+								<li>보험기간 중도에 추가한 경우, 가입일 기준으로 보험종료일까지 일할 계산하여 보험료를 환급해 드립니다.</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="content">
+					<h2>착!한 걷기 서비스란?</h2>
+					<ul class="check-ul">
+						<li>착!한걷기 서비스는 고객님의 걷기 습관을 위한 서비스로 삼성화재 다이렉트 착!한 생활 시리즈 중 하나입니다.</li>
+						<li>착!한 걷기 서비스로 매일, 매월 걸음 수에 따라 포인트를 받을 수 있으며, 적립 포인트는 보험료 납입, 상품 및 서비스 구매, 기부 등에 사용할 수 있습니다.
+						</li>
+						<li>
+							착!한걷기 서비스는 삼성화재 다이렉트 모바일 앱에서 서비스 가입 후 이용 가능합니다.<br>
+							<button class="btn-round">자세히 보기 > </button>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="content">
+					<h2>애니핏 플러스 서비스란?</h2>
+					<ul class="check-ul">
+						<li>애니핏 플러스 서비스는 삼성화재 고객님의 건강관리를 위한 삼성화재 모바일 헬스케어 서비스입니다.</li>
+						<li>애니핏 플러스 서비스를 통해 걷기, 달리기 등 운동 미션을 달성하면 보험료 결제와 삼성화재 애니포인트몰에서 사용할 수 있는 포인트를 받을 수 있습니다.</li>
+						<li>
+							애니핏 플러스 앱을 설치한 후, 서비스에 가입하시면 이용할 수 있습니다.<br>
+							<button class="btn-round">자세히 보기 > </button>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+			<div class="section-plus">
+				<p>준법감시인확인필 제25-1-0182호 (0801,'25.01.15~'26.01.14)</p>
+				<div class="btn-wrap">
+					<button class="btn-round">가입 시 유의사항</button>
+				</div>
+			</div>
+			<div class="call-box">
+				전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 동일하게 특약 가입이 가능합니다.
+			</div>
+		</div>
+
+	</main>
+</body>
+
+</html>
