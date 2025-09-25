@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/mall/layout/layout_mall.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>피보험자/계약자 정보입력</title>
+	<style>
+		.info-wrap {
+			justify-content: center;
+			text-align: center;
+		}
+		.required-info-check-box {
+			width: 1000px;
+			text-align: left;
+			margin: 0 auto;
+			user-select: none;
+			border: 1px solid lightgray;
+		}
+	</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div class="info-wrap">
+			<h1>피보험자/계약자<br>정보를 입력해 주세요</h1>
+			
+			<!-- ============================ -->
+			<!-- 필수입력사항: 이름, 전화번호, 이메일 -->
+			<!-- ============================ -->
+		<form>
+			<!-- 피보험자 -->
+			<h2 class="custom-table-title">피보험자
+				<button>계약자와 동일</button>
+			</h2>
+			<table class="custom-table">
+				<tr>
+					<th>이름</th>
+					<td><input name="person_name" placeholder="홍길동"></td>
+				</tr>
+				<tr>
+					<th>휴대폰 번호</th>
+					<td><input name="phone_number" placeholder="-없이 입력해주세요"></td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+					<td><input name="email" placeholder="sample@ex.com"></td>
+				</tr>
+			</table>
+			
+			<!-- 계약자 -->
+			<h2 class="custom-table-title">계약자
+				<button>수정</button>
+			</h2>
+			<table class="custom-table">
+				<tr>
+					<th>이름</th>
+					<td><input name="person_name" placeholder="홍길동"
+						th:value="${loginUser.person.person_name}"></td>
+				</tr>
+				<tr>
+					<th>휴대폰 번호</th>
+					<td><input name="phone_number" placeholder="-없이 입력해주세요"
+						th:value="${loginUser.person.phone_number}"></td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+					<td><input name="email" placeholder="sample@ex.com"
+						th:value="${loginUser.person.email}"></td>
+				</tr>
+			</table>
+		</form>
+			
+			<!-- ============================ -->
+			<!--          필수확인사항           -->
+			<!-- ============================ -->
+			<h2 class="custom-table-title">필수 확인사항</h2>
+			<div class="required-info-check-box">
+				<label><input type="checkbox">
+					<span>이 금융거래의 실제 소유자임을 확인했습니다.</span><br>
+					<span>특정 금융정보법에 따라 금융기관과의 거래를 위해 고객 신원 및 실제 소유자임을 확인하고 있습니다.</span>
+				</label><br>
+				<label><input type="checkbox">
+					<span>해외 납세의무자가 아님을 확인했습니다.</span><br>
+					<span>해외 납세의무자이거나, 한국 외에 조세 목적상 거주지가 있는 경우 다이렉트 보험 가입이 불가합니다.</span>
+				</label>
+			</div>
+			
+			<!-- ============================ -->
+			<!--          기타사항              -->
+			<!-- ============================ -->
+			<h2 class="custom-table-title">기타사항</h2>
+			<table class="custom-table">
+				<tr>
+					<th>사망보험금 수익자</th>
+					<td>법정상속인</td>
+				</tr>
+				<tr>
+					<th>대리청구인</th>
+					<td>보험금 지정대리청구인 신청 안내</td>
+				</tr>
+			</table>
+			
+			<div>
+				<button type="button">이전</button>
+				<button type="submit">다음</button>
+			</div>
+			
+		</div>
+	</main>
+</body>
+</html>

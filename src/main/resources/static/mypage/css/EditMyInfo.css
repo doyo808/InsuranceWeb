@@ -33,3 +33,35 @@ td .fa-magnifying-glass {
 	font-size: 15px;
 	cursor: pointer;
 }
+
+.info-submit-button {
+	color: #FFFFFF;
+	border: 1px solid #2C7FDF;
+	background: #2C7FDF;
+	min-width: 90px;
+	padding: 11px 30px 9px;
+	border-radius: 6px;
+	font-size: 16px;
+	font-weight: 500;
+	height: 45px;
+	line-height: 20px;
+	margin-top: 30px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.clear-btn {
+	display: inline-block;
+	color: #2C7FDF;
+	border: 1px solid #2C7FDF;
+	background: #FFFFFF;
+	margin: 0 20px;
+	padding: 3px 0;
+	border-radius: 6px;
+	font-size: 15px;
+	text-align: center;
+	line-height: 28px;
+	font-weight: 500;
+	width: 80px;
+	cursor: pointer;
+}

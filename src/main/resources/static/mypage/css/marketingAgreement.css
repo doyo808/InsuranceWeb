@@ -156,3 +156,19 @@
 .personal-info-using-guide:hover {
 	border: 2px solid var(--gray-text);
 }
+
+/* 저장 버튼 */
+.consent-submit-button {
+	color: #FFFFFF;
+	border: 1px solid #2C7FDF;
+	background: #2C7FDF;
+	min-width: 90px;
+	padding: 11px 30px 9px;
+	border-radius: 6px;
+	font-size: 18px;
+	font-weight: 500;
+	height: 50px;
+	line-height: 20px;
+	white-space: nowrap;
+	cursor: pointer;
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.mypage.mapper.MarketingConsentMapper">
+  <select id="selectByCustomerId" resultType="com.kd.insuranceweb.mypage.dto.MarketingConsentDTO"
+   parameterType="Integer">
+  	SELECT * FROM marketing_consent WHERE customer_id = #{customer_id}
+  </select>
+  
+  <insert id="insertMarketingConsent" parameterType="com.kd.insuranceweb.mypage.dto.MarketingConsentDTO">
+  	INSERT INTO marketing_consent 
+  		(marketing_consent_id,
+  		 customer_id,
+  		 consent_collection,  
+  		 consent_marketing, 
+  		 consent_sharing, 
+  		 consent_lookup, 
+  		 channel_phone, 
+  		 channel_sms, 
+  		 channel_email, 
+  		 updated_at)
+  	values 
+  		(marketing_consent_seq.nextval, 
+  		 #{dto.customer_id}, 
+  		 #{dto.consent_collection}, 
+  		 #{dto.consent_marketing}, 
+  		 #{dto.consent_sharing}, 
+  		 #{dto.consent_lookup}, 
+  		 #{dto.channel_phone}, 
+  		 #{dto.channel_sms},
+  		 #{dto.channel_email},
+  		 #{dto.updated_at})
+  </insert>
+  
+  <update id="updateMarketingConsent">
+  	UPDATE marketing_consent
+    SET
+      consent_collection = #{dto.consent_collection},
+      consent_marketing  = #{dto.consent_marketing},
+      consent_sharing    = #{dto.consent_sharing},
+      consent_lookup     = #{dto.consent_lookup},
+      channel_phone      = #{dto.channel_phone},
+      channel_sms        = #{dto.channel_sms},
+      channel_email      = #{dto.channel_email},
+      updated_at         = #{dto.updated_at}
+    WHERE customer_id = #{dto.customer_id}
+  </update>
+</mapper>

@@ -6,68 +6,65 @@ class MarketingAgreementManager {
 
 			/** 메인 동의 항목 (라디오 버튼 그룹)*/
 			mainConsents: {
-				collection: document.querySelectorAll('input[name="consent-for-collection"]'),
-				marketing: document.querySelectorAll('input[name="consent-for-marketing"]'),
-				sharing: document.querySelectorAll('input[name="consent-for-sharing"]'),
-				lookup: document.querySelectorAll('input[name="consent-for-lookup"]'),
+				collection: document.querySelectorAll('input[name="consent_collection"]'),
+				marketing: document.querySelectorAll('input[name="consent_marketing"]'),
+				sharing: document.querySelectorAll('input[name="consent_sharing"]'),
+				lookup: document.querySelectorAll('input[name="consent_lookup"]'),
 			},
 
 			/** 마케팅 채널 상세 동의 항목 */
 			marketingChannels: {
 				all: document.querySelector('input[name="marketing-channel-all"]'),
-				individuals: document.querySelectorAll('input[name^="marketing-channel-"]:not([name$="-all"])'),
+				individuals: document.querySelectorAll('input[name^="channel_"]'),
 			},
+            personalInfoBtn: document.querySelector('.personal-info-using-guide'),
 		};
 
 		// this 바인딩
 		this.handleConsentAllChange = this.handleConsentAllChange.bind(this);
 		this.handleMarketingChannelAllChange = this.handleMarketingChannelAllChange.bind(this);
 		this.handleIndividualChange = this.handleIndividualChange.bind(this);
+		this.handleMarketingConsentChange = this.handleMarketingConsentChange.bind(this);
+        this.openPersonalInfoGuide = this.openPersonalInfoGuide.bind(this);
 	}
 
 	// --- 헬퍼 함수들 ---
 
-	/** [헬퍼] 라디오 그룹 업데이트 */
 	updateRadioGroup(radioGroup, value) {
 		radioGroup.forEach(radio => {
 			radio.checked = (radio.value === value);
 		});
 	}
 
-	/** [헬퍼] 단일 체크박스 업데이트 */
 	updateCheckbox(checkbox, isChecked) {
-		checkbox.checked = isChecked;
+		if (checkbox) {
+			checkbox.checked = isChecked;
+        }
 	}
 
 	// --- 메인 로직 ---
-
+	
 	/**
-	 * [핵심] 모든 동의 항목의 현재 상태를 기반으로 UI를 동기화하는 함수
+	 * 	각 상태값을 동기화하기
 	 */
 	syncConsentStatus() {
-		// 1. 마케팅 개별 채널 -> 마케팅 '전체' 체크박스 동기화
 		const areAllChannelsChecked = [...this.elements.marketingChannels.individuals].every(cb => cb.checked);
 		this.updateCheckbox(this.elements.marketingChannels.all, areAllChannelsChecked);
 
-		// 2. 마케팅 개별 채널 -> 마케팅 '동의' 라디오 버튼 동기화
 		const isAnyChannelChecked = [...this.elements.marketingChannels.individuals].some(cb => cb.checked);
-		this.updateRadioGroup(this.elements.mainConsents.marketing, isAnyChannelChecked ? 'true' : 'false');
+		this.updateRadioGroup(this.elements.mainConsents.marketing, isAnyChannelChecked ? 'Y' : 'N');
 		
-		// 3. 모든 라디오 버튼 -> '모두 동의하기' 체크박스 동기화
 		const areAllRadiosAgreed = Object.values(this.elements.mainConsents)
-			.every(group => [...group].find(radio => radio.value === 'true').checked);
+			.every(group => [...group].find(radio => radio.value === 'Y').checked);
 		this.updateCheckbox(this.elements.consentAll, areAllRadiosAgreed);
 	}
 
 
 	// --- 이벤트 핸들러들 ---
 
-	/**
-	 * '모두 동의하기' 클릭 시: 모든 하위 항목을 제어
-	 */
 	handleConsentAllChange(e) {
 		const isChecked = e.target.checked;
-		const targetValue = isChecked ? 'true' : 'false';
+		const targetValue = isChecked ? 'Y' : 'N';
 
 		Object.values(this.elements.mainConsents).forEach(group => this.updateRadioGroup(group, targetValue));
 		
@@ -75,53 +72,63 @@ class MarketingAgreementManager {
 		this.elements.marketingChannels.individuals.forEach(cb => this.updateCheckbox(cb, isChecked));
 	}
 	
-	/**
-	 * '마케팅 채널 전체' 클릭 시: 하위 채널들과 마케팅 라디오를 제어
-	 */
+	handleMarketingConsentChange(e) {
+        const selectedValue = e.target.value;
+
+		// '동의(Y)'를 선택한 경우, 하위 모든 채널 체크박스 선택
+		if (selectedValue === 'Y') {
+			this.updateCheckbox(this.elements.marketingChannels.all, true);
+			this.elements.marketingChannels.individuals.forEach(cb => this.updateCheckbox(cb, true));
+		}
+        // '비동의(N)'를 선택한 경우, 모든 하위 채널 체크박스를 해제
+        if (selectedValue === 'N') {
+            this.updateCheckbox(this.elements.marketingChannels.all, false);
+            this.elements.marketingChannels.individuals.forEach(cb => this.updateCheckbox(cb, false));
+        }
+
+        // 작업 완료 후, 전체 상태를 최종 동기화
+        this.syncConsentStatus();
+    }
+	
 	handleMarketingChannelAllChange(e) {
 		const isChecked = e.target.checked;
-		
 		this.elements.marketingChannels.individuals.forEach(cb => this.updateCheckbox(cb, isChecked));
-		
-		// 변경 후, 전체 상태를 다시 동기화
 		this.syncConsentStatus();
 	}
 
-	/**
-	 * 개별 항목 클릭 시: 전체 상태를 다시 계산하여 동기화
-	 */
 	handleIndividualChange() {
 		this.syncConsentStatus();
 	}
+
+    openPersonalInfoGuide() {
+        window.open("https://www.samsungfire.com/util/P_U04_05_01_305.html", '_blank');
+    }
 	
-	/**
-	 * 모든 이벤트 리스너를 등록하는 함수
-	 */
 	addEventListeners() {
-		// 1. 마스터 컨트롤: '모두 동의하기' 체크박스
 		this.elements.consentAll.addEventListener('change', this.handleConsentAllChange);
-		
-		// 2. 서브 컨트롤: '마케팅 채널 전체' 체크박스
 		this.elements.marketingChannels.all.addEventListener('change', this.handleMarketingChannelAllChange);
+	    this.elements.personalInfoBtn.addEventListener('click', this.openPersonalInfoGuide);
 
-		// 3. 개별 항목들: 라디오 버튼과 개별 채널 체크박스
-		Object.values(this.elements.mainConsents).forEach(group => {
-			group.forEach(radio => radio.addEventListener('change', this.handleIndividualChange));
-		});
+	    // 1. 일반 동의 항목들
+		this.elements.mainConsents.collection.forEach(radio => radio.addEventListener('change', this.handleIndividualChange));
+	    this.elements.mainConsents.sharing.forEach(radio => radio.addEventListener('change', this.handleIndividualChange));
+	    this.elements.mainConsents.lookup.forEach(radio => radio.addEventListener('change', this.handleIndividualChange));
 
+	    // 2. 광고성 동의 항목 (전용 핸들러 사용)
+	    this.elements.mainConsents.marketing.forEach(radio => radio.addEventListener('change', this.handleMarketingConsentChange));
+
+	    // 3. 개별 채널 체크박스
 		this.elements.marketingChannels.individuals.forEach(checkbox => {
 			checkbox.addEventListener('change', this.handleIndividualChange);
 		});
 	}
+
+    init() {
+        this.addEventListeners();
+        this.syncConsentStatus(); 
+    }
 }
 
 // --- 스크립트 실행 ---
 const agreementForm = new MarketingAgreementManager();
-agreementForm.addEventListeners();
-
-
-// 페이지 최하단 개인정보처리방침 링크
-const personalInfoUsingGuideBtn = document.querySelector('.personal-info-using-guide');
-personalInfoUsingGuideBtn.addEventListener('click', () => {
-	window.open("https://www.samsungfire.com/util/P_U04_05_01_305.html", '_blank');
-});
+agreementForm.init();

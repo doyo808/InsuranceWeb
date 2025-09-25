@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$CONTENT_TITLE - 보험가입">공통 타이틀</title>
+	<link rel="stylesheet" th:href="@{/common/css/customTable.css}" />
+	<style>
+		body {
+			margin: 0;
+		}
+		.header__wrap {
+			background-color: #3b92e5;
+			min-width: 1200px;
+			display: flex;
+			justify-content: center;
+		}
+		.header__main {
+			width: 1200px;
+			height: 35px;
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header th:replace="~{mall/layout/header_mall :: headerFragment}"></header>
+
+    <!-- 본문 -->
+    <main layout:fragment="content" style="width: 1200px; margin: 137px auto 0 auto;">
+        <!-- 개별 콘텐츠 삽입될 자리 -->
+    </main>
+
+	<script th:inline="javascript">
+	  const contextPath = /*[[@{/}]]*/ '';
+	</script>
+</body>
+</html>

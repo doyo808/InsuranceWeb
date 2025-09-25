@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/mall/layout/layout_mall.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>알릴사항</title>
+	<style>
+		.insured_detail_wrapper {
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+<main layout:fragment="content">
+	<div class="insured_detail_wrapper">
+		<h1>
+			<span>고객이름</span>
+			님의 보험 가입에<br>필요한 정보를 알려주세요
+		</h1>
+		
+		<!-- 알릴사항 정보 입력 -->
+		<table class="custom-table">
+			<tr><th>1. 흡연을 하시나요?</th>
+				<td>
+					<label><input type="radio" name="is_smoker" value="Y">예</label>
+					<label><input type="radio" name="is_smoker" value="N">아니오</label>
+				</td>
+			</tr>
+			<tr><th>2. 음주을 하시나요?</th>
+				<td>
+					<label><input type="radio" name="drinks" value="Y">예</label>
+					<label><input type="radio" name="drinks" value="N">아니오</label>
+				</td>
+			</tr>
+			<tr><th>3. 운전을 하시나요?</th>
+				<td>
+					<label><input type="radio" name="driving_status" value="BIKE">이륜차(오토바이)</label>
+					<label><input type="radio" name="driving_status" value="TRUCK">트럭(건설기계, 농기구 포함)</label>
+					<label><input type="radio" name="driving_status" value="SEDAN">승용차</label>
+					<label><input type="radio" name="driving_status" value="NONE">아니오</label>
+				</td>
+			</tr>
+			<tr><th>4.(최근 5년 이내) 입원, 수술, 7일 이상의 계속된 치료, 30일 이상의 계속된 투약을 받은 적이 있으신가요?</th>
+				<td>
+					<label><input type="radio" name="medical_history" value="Y">예</label>
+					<label><input type="radio" name="medical_history" value="N">아니오</label>
+				</td>
+			</tr>
+			<tr><td>4번 항목에 예를 선택하신 경우: 병명을 입력해주세요.</td></tr>
+		</table>
+		
+		<div>
+			<button type="button">이전</button>
+			<button type="submit">다음</button>
+		</div>
+		
+	</div>
+</main>
+</body>
+</html>
