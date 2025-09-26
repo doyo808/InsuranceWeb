@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8" />
@@ -89,12 +89,12 @@
 <body>
     <div class="title" style="width: 700px; margin: 0 auto;">
         <div class="title-head" style="display: flex; justify-content: space-between;">
-            <span>치아보험</span>
+            <span>자동차보험</span>
             <button style="border: 0; background-color: rgb(0, 128, 255); color: white;"
                 onclick="location.href='/home';">종료</button>
         </div>
         <div style="display: flex;">
-            <div style="width: 400px; height: 500px;">
+            <div style="min-width: 400px; height: 500px;">
                 이미지 들어가는 칸
             </div>
             <div>
@@ -103,27 +103,9 @@
                     <button type="button">계산기록</button>
                     <hr>
                     <dl class="user-form">
-                        <dt>가입대상</dt>
-                        <dd>
-                            <label>
-                                <input type="radio" name="join-target">
-                                본인
-                            </label>
-                            <label>
-                                <input type="radio" name="join-target">
-                                배우자/부모 등
-                            </label>
-                            <label>
-                                <input type="radio" name="join-target">
-                                미성년 자녀
-                            </label>
-                        </dd>
-                        <div class="error-msg disabled disabledEle" id="targetError">가입대상을 선택해주세요.</div>
-                    </dl>
-                    <dl class="user-form">
                         <dt>생년월일</dt>
                         <dd>
-                            <input type="text" id="birth" placeholder="예) 20250917" />
+                            <input type="text" id="birth" name="birth" th:value="${session.birth}" placeholder="예) 20250917" />
                         </dd>
                         <div class="error-msg disabled disabledEle" id="birthError">8자리 형식(YYYYMMDD)으로 정확한 생년월일을 입력해주세요.
                         </div>
@@ -132,11 +114,11 @@
                         <dt>성별</dt>
                         <dd>
                             <label>
-                                <input type="radio" name="gender" value="men" />
+                                <input type="radio" name="gender" value="men" th:checked="${session.gender== 'men'} " />
                                 남자
                             </label>
                             <label>
-                                <input type="radio" name="gender" value="women" />
+                                <input type="radio" name="gender" value="women" th:checked="${session.gender== 'women'} "/>
                                 여자
                             </label>
                         </dd>
@@ -145,7 +127,7 @@
                     <dl class="user-form">
                         <dt>직업</dt>
                         <dd>
-                            <input type="text" id="job" disabled />
+                            <input type="text" name="job" id="job" value="nojob" readonly />
                             <button type="button" onclick="" class="btn-function">직업 찾기</button>
                         </dd>
                     </dl>
@@ -228,7 +210,6 @@
     <script>
         const submitBtn = document.getElementById("submitBtn");
         const inputs = {
-            target: document.getElementsByName("join-target"),
             birth: document.getElementById("birth"),
             gender: document.getElementsByName("gender"),
         };
@@ -277,10 +258,6 @@
         function validateForm(showError = false, birthCheck = false) {
             let valid = true;
 
-            // 가입대상 체크
-            const isTargetChecked = [...inputs.target].some(r => r.checked);
-            if (!isTargetChecked) valid = false;
-
             // 생년월일
             const birthValue = inputs.birth.value.trim();
             const isBirthValid = isValidBirthdate(birthValue);
@@ -292,7 +269,6 @@
             if (!isGenderChecked) valid = false;
 
             if (showError) {
-                document.getElementById("targetError").style.display = (!isTargetChecked) ? "block" : "none";
                 if (birthCheck) document.getElementById("birthError").style.display = (!isBirthValid) ? "block" : "none";
                 document.getElementById("genderError").style.display = (!isGenderChecked) ? "block" : "none";
             }
@@ -305,13 +281,17 @@
     <script>
         const dental_form = document.getElementById('dental-input');
         dental_form.method = 'POST';
-        dental_form.action = './';
+        dental_form.action = './car';
         dental_form.addEventListener('change', e => {
             const isValid = validateForm(true, true);
-            console.log(isValid);
             submitBtn.classList.toggle("disabled", !isValid);
             submitBtn.textContent = isValid ? "보험료 계산하기" : "정보를 입력해주세요";
         });
+		
+		window.onload = function() {
+			const isValid = validateForm();
+			submitBtn.classList.toggle("disabled", !isValid);
+		}
 
         function nextPage() {
             if (submitBtn.classList.contains('disabled')) {
