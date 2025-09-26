@@ -27,45 +27,48 @@
 			<!-- ============================ -->
 			<!-- 필수입력사항: 이름, 전화번호, 이메일 -->
 			<!-- ============================ -->
-		<form>
+		<form id="personal-basic-form" th:action="@{/mall/info}" method="POST">
 			<!-- 피보험자 -->
 			<h2 class="custom-table-title">피보험자
-				<button>계약자와 동일</button>
+				<button type="button" id="bring-customer-info-button">계약자와 동일</button>
 			</h2>
 			<table class="custom-table">
 				<tr>
 					<th>이름</th>
-					<td><input name="person_name" placeholder="홍길동"></td>
+					<td><input id="input_insured_name" name="insured_name" placeholder="홍길동"
+						 th:value="${session.insured_name} ?: ''"></td>
 				</tr>
 				<tr>
 					<th>휴대폰 번호</th>
-					<td><input name="phone_number" placeholder="-없이 입력해주세요"></td>
+					<td><input id="input_insured_phone_number" name="insured_phone_number" placeholder="-없이 입력해주세요" maxlength="11"
+						th:value="${session.insured_phone_number} ?: ''"></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
-					<td><input name="email" placeholder="sample@ex.com"></td>
+					<td><input id="input_insured_email" name="insured_email" placeholder="sample@ex.com"
+						th:value="${session.insured_email} ?: ''"></td>
 				</tr>
 			</table>
 			
 			<!-- 계약자 -->
 			<h2 class="custom-table-title">계약자
-				<button>수정</button>
+				<button type="button">수정</button>
 			</h2>
 			<table class="custom-table">
 				<tr>
 					<th>이름</th>
-					<td><input name="person_name" placeholder="홍길동"
-						th:value="${loginUser.person.person_name}"></td>
+					<td><input id="input_customer_name" name="customer_name" placeholder="홍길동"
+						th:value="${loginUser.person.person_name}" readonly></td>
 				</tr>
 				<tr>
 					<th>휴대폰 번호</th>
-					<td><input name="phone_number" placeholder="-없이 입력해주세요"
-						th:value="${loginUser.person.phone_number}"></td>
+					<td><input id="input_customer_phone_number" name="customer_phone_number" placeholder="-없이 입력해주세요" maxlength="11" 
+						th:value="${loginUser.person.phone_number}" readonly></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
-					<td><input name="email" placeholder="sample@ex.com"
-						th:value="${loginUser.person.email}"></td>
+					<td><input id="input_customer_email" name="customer_email" placeholder="sample@ex.com"
+						th:value="${loginUser.person.email}" readonly></td>
 				</tr>
 			</table>
 		</form>
@@ -100,12 +103,14 @@
 				</tr>
 			</table>
 			
-			<div>
-				<button type="button">이전</button>
-				<button type="submit">다음</button>
+			<div class="button-wrap">
+				<button type="button" class="prev-btn">이전</button>
+				<button type="submit" class="next-btn" form="personal-basic-form">다음</button>
 			</div>
 			
 		</div>
+		
+		<script th:src="@{/mall/js/personal_basic.js}"></script>
 	</main>
 </body>
 </html>

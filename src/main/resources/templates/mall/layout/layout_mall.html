@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title layout:title-pattern="$CONTENT_TITLE - 보험가입">공통 타이틀</title>
 	<link rel="stylesheet" th:href="@{/common/css/customTable.css}" />
+	<link rel="stylesheet" th:href="@{/common/css/customButton.css}" />
 	<style>
 		body {
 			margin: 0;
@@ -28,7 +29,7 @@
     <header th:replace="~{mall/layout/header_mall :: headerFragment}"></header>
 
     <!-- 본문 -->
-    <main layout:fragment="content" style="width: 1200px; margin: 137px auto 0 auto;">
+    <main layout:fragment="content" style="min-width: 1200px; margin: 137px auto 0 auto;">
         <!-- 개별 콘텐츠 삽입될 자리 -->
     </main>
 

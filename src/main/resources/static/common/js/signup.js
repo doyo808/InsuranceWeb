@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         phone: false,
         email: false,
         emailCheckedAndAvailable: false,
-        agreement: false
+        agreement: false,
+		cert: false
     };
 
     const checkFormValidity = () => {
@@ -132,4 +133,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 초기 상태 체크
     checkFormValidity();
+	
+	
+	// 아임포트 초기화 (테스트용 개발 가맹점 ID)
+	var IMP = window.IMP;
+	IMP.init("imp72048686");
+
+	// 버튼 클릭 시 본인인증 호출
+	document.getElementById("certBtn").addEventListener("click", function() {
+	  IMP.certification({
+	    // 주문 번호
+	    merchant_uid: "ORD20180131-0000011",
+	  }, function(rsp) {
+		  cert = true;
+		  checkFormValidity();
+		  
+		  document.getElementById("certSuccessModal").style.display = "block";
+            setTimeout(() => { 
+              document.getElementById("certSuccessModal").style.display = "none"; 
+            }, 2000);
+	      // 서버로 전달 
+	    if (rsp.success) {
+	      fetch(`${contextPath}cert/complete`, {
+	        method: "POST",
+	        headers: { "Content-Type": "application/json" },
+	        body: JSON.stringify(rsp)
+	      });
+	    } else {
+	      alert("본인인증 실패: " + rsp.error_msg);
+	    }
+	  });
+	});
+
+	
+	
 });
