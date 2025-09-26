@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+
+        .in-content {
+            height: 90%;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+
+        .close-btn {
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+    </style>
+	<style>
+		.selected {
+			background-color: lightgray;
+		}
+		
+		.frame {
+			background-color: azure;
+		}
+	</style>
+</head>
+
+<body>
+    <div class="title" style="width: 700px; margin: 0 auto;">
+        <div class="title-head" style="display: flex; justify-content: space-between;">
+            <span>자동차보험</span>
+            <button style="border: 0; background-color: rgb(0, 128, 255); color: white;"
+                onclick="location.href='/home';">종료</button>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <div class="selectzone">
+				<div class="frame"></div>
+				<div class="frame selected"></div>
+				<div class="frame"></div>
+			</div>
+			<div class="sideMenu" style="width: 200px;">
+				<div class="infos" id="value">
+					<p>[[|${session.birth} (${session.gender})|]]</p>
+					<p>[[${session.job}]]</p>
+				</div>
+				<div class="infos" id="conditions">
+					<button>조건 변경하기</button>
+				</div>
+			</div>
+        </div>
+		<div style="position: fixed; bottom: 0;">
+			<div>
+				<button>이전</button>
+				<button>다음</button>
+			</div>
+		</div>
+    </div>
+	
+</body>
+
+</html>

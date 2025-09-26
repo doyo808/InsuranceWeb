@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{/common/layout.html}">
+	  
+<head>
+  <meta charset="UTF-8">
+  <title>영업용자동차보험(전화가입)</title>
+  <link rel="stylesheet" th:href="@{/mall/css/commonPage.css}" />
+  <link rel="stylesheet" th:href="@{/mall/css/custom-button.css}" />
+  <link rel="stylesheet" th:href="@{/mall/css/table.css}" />
+  <script th:src="@{/mall/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+  <main layout:fragment="content" style="width: 100%; margin: 137px auto 0;">
+
+    <div class="header-cover main-section">
+      <div class="breadcrumb container">홈 > 보험상품/대출 > 자동차 > <strong>영업용자동차보험(전화가입)</strong></div>
+      <!-- 상단 자동차 보험 소개 -->
+      <div class="top-section container">
+        <div class="text-section">
+          <div class="title">
+            영업용자동차보험 <span class="badge">전화가입</span>
+          </div>
+          <div class="subtitle">영업용자동차보험도 전화로 간편하게 가입가능</div>
+          <div class="description">대상 : 개인소유화물차</div>
+          <button class="btn">상담 신청하기 tel: 0000-0000</button>
+        </div>
+        <div class="image-section">
+          <img src="" alt="자동차보험 일러스트">
+        </div>
+      </div>
+    </div>
+
+    <div class="container main-section">
+
+      <!-- 탭 메뉴 -->
+      <div class="tabs">
+        <div class="tab-menu selected" data-tab="tab1">상품소개</div>
+        <div class="tab-menu" data-tab="tab2">보장내용</div>
+      </div>
+
+      <!-- 상품 소개 섹션 -->
+      <div class="tab show" id="tab1">
+        <div class="section">
+          <div class="content">
+            <h2>다이렉트(TM)로 평균 6.1% 저렴한 보험료 (기준일자: 2023.05.02)</h2>
+            <ul class="check-ul">
+              <li>삼성화재 오프라인 상품 가입 대비 평균 6.1% 저렴
+                가입가능차종: 개인소유 화물차 전차종</li>
+            </ul>
+          </div>
+          <div class="image">
+            <img src="" alt="전화 아이콘">
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="content">
+            <h2>믿을 수 있는 삼성화재 보상서비스는 그대로</h2>
+            <ul class="check-ul">
+              <li>전화로 가입해도 동일한 삼성화재 보상서비스 제공</li>
+              <li>애니카서비스 특약 가입 시 신속한 현장출동 서비스 제공</li>
+            </ul>
+          </div>
+          <div class="image">
+            <img src="" alt="트럭 아이콘">
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="content">
+            <h2>전문상담사를 통해 전화로 편리하게 가입</h2>
+            <ul class="check-ul">
+              <li>자동차보험 전문상담사가 맞춤형 컨설팅 제공</li>
+              <li>전화가입 전문센터를 통해 영업용 자동차보험 가입 가능</li>
+            </ul>
+            <p class="alert-p">갱신 시 보험료가 인상될 수 있음</p>
+          </div>
+          <div class="image">
+            <img src="" alt="헤드셋 아이콘">
+          </div>
+        </div>
+
+        <div class="section-plus">
+          <p>준법감시인확인필 제24-1-11095호 (0801,'24.10.10~'25.10.09)</p>
+          <div class="btn-wrap">
+            <button class="btn-round">가입 시 유의사항</button>
+          </div>
+        </div>
+
+        <div class="call-box">
+          전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 특약 가입이 가능합니다.
+        </div>
+      </div>
+    </div>
+	
+	<div class="tab">
+	</div>
+	
+	<script th:src="@{/mall/js/product.js}"></script>
+  </main>
+</body>
+
+</html>

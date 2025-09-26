@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+/*버튼 스타일 커스텀*/
+.btn-round {
+	border: 1px rgb(192, 192, 192) solid;
+	border-radius: 20px;
+	padding: 10px 25px;
+	margin-top: 10px;
+	color: rgb(128, 128, 128);
+	background-color: white;
+	cursor: pointer;
+	transition: 0.2s ease-out;
+	
+}
+.btn-round:hover {
+	border: 1px black solid;
+	transition: 0.2s ease-in;
+}

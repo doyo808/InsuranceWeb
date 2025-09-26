@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{/common/layout.html}">
+	  
+<head>
+  <meta charset="UTF-8">
+  <title>자동차보험(인터넷가입)</title>
+  <link rel="stylesheet" th:href="@{/mall/css/commonPage.css}" />
+  <link rel="stylesheet" th:href="@{/mall/css/custom-button.css}" />
+  <link rel="stylesheet" th:href="@{/mall/css/table.css}" />
+  <script th:src="@{/mall/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+  <main layout:fragment="content" style="width: 100%; margin: 137px auto 0;">
+    <div class="header-cover main-section">
+      <!-- 상단 자동차 보험 소개 -->
+      <div class="breadcrumb container">홈 > 보험상품/대출 > 자동차 > <strong>자동차보험(인터넷가입)</strong></div>
+      <div class="top-section container">
+        <div class="text-section">
+          <div class="title">
+            자동차보험 <span class="badge">인터넷가입</span>
+          </div>
+          <div class="desc">
+            <div class="desc-text">다이렉트 자동차보험 가입 1위</div>
+            <div class="desc-subtext">(14년~24년, 수입보험료 기준)</div>
+          </div>
+          <a class="btn" th:href="@{/mall/ria/car/1}">보험료 계산</a>
+        </div>
+        <div class="image-section">
+          <img src="" alt="자동차보험 일러스트">
+        </div>
+      </div>
+    </div>
+
+    <div class="container main-section">
+      <!-- 탭 메뉴 -->
+      <div class="tabs">
+        <div class="tab-menu selected" data-tab="tab1">상품소개</div>
+        <div class="tab-menu" data-tab="tab2">보장내용</div>
+      </div>
+
+      <!-- 상품 소개 섹션 -->
+      <div class="tab show" id="tab1">
+        <div class="section">
+          <div class="content">
+            <h2>인터넷으로 직접 가입해서 개인용 평균 21.1% 저렴한 보험료</h2>
+            <ul class="check-ul">
+              <li>자사 오프라인 상품 가입 대비 개인용 평균 21.1% 저렴</li>
+              <li>인터넷으로 직접 설계하고 가입하여 판매수수료 0원</li>
+            </ul>
+          </div>
+          <div class="image">
+            <img src="" alt="온라인 체크 아이콘">
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="content">
+            <h2>다양한 할인 특약으로 보험료 할인</h2>
+            <ul class="check-ul">
+              <li>마일리지, 블랙박스, 자녀사랑 할인 특약 등 가입으로 보험료 할인
+                <p class="note">특약별 가입대상 및 조건에 대한 자세한 내용은 각 특약 상세 페이지에서 확인 가능</p>
+              </li>
+              <li>최근 3년 이상 무사고 시 보험료 할인(조건 해당 시, 별도 가입 절차 없이 자동 가입)</li>
+            </ul>
+          </div>
+          <div class="image">
+            <img src="" alt="계산기 할인 아이콘">
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="content">
+            <h2>믿을 수 있는 삼성화재 보상서비스는 그대로</h2>
+            <ul class="check-ul">
+              <li>인터넷으로 가입해도 삼성화재 보상서비스는 동일하게 제공</li>
+              <li>365일 24시간 신속한 현장출동서비스 제공</li>
+            </ul>
+          </div>
+          <div class="section-flex-row notice">
+            <dl class="info-list">
+              <dt>꼭 확인하세요</dt>
+              <dd>
+                <ul class="list-round">
+                  <li>애니카서비스 특약 가입 시 신속한 긴급출동서비스를 제공합니다.</li>
+                  <li>삼성화재가 인증한 애니카 패밀리센터에서 수리 시 품질보증서비스를 제공합니다.</li>
+                  <li>외제차 고객님의 경우, 외제차 안심케어센터에서 예상 견적 산출, 보상 상담, 간편 수리까지 모든 과정을 지원합니다.</li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+          <div class="image">
+            <img src="" alt="계산기 할인 아이콘">
+          </div>
+        </div>
+      </div>
+
+      <div class="tab" id="tab2">
+        <div class="tabs">
+          <div class="tab-menu selected" data-tab="inTab1">기본담보</div>
+          <div class="tab-menu" data-tab="inTab2">선택특약</div>
+        </div>
+
+        <div class="inner-tab show" id="inTab1">
+          <div class="section">
+            <h2 class="section-flex-row">대인배상</h2>
+            <p class="section-flex-row">다른 사람에게 상해, 사망 등 손해를 입힌 경우 보상</p>
+            <h3 class="section-flex-row">대인배상Ⅰ 보장내용</h3>
+            <ul class="section-flex-row list-round">
+              <li>가입하신 자동차의 사고로 다른 사람을 다치게 하거나 사망하게 한 경우 손해배상책임을 짐으로써 입은 손해를 보상합니다.</li>
+              <li>자동차 소유자는 반드시 가입해야 하는 법적 의무보험입니다.</li>
+            </ul>
+            <table class="section-flex-row custom-table">
+              <caption>[보장내용 및 지급액 한도]</caption>
+              <thead>
+                <th>사망</th>
+                <th>후유장애</th>
+                <th>부상</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2천만원 ~ 1억 5천만원</td>
+                  <td>1천만원 ~ 1억 5천만원</td>
+                  <td>50만원 ~ 3천만원</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 class="section-flex-row">대인배상Ⅱ 보장내용</h2>
+            <ul class="section-flex-row list-round">
+              <li>대인배상Ⅰ에서 지급되는 금액을 초과하는 손해를 보험가입금액 한도 내에서 보상합니다.</li>
+              <li>피해자의 직업과 나이에 따라 수십억원까지 배상해야 하는 경우도 있을 수 있으므로 무한 배상으로 가입하실 것을 추천합니다.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="inner-tab" id="inTab2">
+          <div class="section">
+            <h2 class="section-flex-row">나와 내 가족을 위한 보장</h2>
+            <h3 class="section-flex-row">상해간병비 지원Ⅲ 보장내용</h3>
+            <ul class="section-flex-row list-round">
+              <li>가입하신 자동차의 사고로 피보험자 본인, 배우자, 부모, 자녀 등이 상해를 입어 자동차상해(자기신체사고) 보험금이 지급되는 경우 상해 등급에 따라 간병비를 추가로 지급합니다.</li>
+              <li>자기신체사고 또는 자동차상해 특약에 가입한 경우에 한하여 가입할 수 있습니다.</li>
+              <li>간병비는 「자동차손해배상보장법 시행령」(별표1)에서 정한 상해 등급에 따라 아래와 같이 지급됩니다.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-plus">
+        <p>준법감시인확인필 제24-1-11095호 (0801,'24.10.10~'25.10.09)</p>
+        <div class="btn-wrap">
+          <button class="btn-round">가입 시 유의사항</button>
+        </div>
+      </div>
+
+      <div class="call-box">
+        전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 특약 가입이 가능합니다.
+      </div>
+    </div>
+
+    <script th:src="@{/mall/js/product.js}"></script>
+  </main>
+</body>
+
+</html>
