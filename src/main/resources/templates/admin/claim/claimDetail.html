@@ -16,135 +16,118 @@
 		<section class="claim-detail">
 			<!-- 타이틀 -->
 			<div class="title-row">
-				<h2 class="page-title">보험금 청구 상세 내역 <span class="muted">(#C20240015)</span></h2>
-				<!-- 필요 시 우측 액션 자리 -->
+				<h2 class="page-title">
+				  보험금 청구 상세 내역
+				  <span class="muted" th:text="'(#' + ${detail.claim_id} + ')'">(#C20240015)</span>
+				</h2>
 			</div>
 
 			<!-- 고객 정보 -->
-			<article class="panel section">
-				<header class="section-head">
-					<h3>고객 정보</h3>
-					<p class="sub">청구인의 개인 정보입니다.</p>
-				</header>
-
-				<div class="kv">
-					<div class="item">
-						<label>고객명</label>
-						<div class="value">김철수</div>
-					</div>
-					<div class="item">
-						<label>보험 계약 번호</label>
-						<div class="value">20230101-A01</div>
-					</div>
-					<div class="item">
-						<label>보험 상품 명</label>
-						<div class="value">다이렉트 실손의료비보장보험</div>
-					</div>
-					<div class="item">
-						<label>연락처</label>
-						<div class="value">010-9876-5432</div>
-					</div>
-					<div class="item span-2">
-						<label>이메일</label>
-						<div class="value">cheolsu.kim@example.com</div>
-					</div>
-				</div>
-			</article>
+			<div class="item">
+			  <label>고객명</label>
+			  <div class="value" th:text="${detail.person_name}">김철수</div>
+			</div>
+			<div class="item">
+			  <label>보험 계약 번호</label>
+			  <div class="value" th:text="${detail.contract_id}">20230101-A01</div>
+			</div>
+			
+			
+			<div class="item">
+			  <label>수익자 이름</label>
+			  <div class="value" th:text="${detail.beneficiary_name}">홍길동</div>
+			</div>
+			<div class="item">
+			  <label>은행명</label>
+			  <div class="value" th:text="${detail.bank_name}">하나은행</div>
+			</div>
+			<div class="item">
+			  <label>계좌번호</label>
+			  <div class="value" th:text="${detail.bank_account}">1234567869</div>
+			</div>
+			<div class="item">
+			  <label>수익자 연락처</label>
+			  <div class="value" th:text="${detail.phone_number}">010-9876-5432</div>
+			</div>
+			<div class="item span-2">
+			  <label>수익자 이메일</label>
+			  <div class="value" th:text="${detail.beneficiary_email}">cheolsu.kim@example.com</div>
+			</div>
 
 			<!-- 청구 정보 -->
-			<article class="panel section">
-				<header class="section-head">
-					<h3>청구 정보</h3>
-					<p class="sub">보험금 청구 관련 상세 내역입니다.</p>
-				</header>
-
-				<div class="kv">
-					<div class="item">
-						<label>청구 대상</label>
-						<div class="value">본인</div>
-					</div>
-					<div class="item">
-						<label>청구 유형</label>
-						<div class="value">신규 접수</div>
-					</div>
-					<div class="item">
-						<label>사고일/발병일</label>
-						<div class="value">2024-07-25</div>
-					</div>
-					<div class="item">
-						<label>사고 유형</label>
-						<div class="value">질병</div>
-					</div>
-					<div class="item span-2">
-						<label>사고 내용</label>
-						<div class="value">급성 위염으로 인한 병원 통원 치료</div>
-					</div>
-					<div class="item">
-						<label>의료급여 수급권자 여부</label>
-						<div class="value">아니요</div>
-					</div>
-					<div class="item">
-						<label>청구 금액</label>
-						<div class="value">₩ 150,000</div>
-					</div>
-					<div class="item">
-						<label>접수 날짜</label>
-						<div class="value">2024-07-28</div>
-					</div>
-					<div class="item">
-						<label>현재 상태</label>
-						<!-- 상태 뱃지는 공통 CSS/컴포넌트 재사용 가정 -->
-						<div class="value"><span class="badge badge--processing">처리중</span></div>
-					</div>
-				</div>
-			</article>
+			<div class="item">
+			  <label>청구 유형</label>
+			  <div class="value" th:text="${detail.claim_type}">신규 접수</div>
+			</div>
+			<div class="item">
+			  <label>사고일/발병일</label>
+			  <div class="value" th:text="${#temporals.format(detail.accident_date,'yyyy-MM-dd')}">2024-07-25</div>
+			</div>
+			<div class="item">
+			  <label>보상구분</label>
+			  <div class="value" th:text="${detail.compensation_type}">H or P</div>
+			</div>
+			<div class="item span-2">
+			  <label>사고 내용</label>
+			  <div class="value" th:text="${detail.accident_description}">급성 위염...</div>
+			</div>
+			<div class="item">
+			  <label>질병 코드</label>
+			  <div class="value" th:text="${detail.diagnosis_cd}">D123</div>
+			</div>
+			<div class="item">
+			  <label>접수 날짜</label>
+			  <div class="value" th:text="${#temporals.format(detail.claim_date,'yyyy-MM-dd')}">2024-07-28</div>
+			</div>
+			<div class="item">
+			  <label>현재 상태</label>
+			  <div class="value">
+			    <span class="badge"
+			          th:classappend="${detail.claim_status} == 1 ? ' badge--pending' :
+			                          (${detail.claim_status} == 2 ? ' badge--approved' :
+			                          (${detail.claim_status} == 3 ? ' badge--rejected' : ''))"
+			          th:switch="${detail.claim_status}">
+			      <span th:case="1">접수</span>
+			      <span th:case="2">지급완료(종결)</span>
+			      <span th:case="3">접수취소</span>
+			      <span th:case="*">-</span>
+			    </span>
+			  </div>
+			</div>
 
 			<!-- 첨부 문서 -->
-			<article class="panel section">
-				<header class="section-head">
-					<h3>첨부 문서</h3>
-					<p class="sub">제출된 관련 서류입니다.</p>
-				</header>
+			<ul class="doc-list">
+			  <li th:if="${detail.receipt_file_path != null}">
+			    <div class="doc-name"><span class="icon">description</span>
+			      <span th:text="${#strings.substringAfterLast(detail.receipt_file_path,'/')}">진료비_영수증.pdf</span>
+			    </div>
+			    <a class="btn ghost" th:href="@{|/admin/claims/${detail.claim_id}/files?type=receipt|}">다운로드</a>
+			  </li>
 
-				<ul class="doc-list">
-					<li>
-						<div class="doc-name">
-							<span class="icon">description</span>
-							<span>진료비_영수증.pdf</span>
-						</div>
-						<button type="button" class="btn ghost">다운로드</button>
-					</li>
-					<li>
-						<div class="doc-name">
-							<span class="icon">description</span>
-							<span>진료비_세부내역서.pdf</span>
-						</div>
-						<button type="button" class="btn ghost">다운로드</button>
-					</li>
-					<li>
-						<div class="doc-name">
-							<span class="icon">description</span>
-							<span>약제비_영수증.jpg</span>
-						</div>
-						<button type="button" class="btn ghost">다운로드</button>
-					</li>
-				</ul>
-			</article>
+			  <li th:if="${detail.detail_file_path != null}">
+			    <div class="doc-name"><span class="icon">description</span>
+			      <span th:text="${#strings.substringAfterLast(detail.detail_file_path,'/')}">진료비_세부내역서.pdf</span>
+			    </div>
+			    <a class="btn ghost" th:href="@{|/admin/claims/${detail.claim_id}/files?type=detail|}">다운로드</a>
+			  </li>
 
-			<!-- 하단 버튼 -->
-			<div class="btn-bar">
-				<button type="button" class="btn outline">
-					<span class="icon">arrow_back</span> 이전
-				</button>
+			  <li th:if="${detail.etc_file_path != null}">
+			    <div class="doc-name"><span class="icon">description</span>
+			      <span th:text="${#strings.substringAfterLast(detail.etc_file_path,'/')}">약제비_영수증.jpg</span>
+			    </div>
+			    <a class="btn ghost" th:href="@{|/admin/claims/${detail.claim_id}/files?type=etc|}">다운로드</a>
+			  </li>
+			</ul>
 
-				<div class="btn-row">
-					<button type="button" class="btn success">
-						<span class="icon">check_circle</span> 승인
-					</button>
-					<button type="button" class="btn danger">
-						<span class="icon">cancel</span> 거절
-					</button>
-				</div>
+			<!-- 승인/거절 액션 -->
+			<div class="btn-row">
+			  <form th:action="@{|/admin/claims/${detail.claim_id}/approve|}" method="post">
+			    <button type="submit" class="btn success"><span class="icon">check_circle</span> 승인</button>
+			  </form>
+			  <form th:action="@{|/admin/claims/${detail.claim_id}/reject|}" method="post">
+			    <input type="hidden" name="reason" value="관리자 판단에 의한 반려"/>
+			    <button type="submit" class="btn danger"><span class="icon">cancel</span> 거절</button>
+			  </form>
 			</div>
 		</section>
 	</main>

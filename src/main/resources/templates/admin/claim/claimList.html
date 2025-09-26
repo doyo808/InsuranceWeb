@@ -11,100 +11,91 @@
 	</th:block>
 </head>
 
-<body class="page claim-page">
-	<main layout:fragment="adminContent">
+<body class="admin-root">
+	<main class="admin-main claim-page" layout:fragment="adminContent"
+	      style="width:1200px; margin:137px auto 0 auto;">
+		<header class="page-header">
+			<h1 class="page-title">보험금 청구 관리</h1>
+			<p class="page-desc">모든 보험금 청구 건을 한 곳에서 관리하고 처리합니다.</p>
+		</header>
 
-		<main class="page__content container">
-			<header class="page-header">
-				<h1 class="page-title">보험금 청구 관리</h1>
-				<p class="page-desc">모든 보험금 청구 건을 한 곳에서 관리하고 처리합니다.</p>
-			</header>
+		<!-- 요약 카드 -->
+		<section class="stats">
+			<article class="stat-card panel">
 
-			<!-- 요약 카드 -->
-			<section class="stats">
-				<article class="stat-card panel">
-					<p class="stat-card__label">미처리 청구 건수</p>
-					<p class="stat-card__value">125건</p>
-				</article>
-				<article class="stat-card panel">
-					<p class="stat-card__label">총 청구 금액</p>
-					<p class="stat-card__value">5,250만원</p>
-				</article>
-			</section>
+				<!--<p class="stat-card__value" th:text="${pendingCount} + '건'">125건</p>
+					<p class="stat-card__value" th:text="${totalAmountFormatted}">5,250만원</p>-->
 
-			<!-- 목록 패널 -->
-			<section class="panel panel--claims">
-				<div class="panel__header">
-					<h2 class="panel__title">청구 목록</h2>
+				<p class="stat-card__label">미처리 청구 건수</p>
+				<p class="stat-card__value">125건</p>
+			</article>
+			<article class="stat-card panel">
+				<p class="stat-card__label">총 청구 금액</p>
+				<p class="stat-card__value">5,250만원</p>
+			</article>
+		</section>
+
+		<!-- 목록 패널 -->
+		<section class="panel panel--claims">
+			<div class="panel__header">
+				<h2 class="panel__title">청구 목록</h2>
+			</div>
+
+			<div class="filters">
+				<div class="search">
+					<input type="search" class="search__input" placeholder="청구 ID, 고객 이름, 청구 유형으로 검색" />
 				</div>
 
-				<div class="filters">
-					<div class="search">
-						<input type="search" class="search__input" placeholder="청구 ID, 고객 이름, 청구 유형으로 검색" />
-					</div>
-
-					<div class="filters__chips">
-						<button type="button" class="chip">청구 유형</button>
-						<button type="button" class="chip">처리 상태</button>
-						<button type="button" class="chip">접수 날짜</button>
-					</div>
+				<div class="filters__chips">
+					<button type="button" class="chip">청구 유형</button>
+					<button type="button" class="chip">처리 상태</button>
+					<button type="button" class="chip">접수 날짜</button>
 				</div>
+			</div>
 
-				<div class="table-wrap">
-					<table class="table claim-table">
-						<thead>
-							<tr>
-								<th scope="col">청구 ID</th>
-								<th scope="col">고객 이름</th>
-								<th scope="col">청구 유형</th>
-								<th scope="col">청구 금액</th>
-								<th scope="col">접수 날짜</th>
-								<th scope="col">처리 상태</th>
-								<th scope="col" class="t-center">상세보기</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>#20240001</td>
-								<td>김민지</td>
-								<td>상해 보험</td>
-								<td>150만원</td>
-								<td>2024-07-20</td>
-								<td><span class="badge badge--pending">대기 중</span></td>
-								<td class="t-center"><a href="#" class="btn btn--link">상세보기</a></td>
-							</tr>
-							<tr>
-								<td>#20240002</td>
-								<td>박준호</td>
-								<td>자동차 보험</td>
-								<td>200만원</td>
-								<td>2024-07-19</td>
-								<td><span class="badge badge--processing">처리 중</span></td>
-								<td class="t-center"><a href="#" class="btn btn--link">상세보기</a></td>
-							</tr>
-							<tr>
-								<td>#20240003</td>
-								<td>최수현</td>
-								<td>화재 보험</td>
-								<td>300만원</td>
-								<td>2024-07-18</td>
-								<td><span class="badge badge--approved">승인 완료</span></td>
-								<td class="t-center"><a href="#" class="btn btn--link">상세보기</a></td>
-							</tr>
-							<tr>
-								<td>#20240004</td>
-								<td>이현우</td>
-								<td>여행자 보험</td>
-								<td>50만원</td>
-								<td>2024-07-17</td>
-								<td><span class="badge badge--rejected">거절</span></td>
-								<td class="t-center"><a href="#" class="btn btn--link">상세보기</a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</section>
-		</main>
+			<div class="table-wrap">
+				<table class="table claim-table">
+					<thead>
+						<tr>
+							<th scope="col">청구 ID</th>
+							<th scope="col">고객명</th>
+							<th scope="col">청구 유형</th>
+							<th scope="col">사고 날짜</th>
+							<th scope="col">접수 날짜</th>
+							<th scope="col">처리 상태</th>
+							<th scope="col" class="t-center">상세보기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="row : ${claims}">
+							<td th:text="'#' + ${row.claim_id}"></td>
+							<td th:text="${row.person_name}"></td>
+							<td th:text="${row.claim_type}"></td>
+							<td th:text="${#dates.format(row.accident_date, 'yyyy-MM-dd')}"></td>
+							<td th:text="${#dates.format(row.claim_date,    'yyyy-MM-dd')}"></td>
+
+							<!-- 상태 뱃지: 값에 따라 클래스 바꾸기 -->
+							<td>
+								<span class="badge" th:classappend="${row.claim_status} == 1 ? ' badge--pending' :
+								                        (${row.claim_status} == 2 ? ' badge--approved' :
+								                        (${row.claim_status} == 3 ? ' badge--rejected' : ''))" th:switch="${row.claim_status}">
+									<span th:case="1">접수</span>
+									<span th:case="2">지급완료(종결)</span>
+									<span th:case="3">접수취소</span>
+									<span th:case="*">-</span>
+								</span>
+							</td>
+
+							<!-- 상세보기 이동 -->
+							<td class="t-center">
+								<a th:href="@{/admin/claims/detail(claim_id=${row.claim_id})}"
+									class="btn btn--link">상세보기</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
 	</main>
 </body>
 

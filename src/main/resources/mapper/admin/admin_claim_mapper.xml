@@ -1,0 +1,63 @@
+<!-- src/main/resources/mappers/admin/ClaimMapper.xml -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.admin.mapper.AdminClaimMapper">
+
+	<select id="findClaimList" resultType="claimList">
+		SELECT
+		c.CLAIM_ID,
+		p.PERSON_NAME,
+		c.CLAIM_TYPE,
+		c.ACCIDENT_DATE,
+		c.CLAIM_DATE,
+		c.CLAIM_STATUS
+		FROM CLAIMS c
+		JOIN CUSTOMERS cu ON c.customer_id = cu.customer_id
+		JOIN PERSONS p ON p.PERSON_ID = cu.PERSON_ID
+		ORDER BY c.CLAIM_ID DESC
+	</select>
+
+
+	<select id="findClaimDetail" parameterType="int" resultType="claimDetail">
+		SELECT
+			c.CLAIM_ID,
+			c.CLAIM_TYPE,
+			c.COMPENSATION_TYPE,
+			c.ACCIDENT_DESCRIPTION,
+			c.ACCIDENT_DATE,
+			c.CLAIM_DATE,
+			c.CLAIM_STATUS,
+			c.DIAGNOSIS_CD,
+			c.BENEFICIARY_NAME,
+			c.BENEFICIARY_EMAIL,
+			c.BANK_NAME,
+			c.BANK_ACCOUNT,
+			c.BENEFICIARY_POSTCODE,
+			c.BENEFICIARY_ADDRESS,
+			c.TOTAL_PAID_AMOUNT,
+			c.COMPLETION_DATE,
+			c.DETAIL_FILE_PATH,
+			c.RECEIPT_FILE_PATH,
+			c.ETC_FILE_PATH,
+			c.CONTRACT_ID,
+            p.person_name
+		FROM CLAIMS c
+        JOIN customers cu ON c.customer_id = cu.customer_id 
+        JOIN persons p ON cu.person_id = p.person_id
+		WHERE CLAIM_ID = #{claim_id}
+	</select>
+
+	<update id="approveClaim" parameterType="int">
+		UPDATE CLAIMS
+		SET CLAIM_STATUS = 2,
+		COMPLETION_DATE = CURRENT_TIMESTAMP
+		WHERE CLAIM_ID = #{claim_id}
+	</update>
+
+	<update id="rejectClaim">
+		UPDATE CLAIMS
+		SET CLAIM_STATUS = 3,
+		REJECTION_REASON = #{reason},
+		COMPLETION_DATE = CURRENT_TIMESTAMP
+		WHERE CLAIM_ID = #{claim_id}
+	</update>
+</mapper>

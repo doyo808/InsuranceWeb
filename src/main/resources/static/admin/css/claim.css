@@ -1,191 +1,96 @@
 /* ====== 페이지 스코프 ====== */
-.claim-page .page-header {
-	margin-bottom: 24px;
-}
+.claim-page .page-header { margin-bottom: 24px; }
+.claim-page .page-title { margin: 0 0 6px; }
+.claim-page .page-desc { margin: 0; }
 
-.claim-page .page-title {
-	margin: 0 0 6px;
-}
-
-.claim-page .page-desc {
-	margin: 0;
-}
-
-/* 요약 카드 레이아웃(카드 자체의 공통 스타일은 재사용한다고 가정) */
+/* 요약 카드 레이아웃 */
 .claim-page .stats {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
-
 @media (min-width: 640px) {
-	.claim-page .stats {
-		grid-template-columns: repeat(2, 1fr);
-	}
+  .claim-page .stats { grid-template-columns: repeat(2, 1fr); }
 }
+.claim-page .stat-card__label { font-size: 0.875rem; color: var(--color-text-weak); }
+.claim-page .stat-card__value { font-weight: 800; font-size: 1.75rem; line-height: 1.2; }
 
-.claim-page .stat-card__label {
-	font-size: 0.875rem;
-	color: var(--color-text-weak);
-}
-
-.claim-page .stat-card__value {
-	font-weight: 800;
-	font-size: 1.75rem;
-	line-height: 1.2;
-}
-
-/* 패널 상단(패널 기본 스타일은 공통 재사용) */
-.claim-page .panel--claims .panel__header {
-	padding: 16px 16px 0;
-}
-
-.claim-page .panel--claims .panel__title {
-	margin: 0;
-}
+/* 패널 상단 */
+.claim-page .panel--claims .panel__header { padding: 16px 16px 0; }
+.claim-page .panel--claims .panel__title { margin: 0; }
 
 /* 필터 영역 */
-.claim-page .filters {
-	display: grid;
-	gap: 12px;
-	padding: 16px;
-}
-
+.claim-page .filters { display: grid; gap: 12px; padding: 16px; }
 @media (min-width: 640px) {
-	.claim-page .filters {
-		grid-template-columns: 1fr auto;
-		align-items: center;
-	}
+  .claim-page .filters { grid-template-columns: 1fr auto; align-items: center; }
 }
 
-/* 검색 인풋: 좌측 아이콘 자리만 확보(실제 아이콘은 가상요소) */
-.claim-page .search {
-	position: relative;
-}
-
+/* 검색 인풋 */
+.claim-page .search { position: relative; }
 .claim-page .search::before {
-	content: "🔎";
-	position: absolute;
-	left: 12px;
-	top: 50%;
-	transform: translateY(-50%);
-	opacity: .55;
-	font-size: 14px;
+  content: "🔎";
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  opacity: .55; font-size: 14px;
 }
-
 .claim-page .search__input {
-	width: 100%;
-	padding: 10px 12px 10px 34px;
-	/* 아이콘 여백 */
-	border: 1px solid var(--color-border);
-	border-radius: var(--radius);
-	background: var(--color-bg);
+  width: 100%;
+  padding: 10px 12px 10px 34px; /* 아이콘 여백 */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
 }
 
-/* 칩 버튼(공통 .btn과 겹치지 않도록 별도 컴포넌트) */
-.claim-page .filters__chips {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-}
-
+/* 칩 버튼 */
+.claim-page .filters__chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .claim-page .chip {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	padding: 8px 12px;
-	border: 1px solid var(--color-border);
-	border-radius: var(--radius);
-	background: transparent;
-	font-size: 0.875rem;
-	cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 12px; border: 1px solid var(--color-border);
+  border-radius: var(--radius); background: transparent;
+  font-size: 0.875rem; cursor: pointer;
 }
+.claim-page .chip:hover { background: rgba(17,115,212,.06); }
 
-.claim-page .chip:hover {
-	background: rgba(17, 115, 212, .06);
-}
-
-/* 테이블(공통 .table은 유지, 이 페이지 전용 보조 규칙만 추가) */
-
+/* 테이블 보조 규칙 */
 .claim-page .claim-table th,
-.claim-page .claim-table td {
-	vertical-align: middle;
-	text-align: center;
-}
-
+.claim-page .claim-table td { vertical-align: middle; text-align: center; }
 .claim-page .claim-table th:nth-child(1),
-.claim-page .claim-table td:nth-child(1) {
-	width: 120px;
-}
-
+.claim-page .claim-table td:nth-child(1) { width: 120px; }
 .claim-page .claim-table th:nth-child(4),
-.claim-page .claim-table td:nth-child(4) {
-	width: 120px;
-}
-
+.claim-page .claim-table td:nth-child(4) { width: 120px; }
 .claim-page .claim-table th:nth-child(7),
-.claim-page .claim-table td:nth-child(7) {
-	width: 120px;
-}
+.claim-page .claim-table td:nth-child(7) { width: 120px; }
+.claim-page .t-center { text-align: center; }
 
-.claim-page .t-center {
-	text-align: center;
-}
-
-/* 상세보기 링크 버튼: 공통 .btn에 영향 주지 않도록 링크 변형만 */
+/* 상세보기 링크 버튼 */
 .claim-page .btn--link {
-	display: inline-block;
-	padding: 6px 10px;
-	border-radius: var(--radius);
-	font-weight: 700;
-	color: var(--color-primary);
-	background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  display: inline-block; padding: 6px 10px; border-radius: var(--radius);
+  font-weight: 700; color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
-
 .claim-page .btn--link:hover {
-	background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 18%, transparent);
 }
 
-/* 상태 배지(공통 배지 없다는 전제에서 페이지 한정 정의) */
+/* 상태 배지 */
 .claim-page .badge {
-	display: inline-flex;
-	align-items: center;
-	padding: 4px 10px;
-	border-radius: 999px;
-	font-size: 12px;
-	font-weight: 700;
+  display: inline-flex; align-items: center;
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 700;
 }
+.claim-page .badge--pending { background: #FFE8BB; color: #8B5B00; }
+.claim-page .badge--processing { background: #D8E8FF; color: #124B9A; }
+.claim-page .badge--approved { background: #CFF5CF; color: #1F6B1F; }
+.claim-page .badge--rejected { background: #FFD6D6; color: #8C1F1F; }
 
-.claim-page .badge--pending {
-	background: #FFE8BB;
-	color: #8B5B00;
-}
-
-.claim-page .badge--processing {
-	background: #D8E8FF;
-	color: #124B9A;
-}
-
-.claim-page .badge--approved {
-	background: #CFF5CF;
-	color: #1F6B1F;
-}
-
-.claim-page .badge--rejected {
-	background: #FFD6D6;
-	color: #8C1F1F;
-}
-
-/* 아바타 사이즈(공통 .avatar와 중복 피하기 위해 변형 클래스만) */
+/* 아바타 변형 */
 .claim-page .avatar--sm {
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
-	object-fit: cover;
+  width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
 }
 
-/* claim.css에 추가 */
-.claim-page .stat-card{
+/* 카드 박스 */
+.claim-page .stat-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
