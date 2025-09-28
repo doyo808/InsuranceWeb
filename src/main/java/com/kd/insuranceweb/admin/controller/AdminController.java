@@ -66,13 +66,19 @@ public class AdminController {
 	  }
 	
 	
-	  @GetMapping("/inquiriesList")
-		 public String inquiriesList() {
-			 return "admin/inquiries/inquiriesList";
+	  @GetMapping("/inquiryList")
+		 public String inquiryList() {
+			 return "admin/inquiry/inquiryList";
 		 }
+	  
 	
 	  @GetMapping("/contractList")
 	  public String contractList() {
 		  return "admin/contract/contractList";
+	  }
+	  
+	  @GetMapping("/productList")
+	  public String productList() {
+		  return "admin/product/productList";
 	  }
 }

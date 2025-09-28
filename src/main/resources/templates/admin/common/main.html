@@ -19,7 +19,7 @@
 	<main layout:fragment="adminContent">
 		<main class="page">
 
-			<a href="#" class="kpi-card">
+			<a th:href="@{/admin/contractList}" class="kpi-card">
 				<div class="kpi-card__head">
 					<p class="kpi-card__title">신규 계약 접수</p>
 					<span class="material-symbols-outlined kpi-card__icon" aria-hidden>open_in_new</span>
@@ -27,7 +27,7 @@
 				<p class="kpi-card__value">3건</p>
 			</a>
 
-			<a href="#" class="kpi-card">
+			<a th:href="@{/admin/inquiryList}" class="kpi-card">
 				<div class="kpi-card__head">
 					<p class="kpi-card__title">미처리 고객 문의</p>
 					<span class="material-symbols-outlined kpi-card__icon" aria-hidden>open_in_new</span>
@@ -40,25 +40,29 @@
 			<section class="section mt-12" aria-label="주요 기능 바로가기">
 				<h2 class="section__title">주요 기능 바로가기</h2>
 				<div class="shortcut-grid">
+					
+					<a th:href="@{/admin/productList}" class="shortcut">
+						<div class="shortcut__icon">
+							<span class="material-symbols-outlined" aria-hidden>inventory_2</span>
+						</div>
+						<p class="shortcut__label">보험 상품 내역</p>
+					</a>
+
 					<a th:href="@{/admin/contractList}" class="shortcut">
 						<div class="shortcut__icon">
 							<span class="material-symbols-outlined" aria-hidden>description</span>
 						</div>
 						<p class="shortcut__label">보험 계약 접수</p>
 					</a>
+					
 					<a th:href="@{/admin/claimList}" class="shortcut">
 						<div class="shortcut__icon">
 							<span class="material-symbols-outlined" aria-hidden>paid</span>
 						</div>
 						<p class="shortcut__label">보험금 청구</p>
 					</a>
-					<a href="#" class="shortcut">
-						<div class="shortcut__icon">
-							<span class="material-symbols-outlined" aria-hidden>inventory_2</span>
-						</div>
-						<p class="shortcut__label">보험 상품 내역</p>
-					</a>
-					<a th:href="@{/admin/inquiriesList}" class="shortcut">
+
+					<a th:href="@{/admin/inquiryList}" class="shortcut">
 						<div class="shortcut__icon">
 							<span class="material-symbols-outlined" aria-hidden>support_agent</span>
 						</div>
