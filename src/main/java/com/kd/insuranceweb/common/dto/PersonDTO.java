@@ -23,12 +23,12 @@ public class PersonDTO {
     // ======================
 
     // ----------------------
-    // PK
+    // 1. PK
     // ----------------------
     private Integer person_id;
 
     // ----------------------
-    // 이름
+    // 2. 이름
     // ----------------------
     @NotBlank(message = "이름은 필수 입력 값입니다.")
     @Pattern(
@@ -38,14 +38,14 @@ public class PersonDTO {
     private String person_name;
 
     // ----------------------
-    // 이메일
+    // 3. 이메일
     // ----------------------
     @NotBlank(message = "이메일은 필수 입력 값입니다.")
     @Email(message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
     // ----------------------
-    // 주민등록번호
+    // 4. 주민등록번호
     // ----------------------
     @NotBlank(message = "주민등록번호는 필수 입력 값입니다.")
     @Pattern(
@@ -55,7 +55,7 @@ public class PersonDTO {
     private String personal_id;
 
     // ----------------------
-    // 전화번호
+    // 5. 전화번호
     // ----------------------
     private String phone_number;
 }

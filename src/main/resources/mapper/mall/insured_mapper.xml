@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.mall.mapper.InsuredMapper">
+
+  <insert id="insertInsured">
+  	<selectKey keyProperty="dto.insured_id" resultType="int" order="AFTER">
+        SELECT insured_seq.CURRVAL FROM DUAL
+    </selectKey>
+  
+  	INSERT INTO insureds (
+  		insured_id,
+  		person_id,
+  		gender,
+  		age,
+  		is_smoker,
+  		drinks,
+  		driving_status,
+  		medical_history
+  		)
+  	VALUES (
+  		insured_seq.nextval,
+  		#{dto.person_id},
+  		#{dto.gender},
+  		#{dto.age},
+  		#{dto.is_smoker},
+  		#{dto.drinks},
+  		#{dto.driving_status},
+  		#{dto.medical_history}
+  		)
+  </insert>
+
+</mapper>
