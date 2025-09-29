@@ -1,5 +1,5 @@
 /* ====== 페이지 전용 (공통과 중복 없는 새 클래스들만) ====== */
-body.contract-list-page {}
+
 
 /* 상단 툴바 */
 .toolbar {
@@ -136,3 +136,4 @@ body.contract-list-page {}
   .cell--ellipsis { max-width: 180px; }
   .toolbar__item { min-width: 140px; }
 }
+

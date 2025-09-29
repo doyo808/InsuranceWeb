@@ -19,7 +19,7 @@
 	<main layout:fragment="adminContent">
 		<main class="page">
 
-			<a th:href="@{/admin/contractList}" class="kpi-card">
+			<a th:href="@{/admin/contract}" class="kpi-card">
 				<div class="kpi-card__head">
 					<p class="kpi-card__title">신규 계약 접수</p>
 					<span class="material-symbols-outlined kpi-card__icon" aria-hidden>open_in_new</span>
@@ -27,7 +27,7 @@
 				<p class="kpi-card__value">3건</p>
 			</a>
 
-			<a th:href="@{/admin/inquiryList}" class="kpi-card">
+			<a th:href="@{/admin/inquiry}" class="kpi-card">
 				<div class="kpi-card__head">
 					<p class="kpi-card__title">미처리 고객 문의</p>
 					<span class="material-symbols-outlined kpi-card__icon" aria-hidden>open_in_new</span>
@@ -41,28 +41,28 @@
 				<h2 class="section__title">주요 기능 바로가기</h2>
 				<div class="shortcut-grid">
 					
-					<a th:href="@{/admin/productList}" class="shortcut">
+					<a th:href="@{/admin/product}" class="shortcut">
 						<div class="shortcut__icon">
 							<span class="material-symbols-outlined" aria-hidden>inventory_2</span>
 						</div>
 						<p class="shortcut__label">보험 상품 내역</p>
 					</a>
 
-					<a th:href="@{/admin/contractList}" class="shortcut">
+					<a th:href="@{/admin/contract}" class="shortcut">
 						<div class="shortcut__icon">
 							<span class="material-symbols-outlined" aria-hidden>description</span>
 						</div>
 						<p class="shortcut__label">보험 계약 접수</p>
 					</a>
 					
-					<a th:href="@{/admin/claimList}" class="shortcut">
+					<a th:href="@{/admin/claim}" class="shortcut">
 						<div class="shortcut__icon">
 							<span class="material-symbols-outlined" aria-hidden>paid</span>
 						</div>
 						<p class="shortcut__label">보험금 청구</p>
 					</a>
 
-					<a th:href="@{/admin/inquiryList}" class="shortcut">
+					<a th:href="@{/admin/inquiry}" class="shortcut">
 						<div class="shortcut__icon">
 							<span class="material-symbols-outlined" aria-hidden>support_agent</span>
 						</div>
@@ -88,26 +88,6 @@
 								<td>2024-07-28 14:30</td>
 								<td>보험금 청구 처리</td>
 								<td class="bold">김민지</td>
-							</tr>
-							<tr>
-								<td>2024-07-28 11:20</td>
-								<td>신규 계약 접수</td>
-								<td class="bold">박준호</td>
-							</tr>
-							<tr>
-								<td>2024-07-27 16:45</td>
-								<td>고객 문의 답변</td>
-								<td class="bold">최지혜</td>
-							</tr>
-							<tr>
-								<td>2024-07-27 09:10</td>
-								<td>보험 상품 수정</td>
-								<td class="bold">이수진</td>
-							</tr>
-							<tr>
-								<td>2024-07-26 15:55</td>
-								<td>계약 정보 업데이트</td>
-								<td class="bold">정우진</td>
 							</tr>
 						</tbody>
 					</table>

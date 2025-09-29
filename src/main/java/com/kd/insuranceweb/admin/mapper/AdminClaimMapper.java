@@ -7,10 +7,13 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kd.insuranceweb.admin.dto.ClaimDetailDTO;
 import com.kd.insuranceweb.admin.dto.ClaimListRowDTO;
+import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
 
 @Mapper
 public interface AdminClaimMapper {
-	 List<ClaimListRowDTO> findClaimList();
+	 List<ClaimListRowDTO> findClaimList(@Param("c") ClaimSearchCriteria criteria);
+
+	 int countPendingClaims();
 
 	    ClaimDetailDTO findClaimDetail(@Param("claim_id") Integer claim_id);
 

@@ -50,10 +50,12 @@
 
 				<div class="field toolbar__item toolbar__item--grow">
 					<label class="field__label">문의일자</label>
-					<div class="daterange">
-						<input class="field__control daterange__input" type="date" name="from" />
+					<div class="daterange" data-daterange>
+						<input class="field__control daterange__input" type="date" name="from"
+							> <!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
 						<span class="daterange__sep">~</span>
-						<input class="field__control daterange__input" type="date" name="to" />
+						<input class="field__control daterange__input" type="date" name="to"
+							>
 					</div>
 				</div>
 

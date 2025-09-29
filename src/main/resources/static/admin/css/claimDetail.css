@@ -1,166 +1,180 @@
-/* /static/admin/css/claimDetail.css */
-/* 공통(variables, reset, btn, badge, panel 등)은 재정의하지 않음 */
+/* =========================
+   Claim Detail (page-specific)
+   ========================= */
 
-/* 레이아웃 컨테이너 & 타이틀 정렬 */
+/* 섹션 컨테이너 */
 .claim-detail {
-	max-width: 1120px;
-	margin: 0 auto;
-	padding: 24px 16px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
+/* 타이틀 행 */
 .claim-detail .title-row {
-	display: flex;
-	align-items: flex-end;
-	justify-content: space-between;
-	gap: 16px;
-	margin-bottom: 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .claim-detail .page-title {
-	margin: 0;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
 }
 
-.claim-detail .page-title .muted {
-	opacity: .7;
-	font-weight: 600;
+.claim-detail .muted {
+  margin-left: 8px;
+  font-size: 14px;
+  color: var(--color-text-weak);
+  font-weight: 600;
 }
 
-/* 섹션 래퍼(박스는 공통 .panel 사용 가정) */
-.claim-detail .section {
-	display: grid;
-	gap: 16px 24px;
-	grid-template-columns: 1fr;
+/* 폼-같은 정보 그리드 */
+.claim-detail {
+  /* 타이틀 아래 아이템 그리드 */
+}
+.claim-detail .item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: start;
+  gap: 10px 16px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(0, 0, 0, .04);
 }
 
-@media (min-width: 768px) {
-	.claim-detail .section {
-		grid-template-columns: 240px 1fr;
-		align-items: start;
-	}
+.claim-detail .item:first-of-type {
+  border-top: 0;
+  padding-top: 4px;
 }
 
-/* 섹션 간격 (인접 섹션 사이 여백) */
-.claim-detail .section+.section {
-	margin-top: 20px;
+.claim-detail .item label {
+  display: block;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
 }
 
-/* 섹션 헤더 */
-.claim-detail .section-head {
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
+.claim-detail .item .value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  word-break: break-word;
 }
 
-.claim-detail .section-head .sub {
-	font-size: .875rem;
-	color: var(--color-text-weak);
+/* 2칸 차지하는 항목 */
+.claim-detail .item.span-2 {
+  grid-template-columns: 160px 1fr;
 }
 
-/* Key-Value 그리드 */
-.claim-detail .kv {
-	display: grid;
-	gap: 16px;
-	grid-template-columns: 1fr;
+/* 상태 배지 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  border: 1px solid transparent;
 }
 
-@media (min-width: 640px) {
-	.claim-detail .kv {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
+/* 접수(1) */
+.badge--pending {
+  color: #b07a00;
+  background: rgba(255, 193, 7, .14);         /* amber 느낌 */
+  border-color: rgba(255, 193, 7, .28);
 }
 
-.claim-detail .kv .item {
-	display: grid;
-	gap: 6px;
+/* 지급완료(2) */
+.badge--approved {
+  color: #0b7a37;
+  background: rgba(34, 197, 94, .14);         /* green 느낌 */
+  border-color: rgba(34, 197, 94, .28);
 }
 
-.claim-detail .kv .item.span-2 {
-	grid-column: 1 / -1;
+/* 접수취소(3) */
+.badge--rejected {
+  color: #a11d2c;
+  background: rgba(239, 68, 68, .14);         /* red 느낌 */
+  border-color: rgba(239, 68, 68, .28);
 }
 
-/* 레이블/값 타이포(공통 타이포 침범 X) */
-.claim-detail .kv .item>label {
-	font-size: .875rem;
-	color: var(--color-text-weak);
-	font-weight: 600;
-}
-
-.claim-detail .kv .item>.value {
-	font-size: 1rem;
-	font-weight: 700;
-	color: var(--color-text);
-}
-
-/* 소제목과 내용 사이 구분선(옵션) */
-.claim-detail .divider {
-	height: 1px;
-	background: var(--color-border);
-	margin: 8px 0;
-}
-
-/* 첨부 문서 리스트 */
-.claim-detail .doc-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: grid;
-	gap: 12px;
-}
-
-.claim-detail .doc-list li {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 12px;
-	padding: 12px 14px;
-	border: 1px solid var(--color-border);
-	border-radius: 10px;
-	background: var(--color-surface);
-}
-
-.claim-detail .doc-name {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
-
-.claim-detail .doc-name .icon {
-	font-family: 'Material Symbols Outlined', sans-serif;
-	font-size: 18px;
-	line-height: 1;
-}
-
-/* 하단 버튼 영역 */
-.claim-detail .btn-bar {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	margin-top: 24px;
-	border-top: 1px solid var(--color-border);
-	padding-top: 16px;
-}
-
+/* 승인/거절 버튼 영역 */
 .claim-detail .btn-row {
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(0, 0, 0, .08);
 }
 
-@media (min-width: 640px) {
-	.claim-detail .btn-bar {
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-	}
+.btn-row > :first-child{ margin-right:auto; }
 
-	.claim-detail .btn-row {
-		flex-direction: row;
-	}
+.btn.back {
+  background: rgb(192, 192, 192);          /* green-600 */
+  color: #fff;
+  border-color: transparent;
+  text-decoration: none;
 }
 
-/* 상태 배지 컨테이너(공통 배지 사용 가정, 간격만) */
-.claim-detail .status-wrap {
-	display: flex;
-	align-items: center;
-	gap: 8px;
+/* 공통 .btn은 기존 것을 사용하고, 여기서는 모디파이어만 정의 */
+.btn.success {
+  background: #16a34a;          /* green-600 */
+  color: #fff;
+  border-color: transparent;
+}
+.btn.success:hover { filter: brightness(.98); }
+
+.btn.danger {
+  background: #ef4444;          /* red-500 */
+  color: #fff;
+  border-color: transparent;
+}
+.btn.danger:hover { filter: brightness(.98); }
+
+/* 아이콘 (머티리얼 심볼/텍스트 아이콘 모두 여백만) */
+.btn .icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .claim-detail {
+    padding: 20px 14px 28px;
+    border-radius: 10px;
+  }
+  .claim-detail .item,
+  .claim-detail .item.span-2 {
+    grid-template-columns: 1fr; /* 라벨 위, 값 아래 */
+    gap: 6px;
+  }
+  .claim-detail .item label {
+    font-size: 12px;
+  }
+  .claim-detail .item .value {
+    font-size: 14px;
+  }
+  .claim-detail .page-title {
+    font-size: 20px;
+  }
+}
+
+/* 색상 토큰이 없을 때 최소한의 폴백 */
+@supports not (color: color-mix(in srgb, #000 10%, transparent)) {
+  .claim-detail .item label { color: #4b5563; }
+  .claim-detail .item .value { color: #111827; }
 }

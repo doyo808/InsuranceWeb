@@ -6,96 +6,163 @@
 	<meta charset="utf-8" />
 	<title>보험금 청구 관리 - 관리자</title>
 
+	<!-- 페이지 전용 CSS -->
+
 	<th:block layout:fragment="extraHead">
-		<link rel="stylesheet" th:href="@{/admin/css/claimList.css}" />
+		<link rel="stylesheet" th:href="@{/admin/css/contractList.css}" />
 	</th:block>
 </head>
 
-<body class="admin-root">
-	<main class="admin-main claim-page" layout:fragment="adminContent"
-	      style="width:1200px; margin:137px auto 0 auto;">
-		<header class="page-header">
-			<h1 class="page-title">보험금 청구 관리</h1>
-			<p class="page-desc">모든 보험금 청구 건을 한 곳에서 관리하고 처리합니다.</p>
-		</header>
+<body>
+	<main layout:fragment="adminContent" class="admin-main">
+		<h1 class="page-title">보험금 청구 관리</h1>
+		<p class="page-desc">모든 보험금 청구 건을 한 곳에서 관리하고 처리합니다.</p>
 
-		<!-- 요약 카드 -->
 		<section class="stats">
 			<article class="stat-card panel">
-
-				<!--<p class="stat-card__value" th:text="${pendingCount} + '건'">125건</p>
-					<p class="stat-card__value" th:text="${totalAmountFormatted}">5,250만원</p>-->
-
 				<p class="stat-card__label">미처리 청구 건수</p>
-				<p class="stat-card__value">125건</p>
-			</article>
-			<article class="stat-card panel">
-				<p class="stat-card__label">총 청구 금액</p>
-				<p class="stat-card__value">5,250만원</p>
+				<p class="stat-card__value" th:text="${pendingCount} + '건'">125건</p>
+				<!--<p class="stat-card__value" th:text="${pendingCount} + '건'">125건</p>-->
 			</article>
 		</section>
 
-		<!-- 목록 패널 -->
-		<section class="panel panel--claims">
-			<div class="panel__header">
-				<h2 class="panel__title">청구 목록</h2>
-			</div>
-
-			<div class="filters">
-				<div class="search">
-					<input type="search" class="search__input" placeholder="청구 ID, 고객 이름, 청구 유형으로 검색" />
+		<section class="toolbar card">
+			<form class="toolbar__row" method="get" th:action="@{/admin/claim}">
+				<div class="field toolbar__item">
+					<label class="field__label" for="q">검색어</label>
+					<input id="q" class="field__control" type="text" name="q" placeholder="청구 ID, 고객 이름으로 검색"
+						th:value="${criteria.q}">
 				</div>
 
-				<div class="filters__chips">
-					<button type="button" class="chip">청구 유형</button>
-					<button type="button" class="chip">처리 상태</button>
-					<button type="button" class="chip">접수 날짜</button>
+				<div class="field toolbar__item">
+					<label class="field__label" for="claimType">청구 유형</label>
+					<select id="claimType" class="field__control" name="claimType">
+						<option value="">청구 유형 전체</option>
+						<option value="신규접수" th:selected="${criteria.claimType} == '신규접수'">신규접수</option>
+						<option value="질병보험" th:selected="${criteria.claimType} == '질병보험'">질병보험</option>
+						<option value="자동차보험" th:selected="${criteria.claimType} == '자동차보험'">자동차보험</option>
+					</select>
 				</div>
-			</div>
 
-			<div class="table-wrap">
-				<table class="table claim-table">
-					<thead>
-						<tr>
-							<th scope="col">청구 ID</th>
-							<th scope="col">고객명</th>
-							<th scope="col">청구 유형</th>
-							<th scope="col">사고 날짜</th>
-							<th scope="col">접수 날짜</th>
-							<th scope="col">처리 상태</th>
-							<th scope="col" class="t-center">상세보기</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="row : ${claims}">
-							<td th:text="'#' + ${row.claim_id}"></td>
-							<td th:text="${row.person_name}"></td>
-							<td th:text="${row.claim_type}"></td>
-							<td th:text="${#dates.format(row.accident_date, 'yyyy-MM-dd')}"></td>
-							<td th:text="${#dates.format(row.claim_date,    'yyyy-MM-dd')}"></td>
+				<div class="field toolbar__item">
+					<label class="field__label" for="status">처리 상태</label>
+					<select id="status" class="field__control" name="status">
+						<option value="">처리 상태 전체</option>
+						<option value="1" th:selected="${criteria.status} == 1">접수</option>
+						<option value="2" th:selected="${criteria.status} == 2">지급완료</option>
+						<option value="3" th:selected="${criteria.status} == 3">취소</option>
+					</select>
+				</div>
 
-							<!-- 상태 뱃지: 값에 따라 클래스 바꾸기 -->
-							<td>
-								<span class="badge" th:classappend="${row.claim_status} == 1 ? ' badge--pending' :
-								                        (${row.claim_status} == 2 ? ' badge--approved' :
-								                        (${row.claim_status} == 3 ? ' badge--rejected' : ''))" th:switch="${row.claim_status}">
-									<span th:case="1">접수</span>
-									<span th:case="2">지급완료(종결)</span>
-									<span th:case="3">접수취소</span>
-									<span th:case="*">-</span>
-								</span>
-							</td>
+				<div class="field toolbar__item toolbar__item--grow">
+					<label class="field__label">접수일자</label>
+					<div class="daterange" data-daterange>
+						<input class="field__control daterange__input" type="date" name="from"
+							th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}">
+						<span class="daterange__sep">~</span>
+						<input class="field__control daterange__input" type="date" name="to"
+							th:value="${#temporals.format(criteria.to, 'yyyy-MM-dd')}">
+					</div>
+				</div>
 
-							<!-- 상세보기 이동 -->
-							<td class="t-center">
-								<a th:href="@{/admin/claims/detail(claim_id=${row.claim_id})}"
-									class="btn btn--link">상세보기</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+				<div class="toolbar__spacer"></div>
+
+				<div class="toolbar__actions">
+					<button type="button" class="btn btn--ghost" id="btnReset">초기화</button>
+					<button type="submit" class="btn btn--primary">조회</button>
+				</div>
+			</form>
 		</section>
+
+		<!-- 목록 테이블 -->
+		<section class="table-wrap mt-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">청구 ID</th>
+						<th scope="col">고객명</th>
+						<th scope="col">청구 유형</th>
+						<th scope="col">사고 날짜</th>
+						<th scope="col">접수 날짜</th>
+						<th scope="col">처리 상태</th>
+						<th scope="col">상세보기</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="row : ${claims}">
+						<td th:text="'#' + ${row.claim_id}"></td>
+						<td th:text="${row.person_name}"></td>
+						<td th:text="${row.claim_type}"></td>
+						<td th:text="${#dates.format(row.accident_date, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#dates.format(row.claim_date,    'yyyy-MM-dd')}"></td>
+
+						<!-- 상태 뱃지: 값에 따라 클래스 바꾸기 -->
+						<td>
+							<span class="badge" th:classappend="${row.claim_status} == 1 ? ' badge--pending' :
+													                        (${row.claim_status} == 2 ? ' badge--approved' :
+													                        (${row.claim_status} == 3 ? ' badge--rejected' : ''))"
+								th:switch="${row.claim_status}">
+								<span th:case="1">접수</span>
+								<span th:case="2">지급완료(종결)</span>
+								<span th:case="3">접수취소</span>
+								<span th:case="*">-</span>
+							</span>
+						</td>
+
+						<!-- 상세보기 이동 -->
+						<td class="text-center">
+							<!-- 올바른 쿼리스트링 -->
+							<a th:href="@{/admin/claimDetail(claimId=${row.claim_id})}">상세정보</a>
+
+						</td>
+
+
+						<!-- 데이터 없음 예시 (필요 시 주석 해제해 확인) -->
+						<!--
+          <tr>
+            <td class="cell--empty" colspan="7">
+              <div class="empty">
+                <div class="empty__title">표시할 접수 내역이 없습니다</div>
+                <div class="empty__desc">검색 조건을 변경해보세요.</div>
+              </div>
+            </td>
+          </tr>
+          -->
+				</tbody>
+			</table>
+		</section>
+
+		<app-pagination th:attr="current=${page},
+		           total-items=${totalCount},
+		           per-page=${size},      
+		           window=5,
+		           href='/admin/claim?page={page}'" preserve-query>
+		</app-pagination>
+
+
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				const form = document.querySelector('.toolbar__row');
+				const btnReset = document.getElementById('btnReset');
+
+				btnReset.addEventListener('click', () => {
+					// 값만 초기화
+					form.querySelector('[name="q"]').value = '';
+					form.querySelector('#claimType').value = '';
+					form.querySelector('#status').value = '';
+					form.querySelector('[name="from"]').value = '';
+					form.querySelector('[name="to"]').value = '';
+
+					// 선택 1) 화면만 값 초기화하고, 목록은 그대로 두고 싶다면 여기서 끝.
+					return;
+
+					// 선택 2) 값 초기화 후 "현재 페이지 그대로" 재조회하고 싶다면 submit 실행
+					// form.submit();
+				});
+			});
+		</script>
+
+
 	</main>
 </body>
 

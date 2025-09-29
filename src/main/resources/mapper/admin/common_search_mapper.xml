@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common.search">
+  <!-- common.search -->
+<sql id="whereCommon">
+  <where>
+    <!-- 검색어 공통 -->
+    <if test="${paramAlias}.q != null and ${paramAlias}.q.trim() != ''">
+      AND (
+        INSTR(LOWER(${kw1}), LOWER(#{${paramAlias}.q})) > 0
+        <if test="kw2 != null and kw2 != ''">
+          OR INSTR(LOWER(${kw2}), LOWER(#{${paramAlias}.q})) > 0
+        </if>
+        <if test="kw3 != null and kw3 != ''">
+          OR INSTR(LOWER(${kw3}), LOWER(#{${paramAlias}.q})) > 0
+        </if>
+      )
+    </if>
+
+    <!-- 상태값 필터: 'statusCol'은 프로퍼티 치환, 값은 파라미터 바인딩 -->
+    <if test="${paramAlias}.status != null and ${paramAlias}.status != ''">
+      AND ${statusCol} = #{${paramAlias}.status}
+    </if>
+
+    <!-- 날짜 범위 필터: 'dateCol'은 프로퍼티 치환 -->
+    <if test="${paramAlias}.from != null and ${paramAlias}.to != null">
+      AND ${dateCol} BETWEEN #{${paramAlias}.from} AND #{${paramAlias}.to}
+    </if>
+  </where>
+</sql>
+
+</mapper>
