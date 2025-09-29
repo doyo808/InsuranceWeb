@@ -1,0 +1,212 @@
+/* 전체 컨테이너 */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 카드 상단 기준 동일 위치 */
+  gap: 20px; /* 좌우 카드 사이 간격 */
+  width: 100%;
+  min-height: 100vh;
+  background-color: #3b92e5;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Left Panel */
+.left-panel {
+  width: 590px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 제목 왼쪽 정렬 */
+}
+
+/* 좌측 제목 */
+.main-title {
+	width: 590px;
+	height: 132px;
+	color: white;
+	font-size: 2.5rem;
+	font-weight: 800;	
+	text-align: left;
+	line-height: 1.3;
+	width: 100%;
+}
+
+/* 아이콘 카드 */
+.icon-grid {
+  width: 580px;
+  height: 370px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px 10px;
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  justify-items: center;
+  align-items: center;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  background-image: url(/kdInsuranceTeam/common/images/icon_category.png);
+  background-repeat: no-repeat;
+  background-size: 240px;
+  margin-bottom: 6px;
+}
+
+.icon-car       { background-position: 0 0; }
+.icon-driver    { background-position: -60px 0; }
+.icon-medical   { background-position: -120px 0; }
+.icon-child     { background-position: -180px 0; }
+.icon-health    { background-position: -60px -180px; }
+.icon-patient   { background-position: -120px -60px; }
+.icon-tooth     { background-position: -60px -60px; }
+.icon-fire      { background-position: -180px -60px; }
+.icon-asset     { background-position: -120px -120px; }
+.icon-travel    { background-position: 0 -120px; }
+.icon-pet       { background-position: -180px -120px; }
+.icon-analysis  { background-position: -120px -180px; }
+
+/* Right Panel */
+.right-panel {
+    width: 590px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 29px; /* 배너와 로그인 카드 사이 간격 */
+    box-sizing: border-box;
+}
+
+/* 배너 영역 */
+.banner-area {
+    width: 590px;
+    height: 170px; /* 배너 높이 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e0f2ff; /* 파란색 배경 */
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+}
+
+.banner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.banner-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.banner-title strong {
+    font-size: 1.1rem;
+    color: #2563eb;
+}
+
+.banner-desc {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.banner-phone img {
+    width: 36px;
+    height: 36px;
+}
+
+/* 로그인 카드 영역 */
+.login-box {
+    width: 580px;
+    height: 370px; /* 카드 높이 */
+    background-color: white; /* 흰색 배경 */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: center; /* 내부 내용 좌우 중앙 */
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 카드 내부 Flex */
+.login-content {
+    display: flex;
+    justify-content: space-between; /* 왼쪽 텍스트, 오른쪽 이미지 분리 */
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* 로그인 텍스트 영역 */
+.login-left {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* 로그인 제목 */
+.login-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.4;
+    margin-bottom: 16px;
+}
+
+/* 버튼 스타일 */
+.btn {
+    padding: 12px 0;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.login-btn {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: #2563eb;
+}
+
+.signup-btn {
+    background-color: white;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+}
+
+.signup-btn:hover {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* 오른쪽 이미지 */
+.login-popup {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-popup img {
+    width: 250px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 8px;
+}
