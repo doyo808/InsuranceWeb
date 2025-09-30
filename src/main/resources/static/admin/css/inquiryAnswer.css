@@ -1,0 +1,104 @@
+/* 페이지 전용 CSS만 정의합니다. (admin.css의 토큰/카드/버튼 중복 정의 제외) */
+
+/* 상단 타이틀 행 배치 */
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.title-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* 카드 안쪽 여백 (공통 .card에 padding만 추가) */
+.card--padded {
+  padding: 20px;
+}
+
+/* 상세 그리드: 라벨/값 2열, 모바일 1열 */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 10px 16px;
+}
+@media (max-width: 640px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .detail-grid__label { margin-top: 10px; }
+}
+.detail-grid__label {
+  font-weight: 700;
+}
+.detail-grid__value .paragraph {
+  margin: 0;
+  line-height: 1.6;
+}
+.muted {
+  color: var(--color-text-weak);
+}
+
+/* 파일 리스트 */
+.file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.file-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.file-link:hover {
+  text-decoration: underline;
+}
+
+/* 답변 작성 폼 */
+.answer-form {
+  display: grid;
+  gap: 14px;
+}
+.answer-textarea {
+  width: 100%;
+  min-height: 220px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: var(--color-text);
+}
+.answer-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(17,115,212,.15);
+}
+
+/* 버튼 변형: 공통 .btn 기반, 페이지에서만 쓰는 outline 변형 */
+.btn--outline {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.btn--outline:hover {
+  filter: brightness(0.98);
+}
+
+/* 폼 버튼 정렬 */
+.form-actions {
+	display: flex;
+	  flex-wrap: wrap;
+	  justify-content: end;
+	  gap: 10px;
+	  margin-top: 24px;
+	  padding-top: 16px;
+	  border-top: 1px dashed rgba(0,0,0,.08);
+}
+
+.form-actions > :first-child { margin-right: auto; }
+

@@ -56,6 +56,11 @@ public class AdminController {
 		return "admin/inquiry/inquiryList";
 	}
 
+	@GetMapping("/inquiryAnswer")
+	public String inquiryAnswer() {
+		return "admin/inquiry/inquiryAnswer";
+	}
+	
 	// ===== 계약 관리 =====
 	@GetMapping("/contract")
 	public String contractList() {
