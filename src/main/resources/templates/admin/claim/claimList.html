@@ -6,8 +6,6 @@
 	<meta charset="utf-8" />
 	<title>보험금 청구 관리 - 관리자</title>
 
-	<!-- 페이지 전용 CSS -->
-
 	<th:block layout:fragment="extraHead">
 		<link rel="stylesheet" th:href="@{/admin/css/contractList.css}" />
 	</th:block>
@@ -20,9 +18,8 @@
 
 		<section class="stats">
 			<article class="stat-card panel">
-				<p class="stat-card__label">미처리 청구 건수</p>
-				<p class="stat-card__value" th:text="${pendingCount} + '건'">125건</p>
-				<!--<p class="stat-card__value" th:text="${pendingCount} + '건'">125건</p>-->
+				<p class="stat-card__label">신규 청구 건수</p>
+				<p class="stat-card__value" th:text="${pendingCount} + '건'"></p>
 			</article>
 		</section>
 
@@ -93,8 +90,8 @@
 						<td th:text="'#' + ${row.claim_id}"></td>
 						<td th:text="${row.person_name}"></td>
 						<td th:text="${row.claim_type}"></td>
-						<td th:text="${#dates.format(row.accident_date, 'yyyy-MM-dd')}"></td>
-						<td th:text="${#dates.format(row.claim_date,    'yyyy-MM-dd')}"></td>
+						<td th:text="${#temporals.format(row.accident_date, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#temporals.format(row.claim_date,    'yyyy-MM-dd')}"></td>
 
 						<!-- 상태 뱃지: 값에 따라 클래스 바꾸기 -->
 						<td>
@@ -109,25 +106,10 @@
 							</span>
 						</td>
 
-						<!-- 상세보기 이동 -->
 						<td class="text-center">
-							<!-- 올바른 쿼리스트링 -->
 							<a th:href="@{/admin/claimDetail(claimId=${row.claim_id})}">상세정보</a>
 
 						</td>
-
-
-						<!-- 데이터 없음 예시 (필요 시 주석 해제해 확인) -->
-						<!--
-          <tr>
-            <td class="cell--empty" colspan="7">
-              <div class="empty">
-                <div class="empty__title">표시할 접수 내역이 없습니다</div>
-                <div class="empty__desc">검색 조건을 변경해보세요.</div>
-              </div>
-            </td>
-          </tr>
-          -->
 				</tbody>
 			</table>
 		</section>
@@ -136,9 +118,8 @@
 		           total-items=${totalCount},
 		           per-page=${size},      
 		           window=5,
-		           href='/admin/claim?page={page}'" preserve-query>
+		           href=@{/admin/claim} + '?page={page}'" preserve-query>
 		</app-pagination>
-
 
 		<script>
 			document.addEventListener('DOMContentLoaded', () => {

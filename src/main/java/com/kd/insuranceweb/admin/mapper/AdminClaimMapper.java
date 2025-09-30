@@ -11,13 +11,17 @@ import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
 
 @Mapper
 public interface AdminClaimMapper {
-	 List<ClaimListRowDTO> findClaimList(@Param("c") ClaimSearchCriteria criteria);
+	List<ClaimListRowDTO> findClaimList(@Param("c") ClaimSearchCriteria criteria);
 
-	 int countPendingClaims();
+	ClaimDetailDTO findClaimDetail(@Param("claimId") Integer claim_id);
 
-	    ClaimDetailDTO findClaimDetail(@Param("claim_id") Integer claim_id);
+	int approveClaim(@Param("claimId") Integer claim_id);
 
-	    int approveClaim(@Param("claim_id") Integer claim_id);
+	int rejectClaim(@Param("claimId") Integer claim_id, @Param("reason") String reason);
+	
+	int countPendingClaims();
 
-	    int rejectClaim(@Param("claim_id") Integer claim_id, @Param("reason") String reason);
+	List<ClaimListRowDTO> findClaimsPage(@Param("c") ClaimSearchCriteria criteria);
+	
+	int countClaims(@Param("c") ClaimSearchCriteria criteria);
 }
