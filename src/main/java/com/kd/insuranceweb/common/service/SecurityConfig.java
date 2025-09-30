@@ -19,7 +19,8 @@ public class SecurityConfig {
     			"/", "/index.html", "/login", "/common/login.html", "/home",
     			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
-    			"/api/auth/status"
+    			"/api/auth/status",
+    			"/helpdesk/**", "/terms/**", "/club/PP050101_001.html"
     	};
     	
     	return http

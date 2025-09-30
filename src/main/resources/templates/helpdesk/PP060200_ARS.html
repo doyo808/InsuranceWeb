@@ -1,0 +1,240 @@
+<div th:fragment="arsContent(menu)">
+	<div class="tab-content">
+		<div id="ars1" class="tab-pane" th:classappend="${menu=='ars1'} ? ' active' : ''">
+			<div class="ars-center">
+				<img th:src="@{/helpdesk/images/img_phone.svg}">
+				<strong>삼성화재 고객콜센터</strong>
+				<span>365일 24시간 서비스 운영</span>
+				<strong>1588-5114</strong>				 
+			</div>
+			<div class="ars-list">
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">1</span>
+					<span class="ars-unit">번</span>
+					<span class="ars-desc">자동차 사고접수 <em>(365일 24시간 운영)</em></span>  
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">2</span>
+					<span class="ars-unit">번</span>
+					<span class="ars-desc">자동차 고장출동 요청 <em>(365일 24시간 운영)</em></span>
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">4</span>
+					<span class="ars-unit">번</span>
+					<span class="ars-desc">자동차 외 보험금 신청 <em>(평일 9시 ~ 18시)</em></span>
+				</div>
+			</div>			
+			<div th:insert="~{helpdesk/PP060200_ARS :: commonNotice}"></div>			
+		</div>
+		<div id="ars2" class="tab-pane" th:classappend="${menu=='ars2'} ? ' active' : ''">
+			<div class="ars-center">
+				<img th:src="@{/helpdesk/images/img_phone.svg}">
+				<strong>다이렉트 고객센터</strong>
+				<span>평일 9시 ~ 18시 (토요일, 공휴일 휴무)</span>
+				<span>1577-3339</span>  
+			</div>
+			<div class="ars-notice">
+				<ul>
+					<li>삼성화재 다이렉트 보험상품은 인터넷 전용이므로 고객님께서 직접 보험료를 계산하고 가입해 주세요.</li>
+					<li>가입절차나 상품문의는 다이렉트 고객센터에서 자세히 안내해 드립니다.</li>
+				</ul>				
+			</div>
+			
+			<div class="ars-list">
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">1</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">						
+						<h4>자동차보험 가입</h4>
+						<ul>
+							<li>① 인터넷 가입문의</li>
+							<ul>
+								<li>1. 자동차보험 갱신가입</li>
+								<li>2. 자동차보험 신규가입</li>
+							</ul>
+							<li>② 전화 가입문의</li>								
+						</ul>						
+					</div>					
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span> 
+					<span class="ars-number">2</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">
+						<h4>자동차보험 변경, 해지</h4>
+						<ul>
+							<li>① 자동차보험 계약변경</li>
+							<ul>
+								<li>1. 자동차보험 임시운전자 셀프 가입</li>
+								<li>2. 자동차보험 임시운전자 특약 문의</li>
+								<li>3. 자동차보험 마일리지 특약 문의</li>
+								<li>4. 자동차보험 운전자범위 변경 문의</li>
+								<li>5. 자동차보험 차량정보 변경 문의</li>
+								<li>6. 조회 문의</li>
+							</ul>
+							<li>② 자동차보험 계약해지</li>
+						</ul>
+					</div>					
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">3</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">
+						<h4>사고접수, 고장출동</h4>
+						<ul>
+							<li>① 자동차보험 사고접수</li>
+							<li>② 자동차보험 고장출동</li>
+						</ul>
+					</div>
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">4</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">
+						<h4>자녀보험 가입 및 변경문의</h4>
+						<ul>
+							<li>① 자녀보험 가입문의</li>
+							<li>② 자녀보험 계약조회 및 변경</li>
+							<li>③ 자녀보험 보험금 청구</li>
+						</ul>
+					</div>										
+				</div>
+				<div class="ars-item">				
+					<span class="label">ARS</span>
+					<span class="ars-number">5</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">
+						<h4>운전자보험, 여행보험 등 생활보험</h4>
+						<ul>
+							<li>① 운전자보험, 실손보험, 주택화재보험 등 생활보험</li>
+							<ul>
+								<li>1. 인터넷 가입문의</li>
+								<li>2. 인터넷 계약조회, 변경</li>
+							</ul>
+							<li>② 여행보험, 유학보험, 반려동물보험</li>
+							<ul>
+								<li>1. 인터넷 가입문의</li>
+								<li>2. 인터넷 계약조회, 변경</li>
+							</ul>
+							<li>③ 질병, 상해, 휴대품 손해 等 보험금 청구</li>
+						</ul>							
+					</div>					
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">6</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">
+						<h4>증명서 발급</h4>
+					</div>						
+				</div>
+			</div>
+			<div th:insert="~{helpdesk/PP060200_ARS :: commonNotice}"></div>			
+		</div>
+		<div id="ars3" class="tab-pane" th:classappend="${menu=='ars3'} ? ' active' : ''">
+			<div class="ars-center">
+				<img th:src="@{/helpdesk/images/img_phone.svg}">
+				<strong>자동차보험 전화가입센터</strong>
+				<span>평일 9시 ~ 18시 (토요일, 공휴일 휴무)</span>
+				<strong>1600-5008</strong> 
+			</div>
+			<div class="ars-notice">
+				<ul>
+					<li>‘18년 7월부터 삼성화재 다이렉트 자동차보험을 전화로도 가입하실 수 있습니다.</li>
+					<li>전문상담사를 통해 편안하게 가입이 가능합니다. 단, 인터넷보험료와 차이가 있으므로 이점 유의해 주세요.</li>
+				</ul>
+			</div>
+			<div class="ars-list">
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">1</span>
+					<span class="ars-unit">번</span>				
+					<div class="ars-details">
+						<h4>자동차보험 전화가입</h4>
+						<ul>
+							<li>① 자동차보험 신규가입</li>
+							<li>② 자동차보험 갱신가입</li>
+						</ul>					
+					</div>
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">3</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">
+						<h4>사고접수, 고장출동</h4>
+						<ul>
+							<li>① 자동차보험 사고접수</li>
+							<li>② 자동차보험 고장출동</li>
+						</ul>
+					</div>					
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">2</span>
+					<span class="ars-unit">번</span>
+					<div class="ars-details">
+						<h4>자동차보험 변경, 해지</h4>
+						<ul>
+							<li>① 자동차보험 계약변경</li>
+							<li>② 자동차보험 계약해지</li>
+						</ul>
+					</div>			
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">5</span>
+					<span class="ars-unit">번</span>
+					<span class="ars-desc">증명서 발급</span>				
+				</div>				
+			</div>
+			<div th:insert="~{helpdesk/PP060200_ARS :: commonNotice}"></div>			
+		</div>
+		<div id="ars4" class="tab-pane" th:classappend="${menu=='ars4'} ? ' active' : ''">
+			<div class="ars-center">
+				<img th:src="@{/helpdesk/images/img_phone.svg}">
+				<strong>삼성화재 수신거부 전화</strong>
+				<span>365일 24시간 서비스 운영</span>
+				<strong>080-679-0001</strong>  
+			</div>
+			<div class="ars-list">
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">1</span>
+					<span class="ars-unit">번</span>
+					<span class="ars-desc">문자메시지 수신거부</span>					
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">3</span>
+					<span class="ars-unit">번</span>
+					<span class="ars-desc">모든 광고물 수신거부</span>				
+				</div>
+				<div class="ars-item">
+					<span class="label">ARS</span>
+					<span class="ars-number">2</span>
+					<span class="ars-unit">번</span>
+					<span class="ars-desc">이메일 수신거부</span>				
+				</div>				
+			</div>
+			<div th:insert="~{helpdesk/PP060200_ARS :: commonNotice}"></div>			
+		</div>		
+	</div>	
+</div>
+
+
+<div th:fragment="commonNotice" class="common-notice">
+	<h3><img th:src="@{/helpdesk/images/icon_noti.png}">확인해주세요</h3>
+	<ul>
+		<li>일반전화 이용 시 시내 통화료가 3분 당 39원 부과되며 휴대폰/인터넷전화 이용 시 개인별 통신사 약정요금에 따라 통화료가 부과됩니다.</li>
+		<li>수신거부 처리완료까지 1~2일(휴일 제외)이 소요될 수 있습니다.</li>
+		<li>수신거부에도 불구하고 보험계약 관련 안내를 위한 이메일, 문자메시지 등은 발송될 수 있습니다.</li>
+		<li>청각장애인을 위한 수화상담 전화 이용을 원하실 경우, 휴대폰의 영상 통화로 전화하시면 자동차사고 접수 및 고장출동 요청 서비스를 이용하실 수 있습니다.</li>
+	</ul>		
+</div>

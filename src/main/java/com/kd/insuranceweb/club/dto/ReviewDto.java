@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.helpdesk.dto;
+package com.kd.insuranceweb.club.dto;
 
 import java.util.Date;
 

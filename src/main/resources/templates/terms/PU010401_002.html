@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
 <head>
 	<meta charset="UTF-8" />
 	<title>전자금융거래 유의사항</title>
-	<link rel="stylesheet" th:href="@{/css/PU010401_002.css}">
-	<script th:src="@{/js/PU010401_002.js}"></script>
+	<link rel="stylesheet" th:href="@{/terms/css/PU010401_002.css}">
+	<script th:src="@{/terms/js/PU010401_002.js}"></script>
 </head>
 <body>
+<main layout:fragment="content">
 	<div class="container">
 		<div class="breadcrumb">홈 > 곡객센터 > 개인정보보호 > 전자금융거래 유의사항</div>
 		<h1>전자금융거래 유의사항을<br>안내해 드려요</h1>
@@ -78,6 +81,6 @@
 			
 		</div>		
 	</div>	
-
+</main>
 </body>
 </html>

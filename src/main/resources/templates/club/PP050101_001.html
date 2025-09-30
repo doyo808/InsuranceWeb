@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+    <meta charset="UTF-8" />
+    <title>자동차보험 가입후기</title>
+    <link rel="stylesheet" th:href="@{/club/css/PP050101_001.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/club/js/PP050101_001.js}"></script>
+</head>
+<body>
+<main layout:fragment="content">
+<main class="container">
+	<div class="breadcrumb">홈 > 이용안내 > 가입후기 > 자동차보험 가입후기</div>
+    <h1>생생한 가입후기를 확인해보세요</h1>
+
+    <!-- 탭 메뉴 -->
+    <div class="tabs">
+        <a th:href="@{/club/PP050101_001(category='자동차보험')}" 
+           th:classappend="${category=='자동차보험' ? 'active' : ''}">
+           <span>자동차보험</span>
+        </a>
+        <a th:href="@{/club/PP050101_001(category='생활보험')}" 
+           th:classappend="${category=='생활보험' ? 'active' : ''}">
+           <span>생활보험</span>
+        </a>
+    </div>
+
+    <!-- 검색 박스 -->
+    <div class="search-box">
+        <!-- 왼쪽 드롭다운 -->
+        <div class="dropdown">
+            <button class="dropdown-btn" th:text="${searchType != null ? searchType : '내용'}"></button>
+            <ul class="dropdown-menu">
+                <li>내용</li>
+                <li>작성자</li>
+            </ul>
+        </div>
+
+        <!-- 검색 입력창 -->
+        <input type="text" class="search-input" th:value="${searchKeyword}" placeholder="검색어를 입력해주세요">
+
+        <!-- 검색 버튼 -->
+        <button class="search-btn">
+            <i class="fas fa-search"></i> 🔍
+        </button>
+    </div>
+
+    <!-- 세부분류 드롭다운 -->
+    <div class="dropdown right">
+        <button class="dropdown-btn" th:text="${subCategory != null ? subCategory : '전체'}"></button>
+        <ul class="dropdown-menu">
+            <li th:each="sc : ${subCategories}" th:text="${sc}"></li>
+        </ul>
+    </div>
+
+    <!-- 리뷰 리스트 -->
+    <div class="accordion">
+        <div class="accordion-item" th:each="r : ${reviews}">
+            <div class="accordion-header">
+                <div class="star-rating" th:text="${'★'.repeat(r.rating) + '☆'.repeat(5 - r.rating)}"></div>
+                <div class="accordion-title" 
+                     th:text="${r.content.length() > 20 ? #strings.concat(r.content.substring(0,20),'...') : r.content}"></div>
+                <div class="accordion-info">
+                    <span class="category" th:text="${r.subCategory}"></span>
+                    <span class="name" th:text="${r.authorName}"></span>
+                    <span class="date" th:text="${#dates.format(r.createdAt,'yyyy.MM.dd')}"></span>
+                </div>
+                <span class="accordion-arrow">→</span>
+            </div>
+            <div class="accordion-content">
+                <p th:text="${r.content}"></p>
+            </div>
+        </div>
+    </div>
+	
+	
+	<!-- 페이징 -->
+	<nav class="pagination-container" aria-label="Page navigation">
+	    <ul class="pagination-list">
+	        <!-- 처음 페이지 -->
+	        <li class="pagination-first" th:if="${currentPage > 1}">
+	            <a th:href="@{/club/PP050101_001(page=1, category=${category}, subCategory=${subCategory}, searchType=${searchType}, searchKeyword=${searchKeyword})}"><<</a>
+	        </li>
+	        <!-- 이전 페이지 -->
+	        <li class="pagination-prev" th:if="${currentPage > 1}">
+	            <a th:href="@{/club/PP050101_001(page=${currentPage-1}, category=${category}, subCategory=${subCategory}, searchType=${searchType}, searchKeyword=${searchKeyword})}"><</a>
+	        </li>
+	        <!-- 페이지 번호 -->
+	        <li th:each="i : ${#numbers.sequence(1,totalPage)}">
+	            <a th:href="@{/club/PP050101_001(page=${i}, category=${category}, subCategory=${subCategory}, searchType=${searchType}, searchKeyword=${searchKeyword})}"
+	               th:text="${i}" th:classappend="${i==currentPage ? 'active' : ''}"></a>
+	        </li>
+	        <!-- 다음 페이지 -->
+	        <li class="pagination-next" th:if="${currentPage < totalPage}">
+	            <a th:href="@{/club/PP050101_001(page=${currentPage+1}, category=${category}, subCategory=${subCategory}, searchType=${searchType}, searchKeyword=${searchKeyword})}">></a>
+	        </li>
+	        <!-- 마지막 페이지 -->
+	        <li class="pagination-last" th:if="${currentPage < totalPage}">
+	            <a th:href="@{/club/PP050101_001(page=${totalPage}, category=${category}, subCategory=${subCategory}, searchType=${searchType}, searchKeyword=${searchKeyword})}">>></a>
+	        </li>
+	    </ul>
+	</nav>
+</main>
+</div>
+</body>
+</html>

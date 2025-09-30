@@ -15,10 +15,13 @@ public class PageController {
     private static final Map<String, String> termsPages = new HashMap<>();
 
     static {
-        helpdeskPages.put("bookmark", "helpdesk/PP060801_001");
+    	helpdeskPages.put("customerservice", "helpdesk/PP060200_000");    	
+    	helpdeskPages.put("bookmark", "helpdesk/PP060801_001");
         helpdeskPages.put("install", "helpdesk/PP060301_002");
         
         termsPages.put("electfinterms", "terms/PU010401_001");
+        termsPages.put("directterms", "terms/PU010401_011");
+        termsPages.put("efprecaution", "terms/PU010401_002");
         
     }
 

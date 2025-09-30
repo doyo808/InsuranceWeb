@@ -43,6 +43,8 @@ dependencies {
 	implementation 'com.google.cloud:google-cloud-vision:3.65.0'
 }
 
+
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
