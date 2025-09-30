@@ -211,6 +211,8 @@
         </div>
         <div class="content">
             <form id="insurance-form">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<input type="hidden" th:name="_csrf_header" th:value="${_csrf.headerName}">
                 <section id="product-section">
                     <h2>가입 상품 정보</h2>
                     <div class="product-info">
@@ -372,14 +374,16 @@
                 // sessionStorage.setItem('insuranceSelection', JSON.stringify(sessionData));
 
                 // alert('선택하신 정보가 세션에 저장되었습니다.\n개발자 도구(F12) > Application > Session Storage에서 확인해보세요.');
-                
+				const token = document.querySelector('input[name="_csrf"]').value;  
+				const header = document.querySelector('input[name="_csrf_header"]').value;  
 				try {
 				        // 1. fetch API를 사용해 URL로 POST 요청을 보냅니다.
 				        const response = await fetch('/kdInsuranceTeam/mall/init', {
 				            method: 'POST', // HTTP 요청 방식
 				            headers: {
 				                // 우리가 보내는 데이터가 JSON 형식임을 서버에 알림
-				                'Content-Type': 'application/json'
+				                'Content-Type': 'application/json',
+								[header]: token
 				            },
 				            // 2. JavaScript 객체를 JSON 문자열로 변환하여 요청 본문에 담아 보냅니다.
 				            body: JSON.stringify(submissionData) 
