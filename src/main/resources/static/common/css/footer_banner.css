@@ -133,6 +133,7 @@
 }
 
 /* 항목별 아이콘 (직접 파일 넣기) */
+/*
 .footer-banner .faq li.faq-accident a::before {
   background-image: url("icons/accident.png");
 }
@@ -148,6 +149,7 @@
 .footer-banner .faq li.faq-location a::before {
   background-image: url("icons/location.png");
 }
+*/
 
 /* 화살표 (>) */
 .footer-banner .faq li::after {
