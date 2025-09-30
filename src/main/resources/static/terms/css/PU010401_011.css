@@ -1,0 +1,203 @@
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 40px 20px;
+	font-family: "Noto Sans KR", sans-serif;
+	color: #222;
+}
+
+.breadcrumb {
+	position: fixed;
+	top: 0;       /* 상단 */
+	right: 300px;  /* 오른쪽 여백 */
+	padding: 5px 10px; 
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+
+/* 시행일자 셀렉트 영역 */
+.terms-header {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-bottom: 30px;
+	gap: 10px;
+}
+
+.terms-header label {
+	font-size: 16px;
+}
+
+.terms-header select {
+	width: 200px;
+	padding: 8px 14px;
+	font-size: 16px;
+	border: 2px solid #007BFF; /* ✅ 파란색 테두리 */
+	border-radius: 20px;
+	appearance: none; /* 기본 브라우저 화살표 제거 */
+	background-color: #fff;
+	background-image: url("data:image/svg+xml;utf8,<svg fill='%23007BFF' height='24' viewBox='0 0 24 24' width='24'><path d='M7 10l5 5 5-5'/></svg>"); /* ✅ 파란색 V 표시 */
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 16px;
+	padding-right: 30px; /* V 아이콘 영역 확보 */
+	box-sizing: border-box;
+	cursor: pointer;	
+}
+
+
+
+
+.select-container {
+  display: flex;
+  justify-content: flex-end;  /* 오른쪽 정렬 */
+}
+
+
+.custom-select-wrapper {
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+	color: #000;
+	outline: none;
+	width: 130px;
+	
+	/* 추가 */
+	margin-left: auto;  /* 오른쪽 정렬용 */
+}
+
+.selected-value {
+	padding: 8px 12px;
+	border: none; /* 처음엔 테두리 없음 */
+	user-select: none;
+}
+
+.custom-select-wrapper.open .selected-value {
+	border: 1.5px solid #000;
+	border-radius: 6px;
+}
+
+.options-list {
+	list-style: none;
+	margin: 0;
+	padding: 4px 0;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 130px;
+	border: 1.5px solid #000;
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+	max-height: 150px;
+	overflow-y: auto;
+	z-index: 100;
+}
+
+.options-list.hidden {
+	display: none;
+}
+
+.options-list li {
+	padding: 8px 12px;
+	cursor: pointer;
+}
+
+.options-list li:hover {
+	background-color: #f0f0f0;
+}
+
+.options-list li.selected {
+	color: #007BFF;
+	font-weight: 700;
+}
+
+.selected-value {
+	display: inline-flex;      /* flexbox 활성화 */
+	align-items: center;       /* 수직 중앙 정렬 */
+	gap: 6px;                  /* 텍스트와 화살표 간격 */
+	font-weight: 700;
+	font-size: 16px;
+	color: #000;
+	user-select: none;
+}
+
+/* ::after 대신 별도 요소로 화살표를 만들거나 */
+/* ::after 사용 시 content를 '▼'만 넣고 gap으로 간격 조절 */
+
+.selected-value::after {
+	content: "▼";
+	font-size: 12px;
+	color: #000;
+	line-height: 1;
+}
+
+
+/* 약관 전체 공통 스타일 */
+/* 공통 초기화 */
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+/* 상위 조항 (①, ②, ③ …) */
+ol.clause {
+  list-style: none;
+  counter-reset: clause;
+}
+
+ol.clause > li {
+  counter-increment: clause;
+  margin: 8px 0;
+  padding-left: 30px;
+  position: relative;
+}
+
+ol.clause > li::before {
+  position: absolute;
+  left: 0;
+  font-family: "Arial Unicode MS", "Segoe UI Symbol", sans-serif;
+}
+
+/* 유니코드 원형 숫자 매핑 */
+ol.clause > li:nth-child(1)::before { content: "①"; }
+ol.clause > li:nth-child(2)::before { content: "②"; }
+ol.clause > li:nth-child(3)::before { content: "③"; }
+ol.clause > li:nth-child(4)::before { content: "④"; }
+ol.clause > li:nth-child(5)::before { content: "⑤"; }
+ol.clause > li:nth-child(6)::before { content: "⑥"; }
+ol.clause > li:nth-child(7)::before { content: "⑦"; }
+/* 필요 시 계속 확장 */
+
+/* 하위 항목 (1, 2, 3 …) */
+ol.subclause {
+  list-style: none;
+  counter-reset: sub;
+  margin-top: 10px;
+  margin-left: 25px;
+  padding-left: 20px;
+}
+
+ol.subclause > li {
+  counter-increment: sub;
+  margin: 5px 0;
+  padding-left: 25px;
+  position: relative;
+}
+
+ol.subclause > li::before {
+  content: counter(sub) ". ";
+  position: absolute;
+  left: 0;
+}
+
