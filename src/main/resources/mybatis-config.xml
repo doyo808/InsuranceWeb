@@ -3,15 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	
+	<settings>
+    	<setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    		
 	<typeAliases>
-          <typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
-          <typeAlias type="com.kd.insuranceweb.common.dto.PersonDTO" alias="person"></typeAlias>
-          <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
-          <typeAlias type="com.kd.insuranceweb.club.dto.Card_company" alias="cardCompany"></typeAlias>
-          <typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit_interest_free" alias="cardBenefitInterestFree"></typeAlias>
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"/>
           <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
+
+		<typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
+		
+        <typeAlias type="com.kd.insuranceweb.common.dto.PersonDTO" alias="person"></typeAlias>
+        <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
+        
+        <typeAlias type="com.kd.insuranceweb.club.dto.Card_company" alias="cardCompany"></typeAlias>
+        <typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit_interest_free" alias="cardBenefitInterestFree"></typeAlias>
+  		<typeAlias type="com.kd.insuranceweb.club.dto.ReviewDto" alias="reviewDto"></typeAlias>
+        
+        <typeAlias type="com.kd.insuranceweb.helpdesk.dto.FaqDto" alias="faqDto"></typeAlias>
+  		<typeAlias type="com.kd.insuranceweb.helpdesk.dto.NoticeDto" alias="noticeDto"></typeAlias>
   	</typeAliases>
 
   

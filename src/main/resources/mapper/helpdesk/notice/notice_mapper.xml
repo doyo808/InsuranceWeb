@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NoticeMapper">
+	<!-- 사용자용: 표시된 공지만 조회 -->
+	<select id="selectNoticeList" parameterType="map" resultType="noticeDto">
+	    SELECT *
+	    FROM (
+			SELECT a.*, ROWNUM rnum
+			FROM (
+				SELECT notice_id, title, writer, is_visible, created_at
+				FROM notice
+				WHERE is_visible = 'Y'
+				<if test="keyword != null and keyword != ''">
+					AND (title LIKE '%' || #{keyword} || '%')
+				</if>
+				ORDER BY created_at DESC
+				) a
+			WHERE ROWNUM &lt;= #{offset} + #{limit})
+		WHERE rnum &gt; #{offset}
+	</select>
+
+	
+	<!-- 관리자용: 전체 공지 조회 -->
+	<select id="selectAllNotices" parameterType="map" resultType="noticeDto">
+		SELECT notice_id, title, writer, is_visible, created_at
+        FROM (
+            SELECT a.*, ROWNUM rnum
+            FROM (
+                SELECT notice_id, title, writer, is_visible, created_at
+                FROM notice
+                <if test="keyword != null and keyword != ''">
+                    WHERE title LIKE '%' || #{keyword} || '%'
+                </if>
+                ORDER BY created_at DESC
+            ) a
+            WHERE ROWNUM &lt;= #{offset} + #{limit}
+        )
+        WHERE rnum &gt; #{offset}
+	</select>
+	
+	
+	<select id="countNotices" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM notice
+		WHERE is_visible = 'Y'
+		<if test="keyword != null and keyword != ''">
+        	AND title LIKE '%' || #{keyword} || '%'
+    	</if>
+	</select>
+	
+	
+	<!-- 상세 조회 -->
+	<select id="selectNoticeDetail" parameterType="long" resultType="noticeDto">
+		SELECT notice_id, title, content, writer, is_visible, created_at, updated_at
+		FROM notice
+		WHERE notice_id = #{noticeId}
+	</select>	
+	
+	<insert id="insertNotice" parameterType="noticeDto">
+		INSERT INTO NOTICE (notice_id, title, content, writer, is_visible, created_at)
+        VALUES (NOTICE_SEQ.NEXTVAL, #{title}, #{content}, #{writer}, #{isVisible}, SYSDATE)
+	</insert>
+	
+	<update id="updateNotice" parameterType="noticeDto">
+		UPDATE notice
+        SET title = #{title}, content = #{content}, is_visible = #{isVisible}, updated_at = SYSDATE
+        WHERE notice_id = #{noticeId}	
+	</update>
+	
+	<delete id="deleteNotice" parameterType="long">
+		DELETE FROM notice WHERE notice_id = #{noticeId}	
+	</delete>
+	
+	
+</mapper>

@@ -1,0 +1,332 @@
+/* 기본 레이아웃 */
+.container{	
+	max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #222;
+}
+
+.breadcrumb {
+	position: absolute;
+	top: 0;       /* 상단 */
+	right: 300px;  /* 오른쪽 여백 */  
+	padding: 5px 10px;	
+}
+
+/* 제목 */
+.container h1{
+	font-size: 28px;
+	font-weight: 700;
+	text-align: center;
+	line-height: 1.4;
+	margin-bottom: 40px;
+}
+
+
+/* 카드 그리드 영역 */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; /* 카드 간격 */
+}
+/* 카드 개별 박스 */
+.card {
+  background-color: #f7f9fa;
+  border-radius: 10px;
+  padding: 25px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 카드 제목 (h2) */
+.card h2 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* 전화번호 */
+.card .phone {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+}
+
+/* 설명 텍스트 */
+.card .desc {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* 메뉴 */
+.tab-menu {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.tab-menu a {
+  position: relative;
+  font-size: 16px;
+  font-weight: 600;
+  color: #aaa;
+  text-decoration: none;
+  padding: 10px 0;
+  transition: color 0.3s ease;
+}
+
+/* 활성 탭 스타일 */
+.tab-menu a.active {
+  color: #007aff; /* 파란색 텍스트 */
+}
+
+.tab-menu a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #007aff; /* 파란 밑줄 */
+  border-radius: 2px;
+}
+
+/* 호버 효과 */
+.tab-menu a:hover {
+  color: #007aff;
+}
+
+/* 메뉴 */
+.tab-content {  
+  
+  margin-top: 40px;
+  
+}
+
+/* 탭 패널 공통 */
+.tab-pane { 
+  display: none; /* 기본 숨김 */
+}
+
+.tab-pane.active {
+  display: block; /* active 탭만 표시 */
+}
+
+/* 고객콜센터 안내 영역 */
+.ars-center {
+  background-color: #f0f7ff;
+  border-radius: 12px;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 25px;
+}
+
+.ars-center strong {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* 개별 notice*/
+.ars-notice {
+  font-size: 14px;
+  color: #555;
+}
+
+/* 리스트 스타일 */
+.ars-notice ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.ars-notice li {
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.7;
+  color: #666;
+  font-size: 14px;
+}
+
+/* 리스트 앞에 점 스타일 */
+.ars-notice li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #999;
+}
+
+
+/* ARS 리스트 전체 박스 */
+.ars-list {
+  list-style: none;
+  padding: 20px 25px;
+  margin: 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  background-color: #fff;
+}
+
+/* 개별 ARS 항목 */
+.ars-item {
+  display: flex;
+  align-items: flex-start; /* 핵심: 윗줄 맞춤 */
+  flex: 1 1 45%;
+  font-size: 15px;
+  color: #333;
+  gap: 8px; /* 번호와 설명 간 간격 */
+}
+
+/* ARS 라벨 (텍스트 "ARS") */
+.ars-item .label {
+  font-size: 13px;
+  color: #888;
+  margin-right: 6px;
+}
+
+/* ARS 번호 동그라미 */
+.ars-number {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: #1e5eff;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;  
+}
+
+/* 설명 텍스트 */
+.ars-desc, .ars-unit {
+  font-weight: 500;
+  margin: 0 8px;
+}
+
+.ars-desc em {
+  font-style: normal;
+  font-weight: normal;
+  color: #666;
+  margin-left: 6px;
+  font-size: 14px;
+}
+
+/* ============ ARS 상세 내용 ============ */
+
+
+.ars-details {
+  flex: 1;
+  margin-top: 0; /* 기존 여백 제거 */
+  padding-left: 5px;
+}
+
+
+
+.ars-details h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.ars-details ul {
+  list-style: none;
+  padding-left: 16px;
+  margin-bottom: 6px;
+}
+
+.ars-details ul > li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ✅ 중첩 리스트: - 표시 제거 및 들여쓰기만 */
+.ars-details ul ul {
+  padding-left: 16px;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
+.ars-details ul ul li::before {
+  content: ''; /* ← 기호 제거 */
+}
+
+
+
+
+/* 공지 전체 영역 */
+.common-notice {
+  margin-top: 40px;
+  padding: 25px 0;  
+  font-size: 14px;
+  color: #555;
+}
+
+/* 공지 제목 영역 (아이콘 + 텍스트) */
+.common-notice h3 {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #000;
+}
+
+/* 아이콘 스타일 */
+.common-notice h3 img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* 리스트 스타일 */
+.common-notice ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.common-notice li {
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.7;
+  color: #666;
+  font-size: 14px;
+}
+
+/* 리스트 앞에 점 스타일 */
+.common-notice li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #999;
+}
+
+
+
+
+
+
+

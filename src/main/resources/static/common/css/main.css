@@ -1,0 +1,522 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 카드 상단 기준 동일 위치 */
+  gap: 20px; /* 좌우 카드 사이 간격 */
+  width: 100%;
+  min-height: 70vh;
+  background-color: #3b92e5;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Left Panel */
+.left-panel {
+  width: 590px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 제목 왼쪽 정렬 */
+}
+
+/* 좌측 제목 */
+.main-title {
+  width: 590px;
+  height: 145px;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;  
+  text-align: left;
+  line-height: 1.3;
+  width: 100%;
+}
+
+/* 아이콘 카드 */
+.icon-grid {
+  width: 580px;
+  height: 370px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px 10px;
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  justify-items: center;
+  align-items: center;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  background-image: url(/kdInsuranceTeam/common/images/icon_category.png);
+  background-repeat: no-repeat;
+  background-size: 240px;
+  margin-bottom: 6px;
+}
+
+.icon-car       { background-position: 0 0; }
+.icon-driver    { background-position: -60px 0; }
+.icon-medical   { background-position: -120px 0; }
+.icon-child     { background-position: -180px 0; }
+.icon-health    { background-position: -60px -180px; }
+.icon-patient   { background-position: -120px -60px; }
+.icon-tooth     { background-position: -60px -60px; }
+.icon-fire      { background-position: -180px -60px; }
+.icon-asset     { background-position: -120px -120px; }
+.icon-travel    { background-position: 0 -120px; }
+.icon-pet       { background-position: -180px -120px; }
+.icon-analysis  { background-position: -120px -180px; }
+
+/* Right Panel */
+.right-panel {
+  width: 590px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 29px; /* 배너와 로그인 카드 사이 간격 */
+  box-sizing: border-box;
+}
+
+/* 배너 영역 */
+.banner-area.slider {
+  position: relative;
+  width: 590px;
+  height: 170px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: #3b92e5;
+}
+
+/* 슬라이드 모음 */
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+}
+
+/* 각 슬라이드 */
+.slide {
+  min-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px; /* 화살표 영역과 겹치지 않도록 */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.banner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.banner-content p {
+  margin: 2px 0;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.banner-title strong {
+  font-weight: bold;
+}
+
+.banner-phone img {
+  width: 40px;
+  height: 40px;
+}
+
+/* 좌/우 화살표 (배경 제거) */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none; /* 배경 제거 */
+  color: black;     /* 화살표 색상 */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+}
+
+.prev { left: 5px; } 
+.next { right: 5px; }
+
+/* 하단 번호 + 일시정지 버튼 중앙 정렬 */
+.bottom-bar {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.pause-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* 로그인 카드 영역 */
+.login-box {
+  width: 580px;
+  height: 370px; /* 카드 높이 */
+  background-color: white; /* 흰색 배경 */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: center; /* 내부 내용 좌우 중앙 */
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 카드 내부 Flex */
+.login-content {
+  display: flex;
+  justify-content: space-between; /* 왼쪽 텍스트, 오른쪽 이미지 분리 */
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* 로그인 텍스트 영역 */
+.login-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;        /* 버튼과 텍스트 간격 */
+  flex-shrink: 0;
+}
+
+/* 로그인 제목(h2) */
+.login-left .login-title {
+  align-self: flex-start; /* 이미지 상단 기준 정렬 */
+  margin-bottom: 50px;
+}
+
+/* 버튼 스타일 */
+.btn {
+  width: 250px;       /* 가로 250px */
+  height: 50px;       /* 세로 50px */
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s, color 0.3s;
+}
+
+.login-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.login-btn:hover {
+  background-color: #2563eb;
+}
+
+.signup-btn {
+  background-color: white;
+  color: #3b82f6;
+  border: 2px solid #3b82f6;
+}
+
+.signup-btn:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* 오른쪽 이미지 */
+.login-popup {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-popup img {
+  width: 250px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* 카드 전체 링크 */
+.analysis-banner {
+  display: block;
+  background-color: #f4f9ff;
+  padding: 20px 0; /* 위/아래 여백만 */ 
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.3s; /* 배경색 변화 제거 */
+  cursor: pointer;
+}
+
+/* 호버 효과 (배경 변화 제거) */
+.analysis-banner:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* 내부 콘텐츠 래퍼 */
+.content-box {
+  display: flex;
+  justify-content: space-between; /* 텍스트 왼쪽, 이미지 오른쪽 */
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 120px; /* 좌우 여백 */
+  box-sizing: border-box;
+}
+
+/* 텍스트 섹션 */
+.text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #1d4ed8;
+  font-weight: 500;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.description {
+  font-size: 16px;
+  color: #374151;
+  margin: 0;
+}
+
+/* 아이콘 섹션 (오른쪽 정렬) */
+.icon-box {
+  flex-shrink: 0;
+  margin-left: 40px; /* 텍스트와 간격 */
+}
+
+.icon-box img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+/* ✅ 전체 탭 + 배너 영역 */
+.main-tab-section {
+  max-width: 1080px;
+  text-align: center;
+  margin: 80px auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.main-tab-section h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 40px;
+}
+
+/* ✅ 탭 메뉴 스타일 */
+.tab-menu {
+  max-width: 1200px;         /* 헤더와 동일한 최대 너비 */
+  width: 100%;               /* 부모 너비 전부 차지 */
+  margin: 0 auto;            /* 가운데 정렬 */
+
+  display: flex;
+  justify-content: center;   /* 탭 메뉴 항목 중앙 정렬 */
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+
+.tab-menu .tab {
+  font-size: 16px;
+  color: #9ca3af; /* 회색 */
+  text-decoration: none;
+  padding-bottom: 6px;
+  position: relative;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.tab-menu .tab:hover {
+  color: #111827;
+}
+
+.tab-menu .tab.active {
+  color: #111827; /* 검정색 */
+  font-weight: 600;
+}
+
+.tab-menu .tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -9px;
+  width: 100%;
+  height: 2px;
+  background-color: #111827;
+}
+
+
+.main-tab-content {
+  max-width: 1200px;
+  text-align: center;
+  margin: 80px auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+
+.anchor-offset {
+  display: block;
+  position: relative;
+  top: -120px; /* 고정 메뉴의 높이보다 약간 크게 */
+  height: 0;
+}
+
+/* ✅ 배너 카드 */
+.tab-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 40px;
+}
+
+.tab-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+
+.tab-category {
+  font-size: 22px;
+  color: #1d4ed8; /* 파란색 */
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.3; /* ✅ 추가 */
+}
+
+.tab-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.3; /* ✅ 추가 */
+}
+
+.tab-subtext {
+  font-size: 20px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.3; /* ✅ 추가 */
+}
+
+/* ✅ 이미지 스타일 */
+.tab-banner-image img {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+}
+
+/* 카드 전체 레이아웃 */
+.tab-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
+  gap: 24px;
+}
+
+/* 카드 개별 */
+.tab-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start; /* ← 텍스트와 화살표 모두 상단 정렬 */
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 20px 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s;
+  width: 360px;       /* ✅ 고정 폭 */
+  height: 178px;      /* ✅ 고정 높이 */
+  box-sizing: border-box;
+}
+
+.tab-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 텍스트 영역 */
+.card-desc {
+  flex-grow: 1;
+  min-width: 0;
+  text-align: left; /* ✅ 텍스트 왼쪽 정렬 */
+}
+
+.card-desc h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #111827;
+  
+}
+
+.card-desc p {
+  font-size: 14px;
+  color: #4b5563;
+  margin: 0;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 강조 텍스트 */
+.highlight {
+  color: #1d4ed8;
+  font-weight: 500;
+}
+
+/* 오른쪽 화살표 */
+.card-arrow {
+  font-size: 20px;
+  color: #111827;
+  font-weight: bold;
+  flex-shrink: 0;
+  align-self: flex-start; /* ✅ h2와 같은 라인으로 */
+  margin-top: 10px; /* ✅ 약간의 세로 정렬 보정 (필요 시 조정) */
+  margin-left: 12px;
+}
+
+

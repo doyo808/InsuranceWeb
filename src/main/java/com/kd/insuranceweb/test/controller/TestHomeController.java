@@ -18,8 +18,8 @@ public class TestHomeController {
 	}
 	
 	
-	@GetMapping("/helpdesk/link")
-	public String test() {
-		return "/helpdesk/PP060801_001.html";
-	}
+	//@GetMapping("/helpdesk/link")
+	//public String test() {
+	//	return "/helpdesk/PP060801_001.html";
+	//}
 }
