@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.mall.mapper.CoverageMapper">
+
+  <insert id="insertCoverage">
+  
+  	INSERT INTO contract_coverage_items (
+  		contract_id,
+  		coverage_id,
+  		selected,
+  		coverage_amount
+  		)
+  	VALUES (
+  		#{contract_id},
+  		#{coverage_id},
+  		'Y',
+  		#{coverage_amount}
+  		)
+  </insert>
+
+</mapper>
