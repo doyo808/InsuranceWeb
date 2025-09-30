@@ -1,0 +1,191 @@
+/* =========================
+   Claim Detail (page-specific)
+   ========================= */
+
+/* 섹션 컨테이너 */
+.claim-detail {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* 타이틀 행 */
+.claim-detail .title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.claim-detail .page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.claim-detail .muted {
+  margin-left: 8px;
+  font-size: 14px;
+  color: var(--color-text-weak);
+  font-weight: 600;
+}
+
+/* 폼-같은 정보 그리드 */
+.claim-detail {
+  /* 타이틀 아래 아이템 그리드 */
+}
+.claim-detail .item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: start;
+  gap: 10px 16px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(0, 0, 0, .04);
+}
+
+.claim-detail .item:first-of-type {
+  border-top: 0;
+  padding-top: 4px;
+}
+
+.claim-detail .item label {
+  display: block;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
+}
+
+.claim-detail .item .value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+/* 2칸 차지하는 항목 */
+.claim-detail .item.span-2 {
+  grid-template-columns: 160px 1fr;
+}
+
+/* 상태 배지 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+/* 접수(1) */
+.badge--pending {
+  color: #b07a00;
+  background: rgba(255, 193, 7, .14);         /* amber 느낌 */
+  border-color: rgba(255, 193, 7, .28);
+}
+
+/* 지급완료(2) */
+.badge--approved {
+  color: #0b7a37;
+  background: rgba(34, 197, 94, .14);         /* green 느낌 */
+  border-color: rgba(34, 197, 94, .28);
+}
+
+/* 접수취소(3) */
+.badge--rejected {
+  color: #a11d2c;
+  background: rgba(239, 68, 68, .14);         /* red 느낌 */
+  border-color: rgba(239, 68, 68, .28);
+}
+
+/* 승인/거절 버튼 영역 */
+.claim-detail .btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(0, 0, 0, .08);
+}
+
+.btn-row > :first-child{ margin-right:auto; }
+
+.btn.back {
+  background: rgb(192, 192, 192);          /* green-600 */
+  color: #fff;
+  border-color: transparent;
+  text-decoration: none;
+}
+
+/* 공통 .btn은 기존 것을 사용하고, 여기서는 모디파이어만 정의 */
+.btn.success {
+  background: #16a34a;          /* green-600 */
+  color: #fff;
+  border-color: transparent;
+}
+.btn.success:hover { filter: brightness(.98); }
+
+.btn.danger {
+  background: #ef4444;          /* red-500 */
+  color: #fff;
+  border-color: transparent;
+}
+.btn.danger:hover { filter: brightness(.98); }
+
+/* 아이콘 (머티리얼 심볼/텍스트 아이콘 모두 여백만) */
+.btn .icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .claim-detail {
+    padding: 20px 14px 28px;
+    border-radius: 10px;
+  }
+  .claim-detail .item,
+  .claim-detail .item.span-2 {
+    grid-template-columns: 1fr; /* 라벨 위, 값 아래 */
+    gap: 6px;
+  }
+  .claim-detail .item label {
+    font-size: 12px;
+  }
+  .claim-detail .item .value {
+    font-size: 14px;
+  }
+  .claim-detail .page-title {
+    font-size: 20px;
+  }
+}
+
+/* 색상 토큰이 없을 때 최소한의 폴백 */
+@supports not (color: color-mix(in srgb, #000 10%, transparent)) {
+  .claim-detail .item label { color: #4b5563; }
+  .claim-detail .item .value { color: #111827; }
+}
+
+/* 선택: 최소 스타일 */
+.modal { padding: 0; border: none; border-radius: 12px; }
+.modal::backdrop { background: rgba(0,0,0,.35); }
+.modal form { padding: 20px 22px; width: min(520px, 92vw); }
+.modal__title { margin: 0 0 8px; font-size: 18px; }
+.modal__desc { margin: 0 0 12px; color: #6b7280; }
+#rejectReason { width: 100%; resize: vertical; padding: 10px; }
+.modal__actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.char-counter { text-align: right; font-size: 12px; color: #6b7280; margin-top: 4px; }
+

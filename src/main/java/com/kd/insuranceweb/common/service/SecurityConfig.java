@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -19,11 +20,15 @@ public class SecurityConfig {
     			"/", "/index.html", "/login", "/common/login.html", "/home",
     			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
-    			"/api/auth/status", "/cert/**"
+    			"/api/auth/status", "/cert/**",
+    			"/api/auth/status", 
+    			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","club/event/index", "club/event/analysis",
+    			"/admin/**"
     	};
     	
     	return http
-    			.csrf(csrf -> csrf.disable())	// 개발환경 임시설정
+    			.csrf(csrf -> csrf
+    		    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))	// 개발환경 임시설정
     	        .authorizeHttpRequests(auth -> auth
     	            .requestMatchers(whiteList).permitAll()
     	            .requestMatchers("/admin/**").hasRole("ADMIN")

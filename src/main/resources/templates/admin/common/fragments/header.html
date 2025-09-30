@@ -1,0 +1,22 @@
+<div th:fragment="headerFragment">
+	<div class="topbar">
+		<div class="topbar__inner">
+			<a th:href="@{/admin/main}" class="brand" aria-label="홈으로">
+				<span class="brand__icon" aria-hidden="true">
+					<!--아이콘 자리-->
+				</span>
+				<span class="brand__name">삼성화재 다이렉트 착</span>
+			</a>
+
+
+			<nav class="topbar__links" aria-label="주요 메뉴">
+				<a class="topbar__link" th:href="@{/admin/main}">홈</a>
+				<a class="topbar__link" th:href="@{/admin/product}">상품관리</a>
+				<a class="topbar__link" th:href="@{/admin/contract}">계약 접수</a>
+				<a class="topbar__link" th:href="@{/admin/claim}">보험금 청구관리</a>
+				<a class="topbar__link" th:href="@{/admin/inquiry}">고객 문의관리</a>
+				
+			</nav>
+		</div>
+	</div>
+</div>

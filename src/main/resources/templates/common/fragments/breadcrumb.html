@@ -1,83 +1,17 @@
-<!DOCTYPE html>
-<html lang="ko">
+<nav class="breadcrumb-wrap" aria-label="현재 위치" th:fragment="trail(labels)">
+	<ol class="breadcrumb">
+		<li class="home">
+			<a th:href="@{/}" aria-label="홈으로">
+				<i class="fa-solid fa-house"></i>
+			</a>
+			<!-- labels가 있을 때만 구분자 표시 -->
+			<span class="sep" th:if="${labels != null and !#lists.isEmpty(labels)}">›</span>
+		</li>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Breadcrumb 예시</title>
-    <!-- 아이콘 (Font Awesome CDN) -->
-    <script src="https://kit.fontawesome.com/df2bfc0a98.js" crossorigin="anonymous"></script>
-
-    <style>
-		
-        .breadcrumb-wrap {
-			display: flex;
-			width: 100%;
-            margin: 16px 0 24px;
-            white-space: nowrap;
-        }
-
-        .breadcrumb {
-			margin-left: auto;
-            list-style: none;
-            padding: 0;
-            align-items: center;
-            font-size: 14px;
-            color: #7a7f87;
-        }
-	
-        .breadcrumb li {
-            display: flex;
-            align-items: center;
-        }
-
-        .home {
-            text-align: center;
-        }
-
-        .breadcrumb a {
-            color: #7a7f87;
-            text-decoration: none;
-        }
-
-        .breadcrumb .home i {
-            font-size: 14px;
-            vertical-align: -1px;
-        }
-
-        .breadcrumb .sep {
-            margin: 0 10px;
-            color: #c2c6cc;
-            font-size: 20px;
-        }
-
-        .breadcrumb .current span {
-            color: #868686;
-            font-weight: 600;
-        }
-    </style>
-
-</head>
-
-<body>
-
-	<nav class="breadcrumb-wrap" aria-label="현재 위치" th:fragment="trail(labels)">
-	  <ol class="breadcrumb">
-	    <li class="home">
-	      <a th:href="@{/}" aria-label="홈으로">
-	        <i class="fa-solid fa-house"></i>
-	      </a>
-	      <!-- labels가 있을 때만 구분자 표시 -->
-	      <span class="sep" th:if="${labels != null and !#lists.isEmpty(labels)}">›</span>
-	    </li>
-
-	    <li th:each="label, iter : ${labels}">
-	      <!-- 현재(마지막) 라벨만 굵게 -->
-	      <span th:text="${label}" th:classappend="${iter.last} ? 'current' : ''">라벨</span>
-	      <span class="sep" th:if="${!iter.last}">›</span>
-	    </li>
-	  </ol>
-	</nav>
-
-</body>
-
-</html>
+		<li th:each="label, iter : ${labels}">
+			<!-- 현재(마지막) 라벨만 굵게 -->
+			<span th:text="${label}" th:classappend="${iter.last} ? 'current' : ''">라벨</span>
+			<span class="sep" th:if="${!iter.last}">›</span>
+		</li>
+	</ol>
+</nav>

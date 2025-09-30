@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>고객 문의 내역</title>
+
+	<!-- 페이지 전용 CSS -->
+
+	<th:block layout:fragment="extraHead">
+		<link rel="stylesheet" th:href="@{/admin/css/contractList.css}" />
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="adminContent" class="admin-main">
+		<h1 class="page-title">고객 문의 내역</h1>
+		<p class="section__title inquiry-subtitle">고객의 소중한 문의를 확인하고 신속하게 답변해주세요.</p>
+
+		<!-- 상단 툴바 -->
+		<section class="toolbar card">
+			<div class="toolbar__row">
+				<div class="field toolbar__item">
+					<label class="field__label">검색어</label>
+					<input class="field__control" type="text" name="q" placeholder="고객명, 문의 내역으로 검색" />
+				</div>
+
+				<div class="field toolbar__item">
+					<label class="field__label">문의 유형</label>
+					<select class="field__control" name="status">
+						<option value="">문의 유형 전체</option>
+						<option value="">상품 문의</option>
+						<option value="">계약 변경</option>
+						<option value="">보험금 청구</option>
+						<option value="">기타</option>
+					</select>
+				</div>
+
+				<div class="field toolbar__item">
+					<label class="field__label">처리 상태</label>
+					<select class="field__control" name="status">
+						<option value="">처리 상태 전체</option>
+						<option value="">답변 완료</option>
+						<option value="">처리 중</option>
+						<option value="">미처리</option>
+						<option value="">기타</option>
+					</select>
+				</div>
+
+				<div class="field toolbar__item toolbar__item--grow">
+					<label class="field__label">문의일자</label>
+					<div class="daterange" data-daterange>
+						<input class="field__control daterange__input" type="date" name="from"
+							> <!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
+						<span class="daterange__sep">~</span>
+						<input class="field__control daterange__input" type="date" name="to"
+							>
+					</div>
+				</div>
+
+				<div class="toolbar__spacer"></div>
+
+				<div class="toolbar__actions">
+					<button type="button" class="btn btn--primary">조회</button>
+				</div>
+			</div>
+
+		</section>
+
+		<!-- 목록 테이블 -->
+		<section class="table-wrap mt-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>문의번호</th>
+						<th>고객명</th>
+						<th>문의유형</th>
+						<th>문의내용</th>
+						<th>문의일시</th>
+						<th>처리상태</th>
+						<th>관리</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 샘플 행 1 -->
+					<tr class="row--hover">
+						<td>CS2024-001</td>
+						<td class="bold">김철수</td>
+						<td>상품 문의</td>
+						<td class="cell--ellipsis" title="안심플러스 운전자 보험 보장 내역 관련하여 문의드립니다.">
+							안심플러스 운전자 보험 보장 내역 관련하여 문의드립니다.
+						</td>
+						<td>2024-07-28</td>
+						<td class="text-center">
+							<span class="chip chip--processing">처리중</span>
+						</td>
+						<td class="text-center">
+							<a class="btn btn--primary btn--xs">상세</a>
+						</td>
+
+					</tr>
+
+
+					<!-- 데이터 없음 예시 (필요 시 주석 해제해 확인) -->
+					<!--
+          <tr>
+            <td class="cell--empty" colspan="7">
+              <div class="empty">
+                <div class="empty__title">표시할 접수 내역이 없습니다</div>
+                <div class="empty__desc">검색 조건을 변경해보세요.</div>
+              </div>
+            </td>
+          </tr>
+          -->
+				</tbody>
+			</table>
+		</section>
+
+		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
+		</app-pagination>
+
+	</main>
+</body>
+
+</html>

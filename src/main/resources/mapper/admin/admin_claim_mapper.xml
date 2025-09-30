@@ -1,0 +1,158 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.admin.mapper.AdminClaimMapper">
+
+
+	<select id="findClaimList" parameterType="map"
+		resultType="claimList"> 
+		SELECT
+		c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE, c.ACCIDENT_DATE, c.CLAIM_DATE,
+		c.CLAIM_STATUS 
+		FROM CLAIMS c 
+		JOIN customers cu ON c.customer_id = cu.customer_id
+		JOIN persons p ON cu.person_id = p.person_id
+		<where>
+			<if test="c.q != null and c.q != ''">
+				AND (LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
+				OR TO_CHAR(c.CLAIM_ID) LIKE '%' || #{c.q} || '%')
+			</if>
+
+			<if test="c.claimType != null and c.claimType != ''">
+				AND c.CLAIM_TYPE = #{c.claimType}
+			</if>
+
+			<if test="c.status != null">
+				AND c.CLAIM_STATUS = #{c.status}
+			</if>
+
+			<!-- 날짜 범위: [from 00:00, to+1 00:00) -->
+			<if test="c.from != null">
+				AND c.CLAIM_DATE <![CDATA[>=]]> #{c.from, jdbcType=DATE}
+			</if>
+			<if test="c.toExclusive != null">
+				AND c.CLAIM_DATE <![CDATA[<]]> #{c.toExclusive, jdbcType=DATE}
+			</if>
+		</where> ORDER BY
+		c.CLAIM_ID DESC </select>
+
+
+	<select id="findClaimDetail" resultType="claimDetail">
+		SELECT
+		c.CLAIM_ID,
+		c.CLAIM_TYPE,
+		c.COMPENSATION_TYPE,
+		c.ACCIDENT_DESCRIPTION,
+		c.ACCIDENT_DATE,
+		c.CLAIM_DATE,
+		c.CLAIM_STATUS,
+		c.DIAGNOSIS_CD,
+		c.BENEFICIARY_NAME,
+		c.BENEFICIARY_EMAIL,
+		c.BANK_NAME,
+		c.BANK_ACCOUNT,
+		c.BENEFICIARY_POSTCODE,
+		c.BENEFICIARY_ADDRESS,
+		c.TOTAL_PAID_AMOUNT,
+		c.COMPLETION_DATE,
+		c.DETAIL_FILE_PATH,
+		c.RECEIPT_FILE_PATH,
+		c.ETC_FILE_PATH,
+		c.CONTRACT_ID,
+		p.person_name,
+		c.rejection_reason
+		FROM CLAIMS c
+		JOIN customers cu ON c.customer_id = cu.customer_id
+		JOIN persons p ON cu.person_id = p.person_id
+		WHERE c.CLAIM_ID = #{claimId}
+	</select>
+
+	<update id="approveClaim" parameterType="int">
+		UPDATE CLAIMS
+		SET CLAIM_STATUS = 2,
+		REJECTION_REASON = null,
+		COMPLETION_DATE = SYSDATE
+		WHERE CLAIM_ID = #{claimId}
+	</update>
+
+	<update id="rejectClaim">
+		UPDATE CLAIMS
+		SET CLAIM_STATUS = 3,
+		REJECTION_REASON = #{reason},
+		COMPLETION_DATE = SYSDATE
+		WHERE CLAIM_ID = #{claimId}
+	</update>
+
+	<select id="findClaimsPage" parameterType="map"
+        resultType="claimList">
+  SELECT * FROM (
+    SELECT inner_q.*,
+           ROWNUM AS rnum
+    FROM (
+      SELECT
+        c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE,
+        c.ACCIDENT_DATE, c.CLAIM_DATE, c.CLAIM_STATUS
+      FROM CLAIMS c
+      JOIN CUSTOMERS cu ON c.CUSTOMER_ID = cu.CUSTOMER_ID
+      JOIN PERSONS   p  ON cu.PERSON_ID = p.PERSON_ID
+      <where>
+        <if test="c.q != null and c.q != ''">
+          AND (
+            LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
+            OR TO_CHAR(c.CLAIM_ID) LIKE '%' || #{c.q} || '%'
+          )
+        </if>
+        <if test="c.claimType != null and c.claimType != ''">
+          AND c.CLAIM_TYPE = #{c.claimType}
+        </if>
+        <if test="c.status != null">
+          AND c.CLAIM_STATUS = #{c.status}
+        </if>
+        <if test="c.from != null">
+          AND c.CLAIM_DATE <![CDATA[>=]]> #{c.from, jdbcType=DATE}
+        </if>
+        <if test="c.toExclusive != null">
+          AND c.CLAIM_DATE <![CDATA[<]]> #{c.toExclusive, jdbcType=DATE}
+        </if>
+      </where>
+      ORDER BY c.CLAIM_ID DESC
+    ) inner_q
+    WHERE ROWNUM &lt;= #{c.offset} + #{c.size}
+  )
+  WHERE rnum &gt; #{c.offset}
+</select>
+
+
+	<select id="countClaims" parameterType="map" resultType="int"> 
+	SELECT
+	COUNT(*) 
+	FROM CLAIMS c 
+	JOIN customers cu ON c.customer_id = cu.customer_id
+		JOIN persons p ON cu.person_id = p.person_id <where>
+			<if test="c.q != null and c.q != ''">
+				AND (
+				LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
+				OR TO_CHAR(c.CLAIM_ID) LIKE '%' || #{c.q} || '%'
+				)
+			</if>
+			<if test="c.claimType != null and c.claimType != ''">
+				AND c.CLAIM_TYPE = #{c.claimType}
+			</if>
+			<if test="c.status != null">
+				AND c.CLAIM_STATUS = #{c.status}
+			</if>
+			<if test="c.from != null">
+				AND c.CLAIM_DATE <![CDATA[>=]]> #{c.from, jdbcType=DATE}
+			</if>
+			<if test="c.toExclusive != null">
+				AND c.CLAIM_DATE <![CDATA[<]]> #{c.toExclusive, jdbcType=DATE}
+			</if>
+		</where>
+	</select>
+
+	<select id="countPendingClaims" resultType="int">
+		SELECT COUNT(*) FROM CLAIMS WHERE CLAIM_STATUS = 1
+	</select>
+
+
+
+
+</mapper>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>보험 상품 내역</title>
+
+	<!-- 페이지 전용 CSS -->
+
+	<th:block layout:fragment="extraHead">
+		<link rel="stylesheet" th:href="@{/admin/css/contractList.css}" />
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="adminContent" class="admin-main">
+		<h1 class="page-title">보험 상품 내역</h1>
+
+		<!-- 상단 툴바 -->
+		<section class="toolbar card">
+			<div class="toolbar__row">
+				<div class="field toolbar__item">
+					<label class="field__label">검색</label>
+					<input class="field__control" type="text" name="q" placeholder="상품명 또는 ID로 검색" />
+				</div>
+
+				<div class="field toolbar__item">
+					<label class="field__label">상태</label>
+					<select class="field__control" name="status">
+						<option value="">상태 전체</option>
+						<option value="">활성</option>
+						<option value="">비활성</option>
+					</select>
+				</div>
+
+				<div class="field toolbar__item">
+					<label class="field__label">카테고리</label>
+					<select class="field__control" name="status">
+						<option value="">카테고리 전체</option> 전체</option>
+						<option value="">자동차</option>
+						<option value="">주택</option>
+						<option value="">여행</option>
+						<option value="">건강</option>
+						<option value="">금융</option>
+						<option value="">펫</option>
+					</select>
+				</div>
+
+				<div class="field toolbar__item">
+					<label class="field__label">보험 유형</label>
+					<select class="field__control" name="status">
+						<option value="">보험 유형 전체</option>
+						<option value="">운전자</option>
+						<option value="">화재</option>
+						<option value="">여행자</option>
+						<option value="">암</option>
+						<option value="">연금</option>
+						<option value="">반려동물</option>
+					</select>
+				</div>
+
+				<div class="toolbar__spacer"></div>
+
+				<div class="toolbar__actions">
+					<button type="button" class="btn btn--primary">검색</button>
+				</div>
+
+				<div class="toolbar__actions">
+					<a href="#" class="btn btn--primary">새 상품 등록</a>
+				</div>
+			</div>
+
+		</section>
+
+		<!-- 목록 테이블 -->
+		<section class="table-wrap mt-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>상품ID</th>
+						<th>상품명</th>
+						<th>카테고리</th>
+						<th>보험유형</th>
+						<th>상태</th>
+						<th>등록일</th>
+						<th>관리</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 샘플 행 1 -->
+					<tr class="row--hover">
+						<td>1001</td>
+						<td>안심플러스 운전자 보험</td>
+						<td class="cell--ellipsis">자동차</td>
+						<td class="cell--amount">운전자</td>
+						<td>
+							<span class="badge badge--pending">활성</span>
+						</td>
+						<td class="cell--amount">2023-01-15</td>
+						<td class="text-center">
+							<a class="btn btn--primary btn--xs">수정</a>
+							<button type="button" class="btn btn--primary btn--xs">해지</button>
+						</td>
+					</tr>
+
+
+					<!-- 데이터 없음 예시 (필요 시 주석 해제해 확인) -->
+					<!--
+          <tr>
+            <td class="cell--empty" colspan="7">
+              <div class="empty">
+                <div class="empty__title">표시할 접수 내역이 없습니다</div>
+                <div class="empty__desc">검색 조건을 변경해보세요.</div>
+              </div>
+            </td>
+          </tr>
+          -->
+				</tbody>
+			</table>
+		</section>
+
+		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
+		</app-pagination>
+
+	</main>
+</body>
+
+</html>
