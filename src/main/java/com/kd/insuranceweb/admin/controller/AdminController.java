@@ -43,7 +43,10 @@ public class AdminController {
 	}
 
 	@GetMapping("/main")
-	public String main() {
+	public String main(@ModelAttribute("criteria") ClaimSearchCriteria criteria, Model model) {
+		
+		int pendingCount = claimService.getPendingCount(criteria);
+		model.addAttribute("pendingCount", pendingCount);
 		return "admin/common/main";
 	}
 
