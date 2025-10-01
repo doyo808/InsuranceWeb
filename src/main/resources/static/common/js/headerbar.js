@@ -5,6 +5,9 @@ const loginBtn = document.getElementById('header__loginBtn');
 const logoutBtn = document.getElementById('header__logoutBtn');
 const sessionTimer = document.getElementById('header__sessionTimer');
 const homeBtn = document.querySelector('.header__homeBtn');
+// CSRF 토큰 가져오기 (meta 태그 또는 서버에서 내려주는 방식)
+const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
 
 // =================================================================
@@ -87,16 +90,23 @@ async function resetSession() {
  * 로그아웃을 처리하는 함수
  */
 async function handleLogout() {
-    try {
+    try {	// =================  디버깅 코드 추가 =================
+	        console.log('--- 로그아웃 요청 직전 값 확인 ---');
+	        console.log('URL:', `${contextPath}logout`);
+	        console.log('Header Name (csrfHeader):', csrfHeader);
+	        console.log('Header Value (csrfToken):', csrfToken);
+	        // =================================================
         const response = await fetch(`${contextPath}logout`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            headers: { 
+				[csrfHeader]: csrfToken 
+					}
         });
         
         if (response.ok) {
             clearInterval(sessionInterval);
             toggleLoginout(false);
-            window.location.href = `${contextPath}`;
+            window.location.href = `${contextPath}home`;
         } else {
             alert('로그아웃 실패');
         }

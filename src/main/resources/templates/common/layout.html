@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title layout:title-pattern="$CONTENT_TITLE - 내 보험 시스템">공통 타이틀</title>
 	<link rel="stylesheet" th:href="@{/common/css/headerbar.css}">
 	<link rel="stylesheet" th:href="@{/common/css/sidebar.css}">
