@@ -1,14 +1,11 @@
 package com.kd.insuranceweb.mall.controller;
 
-import java.net.http.HttpRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kd.insuranceweb.mall.service.MallService;
 
@@ -17,8 +14,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/mall")
-@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class MallController {
 	
 	private final MallService service;
@@ -39,8 +36,7 @@ public class MallController {
 	}
 	
 	@GetMapping("/ria/car/{id}")
-	public String riaCar(@PathVariable("id") String id, HttpSession session) {
-		System.out.println(session.getAttribute("birth"));
+	public String riaCar(@PathVariable("id") String id) {
 		return "mall/calculate/car/inputForm";
 	}
 	@PostMapping("/ria/car/{id}")
@@ -58,13 +54,13 @@ public class MallController {
 		session.setAttribute("gender", gender);
 		session.setAttribute("job", job);
 		
-		System.out.println(job);
 		// 계산된 보험료를 받아옴
 		// DB에서 연결을 하고 데이터를 검색하기때문에 오래 걸릴수도 있는 작업
-		double premium = service.getPremiumVal();
-		
+		// TODO Ajax를 이용해보면 좋을 것
+		double premiumRate = service.getPremiumRate(Integer.parseInt(id), birth, gender, job);
 		// 데이터를 모델에 따로 실어놓는다
-		model.addAttribute("premium", (Double) premium);
+		System.out.println(premiumRate);
+		model.addAttribute("premium", (Double) premiumRate);
 		
 		return "mall/calculate/car/selectCover";
 	}
