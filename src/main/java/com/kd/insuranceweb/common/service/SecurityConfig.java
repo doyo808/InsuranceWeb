@@ -21,7 +21,7 @@ public class SecurityConfig {
     			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
     			"/api/auth/status", "/cert/**",
-    			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","/club/event/index", "club/event/analysis",
+    			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","/club/event/index", "/club/event/analysis",
     			"/admin/**"
     	};
     	

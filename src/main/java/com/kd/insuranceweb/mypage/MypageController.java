@@ -1,14 +1,18 @@
 package com.kd.insuranceweb.mypage;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.CustomerDTO;
+import com.kd.insuranceweb.mypage.dto.ContractDto;
 import com.kd.insuranceweb.mypage.dto.MarketingConsentDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -22,8 +26,19 @@ public class MypageController {
 	
 	// 계약내용 확인
 	@GetMapping("/MPDG0070")
-	public String chkContracts() {
+	public String chkContracts(Model model) {
+		List<ContractDto> dataList = mypageService.getAllContracts();
+		List<ContractDto> dataListActive = mypageService.getActiveContracts();
+        model.addAttribute("dataList", dataList);
+        model.addAttribute("dataListActive", dataListActive);
 		return "/mypage/chkContracts.html";
+	}
+	
+	// 계약 상세정보
+	@GetMapping("/MPDG0071/{id}")
+	public String contractDetail(@PathVariable("id") Integer contract_id, Model model) {
+		model.addAttribute("contract_id", contract_id);
+		return "/mypage/contractDetail.html";
 	}
 	
 	// 보험료 납입

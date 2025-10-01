@@ -27,43 +27,97 @@
 					<div id="status_btn_all">전체</div>
 				</div>
 				
-				<table class="contract_table">
-					<thead>
-						<tr>
-							<th>상품명</th>
-							<th>계약자</th>
-							<th>피보험자</th>
-							<th>보험기간</th>
-							<th>보험료</th>
-							<th>상태</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- 데이터가 있을 경우 -->
-					    <tr th:each="item, stat : ${dataList}" th:if="${dataList != null and !dataList.isEmpty()}">
+				
+				<table class="contract_table" id="active-contracts-table">
+				    <thead>
+				        <tr>
+				            <th>상품명</th>
+				            <th>계약자</th>
+				            <th>피보험자</th>
+				            <th>보험기간</th>
+				            <th>보험료</th>
+				            <th>상태</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <!-- 데이터가 있을 경우 -->
+				        <tr th:each="item, stat : ${dataListActive}" th:if="${dataListActive != null and !dataListActive.isEmpty()}"
+							th:data-contract-id="${item.contract_id}"
+							class="contract-row">
+				            <td th:text="${item.product_name}">국내여행보험</td>
+				            <td th:text="${item.customer_name}">김길동</td>
+				            <td th:text="${item.insured_name}">김길동</td>
 							<td>
-					            <span th:text="${item.productName}">국내여행보험</span>
-					            <span class="subtext" th:text="${item.productCode}">82507943288000</span>
-					        </td>
-					        <td th:text="${item.contractor}">김길동</td>
-					        <td th:text="${item.insured}">김길동</td>
-					        <td>
-					            <span th:text="${item.startDate}">2025.10.03(00시)</span>
-					            <span> ~ </span>
-					            <span th:text="${item.endDate}">2025.10.05(23시)</span>
-					        </td>
-					        <td th:text="${item.premium} + ' 원'">3,000 원</td>
-					        <td>
-					            <span class="status-badge" th:text="${item.status}">유지</span>
-					        </td>
- 					    </tr>
-					
-   					    <!-- 데이터가 없을 경우 -->
-					    <tr th:if="${dataList == null or dataList.isEmpty()}">
-					        <td class="no-data" colspan="6">확인 가능한 계약이 없습니다.</td>
-					    </tr>
-					</tbody>
+				                <span th:text="${#dates.format(item.start_date, 'yyyy.MM.dd')}">2025.10.03(00시)</span>
+				                <span> ~ </span>
+				                <span th:text="${#dates.format(item.end_date, 'yyyy.MM.dd')}">2025.10.05(23시)</span>
+				            </td>
+				            <td th:text="|${#numbers.formatInteger(item.total_premium,0,'COMMA')} 원|">3,000 원</td>
+				            <td>
+								<span class="status-badge"
+								      th:classappend="${item.status?.trim().equals('유지')} ? 'status-active' :
+								                     (${item.status?.trim().equals('신청')} ? 'status-pending' :
+								                     (${item.status?.trim().equals('만료')} ? 'status-expired' : ''))"
+								      th:text="${item.status}">
+								   알수없음
+								</span>
+				            </td>
+				        </tr>
+
+				        <!-- 데이터가 없을 경우 -->
+				        <tr th:if="${dataList == null or dataList.isEmpty()}">
+				            <td class="no-data" colspan="6">확인 가능한 계약이 없습니다.</td>
+				        </tr>
+				    </tbody>
 				</table>
+				
+				
+				
+				<table class="contract_table" id="all-contracts-table" style="display: none;">
+				    <thead>
+				        <tr>
+				            <th>상품명</th>
+				            <th>계약자</th>
+				            <th>피보험자</th>
+				            <th>보험기간</th>
+				            <th>보험료</th>
+				            <th>상태</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <!-- 데이터가 있을 경우 -->
+						<tr th:each="item, stat : ${dataList}" th:if="${dataList != null and !dataList.isEmpty()}"
+							th:data-contract-id="${item.contract_id}"
+							class="contract-row">
+				            <td th:text="${item.product_name}">국내여행보험</td>
+				            <td th:text="${item.customer_name}">김길동</td>
+				            <td th:text="${item.insured_name}">김길동</td>
+				            <td>
+				                <span th:text="${#dates.format(item.start_date, 'yyyy.MM.dd')}">2025.10.03(00시)</span>
+				                <span> ~ </span>
+				                <span th:text="${#dates.format(item.end_date, 'yyyy.MM.dd')}">2025.10.05(23시)</span>
+				            </td>
+				            <td th:text="|${#numbers.formatInteger(item.total_premium,0,'COMMA')} 원|">3,000 원</td>
+				            <td>
+								<span class="status-badge"
+								      th:classappend="${item.status?.trim().equals('유지')} ? 'status-active' :
+								                     (${item.status?.trim().equals('신청')} ? 'status-pending' :
+								                     (${item.status?.trim().equals('만료')} ? 'status-expired' : ''))"
+								      th:text="${item.status}">
+								   알수없음
+								</span>
+				            </td>
+				        </tr>
+
+				        <!-- 데이터가 없을 경우 -->
+				        <tr th:if="${dataList == null or dataList.isEmpty()}">
+				            <td class="no-data" colspan="6">확인 가능한 계약이 없습니다.</td>
+				        </tr>
+				    </tbody>
+				</table>
+				
+
+
 					
 				<div class="tipBox">
 					<dl>

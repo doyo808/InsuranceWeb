@@ -77,7 +77,9 @@ dd {
 .contract_table tbody td {
     border-bottom: 1px solid #eee;
     padding: 12px 10px;
+	text-align: center;
     vertical-align: top;
+	cursor: pointer;
 }
 
 .contract_table tbody td .subtext {
@@ -101,4 +103,21 @@ dd {
     border-radius: 5px;
     font-size: 13px;
     font-weight: 500;
+}
+/* 유지 (ACTIVE) */
+.status-active {
+    background-color: #eef4ff;
+    color: #2962ff;
+}
+
+/* 신청 (PENDING) */
+.status-pending {
+    background-color: #ffecec;
+    color: #d32f2f;
+}
+
+/* 만료 (EXPIRED) */
+.status-expired {
+    background-color: #f5f5f5;
+    color: #666;
 }
