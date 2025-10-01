@@ -21,8 +21,7 @@ public class SecurityConfig {
     			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
     			"/api/auth/status", "/cert/**",
-    			"/api/auth/status", 
-    			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","club/event/index", "club/event/analysis",
+    			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","/club/event/index", "club/event/analysis",
     			"/admin/**"
     	};
     	
@@ -31,7 +30,6 @@ public class SecurityConfig {
     		    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))	// 개발환경 임시설정
     	        .authorizeHttpRequests(auth -> auth
     	            .requestMatchers(whiteList).permitAll()
-    	            .requestMatchers("/admin/**").hasRole("ADMIN")
     	            .anyRequest().authenticated()
     	        )
     	        .formLogin(form -> form
