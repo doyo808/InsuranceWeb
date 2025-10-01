@@ -6,56 +6,87 @@
 	<meta charset="UTF-8" />
 	<title>알릴사항</title>
 	<style>
-		.insured_detail_wrapper {
-			text-align: center;
-		}
+		.insured_detail_wrapper {text-align: center;}
+		.insured_name_span {color: #3b92e5;}
 	</style>
 </head>
 <body>
 <main layout:fragment="content">
 	<div class="insured_detail_wrapper">
 		<h1>
-			<span>고객이름</span>
+			<span class="insured_name_span" th:text="${session.insured_name}">고객이름</span>
 			님의 보험 가입에<br>필요한 정보를 알려주세요
 		</h1>
 		
 		<!-- 알릴사항 정보 입력 -->
+	<form th:action="@{/mall/detail}" method="POST">
 		<table class="custom-table">
 			<tr><th>1. 흡연을 하시나요?</th>
 				<td>
-					<label><input type="radio" name="is_smoker" value="Y">예</label>
-					<label><input type="radio" name="is_smoker" value="N">아니오</label>
+					<label><input type="radio" name="is_smoker" value="Y"
+						th:checked="${session.is_smoker == 'Y'}">예</label>
+					<label><input type="radio" name="is_smoker" value="N"
+						th:checked="${session.is_smoker == 'N'}">아니오</label>
 				</td>
 			</tr>
 			<tr><th>2. 음주을 하시나요?</th>
 				<td>
-					<label><input type="radio" name="drinks" value="Y">예</label>
-					<label><input type="radio" name="drinks" value="N">아니오</label>
+					<label><input type="radio" name="drinks" value="Y"
+						th:checked="${session.drinks == 'Y'}">예</label>
+					<label><input type="radio" name="drinks" value="N"
+						th:checked="${session.drinks == 'N'}">아니오</label>
 				</td>
 			</tr>
 			<tr><th>3. 운전을 하시나요?</th>
 				<td>
-					<label><input type="radio" name="driving_status" value="BIKE">이륜차(오토바이)</label>
-					<label><input type="radio" name="driving_status" value="TRUCK">트럭(건설기계, 농기구 포함)</label>
-					<label><input type="radio" name="driving_status" value="SEDAN">승용차</label>
-					<label><input type="radio" name="driving_status" value="NONE">아니오</label>
+					<label><input type="radio" name="driving_status" value="BIKE"
+						th:checked="${session.driving_status == 'BIKE'}">이륜차(오토바이)</label>
+					<label><input type="radio" name="driving_status" value="TRUCK"
+						th:checked="${session.driving_status == 'TRUCK'}">트럭(건설기계, 농기구 포함)</label>
+					<label><input type="radio" name="driving_status" value="SEDAN"
+						th:checked="${session.driving_status == 'SEDAN'}">승용차</label>
+					<label><input type="radio" name="driving_status" value="NONE"
+						th:checked="${session.driving_status == 'NONE'}">아니오</label>
 				</td>
 			</tr>
 			<tr><th>4.(최근 5년 이내) 입원, 수술, 7일 이상의 계속된 치료, 30일 이상의 계속된 투약을 받은 적이 있으신가요?</th>
 				<td>
-					<label><input type="radio" name="medical_history" value="Y">예</label>
-					<label><input type="radio" name="medical_history" value="N">아니오</label>
+					<label><input id="medical_history_yes" type="radio" name="medical_history" value="Y"
+						th:checked="${session.medical_history == 'Y'}">예</label>
+					<label><input id="medical_history_no" type="radio" name="medical_history" value="N"
+						th:checked="${session.medical_history == 'N'}">아니오</label>
 				</td>
 			</tr>
-			<tr><td>4번 항목에 예를 선택하신 경우: 병명을 입력해주세요.</td></tr>
+			<tr><th>4번 항목에 예를 선택하신 경우: 병명을 입력해주세요.</th>
+				<td><input id="medical_history_text" type="text" name="medical_history_text" disabled
+					th:value="${session.medical_history_text}"></td>			
+			</tr>
 		</table>
 		
-		<div>
-			<button type="button">이전</button>
-			<button type="submit">다음</button>
+		<div class="button-wrap">
+			<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall/info`">이전</button>
+			<button type="submit" class="next-btn">다음</button>
 		</div>
-		
+	</form>
 	</div>
+	
+	<script>
+		const mhy = document.getElementById('medical_history_yes');
+		const mhn = document.getElementById('medical_history_no');
+		const mht = document.getElementById('medical_history_text');
+		
+		mhy.addEventListener('change', () => {
+			if (mhy.checked) {
+				mht.disabled = false;
+			}
+		});
+		mhn.addEventListener('change', () => {
+			if (mhn.checked) {
+				mht.disabled = true;
+				mht.value = '';
+			}
+		});
+	</script>
 </main>
 </body>
 </html>

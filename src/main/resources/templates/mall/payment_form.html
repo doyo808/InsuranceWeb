@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/mall/layout/layout_mall.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>결제정보 입력</title>
+	<style>
+		.payment_wrapper {text-align: center;}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<body>
+<main layout:fragment="content">
+	<div class="payment_wrapper">
+		<h1>보험료 결제에 관한<br> 정보를 입력해 주세요</h1>
+		<button onclick="requestPay()">보험료 결제하기 테스트버튼</button>
+	<form id="cardForm" th:action="@{/mall/payment}" method="POST">		
+		<h3 class="custom-table-title">결제수단_카드</h3>
+		<table class="custom-table">
+			<tr><th>카드소유자</th>
+				<td>고객님 본인 명의의 신용/체크 카드만 가능</td>
+			</tr>
+			<tr><th>카드 이름</th>
+				<td><input type="text" id="card_name" name="card_name" placeholder="VISA, Master 등"></td>
+			</tr>
+			<tr><th>카드 번호</th>
+				<td><input type="text" id="card_number" name="card_number" placeholder="1234-5678-1234-5678"></td>
+			</tr>
+			<tr><th>유효 기간</th>
+				<td><input type="text" id="expiry" name="expiry" placeholder="MM/YY"></td>
+			</tr>
+		</table>
+		<button type="button" id="registerCardBtn">카드 등록</button>
+	
+	
+		<h3 class="custom-table-title">계속보험료 납입 계좌</h3>
+		
+		<div class="button-wrap">
+			<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall/notice`">이전</button>
+			<button type="submit" class="next-btn">계약 완료하기</button>
+		</div>
+	</form>	
+	
+	</div>
+	
+	<script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+	<script th:src="@{/mall/js/payment_form.js}"></script>
+</main>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title layout:title-pattern="$CONTENT_TITLE - 관리자 시스템">관리자 시스템</title>
+
+	<!-- 공통 CSS (모듈화) -->
+	<link rel="stylesheet" th:href="@{/admin/css/admin.css}" />
+
+	<!-- 페이지별 추가 <head> 자원 삽입 슬롯 -->
+	<th:block layout:fragment="extraHead"></th:block>
+</head>
+
+<body class="admin-root">
+
+	<!-- 헤더 (공통 프래그먼트) -->
+	<header th:replace="~{admin/common/fragments/header :: headerFragment}"></header>
+
+	<div class="admin-shell">
+
+		<!-- 본문 컨테이너 -->
+		<div class="admin-content-wrap">
+
+			<!-- 메인 콘텐츠 슬롯 -->
+			<main id="main-content" layout:fragment="adminContent" class="admin-main"
+				style="width: 1200px; margin: 137px auto 0 auto;">
+				<!-- 개별 페이지에서 이 영역을 대체합니다. -->
+			</main>
+		</div>
+	</div>
+
+	<!-- 푸터 (공통 프래그먼트) -->
+	<footer th:replace="~{common/fragments/footer :: footerFragment}"></footer>
+
+	<!-- 전역 스크립트 (모듈화) -->
+	<script th:inline="javascript">
+		const contextPath = /*[[@{/}]]*/ '';
+	</script>
+
+	
+	<script type="module" th:src="@{/admin/js/pagination.js}"></script>
+	<script type="module" th:src="@{/admin/js/dateRange.js}"></script>
+	<!--
+	<script th:src="@{/admin/js/headerbar.js}"></script>
+	<script th:src="@{/admin/js/sidebar.js}"></script>
+	<script th:src="@{/admin/js/admin-main.js}"></script>  선택: 전역 상호작용/유틸 묶음
+	-->
+	
+	
+</body>
+
+</html>
+
+<!--
+[페이지 사용 예]
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+<head>
+  <title>보험금 청구 관리</title>
+  <th:block layout:fragment="extraHead">각각의 페이지에서 따로 적용한 css를 적용시켜주는 역할?
+    <link rel="stylesheet" th:href="@{/claim/css/claim.css}" />
+  </th:block>
+</head>
+<body>
+  <main layout:fragment="adminContent">
+     여기부터 페이지별 본문 작성 
+  </main>
+  <th:block layout:fragment="extraScripts">
+    <script th:src="@{/claim/js/claim-list.js}"></script>
+  </th:block>
+</body>
+</html>
+-->

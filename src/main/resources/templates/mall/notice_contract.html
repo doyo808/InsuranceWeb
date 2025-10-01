@@ -6,9 +6,7 @@
 	<meta charset="UTF-8" />
 	<title>청약내용 확인</title>
 	<style>
-		.notice_wrapper {
-			text-align: center;
-		}
+		.notice_wrapper {text-align: center;}
 	</style>
 </head>
 <body>
@@ -18,21 +16,40 @@
 		
 		<h3 class="custom-table-title">계약정보</h3>
 		<table class="custom-table">
-			<tr><th>피보험자/계약자</th>
-				<td>고객명/고객명</td>
+			<tr><th>피보험자 / 계약자</th>
+				<td>
+					<span th:text="${insured_name}">피보험자</span> /
+					<span th:text="${customer_name}">계약자</span>
+				</td>
 			</tr>
 			<tr><th>상품명</th>
-				<td>상품명</td>
+				<td><span th:text="${product_name}">상품명</span></td>
 			</tr>
-			<tr><th>납입주기/보험료</th>
-				<td>월납/1,000원</td>
+			<tr><th>납입주기 / 보험료</th>
+				<td>월납 / <span th:text="|${#numbers.formatInteger(premium,0,'COMMA')}원|">1,000원</span></td>
 			</tr>
-			<tr><th>예상만기 환급률/환급금</th>
-				<td>0%/0원</td>
+			<tr><th>예상만기 환급률 / 환급금</th>
+				<td>0% / 0원</td>
 			</tr>
 		</table>
 		
 		<h3 class="custom-table-title">보장내용</h3>
+		<table class="custom-table">
+			<tr th:each="cov : ${selectionData.selectedCoverages}">
+				<th>담보이름 / 보장금액</th>
+				<td><span th:text="${cov.name}"></span>
+					<span th:text="|${#numbers.formatInteger(cov.amount, 0, 'COMMA')} 원|"></span>
+				</td>
+			</tr>
+		</table>
+		
+		
+		
+		<div class="button-wrap">
+			<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall/detail`">이전</button>
+			<button type="button" class="next-btn" onclick="location.href=`${contextPath}mall/payment`">다음</button>
+		</div>
+		
 	</div>
 </main>
 </body>

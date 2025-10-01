@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FaqMapper">
+
+    <select id="findAll" resultType="FaqDto">
+        SELECT faq_id, category, question, answer, created_at, updated_at
+        FROM faq
+        ORDER BY faq_id
+    </select>
+
+    <select id="findByCategory" parameterType="string" resultType="FaqDto">
+        SELECT faq_id, category, question, answer, created_at, updated_at
+        FROM faq
+        WHERE category = #{category}
+        ORDER BY faq_id
+    </select>
+
+    <select id="searchByKeyword" parameterType="string" resultType="FaqDto">
+        SELECT faq_id, category, question, answer, created_at, updated_at
+        FROM faq
+        WHERE LOWER(question) LIKE '%' || LOWER(#{keyword}) || '%'
+           OR LOWER(answer) LIKE '%' || LOWER(#{keyword}) || '%'
+        ORDER BY faq_id
+    </select>
+    
+    <select id="findById" parameterType="long" resultType="FaqDto">
+    	SELECT faq_id, category, question, answer, created_at, updated_at
+    	FROM faq
+    	WHERE faq_id = #{faq_Id}
+    </select>
+    
+    <insert id="insertFaq" parameterType="FaqDto">
+    	INSERT INTO faq (faq_id, category, question, answer, created_at, updated_at)
+        VALUES (#{faq_id}, #{category}, #{question}, #{answer}, SYSDATE, SYSDATE)
+    </insert>
+    	
+    <update id="updateFaq" parameterType="FaqDto">
+    	UPDATE faq
+        SET category = #{category},
+            question = #{question},
+            answer = #{answer},
+            updated_at = SYSDATE
+        WHERE faq_id = #{faq_id}
+    </update>
+    
+    <delete id="deleteFaq" parameterType="long">
+    	DELETE FROM faq WHERE faq_id = #{faq_id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,35 @@
+.button-wrap {
+	margin: 50px auto;
+}
+
+.prev-btn {
+	color: #FFFFFF;
+	background: darkgray;
+	border: none;
+	min-width: 200px;
+	padding: 11px 30px 9px;
+	border-radius: 6px;
+	font-size: 18px;
+	font-weight: 500;
+	height: 45px;
+	line-height: 20px;
+	margin: 0 70px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.next-btn {
+	color: #FFFFFF;
+	background: #2C7FDF;
+	border: none;
+	min-width: 200px;
+	padding: 11px 30px 9px;
+	border-radius: 6px;
+	font-size: 18px;
+	font-weight: 500;
+	height: 45px;
+	line-height: 20px;
+	margin: 0 70px;
+	white-space: nowrap;
+	cursor: pointer;
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>관리자 메인 대시보드</title>
+
+
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+</head>
+
+<body>
+	<main layout:fragment="adminContent">
+		<main class="page">
+
+			<a th:href="@{/admin/contract}" class="kpi-card">
+				<div class="kpi-card__head">
+					<p class="kpi-card__title">신규 계약 접수</p>
+					<span class="material-symbols-outlined kpi-card__icon" aria-hidden>open_in_new</span>
+				</div>
+				<p class="kpi-card__value">3건</p>
+			</a>
+
+			<a th:href="@{/admin/inquiry}" class="kpi-card">
+				<div class="kpi-card__head">
+					<p class="kpi-card__title">미처리 고객 문의</p>
+					<span class="material-symbols-outlined kpi-card__icon" aria-hidden>open_in_new</span>
+				</div>
+				<p class="kpi-card__value">3건</p>
+			</a>
+
+
+			<!-- Shortcuts -->
+			<section class="section mt-12" aria-label="주요 기능 바로가기">
+				<h2 class="section__title">주요 기능 바로가기</h2>
+				<div class="shortcut-grid">
+					
+					<a th:href="@{/admin/product}" class="shortcut">
+						<div class="shortcut__icon">
+							<span class="material-symbols-outlined" aria-hidden>inventory_2</span>
+						</div>
+						<p class="shortcut__label">보험 상품 내역</p>
+					</a>
+
+					<a th:href="@{/admin/contract}" class="shortcut">
+						<div class="shortcut__icon">
+							<span class="material-symbols-outlined" aria-hidden>description</span>
+						</div>
+						<p class="shortcut__label">보험 계약 접수</p>
+					</a>
+					
+					<a th:href="@{/admin/claim}" class="shortcut">
+						<div class="shortcut__icon">
+							<span class="material-symbols-outlined" aria-hidden>paid</span>
+						</div>
+						<p class="shortcut__label">보험금 청구</p>
+					</a>
+
+					<a th:href="@{/admin/inquiry}" class="shortcut">
+						<div class="shortcut__icon">
+							<span class="material-symbols-outlined" aria-hidden>support_agent</span>
+						</div>
+						<p class="shortcut__label">고객 문의 내역</p>
+					</a>
+				</div>
+			</section>
+
+			<!-- Recent Activity -->
+			<section class="section mt-12" aria-label="최근 활동">
+				<h2 class="section__title">최근 활동</h2>
+				<div class="table-wrap">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">시간</th>
+								<th scope="col">활동</th>
+								<th scope="col">사용자</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>2024-07-28 14:30</td>
+								<td>보험금 청구 처리</td>
+								<td class="bold">김민지</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			</div>
+		</main>
+	</main>
+</body>
+
+</html>

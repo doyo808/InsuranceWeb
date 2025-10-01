@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>보험금 청구 상세 내역</title>
+
+	<th:block layout:fragment="extraHead">
+		<link rel="stylesheet" th:href="@{/admin/css/claimDetail.css}" />
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="adminContent">
+		<section class="claim-detail">
+			<!-- 타이틀 -->
+			<div class="title-row">
+				<h2 class="page-title">
+					보험금 청구 상세 내역
+					<span class="muted" th:text="'(#' + ${detail.claim_id} + ')'"></span>
+				</h2>
+			</div>
+
+			<!-- 고객 정보 -->
+			<div class="item">
+				<label>고객명</label>
+				<div class="value" th:text="${detail.person_name}"></div>
+			</div>
+			<div class="item">
+				<label>보험 계약 번호</label>
+				<div class="value" th:text="${detail.contract_id}"></div>
+			</div>
+
+
+			<div class="item">
+				<label>수익자 이름</label>
+				<div class="value" th:text="${detail.beneficiary_name}"></div>
+			</div>
+			<div class="item">
+				<label>은행명</label>
+				<div class="value" th:text="${detail.bank_name}"></div>
+			</div>
+			<div class="item">
+				<label>계좌번호</label>
+				<div class="value" th:text="${detail.bank_account}"></div>
+			</div>
+
+			<div class="item span-2">
+				<label>수익자 이메일</label>
+				<div class="value" th:text="${detail.beneficiary_email}"></div>
+			</div>
+
+			<!-- 청구 정보 -->
+			<div class="item">
+				<label>청구 유형</label>
+				<div class="value" th:text="${detail.claim_type}"></div>
+			</div>
+			<div class="item">
+				<label>사고일/발병일</label>
+				<div class="value" th:text="${#temporals.format(detail.accident_date,'yyyy-MM-dd')}"></div>
+			</div>
+			<div class="item">
+				<label>보상구분</label>
+				<div class="value" th:text="${detail.compensation_type}"></div>
+			</div>
+			<div class="item span-2">
+				<label>사고 내용</label>
+				<div class="value" th:text="${detail.accident_description}"></div>
+			</div>
+			<div class="item">
+				<label>질병 코드</label>
+				<div class="value" th:text="${detail.diagnosis_cd}"></div>
+			</div>
+			<div class="item">
+				<label>접수 날짜</label>
+				<div class="value" th:text="${#temporals.format(detail.claim_date,'yyyy-MM-dd')}"></div>
+			</div>
+			<div class="item">
+				<label>현재 상태</label>
+				<div class="value">
+					<span class="badge" th:classappend="${detail.claim_status} == 1 ? ' badge--pending' :
+			                          (${detail.claim_status} == 2 ? ' badge--approved' :
+			                          (${detail.claim_status} == 3 ? ' badge--rejected' : ''))"
+						th:switch="${detail.claim_status}">
+						<span th:case="1">접수</span>
+						<span th:case="2">지급완료(종결)</span>
+						<span th:case="3">접수취소</span>
+						<span th:case="*">-</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="item span-2">
+			  <label>첨부 서류</label>
+			  <div class="value">
+			    <ul class="file-list">
+					<li th:if="${detail.detail_file_path}">
+					  <a class="btn btn--sm"
+					     th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='detail')}">
+					     상세서류 다운로드
+					  </a>
+					  <span class="muted" th:text="${detailFileName}"></span>
+					</li>
+
+					<li th:if="${detail.receipt_file_path}">
+					  <a class="btn btn--sm"
+					     th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='receipt')}">
+					     영수증 다운로드
+					  </a>
+					  <span class="muted" th:text="${receiptFileName}"></span>
+					</li>
+
+					<li th:if="${detail.etc_file_path}">
+					  <a class="btn btn--sm"
+					     th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='etc')}">
+					     기타서류 다운로드
+					  </a>
+					  <span class="muted" th:text="${etcFileName}"></span>
+					</li>
+			    </ul>
+			  </div>
+			</div>
+
+			<div class="item" th:if="${detail.claim_status} == 3">
+				<label>거절 사유</label>
+				<div class="value pre-wrap" th:text="${detail.rejection_reason}">서류 누락으로 반려합니다.</div>
+			</div>
+
+			<!-- 승인/거절 액션 -->
+			<div class="btn-row">
+				<a th:href="@{/admin/claim}" class="btn back">이전</a>
+
+				<!-- 승인 -->
+				<form th:action="@{/admin/claim/{id}/approve(id=${detail.claim_id})}" method="post">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					<button type="submit" class="btn success">승인</button>
+				</form>
+
+				<!-- 거절 -->
+				<button type="button" class="btn danger" id="openReject">거절</button>
+
+				<dialog id="rejectDialog" class="modal">
+					<form method="post" th:action="@{/admin/claim/{id}/reject(id=${detail.claim_id})}" id="rejectForm">
+						<h3 class="modal__title">거절 사유 입력</h3>
+
+						<p class="modal__desc">거절 사유를 구체적으로 작성해 주세요. (최대 500자)</p>
+
+						<textarea name="reason" id="rejectReason" rows="6" maxlength="500" required
+							placeholder="예) 제출 서류(진단서)가 누락되어 반려합니다. 보완 후 재접수 바랍니다."></textarea>
+
+						<!-- 글자수 카운터(선택) -->
+						<div class="char-counter"><span id="len">0</span>/500</div>
+
+						<!-- CSRF -->
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+						<div class="modal__actions">
+							<button type="button" class="btn" id="cancelReject">취소</button>
+							<button type="submit" class="btn danger">거절 확정</button>
+						</div>
+					</form>
+				</dialog>
+			</div>
+
+		</section>
+
+		<script>
+			(function () {
+				const openBtn = document.getElementById('openReject');
+				const dlg = document.getElementById('rejectDialog');
+				const cancelBtn = document.getElementById('cancelReject');
+				const reasonEl = document.getElementById('rejectReason');
+				const lenEl = document.getElementById('len');
+
+				if (!openBtn || !dlg) return;
+
+				openBtn.addEventListener('click', () => {
+					reasonEl.value = '';
+					lenEl.textContent = '0';
+					dlg.showModal();
+					reasonEl.focus();
+				});
+
+				cancelBtn?.addEventListener('click', () => dlg.close());
+
+				// 배경 클릭 시 닫힘 방지 (원하면 허용 가능)
+				dlg.addEventListener('click', (e) => {
+					const rect = dlg.getBoundingClientRect();
+					const inDialog = (
+						rect.top <= e.clientY && e.clientY <= rect.bottom &&
+						rect.left <= e.clientX && e.clientX <= rect.right
+					);
+					if (!inDialog) e.preventDefault(); // 바깥 클릭 시 닫히지 않도록
+				});
+
+				reasonEl?.addEventListener('input', () => {
+					lenEl.textContent = reasonEl.value.length;
+				});
+			})();
+
+		</script>
+	</main>
+</body>
+
+</html>

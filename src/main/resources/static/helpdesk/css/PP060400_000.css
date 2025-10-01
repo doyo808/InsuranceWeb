@@ -1,0 +1,109 @@
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 40px 20px;
+	font-family: "Noto Sans KR", sans-serif;
+	color: #222;
+}
+
+.breadcrumb {
+	position: fixed;
+	top: 0;       /* 상단 */
+	right: 300px;  /* 오른쪽 여백 */
+	padding: 5px 10px; 
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.search-container {
+    max-width: 600px;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 아이템을 오른쪽으로 밀어내기 */
+    background-color: #f1f1f1;
+    border-radius: 50px;
+    padding: 10px;
+	
+}
+
+#search-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: transparent;
+	outline: none; /* 포커스 시 테두리 제거 */
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.fa-search {
+    font-size: 24px;
+    color: #333;
+}
+
+
+/* 공지사항 리스트 아이템 스타일 */
+.notice-list {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+}
+
+.notice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.notice-item:hover {
+    background-color: #f9f9f9;
+}
+
+.notice-title {
+    flex: 1;
+    font-size: 16px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notice-date {
+    margin-left: 20px;
+    color: #999;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+
+
+
+
+.pagination {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;
+    margin-top: 30px;
+    gap: 5px; /* 버튼 간 간격 */
+}
+
+
+

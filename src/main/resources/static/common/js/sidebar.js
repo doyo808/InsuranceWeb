@@ -14,11 +14,6 @@ if (sidebar.classList.contains('closed')) {
 }
 });
 
-
-function showContainer () {
-
-}
-
 side_menu3.addEventListener('click', (e) => {
     showContainer
 });
@@ -71,16 +66,6 @@ side_menu3.addEventListener('click', (e) => {
       container.innerHTML = '<p>콘텐츠를 불러오지 못했습니다.</p>';
     }
   }
-
-  // 사이드 링크 공통 핸들러
-  document.querySelectorAll('.side_link').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const url = a.dataset.route;
-      const tab = a.dataset.tab; // 예: 'installment'
-      if (url) loadInto(mainContainer, url, tab);
-    });
-  });
 
   // 뒤로가기 처리
   window.addEventListener('popstate', (ev) => {

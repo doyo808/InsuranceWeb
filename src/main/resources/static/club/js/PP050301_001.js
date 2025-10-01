@@ -1,6 +1,22 @@
 const tabs = document.querySelectorAll(".content-main");
 const buttons = document.querySelectorAll(".tab-btn");
 
+// PP050301_001.js 상단 근처에 추가
+const TAB_LABELS = ["무이자 할부", "포인트 결제", "후청구 서비스"];
+
+function updateBreadcrumb(index) {
+  // 마지막 라벨(span.current)을 찾아 텍스트만 교체
+  const current =
+    document.querySelector('.breadcrumb .current')
+    || document.querySelector('.breadcrumb li:last-child span');
+
+  if (current) {
+    current.textContent = TAB_LABELS[index];
+    current.setAttribute('aria-current', 'page'); // 접근성+
+  }
+}
+
+
 // 2) URL의 탭 키 ↔ 내부 인덱스 매핑 표
 //   - 주소창 ?tab=interest-free 처럼 들어오면 0번 탭을 보여준다.
 const TAB_INDEX = {
@@ -19,6 +35,8 @@ function showTab(index, { updateUrl = true } = {}) {
 	// 3-2) 버튼도 같은 방식으로 'active' 스타일 토글
 	buttons.forEach((btn, i) => btn.classList.toggle("active", i === index));
 
+	updateBreadcrumb(index);
+	
 	// 3-3) 주소 표시줄 동기화: 사용자가 탭을 클릭하면 URL에 ?tab=... 를 반영
 	if (updateUrl) {
 		const url = new URL(window.location.href);             // 현재 주소를 URL 객체로 파싱
@@ -49,6 +67,7 @@ function initFromUrl({ updateUrl = false } = {}) {
 	const key = params.get('tab') || 'interest-free';           // ?tab=값이 없으면 기본 'interest-free'
 	const index = TAB_INDEX[key] ?? 0;                          // 매핑표에 없으면 0번(첫 탭)
 	showTab(index, { updateUrl });                                // 초기 표시(대개 URL 갱신은 안 함)
+	updateBreadcrumb(index);
 }
 
 // 7) 문서가 처음 로드되면, URL 기준으로 초기 탭을 보여준다.

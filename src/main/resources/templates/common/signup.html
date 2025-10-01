@@ -44,7 +44,14 @@
 			        <button type="button" id="email-check-btn">중복 확인</button>
 			    </div>
 			    <p id="email-message" class="message"></p>
-			    
+				<button type="button" id="certBtn">본인인증</button>
+				<!-- 성공 모달 -->
+				  <div id="certSuccessModal" style="display:none; position:fixed; top:50%; left:50%; 
+				       transform:translate(-50%, -50%); background:#fff; padding:20px; border:1px solid #000; z-index:999;">
+				    본인인증 성공!
+				  </div>
+				
+				
 			    <h2 class="agreement-section-title">다음 항목에 동의해주세요</h2>
 			    
 			    <div class="agreement-box">
@@ -101,6 +108,7 @@
 			   <input id="signup-next-btn" type="submit" value="다음" disabled>
 		   </form>
 		</div>
+		<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 		<script th:src="@{/common/js/signup.js}"></script>
 	</main>
 	

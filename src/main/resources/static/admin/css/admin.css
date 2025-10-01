@@ -1,0 +1,505 @@
+/* ===== Design Tokens (공통) ===== */
+:root {
+	--color-bg: #f6f9fc;
+	--color-surface: #ffffff;
+	--color-text: #1f2937;
+	/* gray-800 */
+	--color-text-weak: #6b7280;
+	/* gray-500 */
+	--color-border: rgba(0, 0, 0, .08);
+	--color-primary: rgb(77, 158, 240);
+	--radius: 12px;
+	--shadow: 0 4px 16px rgba(0, 0, 0, .06);
+	
+	--topbar-h: 56px;
+}
+
+
+/* ===== Base (공통) ===== */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body.page {
+	margin: 0;
+	font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+	color: var(--color-text);
+	background: var(--color-bg);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+.bold {
+	font-weight: 700;
+}
+
+.mt-12 {
+	margin-top: 48px;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* ===== Topbar (공통) ===== */
+.topbar {
+	border-bottom: 1px solid rgba(17, 115, 212, .18);
+	background: var(--color-surface);
+}
+
+.topbar__inner {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 12px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.brand {
+	display: inline-flex;
+	gap: 10px;
+	align-items: center;
+	color: inherit;
+	text-decoration: none;
+}
+
+.brand__icon {
+	width: 32px;
+	height: 32px;
+	color: var(--color-primary);
+	display: inline-flex;
+}
+
+.brand__icon svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.brand__name {
+	font-weight: 700;
+	font-size: 16px;
+}
+
+
+.topbar__links {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+
+.topbar__link {
+	font-size: 14px;
+	color: #374151;
+	text-decoration: none;
+	transition: color .2s ease;
+}
+
+.topbar__link:hover {
+	color: var(--color-primary);
+}
+
+.avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-size: cover;
+	background-position: center;
+}
+
+
+/* ===== Main Layout (공통) ===== */
+.main {
+	min-height: calc(100vh - 56px);
+	padding: 48px 20px;
+}
+
+.container {
+	max-width: 1120px;
+	margin: 0 auto;
+}
+
+.page-title {
+	margin: 0 0 20px;
+	font-size: 28px;
+	font-weight: 800;
+}
+
+.section__title {
+	margin: 0 0 12px;
+	font-size: 22px;
+	font-weight: 800;
+}
+
+
+/* ===== Card (공통) ===== */
+.card {
+	background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+}
+
+
+/* ===== KPI Cards (관리자 메인) ===== */
+.kpi-grid {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 24px;
+}
+
+@media (min-width: 640px) {
+	.kpi-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1024px) {
+	.kpi-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+
+.kpi-card {
+	display: block;
+	padding: 24px;
+	border-radius: var(--radius);
+	border: 1px solid var(--color-border);
+	background: var(--color-surface);
+	box-shadow: var(--shadow);
+	text-decoration: none;
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.kpi-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+.kpi-card__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.kpi-card__title {
+	margin: 0;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--color-text);
+	text-decoration: underline;
+}
+
+.kpi-card__icon {
+	color: #6b7280;
+	transition: color .2s ease;
+}
+
+.kpi-card:hover .kpi-card__icon {
+	color: var(--color-primary);
+}
+
+.kpi-card__value {
+	margin: 8px 0 0;
+	font-weight: 800;
+	font-size: 28px;
+	color: var(--color-text);
+}
+
+/* ===== Shortcuts (관리자 메인) ===== */
+.shortcut-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 16px;
+}
+
+@media (min-width: 768px) {
+	.shortcut-grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+
+.shortcut {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 24px;
+	border-radius: var(--radius);
+	border: 1px solid var(--color-border);
+	background: var(--color-surface);
+	box-shadow: var(--shadow);
+	text-decoration: none;
+	color: inherit;
+	transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+
+.shortcut:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+.shortcut__icon {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	background: rgba(17, 115, 212, .08);
+	color: var(--color-primary);
+}
+
+.shortcut__label {
+	margin-top: 12px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+
+/* ===== Table (관리자 메인 + 공통) ===== */
+.table-wrap {
+	border: 1px solid rgba(17, 115, 212, .20);
+	border-radius: var(--radius);
+	overflow: hidden;
+	background: var(--color-surface);
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table thead {
+	background: color-mix(in srgb, var(--color-primary) 5%, transparent);
+}
+
+.table th,
+.table td {
+	padding: 12px 16px;
+	font-size: 14px;
+	text-align: center;
+}
+
+.table th {
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	font-weight: 700;
+	color: var(--color-text);
+}
+
+.table tbody tr+tr {
+	border-top: 1px solid rgba(17, 115, 212, .12);
+}
+
+.table td {
+	color: color-mix(in srgb, var(--color-text) 80%, transparent);
+}
+
+
+/* ===== Buttons (공통) ===== */
+.btn {
+	appearance: none;
+	border: 1px solid transparent;
+	border-radius: 8px;
+	padding: 10px 14px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.btn--primary {
+	background: var(--color-primary);
+	color: #fff;
+}
+
+.btn--primary:hover {
+	filter: brightness(0.97);
+}
+
+.btn--block {
+	width: 100%;
+}
+
+
+/* ===== Forms (공통) - 로그인/검색 등에서 재사용 ===== */
+.field {
+	display: grid;
+	gap: 8px;
+}
+
+.field__label {
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.field__control {
+	width: 100%;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	padding: 10px 12px;
+	font-size: 14px;
+	outline: none;
+	transition: border-color .15s ease, box-shadow .15s ease;
+	background: #fff;
+	color: var(--color-text);
+}
+
+.field__control:focus {
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px rgba(17, 115, 212, .15);
+}
+
+.field__error {
+	min-height: 0;
+	font-size: 12px;
+	color: #dc2626;
+}
+
+/* ===== Auth (관리자 로그인 전용) ===== */
+/* 헤더가 있든 없든 로그인 블록을 화면 중앙 정렬 */
+.auth {
+  min-height: calc(100vh - 56px); /* .topbar 높이 고려 */
+  display: grid;
+  place-items: center;
+  padding: 48px 20px;
+}
+
+/* 로그인 카드(폼 박스) */
+.auth-card {
+  width: min(560px, 100%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+
+
+/* 카드 헤더(제목/설명) */
+.auth-card__head {
+  margin-bottom: 20px;
+}
+.auth-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+.auth-desc {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--color-text-weak);
+}
+
+/* 폼 필드 간격 (공통 .field 그대로 쓰되 로그인에선 좀 더 여유) */
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+/* 아이디/비밀번호 아래 미세 안내문(선택) */
+.field__hint {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--color-text-weak);
+}
+
+/* 아이디 저장/비밀번호 찾기 줄 */
+.auth-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+/* 체크박스 라벨 정렬 보조 */
+.form-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+/* 제출 버튼 full-width는 .btn--block 재사용 */
+
+/* 푸터(회원가입/도움말 링크 등) */
+.auth-footer {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-weak);
+}
+
+/* 로그인 화면에서 자주 쓰는 조용한 링크 스타일 */
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.link:hover {
+  filter: brightness(0.96);
+  text-decoration: underline;
+}
+
+/* 상단바를 간소화해서 쓰고 싶을 때(선택) */
+.topbar--minimal {
+  border-bottom: 1px solid rgba(17, 115, 212, .12);
+  background: var(--color-surface);
+}
+.topbar--minimal .brand__name {
+  font-size: 15px;
+}
+
+/* 작은 화면에서 카드 패딩 축소 */
+@media (max-width: 480px) {
+  .auth-card { padding: 20px; }
+  .auth-title { font-size: 20px; }
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0;
+}
+.pagination__btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.pagination__btn.is-disabled { opacity: .5; pointer-events: none; }
+
+.pagination__list {
+  display: flex; gap: 6px; list-style: none; margin: 0; padding: 0;
+}
+.pagination__page {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  border: 1px solid var(--color-border);
+  text-decoration: none; font-weight: 700;
+  color: var(--color-text); background: var(--color-surface);
+}
+.pagination__page.is-active {
+  border-color: rgba(17,115,212,.35);
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+  color: var(--color-primary);
+}
+

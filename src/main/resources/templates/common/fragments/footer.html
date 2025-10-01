@@ -1,6 +1,28 @@
 <!-- footer.html -->
 <div th:fragment="footerFragment">
-    <div style="background-color: #f5f5f5; text-align: center; padding: 15px; margin-top: 40px;">
-        <small>© 2025 KD Insurance. All rights reserved.</small>
+	<div class="footer-container">
+		
+		<!--/* 
+		  footer 구성 :
+		  1) index(홈) 페이지 : index 페이지용 배너컨텐츠(footer_banner.html) + footer_menu.html
+		  2) content(각 메뉴) 페이지 : content 페이지용 배너컨텐츠(footer_banner.html) + footer_menu.html
+		
+		*/-->
+		<!--/*윤한식 footer_banner.html 삽입*/-->
+		<div th:replace="~{common/fragments/footer_banner :: footerBanner}"></div>		
+		
+		
+		<!--/*윤한식 footer_menu.html 삽입*/-->
+		<div th:replace="~{common/fragments/footer_menu :: footerMenu}"></div>
+        <div class="footer-bottom">
+            <small>© 2025 KD Insurance. All rights reserved.</small>
+        </div>
     </div>
 </div>
+
+
+
+
+
+
+

@@ -7,9 +7,9 @@
     gap: 10px
 }
 
-#tab-btns .tab-btn:active {
-    color: #2C7FDF;
-    border-bottom: 3px solid #2C7FDF;
+#tab-btns .tab-btn.active {
+  color:#2C7FDF;
+  border-bottom:3px solid #2C7FDF;
 }
 
 p {
@@ -104,13 +104,21 @@ p {
 
 /* -------- 이벤트 당첨자 확인 --------- */ 
 
-.search-form {
-    position: relative;
-    width: 800px;
-    margin: 0 auto;
-    background-color: #f3f4f6;
-    padding: 23px 80px 23px 40px;
-    border-radius: 38px;
+.eventWinners { 
+	align-content: center;
+	
+	margin-top: 16px; 
+}
+
+/* 검색 폼 정렬/폭 */
+.eventWinners .search-form{
+  max-width: 880px;
+  width: 100%;
+  margin: 0 auto 32px;
+  padding: 23px 80px 23px 40px;
+  background:#f3f4f6;
+  border-radius: 38px;
+  position: relative;
 }
 
 .search-form .inp-base {
@@ -137,4 +145,76 @@ p {
     cursor: pointer;
     content: "";
 }
+
+/* 인풋/버튼 기본 그대로 사용하되 focus 테두리 정리(접근성 대체 링) */
+.search-form .inp-base:focus{
+  outline: none;
+}
+
+.search-form .btn-postsrch:focus{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(44,127,223,.25);
+  border-radius: 50%;
+}
+
+/* 테이블 래퍼 간격 */
+#bbsArticle { margin-top: 24px; }
+
+/* 기본 표 레이아웃 */
+.tbl-base{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;       /* 말줄임용 고정 레이아웃 */
+  border-top: 1px solid #111; /* 첫 줄 위 얇은 선 */
+  margin-top: 80px;
+}
+
+/* colgroup 폭 */
+.tbl-base col.col-date{ width: 200px; }  /* 날짜 칸 폭 */
+.tbl-base col.col-auto{ width: auto; }
+
+/* 셀 패딩/정렬 */
+.tbl-base th,
+.tbl-base td{
+  padding: 20px 30px;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.tbl-base th{
+  text-align: left;
+  font-weight: 500;
+}
+
+.tbl-base td{
+  text-align: right;
+  color: #757679;
+}
+
+/* 행 구분선 */
+.tbl-base tbody tr{
+  border-bottom: 1px solid #EAEBED;
+}
+
+/* 기본: 보더를 투명으로 */
+.tbl-link .tit-link{
+  text-decoration: none;                /* 기본 밑줄 제거 */
+  border-bottom: 2px solid transparent; /* 줄 자리만 확보 -> 레이아웃 안 흔들림 */
+  line-height: 1.6;                     /* 필요 시 조정 */
+  transition: border-color .15s ease;
+}
+
+/* 행 hover 시 색만 켬 */
+.tbl-base tbody tr:hover .tit-link{
+  border-bottom-color: currentColor;    /* 글자색과 동일 */
+}
+
+#bbsArticle p { margin: 0; }
+.search-form .btn-postsrch{ right: 20px; }
+
+@media (max-width: 640px){
+  .tbl-base col.col-date{ width: 120px; }
+  .tbl-base th, .tbl-base td{ padding: 16px 0; font-size: 15px; }
+}
+
 
