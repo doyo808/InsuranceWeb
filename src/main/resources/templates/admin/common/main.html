@@ -19,7 +19,7 @@
 	<main layout:fragment="adminContent">
 		<main class="page">
 
-			
+
 
 
 			<!-- Shortcuts -->
@@ -32,6 +32,7 @@
 							<span class="material-symbols-outlined" aria-hidden>inventory_2</span>
 						</div>
 						<p class="shortcut__label">보험 상품 내역</p>
+						<p class="kpi-card__value" th:text="'판매중인 상품 ' + ${sellingCount} + '개'"></p>
 					</a>
 
 					<a th:href="@{/admin/contract}" class="shortcut">

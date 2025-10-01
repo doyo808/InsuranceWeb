@@ -37,15 +37,11 @@ public class ClaimDetailDTO {
   // persons table
   private String person_name; // 고객명 
   
-  // contract table
+  // insurance_contract table
   private String  contract_id; // 계약 ID
   
-  // contract table -> product_plans table -> products table
-  // private String  product_name;
-  
-  // insureds table -> persons table
-  //private String person_name;  // 피보험자 이름
-  //private String phone_number; // 피보험자 연락처
+  // insurance_contract table -> insurance_products table
+   private String  product_name;
 
 }
 

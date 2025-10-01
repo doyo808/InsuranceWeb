@@ -25,7 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kd.insuranceweb.admin.dto.ClaimDetailDTO;
 import com.kd.insuranceweb.admin.dto.ClaimListRowDTO;
 import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
+import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
 import com.kd.insuranceweb.admin.service.ClaimService;
+import com.kd.insuranceweb.admin.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 
 	private final ClaimService claimService;
+	private final ProductService productService;
 
 	// ===== 공통 페이지 =====
 	@GetMapping("/login")
@@ -43,10 +46,15 @@ public class AdminController {
 	}
 
 	@GetMapping("/main")
-	public String main(@ModelAttribute("criteria") ClaimSearchCriteria criteria, Model model) {
-		
+	public String main(
+			@ModelAttribute("criteria") ClaimSearchCriteria criteria, 
+			Model model
+	) {
 		int pendingCount = claimService.getPendingCount(criteria);
 		model.addAttribute("pendingCount", pendingCount);
+		int sellingCount = productService.countProductsOnSale();
+		model.addAttribute("sellingCount", sellingCount); 
+		
 		return "admin/common/main";
 	}
 
@@ -70,9 +78,19 @@ public class AdminController {
 	
 	// ===== 상품 관리 =====
 	@GetMapping("/product")
-	public String productList() {
-		return "admin/product/productList";
-	}
+	public String productList(@ModelAttribute("criteria") ProductSearchCriteria criteria, Model model) {
+	    int totalCount   = productService.countProducts(criteria);
+	    var products     = productService.findProductPage(criteria);
+	    int sellingCount = productService.countProductsOnSale();
+
+	    model.addAttribute("criteria", criteria);
+	    model.addAttribute("products", products);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("page",  criteria.getPage());
+	    model.addAttribute("perPage", criteria.getSize());
+	    model.addAttribute("sellingCount", sellingCount); 
+	    return "admin/product/productList";
+	    }
 
 	// ===== 보험금 청구 관리 =====
 	// 목록: GET /admin/claims

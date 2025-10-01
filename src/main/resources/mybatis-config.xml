@@ -10,8 +10,9 @@
           <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
           <typeAlias type="com.kd.insuranceweb.club.dto.Card_company" alias="cardCompany"></typeAlias>
           <typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit_interest_free" alias="cardBenefitInterestFree"></typeAlias>
-    	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"/>
           <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
+    	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.admin.dto.ProductListRowDTO" alias="productList"></typeAlias>
   	</typeAliases>
 
   

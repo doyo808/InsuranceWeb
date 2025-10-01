@@ -31,15 +31,14 @@
 				</div>
 
 				<div class="field toolbar__item toolbar__item--grow">
-						      <label class="field__label">접수일자</label>
-						      <div class="daterange" data-daterange>
-						        <input class="field__control daterange__input" type="date" name="from"
-						              > <!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
-						        <span class="daterange__sep">~</span>
-						        <input class="field__control daterange__input" type="date" name="to"
-						               >
-						      </div>
-						    </div>
+					<label class="field__label">접수일자</label>
+					<div class="daterange" data-daterange>
+						<input class="field__control daterange__input" type="date" name="from">
+						<!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
+						<span class="daterange__sep">~</span>
+						<input class="field__control daterange__input" type="date" name="to">
+					</div>
+				</div>
 
 				<div class="toolbar__spacer"></div>
 
@@ -79,7 +78,7 @@
 							<a class="btn btn--primary btn--xs">상세</a>
 						</td>
 					</tr>
-					
+
 
 					<!-- 데이터 없음 예시 (필요 시 주석 해제해 확인) -->
 					<!--

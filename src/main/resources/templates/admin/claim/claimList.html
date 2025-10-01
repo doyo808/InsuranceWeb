@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title>보험금 청구 관리 - 관리자</title>
-	
+
 </head>
 
 <body>
@@ -84,7 +84,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="row : ${claims}">
-						<td th:text="'#' + ${row.claim_id}"></td>
+						<td th:text="${row.claim_id}"></td>
 						<td th:text="${row.person_name}"></td>
 						<td th:text="${row.claim_type}"></td>
 						<td th:text="${#temporals.format(row.accident_date, 'yyyy-MM-dd')}"></td>
@@ -104,8 +104,18 @@
 						</td>
 
 						<td class="text-center">
-							<a th:href="@{/admin/claimDetail(claimId=${row.claim_id})}">상세정보</a>
+							<a class="btn btn--primary btn--xs"
+								th:href="@{/admin/claimDetail(claimId=${row.claim_id})}">상세정보</a>
 						</td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(claims)}">
+						<td class="cell--empty" colspan="8">
+							<div class="empty">
+								<div class="empty__title">표시할 상품이 없습니다</div>
+								<div class="empty__desc">검색 조건을 변경하거나 새 상품을 등록해보세요.</div>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</section>
