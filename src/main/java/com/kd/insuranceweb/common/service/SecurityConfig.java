@@ -39,6 +39,7 @@ public class SecurityConfig {
     	        .formLogin(form -> form
     	            .loginPage("/login")			// 컨트롤러의 매핑경로
     	            .loginProcessingUrl("/login-process")	// 로그인 form의 action
+    	            .usernameParameter("login_id")
     	            .failureUrl("/login?error=true")
     	            .defaultSuccessUrl("/", true)	// true는 항상 해당 url, false면 로그인전 요청 페이지
     	            .permitAll()
