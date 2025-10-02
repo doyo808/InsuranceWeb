@@ -4,12 +4,12 @@
 
 	<select id="findClaimList" parameterType="map"
 		resultType="claimList"> 
-		SELECT
-		c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE, c.ACCIDENT_DATE, c.CLAIM_DATE,
-		c.CLAIM_STATUS 
+		SELECT c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE,
+		c.ACCIDENT_DATE, c.CLAIM_DATE, c.CLAIM_STATUS 
 		FROM CLAIMS c 
-		JOIN customers cu ON c.customer_id = cu.customer_id
-		JOIN persons p ON cu.person_id = p.person_id
+		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
+        JOIN customers cu ON ic.customer_id = cu.customer_id
+        JOIN persons p ON cu.person_id = p.person_id
 		<where>
 			<if test="c.q != null and c.q != ''">
 				AND (LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
@@ -58,10 +58,13 @@
 		c.ETC_FILE_PATH,
 		c.CONTRACT_ID,
 		p.person_name,
-		c.rejection_reason
+		c.rejection_reason,
+		ip.product_name
 		FROM CLAIMS c
-		JOIN customers cu ON c.customer_id = cu.customer_id
-		JOIN persons p ON cu.person_id = p.person_id
+		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
+        JOIN customers cu ON ic.customer_id = cu.customer_id
+        JOIN persons p ON cu.person_id = p.person_id
+		JOIN insurance_products ip ON ic.product_id = ip.product_id
 		WHERE c.CLAIM_ID = #{claimId}
 	</select>
 
@@ -82,51 +85,44 @@
 	</update>
 
 	<select id="findClaimsPage" parameterType="map"
-        resultType="claimList">
-  SELECT * FROM (
-    SELECT inner_q.*,
-           ROWNUM AS rnum
-    FROM (
-      SELECT
-        c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE,
-        c.ACCIDENT_DATE, c.CLAIM_DATE, c.CLAIM_STATUS
-      FROM CLAIMS c
-      JOIN CUSTOMERS cu ON c.CUSTOMER_ID = cu.CUSTOMER_ID
-      JOIN PERSONS   p  ON cu.PERSON_ID = p.PERSON_ID
-      <where>
-        <if test="c.q != null and c.q != ''">
-          AND (
-            LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
-            OR TO_CHAR(c.CLAIM_ID) LIKE '%' || #{c.q} || '%'
-          )
-        </if>
-        <if test="c.claimType != null and c.claimType != ''">
-          AND c.CLAIM_TYPE = #{c.claimType}
-        </if>
-        <if test="c.status != null">
-          AND c.CLAIM_STATUS = #{c.status}
-        </if>
-        <if test="c.from != null">
-          AND c.CLAIM_DATE <![CDATA[>=]]> #{c.from, jdbcType=DATE}
-        </if>
-        <if test="c.toExclusive != null">
-          AND c.CLAIM_DATE <![CDATA[<]]> #{c.toExclusive, jdbcType=DATE}
-        </if>
-      </where>
-      ORDER BY c.CLAIM_ID DESC
-    ) inner_q
-    WHERE ROWNUM &lt;= #{c.offset} + #{c.size}
-  )
-  WHERE rnum &gt; #{c.offset}
-</select>
+		resultType="claimList"> SELECT * FROM ( SELECT inner_q.*, ROWNUM AS rnum
+		FROM ( SELECT c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE, c.ACCIDENT_DATE,
+		c.CLAIM_DATE, c.CLAIM_STATUS 
+		FROM CLAIMS c 
+		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
+        JOIN customers cu ON ic.customer_id = cu.customer_id
+        JOIN persons p ON cu.person_id = p.person_id
+		<where>
+			<if test="c.q != null and c.q != ''">
+				AND (
+				LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
+				OR TO_CHAR(c.CLAIM_ID) LIKE '%' || #{c.q} || '%'
+				)
+			</if>
+			<if test="c.claimType != null and c.claimType != ''">
+				AND c.CLAIM_TYPE = #{c.claimType}
+			</if>
+			<if test="c.status != null">
+				AND c.CLAIM_STATUS = #{c.status}
+			</if>
+			<if test="c.from != null">
+				AND c.CLAIM_DATE <![CDATA[>=]]> #{c.from, jdbcType=DATE}
+			</if>
+			<if test="c.toExclusive != null">
+				AND c.CLAIM_DATE <![CDATA[<]]> #{c.toExclusive, jdbcType=DATE}
+			</if>
+		</where>
+		ORDER BY c.CLAIM_ID DESC ) inner_q WHERE ROWNUM &lt;= #{c.offset} +
+		#{c.size} ) WHERE rnum &gt; #{c.offset} </select>
 
 
 	<select id="countClaims" parameterType="map" resultType="int"> 
-	SELECT
-	COUNT(*) 
-	FROM CLAIMS c 
-	JOIN customers cu ON c.customer_id = cu.customer_id
-		JOIN persons p ON cu.person_id = p.person_id <where>
+		SELECT COUNT(*) 
+		FROM CLAIMS c 
+		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
+        JOIN customers cu ON ic.customer_id = cu.customer_id
+        JOIN persons p ON cu.person_id = p.person_id
+		<where>
 			<if test="c.q != null and c.q != ''">
 				AND (
 				LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
@@ -151,8 +147,6 @@
 	<select id="countPendingClaims" resultType="int">
 		SELECT COUNT(*) FROM CLAIMS WHERE CLAIM_STATUS = 1
 	</select>
-
-
 
 
 </mapper>

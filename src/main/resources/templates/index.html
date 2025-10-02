@@ -3,736 +3,736 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/common/layout.html}">
 <head>
-	<meta charset="UTF-8" />
-	<title>보험 홈</title>	
+        <meta charset="UTF-8" />
+        <title>보험 홈</title>        
 </head>
 <body>
-	<main layout:fragment="content">						
-		<!--/* 윤한식 : index.html  fragments 작성 중  */-->
-		<div class="container">
-			<div class="main-container">
-				<section class="left-panel">
-					<h1 class="main-title">무엇을<br>지켜드릴까요?</h1>
-					<div class="icon-grid">
-						<a href="#tab-car" class="icon-item"><div class="icon icon-car"></div>자동차</a>
-						<a href="#tab-driver" class="icon-item"><div class="icon icon-driver"></div>운전자</a>
-						<a href="#tab-medical" class="icon-item"><div class="icon icon-medical"></div>실손</a>
-						<a href="#tab-child" class="icon-item"><div class="icon icon-child"></div>자녀</a>
-						<a href="#tab-health" class="icon-item"><div class="icon icon-health"></div>건강</a>
-						<a href="#tab-patient" class="icon-item"><div class="icon icon-patient"></div>유병자</a>
-						<a href="#tab-tooth" class="icon-item"><div class="icon icon-tooth"></div>치아</a>
-						<a href="#tab-fire" class="icon-item"><div class="icon icon-fire"></div>화재</a>
-						<a href="#tab-asset" class="icon-item"><div class="icon icon-asset"></div>재산</a>
-						<a href="#tab-travel" class="icon-item"><div class="icon icon-travel"></div>여행/레저</a>
-						<a href="#tab-pet" class="icon-item"><div class="icon icon-pet"></div>펫</a>
-						<a href="#tab-analysis" class="icon-item"><div class="icon icon-analysis"></div>보장분석</a>
-					</div>			
-				</section>
-	
-				<!-- Right Panel -->
-				<section class="right-panel">				
-					<!-- 배너 영역 슬라이드 -->
-					<div class="banner-area slider">
-						<!-- 좌/우 화살표 -->
-						<button class="arrow prev">&lt;</button>
-						<button class="arrow next">&gt;</button>
-						
-						<div class="slides">
-							<!-- 배너 1 -->
-					        <div class="slide">
-					            <div class="banner-content">
-					                <p class="banner-title">자동차보험, 전화로 가입 <strong>1600-5008</strong></p>
-					                <p class="banner-desc">(인터넷보험료와 차이가 있습니다)</p>
-					            </div>
-					            <div class="banner-phone">
-					                <img src="common/images/cellphone.svg" alt="전화 아이콘">
-					            </div>
-					        </div>
-					        <!-- 배너 2 -->
-					        <div class="slide">
-					            <div class="banner-content">
-					                <p class="banner-title">신상품 출시! <strong>온라인 견적</strong></p>
-					                <p class="banner-desc">지금 바로 최신 보험 상품 확인 가능</p>
-					            </div>
-					            <div class="banner-phone">
-					                <img src="common/images/cellphone.svg" alt="전화 아이콘">
-					            </div>
-					        </div>
-					        <!-- 배너 3 -->
-					        <div class="slide">
-					            <div class="banner-content">
-					                <p class="banner-title">혜택 이벤트 진행중! <strong>특별 할인</strong></p>
-					                <p class="banner-desc">가입 고객 대상 다양한 이벤트 제공</p>
-					            </div>
-					            <div class="banner-phone">
-					                <img src="common/images/cellphone.svg" alt="전화 아이콘">
-					            </div>
-					        </div>
-					    </div>	   
-	
-					    <!-- 번호 & 일시정지 버튼 -->
-					    <div class="bottom-bar">
-					        <span id="counter">1 / 3</span>
-					        <button class="pause-btn" id="pauseBtn">⏸</button>
-					    </div>
-					</div>		
-					
-					<!-- 로그인 카드 영역 -->
-				    <div class="login-box">
-						<div class="login-content">
-							<div class="login-left">
-								<h2 class="login-title">안녕하세요<br>로그인 해주세요</h2>
-								<button class="btn login-btn">삼성화재 다이렉트 로그인</button>
-								<button class="btn signup-btn">회원가입</button>
-							</div>
-							<div class="login-popup">
-								<img src="common/images/login_bg.png" width="250" height="260" alt="로그인 이미지">
-				        	</div>
-				      	</div>
-				  	</div>		  	
-		  		</section>
-			</div>		
-			
-			<a href="#" class="analysis-banner">
-				<div class="content-box">
-					<div class="text-content">
-						<span class="subtitle">AI 보장분석</span>
-						<h2 class="title">내 보험 한번에 진단받기</h2>
-						<p class="description">가입한 모든 보험을 한번에 진단하고 꼭 필요한 보험을 찾아드려요</p>
-					</div>
-					<div class="icon-box">
-						<img src="common/images/bg_ms_banner.png">
-					</div>
-				</div>	
-			</a>
-			
-			
-			<!--/* 📌 탭 메뉴 + 배너 영역 통합 */-->
-			<div class="main-tab-section">
-				<h1>삼성화재 다이렉트 보험 상품</h1>
-				<!-- 탭 메뉴 -->
-				<nav class="tab-menu">
-					<a href="#tab-car" class="tab active">자동차</a>
-					<a href="#tab-driver" class="tab">운전자</a>
-					<a href="#tab-medical" class="tab">실손</a>
-					<a href="#tab-child" class="tab">자녀</a>
-					<a href="#tab-health" class="tab">건강</a>
-					<a href="#tab-patient" class="tab">유병자</a>
-					<a href="#tab-tooth" class="tab">치아</a>
-					<a href="#tab-fire" class="tab">화재</a>
-					<a href="#tab-budget" class="tab">예산</a>
-					<a href="#tab-asset" class="tab">재산</a>
-					<a href="#tab-travel" class="tab">여행/레저</a>
-					<a href="#tab-pet" class="tab">펫</a>
-					<a href="#tab-analysis" class="tab">보장분석</a>
-					<a href="#tab-saving" class="tab">저축</a>
-				</nav>
-			</div>
-			<div class="main-tab-content">
-				<!--/* 배너 섹션 (예시: 자동차) */-->
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-car" class="anchor-offset"></span>		
-				<div class="tab-banner">				
-					<div class="tab-banner-text">
-						<p class="tab-category">자동차</p>
-						<h1 class="tab-title">다이렉트 자동차보험 가입 1위</h1>
-						<p class="tab-subtext">(14년~24년, 수입보험료 기준)</p>
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_car.png" alt="자동차 보험 이미지">
-					</div>
-				</div>
-		
-	
-				<!--/* 자동차 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">				
-						<div class="card-desc">
-							<h2>자동차보험(개인)</h2>
-							<p><span class="highlight">열에 아홉이 또 가인하는 이유</span><br>한 번만 경험해 봐도 알 수 있어요<br>*재가입률 92.4%(24년 기준)</p>
-						</div>					
-						<div class="card-arrow">></div>							
-					</a>
-					<a href="" class="tab-card">				
-						<div class="card-desc">
-							<h2>자동차보험 갱신</h2>
-							<p>기본 가입자라면<br><span class="highlight">본인인증 한 번</span>으로 가입까지 퀵하게</p>
-						</div>
-						<div class="card-arrow">></div>			
-					</a>
-					<a href="" class="tab-card">				
-						<div class="card-desc">
-							<h2>자동차보험(개인) + 운전자보험</h2>
-							<p>다이렉트여서 저렴하고 간편하게 한번에 가입!<br>운전자보험 보장보험료 5% 할인<br><span class="highlight">만19~79세 가입</span></p>
-						</div>
-						<div class="card-arrow">></div>
-					</a>
-					<a href="" class="tab-card">			
-						<div class="card-desc">
-							<h2>자동차보험(법인)</h2>
-							<p><span class="highlight">회사 차 50대, 100대</span>라도<br>간편하게 한번에 가입할 수 있어요</p>
-						</div>
-						<div class="card-arrow">></div>				
-					</a>
-					<a href="" class="tab-card">			
-						<div class="card-desc">
-							<h2>이륜차보험</h2>
-							<p><span class="highlight">출퇴근,레저,배달용 오토바이까지</span><br>걱정은 덜고 자신있게 달리세요</p>
-						</div>
-						<div class="card-arrow">></div>			
-					</a>
-					<a href="" class="tab-card">				
-						<div class="card-desc">
-							<h2>영업용 자동차보험</h2>
-							<p><span class="highlight">개인 화물차보험도</span><br>걱정은 덜고 자신있게 달리세요</p>
-						</div>
-						<div class="card-arrow">></div>				
-					</a>
-					<a href="" class="tab-card">				
-						<div class="card-desc">
-							<h2>원데이 자동차보험</h2>
-							<p><span class="highlight">친구 차 부터 렌터카, 카셰어링</span>까지<br>남의 차도 당당하게 운전하세요</p>
-						</div>
-						<div class="card-arrow">></div>				
-					</a>			
-					<a href="" class="tab-card">				
-						<div class="card-desc">
-							<h2>자동차 고장수리보장보험</h2>
-							<p>무상보증기간이 끝난 자동차가 가입하는<br>고장수리비 보장보험</p>
-						</div>
-						<div class="card-arrow">></div>			
-					</a>
-					<a href="" class="tab-card">				
-						<div class="card-desc">
-							<h2>자동차보험 계약변경</h2>
-							<p>임시운전자특약 가입, 블랙박스 추가 등<br>계약 변경도 내가 직접 간편하게</p>
-						</div>
-						<div class="card-arrow">></div>			
-					</a>											
-				</div>
-				<hr>
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">					
-							<h2><img src="common/images/ico-call.png" width="26px" height="26px"> 자동차보험(개인·법인)</h2>
-							<p>다이렉트 자동차보험<br>전화로 간편하게 가입하세요<br>가입상담 1600-5008</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2><img src="common/images/ico-call.png" width="26px" height="26px"> 자동차보험(개인·법인)</h2>
-							<p>다이렉트 자동차보험<br>전화로 간편하게 가입하세요<br>가입상담 1600-5008</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>			
-					</a>
-				</div>
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-driver" class="anchor-offset"></span>			
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">운전자</p>
-						<h1 class="tab-title">운전자와 가족을 위한<br>안전 운전 파트너</h1>
-						<p class="tab-subtext">(50만 가입: 24년2월 누적가입자수 기준)</p>				
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_driver.png">
-					</div>			
-				</div>
-	
-				<!--/* 운전자 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>운전자보험</h2>
-							<p>도로에선 나만 잘한다고 되나요<br>운전자보험으로 만약 대비!</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>오토바이 전용 운전자 보험</h2>
-							<p>오토바이 위험한거 나도 알아.<br>보험으로 나는 내가 지켜</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-				
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-medical" class="anchor-offset"></span>							
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">실손</p>
-						<h1 class="tab-title">상해/질병 보험금 청구 시 3영업일 이내 지급률 98%(23년 기준)</h1>							
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_realloss.png">
-					</div>			
-				</div>
-	
-				<!--/* 실손 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>실손의료비보험</h2>
-							<p>보장내용이 동일한 4세대 실손,<br>기왕이면 <span class="highlight">믿음직상한 삼성화재!</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>유병자 실손보험</h2>
-							<p><span class="highlight">아프것도 서러운데</span><br>보험가입마저 어려우면 어떻해!<br>*간편심사 인수 기준에 따라 가입 거절도 가능</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-	
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-child" class="anchor-offset"></span>
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">자녀</p>
-						<h1 class="tab-title">출산 전 산모와 태아부터<br>아이의 성장 과정을 함께</h1>							
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_kids.png">
-					</div>			
-				</div>
-	
-				<!--/* 자녀 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>어린이보험(0~15세)</h2>
-							<p>어디서든 지켜주고 싶다면,<br><span class="highlight">우리 아이에게 보험을 선물</span>해주세요</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>임산부아기보험(해약환급금미지급형)</h2>
-							<p><span class="highlight">애국자 고객님!</span>정말 축하드려요</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>실손의료비보험</h2>
-							<p>보장내용이 동일한 4세대 실손,<br>기왕이면 <span class="highlight">믿음직한 삼성화재!</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>치아보험</h2>
-							<p><span class="highlight">넌 웃을 때가 제일 예뻐</span><br>마음 놓고 웃을 수 있도록</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-	
-	
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-health" class="anchor-offset"></span>
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">건강</p>
-						<h1 class="tab-title">상해와 질병에 필용한 보장,<br>최대 100세까지 든든하게</h1>							
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_health.png">
-					</div>			
-				</div>
-				<!--/* 건강 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>건강보험</h2>
-							<p>첫 째도 건강, 둘 째도 건강,<br>식단도 운동도 열심인데 <span class="highlight">질병은?</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>비갱신 건강보험(해약환급금미지급형)</h2>
-							<p>첫 째도 건강, 둘 째도 건상,<br>식단도 운동도 열심인데 <span class="highlight">질병은?</span><br>보험료는 보험기간동안 그대로!</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>암보험</h2>
-							<p>암세포만 조준, 치료하는 항암중입자 방산선 치료비<br>신설!('25.5 착Easy암보험, 특약)</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>AI 맞춤보장 보험</h2>
-							<p>생송할 수 있는 보험용어들...<span class="highlight">AI가 보험까지 추천ㅎ</span>해준다고?</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>1 2 3 인실 입원비플랜(건강)</h2>
-							<p><span class="highlight">입원비 부담</span>으로 다인실만 찾았다면?</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>365일 간병비플랜(건강)</h2>
-							<p>나 하나 힘든 것보다, 내 사람들이<br><span class="highlight">나 때문에 힘든건 참기 힘들잖아요</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>								
-				</div>
-	
-	
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-patient" class="anchor-offset"></span>
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">유병자</p>
-						<h1 class="tab-title">간편심사 통과시 과거에 아팠거나<br>만성 질환이 있어도 간편 가입!</h1>
-						<p class="tab-subtext">*간편심사의 경우에도 인수기준에 따라 가입이 거절될 수 있습니다</p>							
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_health_sick.png">
-					</div>			
-				</div>
-				<!--/* 유병자 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>스마트간편보험(해약환급금미지급형)</h2>
-							<p><span class="highlight">아팠던 경험, 고생 많으셨죠</span><br>간편심사로 가입 도와드릴게요</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>유병자 신손보험</h2>
-							<p><span class="highlight">아픈 것도 서러운데</span><br>보험가입마저 어려우면 어떻해!</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>365일 간병비플랜(유병자)</h2>
-							<p>나는 내가 아픈 것보다,<br><span class="highlight">약한 모습 보이는게</span>더 싫어요</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>1 2 3인실 입원비 플랜(유병자)</h2>
-							<p><span class="highlight">입원비 부담</span>으로 다인실만 찾았다면?</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>요양&치매 효도플랜(유병자)</h2>
-							<p><span class="highlight">한국 치매</span>상병지수<br><span class="highlight">78만명</span>(중앙치매센터, '19)</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>												
-				</div>
-				
-				
-				<span id="tab-tooth" class="anchor-offset"></span>			
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">치아</p>
-						<h1 class="tab-title">큰 돈 드는 치과 치료비<br>아프기 전에 준비 필수</h1>											
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_dental.png">
-					</div>			
-				</div>
-				<!--/* 치아 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>치아보험</h2>
-							<p><span class="highlight">넌 웃을 때가 제일 예뻐</span><br>마음 놓고 웃을 수 있도록</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-	
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-fire" class="anchor-offset"></span>
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">화재</p>
-						<h1 class="tab-title">소중한 나의 집과 사업장<br>화재 손해 보장</h1>											
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_home.png">
-					</div>			
-				</div>
-				<!--/* 화재 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>올인원 안심케어 플랜(AI보험) 신규</h2>
-							<p><span class="highlight">가자 소중한 나의 집 </span>튼튼하게!</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>주택 화재보험(아파느/주택)</h2>
-							<p>집이 가장 큰 재산이라면?<span class="highlight">누수, 풍수재</span>도 특약으로 대비!</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>사업장 화재보험</h2>
-							<p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>			
-	
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-asset"  class="anchor-offset"></span>
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">재산</p>
-						<h1 class="tab-title">나의 소중한 재산<br>다이렉트로 저렴하게 보장</h1>											
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_storm6.png">
-					</div>			
-				</div>
-				<!--/* 재산 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>수도권지하철지연보험 신규</h2>
-							<p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>사업장 화재보험</h2>
-							<p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>주택 풍수해 지진재해보험</h2>
-							<p>천재지변을 너무 안일하게 생각하진 않나요?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>소상공인 풍수해 지진재해보험</h2>
-							<p>요즘 날씨, 종잡을 수가 없다면?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>영업배상책임보험</h2>
-							<p><span class="highlight">사업 신경 쓸 것도 많은데</span><br>보험 정도는 다이렉트로 손쉽게~</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>사이버사고보상보험</h2>
-							<p><span class="highlight">금융범죄 만큼은,</span><br>내 이야기가 아니길 바라니까..</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-				
-				
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-travel" class="anchor-offset"></span>									
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">여행/레저</p>
-						<h1 class="tab-title">즐거운 취미 생활과<br>안전한 여행의 준비물</h1>											
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_travel.png">
-					</div>			
-				</div>
-				<!--/* 여행/레저 : card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>해외여행보험</h2>
-							<p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>365 연간 해외여행보험 신규</h2>
-							<p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>해외유학/장기체규보험(글로벌케어)</h2>
-							<p>천재지변을 너무 안일하게 생각하진 않나요?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>국내여행보험</h2>
-							<p>요즘 날씨, 종잡을 수가 없다면?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>착함골프보험</h2>
-							<p><span class="highlight">사업 신경 쓸 것도 많은데</span><br>보험 정도는 다이렉트로 손쉽게~</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>원팀골프보험 신규</h2>
-							<p><span class="highlight">금융범죄 만큼은,</span><br>내 이야기가 아니길 바라니까..</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>스크린홀인원보험</h2>
-							<p>요즘 날씨, 종잡을 수가 없다면?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>4계절보험 신규</h2>
-							<p><span class="highlight">사업 신경 쓸 것도 많은데</span><br>보험 정도는 다이렉트로 손쉽게~</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>틈만 나면 여가생활보험 신규</h2>
-							<p><span class="highlight">금융범죄 만큼은,</span><br>내 이야기가 아니길 바라니까..</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-				
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-pet" class="anchor-offset"></span>	
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">펫</p>
-						<h1 class="tab-title">아프기 전에 준비하는<br>우리집 막내를 위한 보험</h1>											
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_pet.png">
-					</div>			
-				</div>
-				<!--/* 펫: card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>착한펫보험(강아지) 신규</h2>
-							<p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>착한펫보험(고양이)</h2>
-							<p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-				
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-analysis" class="anchor-offset"></span>
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">보장분석</p>
-						<h1 class="tab-title">나의 보험 점수는 몇 점?<br>내 보험 한 눈에 점검</h1>											
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_consulting.png">
-					</div>			
-				</div>
-				<!--/* 보장분석: card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>AI 보장분석</h2>
-							<p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>어린이보험 보장분석</h2>
-							<p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>착!한 우리집진단</h2>
-							<p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>
-				
-				
-				<!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
-				<span id="tab-saving" class="anchor-offset"></span>
-				<div class="tab-banner">
-					<div class="tab-banner-text">
-						<p class="tab-category">저축</p>
-						<h1 class="tab-title">안정적인 노후를 위한<br>오늘의 투자</h1>											
-					</div>
-					<div class="tab-banner-image">
-						<img src="common/images/img_mv_save.png">
-					</div>			
-				</div>
-				<!--/* 저축: card list */-->
-				<div class="tab-cards">
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>연금저축보험(유배당)</h2>
-							<p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-					<a href="" class="tab-card">
-						<div class="card-desc">
-							<h2>개인형 퇴직연금(IRP)</h2>
-							<p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
-						</div>
-						<div class="card-arrow"><p>></p></div>
-					</a>
-				</div>							
-			</div>				
-		</div>	
-		<script th:src="@{/common/js/main.js}"></script>	
-	</main>	
+        <main layout:fragment="content">                                                
+                <!--/* 윤한식 : index.html  fragments 작성 중  */-->
+                <div class="container">
+                        <div class="main-container">
+                                <section class="left-panel">
+                                        <h1 class="main-title">무엇을<br>지켜드릴까요?</h1>
+                                        <div class="icon-grid">
+                                                <a href="#tab-car" class="icon-item"><div class="icon icon-car"></div>자동차</a>
+                                                <a href="#tab-driver" class="icon-item"><div class="icon icon-driver"></div>운전자</a>
+                                                <a href="#tab-medical" class="icon-item"><div class="icon icon-medical"></div>실손</a>
+                                                <a href="#tab-child" class="icon-item"><div class="icon icon-child"></div>자녀</a>
+                                                <a href="#tab-health" class="icon-item"><div class="icon icon-health"></div>건강</a>
+                                                <a href="#tab-patient" class="icon-item"><div class="icon icon-patient"></div>유병자</a>
+                                                <a href="#tab-tooth" class="icon-item"><div class="icon icon-tooth"></div>치아</a>
+                                                <a href="#tab-fire" class="icon-item"><div class="icon icon-fire"></div>화재</a>
+                                                <a href="#tab-asset" class="icon-item"><div class="icon icon-asset"></div>재산</a>
+                                                <a href="#tab-travel" class="icon-item"><div class="icon icon-travel"></div>여행/레저</a>
+                                                <a href="#tab-pet" class="icon-item"><div class="icon icon-pet"></div>펫</a>
+                                                <a href="#tab-analysis" class="icon-item"><div class="icon icon-analysis"></div>보장분석</a>
+                                        </div>                        
+                                </section>
+        
+                                <!-- Right Panel -->
+                                <section class="right-panel">                                
+                                        <!-- 배너 영역 슬라이드 -->
+                                        <div class="banner-area slider">
+                                                <!-- 좌/우 화살표 -->
+                                                <button class="arrow prev">&lt;</button>
+                                                <button class="arrow next">&gt;</button>
+                                                
+                                                <div class="slides">
+                                                        <!-- 배너 1 -->
+                                                <div class="slide">
+                                                    <div class="banner-content">
+                                                        <p class="banner-title">자동차보험, 전화로 가입 <strong>1600-5008</strong></p>
+                                                        <p class="banner-desc">(인터넷보험료와 차이가 있습니다)</p>
+                                                    </div>
+                                                    <div class="banner-phone">
+                                                        <img src="common/images/cellphone.svg" alt="전화 아이콘">
+                                                    </div>
+                                                </div>
+                                                <!-- 배너 2 -->
+                                                <div class="slide">
+                                                    <div class="banner-content">
+                                                        <p class="banner-title">신상품 출시! <strong>온라인 견적</strong></p>
+                                                        <p class="banner-desc">지금 바로 최신 보험 상품 확인 가능</p>
+                                                    </div>
+                                                    <div class="banner-phone">
+                                                        <img src="common/images/cellphone.svg" alt="전화 아이콘">
+                                                    </div>
+                                                </div>
+                                                <!-- 배너 3 -->
+                                                <div class="slide">
+                                                    <div class="banner-content">
+                                                        <p class="banner-title">혜택 이벤트 진행중! <strong>특별 할인</strong></p>
+                                                        <p class="banner-desc">가입 고객 대상 다양한 이벤트 제공</p>
+                                                    </div>
+                                                    <div class="banner-phone">
+                                                        <img src="common/images/cellphone.svg" alt="전화 아이콘">
+                                                    </div>
+                                                </div>
+                                            </div>           
+        
+                                            <!-- 번호 & 일시정지 버튼 -->
+                                            <div class="bottom-bar">
+                                                <span id="counter">1 / 3</span>
+                                                <button class="pause-btn" id="pauseBtn">⏸</button>
+                                            </div>
+                                        </div>                
+                                        
+                                        <!-- 로그인 카드 영역 -->
+                                    <div class="login-box">
+                                                <div class="login-content">
+                                                        <div class="login-left">
+                                                                <h2 class="login-title">안녕하세요<br>로그인 해주세요</h2>
+                                                                <button class="btn login-btn">삼성화재 다이렉트 로그인</button>
+                                                                <button class="btn signup-btn">회원가입</button>
+                                                        </div>
+                                                        <div class="login-popup">
+                                                                <img src="common/images/login_bg.png" width="250" height="260" alt="로그인 이미지">
+                                                </div>
+                                              </div>
+                                          </div>                          
+                                  </section>
+                        </div>                
+                        
+                        <a href="#" class="analysis-banner">
+                                <div class="content-box">
+                                        <div class="text-content">
+                                                <span class="subtitle">AI 보장분석</span>
+                                                <h2 class="title">내 보험 한번에 진단받기</h2>
+                                                <p class="description">가입한 모든 보험을 한번에 진단하고 꼭 필요한 보험을 찾아드려요</p>
+                                        </div>
+                                        <div class="icon-box">
+                                                <img src="common/images/bg_ms_banner.png">
+                                        </div>
+                                </div>        
+                        </a>
+                        
+                        
+                        <!--/* 📌 탭 메뉴 + 배너 영역 통합 */-->
+                        <div class="main-tab-section">
+                                <h1>삼성화재 다이렉트 보험 상품</h1>
+                                <!-- 탭 메뉴 -->
+                                <nav class="tab-menu">
+                                        <a href="#tab-car" class="tab active">자동차</a>
+                                        <a href="#tab-driver" class="tab">운전자</a>
+                                        <a href="#tab-medical" class="tab">실손</a>
+                                        <a href="#tab-child" class="tab">자녀</a>
+                                        <a href="#tab-health" class="tab">건강</a>
+                                        <a href="#tab-patient" class="tab">유병자</a>
+                                        <a href="#tab-tooth" class="tab">치아</a>
+                                        <a href="#tab-fire" class="tab">화재</a>
+                                        <a href="#tab-budget" class="tab">예산</a>
+                                        <a href="#tab-asset" class="tab">재산</a>
+                                        <a href="#tab-travel" class="tab">여행/레저</a>
+                                        <a href="#tab-pet" class="tab">펫</a>
+                                        <a href="#tab-analysis" class="tab">보장분석</a>
+                                        <a href="#tab-saving" class="tab">저축</a>
+                                </nav>
+                        </div>
+                        <div class="main-tab-content">
+                                <!--/* 배너 섹션 (예시: 자동차) */-->
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-car" class="anchor-offset"></span>                
+                                <div class="tab-banner">                                
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">자동차</p>
+                                                <h1 class="tab-title">다이렉트 자동차보험 가입 1위</h1>
+                                                <p class="tab-subtext">(14년~24년, 수입보험료 기준)</p>
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_car.png" alt="자동차 보험 이미지">
+                                        </div>
+                                </div>
+                
+        
+                                <!--/* 자동차 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">                                
+                                                <div class="card-desc">
+                                                        <h2>자동차보험(개인)</h2>
+                                                        <p><span class="highlight">열에 아홉이 또 가인하는 이유</span><br>한 번만 경험해 봐도 알 수 있어요<br>*재가입률 92.4%(24년 기준)</p>
+                                                </div>                                        
+                                                <div class="card-arrow">></div>                                                        
+                                        </a>
+                                        <a href="" class="tab-card">                                
+                                                <div class="card-desc">
+                                                        <h2>자동차보험 갱신</h2>
+                                                        <p>기본 가입자라면<br><span class="highlight">본인인증 한 번</span>으로 가입까지 퀵하게</p>
+                                                </div>
+                                                <div class="card-arrow">></div>                        
+                                        </a>
+                                        <a href="" class="tab-card">                                
+                                                <div class="card-desc">
+                                                        <h2>자동차보험(개인) + 운전자보험</h2>
+                                                        <p>다이렉트여서 저렴하고 간편하게 한번에 가입!<br>운전자보험 보장보험료 5% 할인<br><span class="highlight">만19~79세 가입</span></p>
+                                                </div>
+                                                <div class="card-arrow">></div>
+                                        </a>
+                                        <a href="" class="tab-card">                        
+                                                <div class="card-desc">
+                                                        <h2>자동차보험(법인)</h2>
+                                                        <p><span class="highlight">회사 차 50대, 100대</span>라도<br>간편하게 한번에 가입할 수 있어요</p>
+                                                </div>
+                                                <div class="card-arrow">></div>                                
+                                        </a>
+                                        <a href="" class="tab-card">                        
+                                                <div class="card-desc">
+                                                        <h2>이륜차보험</h2>
+                                                        <p><span class="highlight">출퇴근,레저,배달용 오토바이까지</span><br>걱정은 덜고 자신있게 달리세요</p>
+                                                </div>
+                                                <div class="card-arrow">></div>                        
+                                        </a>
+                                        <a href="" class="tab-card">                                
+                                                <div class="card-desc">
+                                                        <h2>영업용 자동차보험</h2>
+                                                        <p><span class="highlight">개인 화물차보험도</span><br>걱정은 덜고 자신있게 달리세요</p>
+                                                </div>
+                                                <div class="card-arrow">></div>                                
+                                        </a>
+                                        <a href="" class="tab-card">                                
+                                                <div class="card-desc">
+                                                        <h2>원데이 자동차보험</h2>
+                                                        <p><span class="highlight">친구 차 부터 렌터카, 카셰어링</span>까지<br>남의 차도 당당하게 운전하세요</p>
+                                                </div>
+                                                <div class="card-arrow">></div>                                
+                                        </a>                        
+                                        <a href="" class="tab-card">                                
+                                                <div class="card-desc">
+                                                        <h2>자동차 고장수리보장보험</h2>
+                                                        <p>무상보증기간이 끝난 자동차가 가입하는<br>고장수리비 보장보험</p>
+                                                </div>
+                                                <div class="card-arrow">></div>                        
+                                        </a>
+                                        <a href="" class="tab-card">                                
+                                                <div class="card-desc">
+                                                        <h2>자동차보험 계약변경</h2>
+                                                        <p>임시운전자특약 가입, 블랙박스 추가 등<br>계약 변경도 내가 직접 간편하게</p>
+                                                </div>
+                                                <div class="card-arrow">></div>                        
+                                        </a>                                                                                        
+                                </div>
+                                <hr>
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">                                        
+                                                        <h2><img src="common/images/ico-call.png" width="26px" height="26px"> 자동차보험(개인·법인)</h2>
+                                                        <p>다이렉트 자동차보험<br>전화로 간편하게 가입하세요<br>가입상담 1600-5008</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2><img src="common/images/ico-call.png" width="26px" height="26px"> 자동차보험(개인·법인)</h2>
+                                                        <p>다이렉트 자동차보험<br>전화로 간편하게 가입하세요<br>가입상담 1600-5008</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>                        
+                                        </a>
+                                </div>
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-driver" class="anchor-offset"></span>                        
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">운전자</p>
+                                                <h1 class="tab-title">운전자와 가족을 위한<br>안전 운전 파트너</h1>
+                                                <p class="tab-subtext">(50만 가입: 24년2월 누적가입자수 기준)</p>                                
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_driver.png">
+                                        </div>                        
+                                </div>
+        
+                                <!--/* 운전자 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>운전자보험</h2>
+                                                        <p>도로에선 나만 잘한다고 되나요<br>운전자보험으로 만약 대비!</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>오토바이 전용 운전자 보험</h2>
+                                                        <p>오토바이 위험한거 나도 알아.<br>보험으로 나는 내가 지켜</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+                                
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-medical" class="anchor-offset"></span>                                                        
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">실손</p>
+                                                <h1 class="tab-title">상해/질병 보험금 청구 시 3영업일 이내 지급률 98%(23년 기준)</h1>                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_realloss.png">
+                                        </div>                        
+                                </div>
+        
+                                <!--/* 실손 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>실손의료비보험</h2>
+                                                        <p>보장내용이 동일한 4세대 실손,<br>기왕이면 <span class="highlight">믿음직상한 삼성화재!</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>유병자 실손보험</h2>
+                                                        <p><span class="highlight">아프것도 서러운데</span><br>보험가입마저 어려우면 어떻해!<br>*간편심사 인수 기준에 따라 가입 거절도 가능</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+        
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-child" class="anchor-offset"></span>
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">자녀</p>
+                                                <h1 class="tab-title">출산 전 산모와 태아부터<br>아이의 성장 과정을 함께</h1>                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_kids.png">
+                                        </div>                        
+                                </div>
+        
+                                <!--/* 자녀 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>어린이보험(0~15세)</h2>
+                                                        <p>어디서든 지켜주고 싶다면,<br><span class="highlight">우리 아이에게 보험을 선물</span>해주세요</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>임산부아기보험(해약환급금미지급형)</h2>
+                                                        <p><span class="highlight">애국자 고객님!</span>정말 축하드려요</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>실손의료비보험</h2>
+                                                        <p>보장내용이 동일한 4세대 실손,<br>기왕이면 <span class="highlight">믿음직한 삼성화재!</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>치아보험</h2>
+                                                        <p><span class="highlight">넌 웃을 때가 제일 예뻐</span><br>마음 놓고 웃을 수 있도록</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+        
+        
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-health" class="anchor-offset"></span>
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">건강</p>
+                                                <h1 class="tab-title">상해와 질병에 필용한 보장,<br>최대 100세까지 든든하게</h1>                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_health.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 건강 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>건강보험</h2>
+                                                        <p>첫 째도 건강, 둘 째도 건강,<br>식단도 운동도 열심인데 <span class="highlight">질병은?</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>비갱신 건강보험(해약환급금미지급형)</h2>
+                                                        <p>첫 째도 건강, 둘 째도 건상,<br>식단도 운동도 열심인데 <span class="highlight">질병은?</span><br>보험료는 보험기간동안 그대로!</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>암보험</h2>
+                                                        <p>암세포만 조준, 치료하는 항암중입자 방산선 치료비<br>신설!('25.5 착Easy암보험, 특약)</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>AI 맞춤보장 보험</h2>
+                                                        <p>생송할 수 있는 보험용어들...<span class="highlight">AI가 보험까지 추천ㅎ</span>해준다고?</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>1 2 3 인실 입원비플랜(건강)</h2>
+                                                        <p><span class="highlight">입원비 부담</span>으로 다인실만 찾았다면?</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>365일 간병비플랜(건강)</h2>
+                                                        <p>나 하나 힘든 것보다, 내 사람들이<br><span class="highlight">나 때문에 힘든건 참기 힘들잖아요</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>                                                                
+                                </div>
+        
+        
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-patient" class="anchor-offset"></span>
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">유병자</p>
+                                                <h1 class="tab-title">간편심사 통과시 과거에 아팠거나<br>만성 질환이 있어도 간편 가입!</h1>
+                                                <p class="tab-subtext">*간편심사의 경우에도 인수기준에 따라 가입이 거절될 수 있습니다</p>                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_health_sick.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 유병자 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>스마트간편보험(해약환급금미지급형)</h2>
+                                                        <p><span class="highlight">아팠던 경험, 고생 많으셨죠</span><br>간편심사로 가입 도와드릴게요</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>유병자 신손보험</h2>
+                                                        <p><span class="highlight">아픈 것도 서러운데</span><br>보험가입마저 어려우면 어떻해!</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>365일 간병비플랜(유병자)</h2>
+                                                        <p>나는 내가 아픈 것보다,<br><span class="highlight">약한 모습 보이는게</span>더 싫어요</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>1 2 3인실 입원비 플랜(유병자)</h2>
+                                                        <p><span class="highlight">입원비 부담</span>으로 다인실만 찾았다면?</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>요양&치매 효도플랜(유병자)</h2>
+                                                        <p><span class="highlight">한국 치매</span>상병지수<br><span class="highlight">78만명</span>(중앙치매센터, '19)</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>                                                                                                
+                                </div>
+                                
+                                
+                                <span id="tab-tooth" class="anchor-offset"></span>                        
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">치아</p>
+                                                <h1 class="tab-title">큰 돈 드는 치과 치료비<br>아프기 전에 준비 필수</h1>                                                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_dental.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 치아 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>치아보험</h2>
+                                                        <p><span class="highlight">넌 웃을 때가 제일 예뻐</span><br>마음 놓고 웃을 수 있도록</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+        
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-fire" class="anchor-offset"></span>
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">화재</p>
+                                                <h1 class="tab-title">소중한 나의 집과 사업장<br>화재 손해 보장</h1>                                                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_home.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 화재 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>올인원 안심케어 플랜(AI보험) 신규</h2>
+                                                        <p><span class="highlight">가자 소중한 나의 집 </span>튼튼하게!</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>주택 화재보험(아파느/주택)</h2>
+                                                        <p>집이 가장 큰 재산이라면?<span class="highlight">누수, 풍수재</span>도 특약으로 대비!</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>사업장 화재보험</h2>
+                                                        <p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>                        
+        
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-asset"  class="anchor-offset"></span>
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">재산</p>
+                                                <h1 class="tab-title">나의 소중한 재산<br>다이렉트로 저렴하게 보장</h1>                                                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_storm6.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 재산 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>수도권지하철지연보험 신규</h2>
+                                                        <p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>사업장 화재보험</h2>
+                                                        <p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>주택 풍수해 지진재해보험</h2>
+                                                        <p>천재지변을 너무 안일하게 생각하진 않나요?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>소상공인 풍수해 지진재해보험</h2>
+                                                        <p>요즘 날씨, 종잡을 수가 없다면?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>영업배상책임보험</h2>
+                                                        <p><span class="highlight">사업 신경 쓸 것도 많은데</span><br>보험 정도는 다이렉트로 손쉽게~</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>사이버사고보상보험</h2>
+                                                        <p><span class="highlight">금융범죄 만큼은,</span><br>내 이야기가 아니길 바라니까..</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+                                
+                                
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-travel" class="anchor-offset"></span>                                                                        
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">여행/레저</p>
+                                                <h1 class="tab-title">즐거운 취미 생활과<br>안전한 여행의 준비물</h1>                                                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_travel.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 여행/레저 : card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>해외여행보험</h2>
+                                                        <p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>365 연간 해외여행보험 신규</h2>
+                                                        <p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>해외유학/장기체규보험(글로벌케어)</h2>
+                                                        <p>천재지변을 너무 안일하게 생각하진 않나요?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>국내여행보험</h2>
+                                                        <p>요즘 날씨, 종잡을 수가 없다면?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>착함골프보험</h2>
+                                                        <p><span class="highlight">사업 신경 쓸 것도 많은데</span><br>보험 정도는 다이렉트로 손쉽게~</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>원팀골프보험 신규</h2>
+                                                        <p><span class="highlight">금융범죄 만큼은,</span><br>내 이야기가 아니길 바라니까..</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>스크린홀인원보험</h2>
+                                                        <p>요즘 날씨, 종잡을 수가 없다면?<br><span class="highlight">(정부/지자체가 보험료 55% 이상 지원)</span></p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>4계절보험 신규</h2>
+                                                        <p><span class="highlight">사업 신경 쓸 것도 많은데</span><br>보험 정도는 다이렉트로 손쉽게~</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>틈만 나면 여가생활보험 신규</h2>
+                                                        <p><span class="highlight">금융범죄 만큼은,</span><br>내 이야기가 아니길 바라니까..</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+                                
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-pet" class="anchor-offset"></span>        
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">펫</p>
+                                                <h1 class="tab-title">아프기 전에 준비하는<br>우리집 막내를 위한 보험</h1>                                                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_pet.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 펫: card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>착한펫보험(강아지) 신규</h2>
+                                                        <p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>착한펫보험(고양이)</h2>
+                                                        <p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+                                
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-analysis" class="anchor-offset"></span>
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">보장분석</p>
+                                                <h1 class="tab-title">나의 보험 점수는 몇 점?<br>내 보험 한 눈에 점검</h1>                                                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_consulting.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 보장분석: card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>AI 보장분석</h2>
+                                                        <p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>어린이보험 보장분석</h2>
+                                                        <p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>착!한 우리집진단</h2>
+                                                        <p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>
+                                
+                                
+                                <!--/* ✅ 여기 위치에 책갈피 앵커 추가 */-->
+                                <span id="tab-saving" class="anchor-offset"></span>
+                                <div class="tab-banner">
+                                        <div class="tab-banner-text">
+                                                <p class="tab-category">저축</p>
+                                                <h1 class="tab-title">안정적인 노후를 위한<br>오늘의 투자</h1>                                                                                        
+                                        </div>
+                                        <div class="tab-banner-image">
+                                                <img src="common/images/img_mv_save.png">
+                                        </div>                        
+                                </div>
+                                <!--/* 저축: card list */-->
+                                <div class="tab-cards">
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>연금저축보험(유배당)</h2>
+                                                        <p>지하철 지연돼도 놀라지마세요!<br><span class="highlight">택시/버스 이용시 교통비 지급</span><br>(30분 이상 지연 시, 월 1회 한)</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                        <a href="" class="tab-card">
+                                                <div class="card-desc">
+                                                        <h2>개인형 퇴직연금(IRP)</h2>
+                                                        <p>고객이 <span class="highlight">넘어지고, 배탈 </span>난걸로 법적배생책임이?<br>특약으로 대비하자</p>
+                                                </div>
+                                                <div class="card-arrow"><p>></p></div>
+                                        </a>
+                                </div>                                                        
+                        </div>                                
+                </div>        
+                <script th:src="@{/common/js/main.js}"></script>        
+        </main>        
 </body>
 </html>

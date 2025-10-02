@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>고객 문의 답변</title>
+
+	<!-- 페이지 전용 CSS (정적 경로) -->
+	<th:block layout:fragment="extraHead">
+		<link rel="stylesheet" th:href="@{/admin/css/inquiryAnswer.css}" />
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="adminContent">
+		<!-- 타이틀 & 상단 액션 -->
+		<div class="title-row">
+			<h1 class="page-title">고객 문의 답변</h1>
+		</div>
+
+		<!-- 문의 내용 -->
+		<section class="card card--padded">
+			<h2 class="section__title">문의 내용</h2>
+
+			<div class="detail-grid">
+				<div class="detail-grid__label">제목</div>
+				<div class="detail-grid__value">안심플러스 운전자 보험 보장 내역 관련 문의</div>
+
+				<div class="detail-grid__label">고객명</div>
+				<div class="detail-grid__value">
+					김철수 <span class="muted">(CS2024-001)</span>
+				</div>
+
+				<div class="detail-grid__label">문의 유형</div>
+				<div class="detail-grid__value">상품 문의</div>
+
+				<div class="detail-grid__label">문의 날짜</div>
+				<div class="detail-grid__value">2024-07-28</div>
+
+				<div class="detail-grid__label">내용</div>
+				<div class="detail-grid__value">
+					<p class="paragraph">
+						경미한 사고 시에도 보장 되는지, 제출 서류는 무엇인지 궁금합니다.
+					</p>
+				</div>
+
+				<div class="detail-grid__label">첨부 파일</div>
+				<div class="detail-grid__value">
+					<ul class="file-list">
+						<li><a class="file-link" href="/admin/inquiry/file/101">참고_이미지_01.jpg</a></li>
+						<li><a class="file-link" href="/admin/inquiry/file/102">진단서_샘플.pdf</a></li>
+					</ul>
+					<!-- 첨부가 없는 케이스를 보려면 위 UL 대신 아래 라인을 남겨두면 돼요
+          <div class="muted">첨부 없음</div>
+          -->
+				</div>
+			</div>
+		</section>
+
+		<!-- 답변 작성 -->
+		<section class="card card--padded">
+			<h2 class="section__title">답변 작성</h2>
+
+			<form action="#" method="post" class="answer-form">
+				<!-- CSRF 생략 (정적 미리보기용) -->
+				<textarea name="answer" class="answer-textarea" rows="10"
+					placeholder="답변을 입력하세요...">안녕하세요, 고객님. 경미한 사고의 경우에도 보장 가능하며, 기본적으로 진단서 및 영수증이 필요합니다. 자세한 안내는 약관을 참고해 주세요.</textarea>
+
+				<div class="form-actions">
+					<a th:href="@{/admin/inquiry}" class="btn btn--outline"> 이전</a>
+
+					<button type="submit" class="btn btn--primary">답변 등록</button>
+					<button type="reset" class="btn btn--outline">초기화</button>
+				</div>
+			</form>
+		</section>
+	</main>
+</body>
+
+</html>
