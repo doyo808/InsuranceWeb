@@ -13,6 +13,9 @@
           <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"></typeAlias>
           <typeAlias type="com.kd.insuranceweb.admin.dto.ProductListRowDTO" alias="productList"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.admin.dto.ContractListRowDTO" alias="contractList"></typeAlias>
+  		  <typeAlias type="com.kd.insuranceweb.admin.dto.ContractSearchCriteria" alias="contractSearchCriteria"></typeAlias>
+
   	</typeAliases>
 
   

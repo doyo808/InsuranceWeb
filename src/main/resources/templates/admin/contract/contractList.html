@@ -13,16 +13,18 @@
 		<h1 class="page-title">보험 계약 접수 목록</h1>
 
 		<!-- 상단 툴바 -->
+		<!-- 상단 툴바: form으로 감싸고 GET 제출 -->
 		<section class="toolbar card">
-			<div class="toolbar__row">
+			<form class="toolbar__row" method="get" th:action="@{/admin/contract}">
 				<div class="field toolbar__item">
 					<label class="field__label">검색어</label>
-					<input class="field__control" type="text" name="q" placeholder="고객명, 계약번호로 검색" />
+					<input class="field__control" type="text" name="q" th:value="${criteria.q}"
+						placeholder="고객명, 계약번호로 검색" />
 				</div>
 
 				<div class="field toolbar__item">
 					<label class="field__label">상태</label>
-					<select class="field__control" name="status">
+					<select class="field__control" name="status" th:value="${criteria.status}">
 						<option value="">전체</option>
 						<option value="PENDING">접수</option>
 						<option value="APPROVED">승인</option>
@@ -33,20 +35,19 @@
 				<div class="field toolbar__item toolbar__item--grow">
 					<label class="field__label">접수일자</label>
 					<div class="daterange" data-daterange>
-						<input class="field__control daterange__input" type="date" name="from">
-						<!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
+						<input class="field__control daterange__input" type="date" name="from"
+							th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}" />
 						<span class="daterange__sep">~</span>
-						<input class="field__control daterange__input" type="date" name="to">
+						<input class="field__control daterange__input" type="date" name="to"
+							th:value="${#temporals.format(criteria.to, 'yyyy-MM-dd')}" />
 					</div>
 				</div>
 
 				<div class="toolbar__spacer"></div>
-
 				<div class="toolbar__actions">
-					<button type="button" class="btn btn--primary">조회</button>
+					<button type="submit" class="btn btn--primary">조회</button> <!-- ★ submit -->
 				</div>
-			</div>
-
+			</form>
 		</section>
 
 		<!-- 목록 테이블 -->
@@ -55,47 +56,39 @@
 				<thead>
 					<tr>
 						<th>접수ID</th>
-						<th>고객명</th>
 						<th>상품명</th>
+						<th>상품유형</th>
+						<th>고객명</th>
+						<th>보험기간</th>
 						<th>보험료</th>
-						<th>접수일</th>
-						<th>상태</th>
+						<th>계약상태</th>
 						<th>관리</th>
 					</tr>
 				</thead>
 				<tbody>
 					<!-- 샘플 행 1 -->
-					<tr class="row--hover">
-						<td>R2024-001</td>
-						<td>김민지</td>
-						<td class="cell--ellipsis">다이렉트 자동차보험 표준형</td>
-						<td class="cell--amount">85,000</td>
-						<td>2024-07-26</td>
+					<tr th:each="row : ${contracts}">
+						<td th:text="${row.contract_id}"></td>
+						<td th:text="${row.product_name}"></td>
+						<td th:text="${row.product_types}"></td>
+						<td th:text="${row.person_name}"></td>
+						<td th:text="${row.start_date} + ' ~ ' + ${row.end_date}"></td>
+						<td th:text="${row.total_premium}"></td>
 						<td>
-							<span class="badge badge--pending">PENDING</span>
+							<span th:text="${row.status}" class="badge badge--pending"></span>
 						</td>
 						<td class="text-center">
 							<a class="btn btn--primary btn--xs">상세</a>
 						</td>
 					</tr>
-
-
-					<!-- 데이터 없음 예시 (필요 시 주석 해제해 확인) -->
-					<!--
-          <tr>
-            <td class="cell--empty" colspan="7">
-              <div class="empty">
-                <div class="empty__title">표시할 접수 내역이 없습니다</div>
-                <div class="empty__desc">검색 조건을 변경해보세요.</div>
-              </div>
-            </td>
-          </tr>
-          -->
 				</tbody>
 			</table>
 		</section>
 
-		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
+		<app-pagination th:attr="current=${criteria.page},
+		           per-page=${criteria.size},
+		           total-items=${totalCount},
+		           href=@{/admin/contract} + '?page={page}'" preserve-query window="5">
 		</app-pagination>
 
 	</main>
