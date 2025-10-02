@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.kd.insuranceweb.mall.vo.PremiumRateRow;
-import com.kd.insuranceweb.mall.vo.mapper.PremiumRateRowMapper;
+import com.kd.insuranceweb.mall.model.PremiumRateRow;
+import com.kd.insuranceweb.mall.mapper.PremiumRateRowMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,8 +47,6 @@ public class MallService {
 		// base_rate[📄 premium_rate_rows] * base_premium[📄coverage_definitions]
 		PremiumRateRow rate = rateMapper.getRate(params);
 		if(rate != null) {
-			System.out.println("DB로부터 정보를 받아옴 : " + rate.toString());
-			
 			return (1 + rate.getAge_weight() + rate.getGender_weight());
 		} else {
 			return -1;

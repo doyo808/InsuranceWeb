@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.mall.vo;
+package com.kd.insuranceweb.mall.model;
 
 import java.util.Date;
 

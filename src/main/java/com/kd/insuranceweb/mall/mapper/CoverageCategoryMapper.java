@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.mall.vo.mapper;
+package com.kd.insuranceweb.mall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 

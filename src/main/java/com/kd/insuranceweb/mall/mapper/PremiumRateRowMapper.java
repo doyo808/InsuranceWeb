@@ -1,11 +1,11 @@
-package com.kd.insuranceweb.mall.vo.mapper;
+package com.kd.insuranceweb.mall.mapper;
 
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.kd.insuranceweb.mall.vo.PremiumRateRow;
+import com.kd.insuranceweb.mall.model.PremiumRateRow;
 
 @Mapper
 public interface PremiumRateRowMapper {
