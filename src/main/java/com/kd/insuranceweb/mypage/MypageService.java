@@ -1,6 +1,8 @@
 package com.kd.insuranceweb.mypage;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +12,10 @@ import com.kd.insuranceweb.common.dto.CustomerDTO;
 import com.kd.insuranceweb.common.dto.PersonDTO;
 import com.kd.insuranceweb.common.mapper.CustomerMapper;
 import com.kd.insuranceweb.common.mapper.PersonMapper;
+import com.kd.insuranceweb.mypage.dto.ContractDto;
 import com.kd.insuranceweb.mypage.dto.MarketingConsentDTO;
 import com.kd.insuranceweb.mypage.mapper.MarketingConsentMapper;
+import com.kd.insuranceweb.mypage.mapper.MyContractMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +26,7 @@ public class MypageService {
 	private final PersonMapper personMapper;
 	private final CustomerMapper customerMapper;
 	private final MarketingConsentMapper marketingConsentMapper;
+	private final MyContractMapper myContractMapper;
 
 	// 고객정보 html로 전송
 	public CustomUserDetails getPersonAndCustomerInfo(CustomUserDetails loginUser) {
@@ -84,7 +89,29 @@ public class MypageService {
 			return marketingConsentMapper.updateMarketingConsent(dto);
 		}
 	}
+	// 상태 코드 → 한글 매핑
+    private static final Map<String, String> STATUS_MAP = Map.of(
+        "PENDING", "신청",
+        "ACTIVE", "유지",
+        "EXPIRED", "만료"
+    );
 
-	
+    public List<ContractDto> getAllContracts() {
+        List<ContractDto> contracts = myContractMapper.selectAllContracts();
+        return translateStatus(contracts);
+    }
+
+    public List<ContractDto> getActiveContracts() {
+        List<ContractDto> contracts = myContractMapper.selectActiveContracts();
+        return translateStatus(contracts);
+    }
+
+    // 공통 변환 메서드
+    private List<ContractDto> translateStatus(List<ContractDto> contracts) {
+        contracts.forEach(c -> 
+            c.setStatus(STATUS_MAP.getOrDefault(c.getStatus(), c.getStatus()))
+        );
+        return contracts;
+    }
 	
 }
