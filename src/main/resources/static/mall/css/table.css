@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+/*테이블 스타일 정해두는곳*/
+.custom-table {
+	width: fit-content;
+	text-align: center;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+.custom-table caption {
+	text-align: left;
+	margin-bottom: 10px;
+}
+.custom-table thead > tr > th {
+	border-top: 1px black solid;
+	border-bottom: 1px rgb(192, 192, 192) solid;
+	padding: 22px 20px;
+}
+.custom-table thead > tr > th:nth-of-type(n+2) {
+	border-left: 1px rgb(192, 192, 192) solid;
+}
+.custom-table tbody > tr > td:nth-child(n+2) {
+	border-left: 1px rgb(192, 192, 192) solid;
+}
+.custom-table tbody > tr > th,td {
+	border-bottom: 1px rgb(192, 192, 192) solid;
+	padding: 22px 20px;
+}

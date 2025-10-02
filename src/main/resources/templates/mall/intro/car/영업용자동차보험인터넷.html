@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{/common/layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>영업용 자동차보험(인터넷가입)</title>
+  <link rel="stylesheet" th:href="@{/mall/css/commonPage.css}" />
+  <link rel="stylesheet" th:href="@{/mall/css/custom-button.css}" />
+  <link rel="stylesheet" th:href="@{/mall/css/table.css}" />
+  <script th:src="@{/mall/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+  <main layout:fragment="content" style="width: 100%; margin: 137px auto 0;">
+    <div class="header-cover main-section">
+      <!-- 상단 자동차 보험 소개 -->
+      <div class="breadcrumb container">홈 > 보험상품/대출 > 자동차 > <strong>영업용 자동차보험(인터넷가입)</strong></div>
+      <div class="top-section container">
+        <div class="text-section">
+          <div class="title">
+            영업용 자동차보험 <span class="badge">인터넷가입</span>
+          </div>
+          <div class="desc">
+            <div class="desc-text">영업용 개인 화물차도 인터넷으로 부담없이 가입하세요</div>
+          </div>
+          <button class="btn">보험료 계산</button>
+        </div>
+        <div class="image-section">
+          <img src="" alt="자동차보험 일러스트">
+        </div>
+      </div>
+    </div>
+
+    <div class="container main-section">
+      <!-- 탭 메뉴 -->
+      <div class="tabs">
+        <div class="tab-menu active" data-tab="tab1">상품소개</div>
+        <div class="tab-menu" data-tab="tab2">보장내용</div>
+      </div>
+
+      <!-- 상품 소개 섹션 -->
+      <div class="tab show" id="tab1">
+        <div class="section">
+          <div class="content">
+            <h2>인터넷으로 직접 가입해서 평균 13.5% 저렴한 보험료</h2>
+            <ul class="check-ul">
+              <li>자사 오프라인 상품 가입 대비 평균 13.5% 저렴</li>
+              <li>인터넷으로 직접 설계하고 가입하여 판매수수료까지 절감</li>
+              <li>가입 가능 차종 : 화물차 전차종</li>
+            </ul>
+          </div>
+          <div class="image">
+            <img src="" alt="절약 아이콘">
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="content">
+            <h2>믿을 수 있는 삼성화재 보상서비스는 그대로</h2>
+            <ul class="check-ul">
+              <li>인터넷으로 가입해도 삼성화재 보상서비스는 동일하게 제공</li>
+              <li>365일 24시간 신속한 현장출동서비스 제공</li>
+            </ul>
+            <div class="notice">
+              <dl class="info-list">
+                <dt>꼭 확인하세요</dt>
+                <dd>
+                  <ul class="list-round">
+                    <li>애니카서비스 특약 가입 시 신속한 긴급출동서비스를 제공합니다.</li>
+                    <li>삼성화재가 인증한 애니카 패밀리센터에서 수리 시 품질보증서비스를 제공합니다.</li>
+                  </ul>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="image">
+            <img src="" alt="택배 아이콘">
+          </div>
+        </div>
+
+        <div class="section-plus">
+          <p>준법감시인확인필 제24-1-11095호 (0801,'24.10.10~'25.10.09)</p>
+          <div class="btn-wrap">
+            <button class="btn-round">가입 시 유의사항</button>
+          </div>
+        </div>
+
+        <div class="call-box">
+          전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 특약 가입이 가능합니다.
+        </div>
+      </div>
+    </div>
+
+    <script th:src="@{/mall/js/product.js}"></script>
+  </main>
+</body>
+
+</html>

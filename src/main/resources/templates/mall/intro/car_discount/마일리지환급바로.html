@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{/common/layout.html}">
+	  
+<head>
+	<meta charset="UTF-8">
+	<title>마일리지환급금 바로사용 서비스</title>
+	<link rel="stylesheet" th:href="@{/mall/css/commonPage.css}" />
+	<link rel="stylesheet" th:href="@{/mall/css/table.css}" />
+	<link rel="stylesheet" th:href="@{/mall/css/custom-button.css}" />
+	<script th:src="@{/mall/js/jquery-3.7.1.min.js}"></script>
+</head>
+
+<body>
+	<main layout:fragment="content" style="width: 100%; margin: 137px auto 0;">
+		<div class="header-cover main-section">
+			<!-- 상단 자동차 보험 소개 -->
+			<div class="breadcrumb container">홈 > 보험상품/대출 > 자동차보험 할인특약 안내 > <strong>마일리지환급금 바로사용 서비스</strong></div>
+			<div class="top-section container">
+				<div class="text-section">
+					<div class="title">
+						마일리지 환급금 정산 특약 <span class="badge">환급금 바로사용 서비스</span>
+					</div>
+					<div class="desc">
+						<div class="desc-text">마일리지 특약 환급금을 올해 보험료 결제 시 바로 사용</div>
+						<div class="desc-subtext">(환급금을 따로 돌려받는 것도 선택 가능)</div>
+					</div>
+					<button class="btn">갱신보험료 계산/가입</button>
+				</div>
+				<div class="image-section">
+					<img src="" alt="자동차보험 일러스트">
+				</div>
+			</div>
+		</div>
+
+		<div class="container main-section">
+			<div class="section">
+				<div class="content">
+					<h2>이전 계약에서 발생한 마일리지 특약 환급금으로 갱신 보험료를 바로 차감하고 결제</h2>
+					<ul class="check-ul">
+						<li>적용상품: 개인 승용, 개인 업무용(초소형ㆍ경ㆍ4종화물, 3종승합) 자동차보험</li>
+					</ul>
+
+				</div>
+
+				<div class="section-flex-row">
+					<table class="custom-table">
+						<caption>[환급금 사용 예시]</caption>
+						<thead>
+							<th>갱신 보험료</th>
+							<th>바로사용(마일리지 환급금) </th>
+							<th>올해 결제할 보험료</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>500,000원</td>
+								<td>150,000</td>
+								<td>350,000</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="image">
+					<img src="" alt="돈주머니 차감 아이콘">
+				</div>
+
+				<h2 class="section-flex-row">환급금 바로사용 서비스 이럴 때 이용하세요!</h2>
+				<ul class="section-flex-row list-round">
+					<li>이전 계약에서 마일리지 특약에 가입했고, 특약 환급금이 발생한 경우(보험 갱신 시 주행거리 사진을 등록해야 하므로, 자동차번호판 사진 1장과 계기판 사진 1장을 미리 준비)
+					</li>
+					<li>주행거리 사진이 시스템으로 자동 판독되는 경우(사진을 선명하게 촬영 필요)</li>
+					<li>보험료를 신용카드로 결제하는 경우(계좌이체, 무통장입금은 서비스 이용 불가)</li>
+					<li>이전 계약과 올해 계약의 계약자와 자동차번호가 같은 경우(달라진 경우는 서비스 이용 불가)<br>
+						<p class="note">마일리지 환급금을 바로 사용하지 않거나 사용할 수 없는 경우, 환급받을 금액을 정산해 드립니다.(사진 등록일로부터 2~3일 소요)</p>
+					</li>
+					<li>'24.05.21 보험시작일 기준</li>
+				</ul>
+
+			</div>
+
+			<div class="section">
+				<div class="content">
+					<h2>다양한 할인 특약으로 보험료 할인</h2>
+					<ul class="check-ul">
+						<li>마일리지, 블랙박스, 자녀사랑 할인 특약 등 가입으로 보험료 할인</li>
+					</ul>
+					<div class="note">특약별 가입대상 및 조건에 대한 자세한 내용은 각 특약 상세 페이지에서 확인 가능</div>
+				</div>
+				<div class="image">
+					<img src="" alt="계산기 할인 아이콘">
+				</div>
+			</div>
+
+		</div>
+
+		<div class="section-plus container">
+			<p>준법감시인확인필 제25-1-0182호 (0801,'25.01.15~'26.01.14)</p>
+			<div class="btn-wrap">
+				<button class="btn-round">가입 시 유의사항</button>
+			</div>
+		</div>
+		<div class="call-box container">
+			전화가입 상담센터(1600-5008)를 통해 다이렉트 자동차보험에 가입하는 경우에도 동일하게 특약 가입이 가능합니다.
+		</div>
+		</div>
+
+		<script th:src="@{/mall/js/product.js}"></script>
+	</main>
+</body>
+
+</html>
