@@ -103,29 +103,6 @@
 
 		  <!-- ✅ 폼 시작 -->
 		  <form th:action="@{/claim/claimpage6}" method="post">
-		    <!-- 피보험자 정보 -->
-		    <div class="form-section">
-		      <h3>피보험자 정보</h3>
-		      <div class="form-grid">
-		        <label for="insuredName">성명</label>
-		        <input type="text" id="insuredName" name="insuredName" required>
-
-		        <label for="insuredId1">주민등록번호</label>
-		        <div style="display: flex; align-items: center;">
-		          <input type="text" id="insuredId1" name="insuredId1" maxlength="6" style="width: 45%;">
-		          <span style="margin: 0 8px;">-</span>
-		          <input type="password" id="insuredId2" name="insuredId2" maxlength="7" style="width: 55%;">
-		        </div>
-
-		        <label for="insuredJob">직업</label>
-		        <input type="text" id="insuredJob" name="insuredJob">
-
-		        <label for="insuredCompany">회사명</label>
-		        <input type="text" id="insuredCompany" name="insuredCompany">
-
-		      </div>
-		    </div>
-
 		    <!-- 수익자 정보 -->
 		    <div class="form-section">
 		      <h3>수익자 정보 (예금주/안내대상자)</h3>
@@ -135,9 +112,11 @@
 
 		        <label for="beneficiaryId1">주민등록번호</label>
 		        <div style="display: flex; align-items: center;">
-		          <input type="text" id="beneficiaryId1" name="beneficiaryId1" maxlength="6" style="width: 45%;">
-		          <span style="margin: 0 8px;">-</span>
-		          <input type="password" id="beneficiaryId2" name="beneficiaryId2" maxlength="7" style="width: 55%;">
+					<input type="text" id="beneficiaryId1" name="beneficiaryId1" 
+					       maxlength="6" pattern="\d{6}" required style="width:45%;">
+			        <span style="margin: 0 8px;">-</span>
+					<input type="password" id="beneficiaryId2" name="beneficiaryId2" 
+					       maxlength="7" pattern="\d{7}" required style="width:55%;">
 		        </div>
 
 		        <label for="relation">피보험자와 관계</label>
@@ -152,17 +131,17 @@
 
 		        <label for="beneficiaryAddress">주소</label>
 		        <div>
-		          <input type="text" id="postcode" name="beneficiaryAddress" placeholder="우편번호" style="width: 100px; margin-bottom: 5px;">
+		          <input type="text" id="postcode" name="beneficiaryPostcode" placeholder="우편번호" style="width: 100px; margin-bottom: 5px;"  maxlength="5" required>
 		          <button type="button" id="addressSearchBtn" style="margin-left: 5px;">우편번호 찾기</button>
-		          <input type="text" id="address" name="beneficiaryAddress" placeholder="기본 주소" style="width: 100%; margin-bottom: 5px;">
-		          <input type="text" id="detailAddress" name="beneficiaryAddress" placeholder="상세 주소" style="width: 100%;">
+		          <input type="text" id="address" name="beneficiaryAddress" placeholder="기본 주소" style="width: 100%; margin-bottom: 5px;" required>
+		          <input type="text" id="detailAddress" name="detailAddress" placeholder="상세 주소" style="width: 100%;" required>
 		        </div>
 
 			  
 			  <label for="bank">입금계좌</label>
 			  <div>
 			    <!-- 은행 선택 -->
-			    <select id="bank" name="bank">
+			    <select id="bank" name="bank" required>
 			      <option value="">은행 선택</option>
 			      <option value="kookmin">국민은행</option>
 			      <option value="woori">우리은행</option>
@@ -171,10 +150,10 @@
 			    </select>
 
 			    <!-- 계좌 소유자 -->
-			    <input type="text" id="owner" name="owner" placeholder="예금주명">
+			    <input type="text" id="owner" name="owner" placeholder="예금주명" required>
 
 			    <!-- 계좌번호 -->
-			    <input type="text" id="account" name="account" placeholder="계좌번호">
+			    <input type="text" id="account" name="account" placeholder="계좌번호" required>
 			  </div>
 			  
 			  
@@ -251,6 +230,35 @@
 		 });
 
 		    
+		 function filterNumbers(event) {
+		   // 현재 값에서 숫자 아닌 것 제거
+		   event.target.value = event.target.value.replace(/[^0-9]/g, '');
+		 }
+
+		 const fields = ['beneficiaryId1', 'beneficiaryId2', 'postcode'];
+
+		 fields.forEach(id => {
+		   document.getElementById(id).addEventListener('input', filterNumbers);
+		 });
+		 
+		 document.querySelector("form").addEventListener("submit", function(e) {
+		     const id1 = document.getElementById("beneficiaryId1").value;
+		     const id2 = document.getElementById("beneficiaryId2").value;
+
+		     const reg1 = /^\d{6}$/;  // 앞자리 6자리 숫자
+		     const reg2 = /^\d{7}$/;  // 뒷자리 7자리 숫자
+
+		     if (!reg1.test(id1)) {
+		         alert("주민등록번호 앞자리는 6자리 숫자여야 합니다.");
+		         e.preventDefault();
+		         return;
+		     }
+		     if (!reg2.test(id2)) {
+		         alert("주민등록번호 뒷자리는 7자리 숫자여야 합니다.");
+		         e.preventDefault();
+		         return;
+		     }
+		 });
 		</script>
 	</main>
 

@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.claim;
+package com.kd.insuranceweb.claim.service;
 
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.google.cloud.vision.v1.AnnotateImageRequest;

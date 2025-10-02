@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>청구 조회</title>
+  <style>
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .radio-group {
+      margin-bottom: 15px;
+    }
+
+    .radio-group label {
+      margin-right: 20px;
+    }
+
+    .period {
+      margin: 15px 0;
+    }
+
+    .period button {
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-right: 10px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    .period button.active {
+      border: 2px solid #007bff;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .date-range {
+      margin: 15px 0;
+    }
+
+    .date-range input {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin: 0 5px;
+    }
+
+    .btn-confirm {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .notice {
+      font-size: 13px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table thead {
+      background: #f8f8f8;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main layout:fragment="content" style="width: 1200px; margin: 0 auto;">
+    <div class="container">
+      <h2>질병/상해 보상내역을<br>확인해 보세요</h2>
+
+      <div class="search-box">
+        <div class="radio-group">
+          <label><input type="radio" name="target" checked> 본인</label>
+          <label><input type="radio" name="target"> 미성년 자녀</label>
+        </div>
+
+        <div class="period">
+          <button data-months="3">3개월</button>
+          <button data-months="6" class="active">6개월</button>
+          <button data-months="12">1년</button>
+        </div>
+
+        <div class="date-range">
+          <input type="date" id="startDate" readonly>
+          -
+          <input type="date" id="endDate" readonly>
+          <button class="btn-confirm">확인</button>
+        </div>
+
+        <p class="notice">
+          · 최근 3년 이전의 보상내역 확인은 직접검색을 이용해 주세요.<br>
+          · 단체보험으로 미성년자의 보험금을 청구하신 내역은 확인하실 수 없으며,
+            고객센터(1588-5114)로 문의해 주세요.
+        </p>
+      </div>
+
+      <h3>청구번호를 선택해 주세요</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>청구번호<br>(연결청구번호)</th>
+            <th>내용</th>
+            <th>사고/발병일</th>
+            <th>상태</th>
+            <th>담당자</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="empty" colspan="5">확인 가능한 보상내역이 없습니다.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="notice">
+        · 연결청구번호란, 청구사항 내용이 유사한 기존 청구번호를 말합니다.<br>
+        · 조회가 되지 않는 건은 고객센터(1588-5114)를 통해 확인해 주세요.
+      </p>
+    </div>
+
+    <script>
+      const buttons = document.querySelectorAll(".period button");
+      const startDateInput = document.getElementById("startDate");
+      const endDateInput = document.getElementById("endDate");
+
+      // 오늘 날짜 계산
+      const today = new Date();
+      const todayStr = today.toISOString().split("T")[0];
+
+      // 오늘 이후 선택 불가 & 종료일 기본 세팅
+      endDateInput.value = todayStr;
+      endDateInput.max = todayStr;
+      startDateInput.max = todayStr;
+
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          buttons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const months = parseInt(btn.dataset.months);
+          const startDate = new Date(today);
+          startDate.setMonth(startDate.getMonth() - months);
+
+          startDateInput.value = startDate.toISOString().split("T")[0];
+          endDateInput.value = todayStr;
+        });
+      });
+    </script>
+  </main>
+</body>
+</html>

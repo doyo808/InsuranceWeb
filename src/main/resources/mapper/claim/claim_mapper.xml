@@ -5,9 +5,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.kd.insuranceweb.claim.ClaimMapper">
+<mapper namespace="com.kd.insuranceweb.claim.mapper.ClaimMapper">
 
-    <resultMap id="claimResultMap" type="com.kd.insuranceweb.claim.Claim">
+    <resultMap id="claimResultMap" type="com.kd.insuranceweb.claim.dto.Claim">
         <id property="claimId" column="claim_id"/>
         <result property="contractId" column="contract_id"/>
         <result property="customerId" column="customer_id"/>
@@ -20,7 +20,7 @@
         <result property="beneficiaryName" column="beneficiary_name"/>
         <result property="bankAccount" column="bank_account"/>
         <result property="bankName" column="bank_name"/>
-        <result property="email" column="email"/>
+        <result property="beneficiaryEmail" column="beneficiary_email"/>
         <result property="claimStatus" column="claim_status"/>
         <result property="completionDate" column="completion_date"/>
         <result property="totalPaidAmount" column="total_paid_amount"/>
@@ -28,30 +28,40 @@
         <result property="receiptFilePath" column="receipt_file_path"/>
         <result property="etcFilePath" column="etc_file_path"/>
         <result property="documentStatus" column="document_status"/>
+        <result property="beneficiaryPostcode" column="beneficiary_postcode"/>
+        <result property="beneficiaryAddress" column="beneficiary_address"/>
     </resultMap>
 
-    <insert id="insertClaim" parameterType="com.kd.insuranceweb.claim.Claim">
+    <insert id="insertClaim" parameterType="com.kd.insuranceweb.claim.dto.Claim">
         INSERT INTO CLAIMS (
             claim_id, contract_id, customer_id, claim_type, claim_date,
             accident_date, compensation_type, diagnosis_cd, accident_description,
-            beneficiary_name, bank_account, bank_name, email,
+            beneficiary_name, bank_account, bank_name, beneficiary_email,
             claim_status, completion_date, total_paid_amount,
-            detail_file_path, receipt_file_path, etc_file_path, document_status
+            detail_file_path, receipt_file_path, etc_file_path, document_status,
+            beneficiary_postcode, beneficiary_address 
         )
         VALUES (
             CLAIMS_SEQ.NEXTVAL,   <!-- 시퀀스 사용 -->
-            #{contractId}, #{customerId}, #{claimType}, #{claimDate},
+            #{contractId, jdbcType=INTEGER}, #{customerId}, #{claimType}, #{claimDate},
             #{accidentDate}, #{compensationType}, #{diagnosisCd}, #{accidentDescription},
-            #{beneficiaryName}, #{bankAccount}, #{bankName}, #{email},
+            #{beneficiaryName}, #{bankAccount}, #{bankName}, #{beneficiaryEmail},
             #{claimStatus}, #{completionDate}, #{totalPaidAmount},
-            #{detailFilePath}, #{receiptFilePath}, #{etcFilePath}, #{documentStatus}
+            #{detailFilePath}, #{receiptFilePath}, #{etcFilePath}, #{documentStatus},
+            #{beneficiaryPostcode}, #{beneficiaryAddress}
         )
     </insert>
 
-    <select id="selectClaim" parameterType="long" resultType="com.kd.insuranceweb.claim.Claim">
+    <select id="selectClaim" parameterType="long" resultType="com.kd.insuranceweb.claim.dto.Claim">
         SELECT *
         FROM CLAIMS
         WHERE claim_id = #{claimId}
+    </select>
+    
+	<select id="selectClaimsByCustomerId" parameterType="long" resultType="com.kd.insuranceweb.claim.dto.Claim">
+        SELECT *
+        FROM CLAIMS
+        WHERE customer_id = #{customerId}
     </select>
 
     <select id="selectClaimById" resultMap="claimResultMap" parameterType="long">
@@ -62,7 +72,7 @@
         SELECT * FROM CLAIMS ORDER BY claim_date DESC
     </select>
 
-    <update id="updateClaim" parameterType="com.kd.insuranceweb.claim.Claim">
+    <update id="updateClaim" parameterType="com.kd.insuranceweb.claim.dto.Claim">
         UPDATE CLAIMS
         SET
             contract_id = #{contractId},
@@ -76,19 +86,41 @@
             beneficiary_name = #{beneficiaryName},
             bank_account = #{bankAccount},
             bank_name = #{bankName},
-            email = #{email},
+            beneficiary_email = #{beneficiaryEmail},
             claim_status = #{claimStatus},
             completion_date = #{completionDate},
             total_paid_amount = #{totalPaidAmount},
             detail_file_path = #{detailFilePath},
             receipt_file_path = #{receiptFilePath},
             etc_file_path = #{etcFilePath},
-            document_status = #{documentStatus}
+            document_status = #{documentStatus},
+            beneficiary_postcode = #{beneficiaryPostcode},
+            beneficiary_address = #{beneficiaryAddress}
         WHERE claim_id = #{claimId}
     </update>
 
     <delete id="deleteClaim" parameterType="long">
         DELETE FROM CLAIMS WHERE claim_id = #{claimId}
     </delete>
+    
+	<select id="findClaimsByPeriod" resultType="com.kd.insuranceweb.claim.dto.Claim">
+	  SELECT *
+	  FROM (
+	    SELECT c.*, ROWNUM rnum
+	    FROM (
+	      SELECT *
+	      FROM claim
+	      WHERE claim_date BETWEEN #{startDate} AND #{endDate}
+	      ORDER BY claim_date DESC
+	    ) c
+	    WHERE ROWNUM &lt;= #{offset} + #{size}
+	  )
+	  WHERE rnum &gt; #{offset}
+	</select>
 
+	<select id="countClaimsByPeriod" resultType="int">
+	  SELECT COUNT(*)
+	  FROM claim
+	  WHERE claim_date BETWEEN #{startDate} AND #{endDate}
+	</select>
 </mapper>
