@@ -1,0 +1,9 @@
+<div th:fragment="faqList">
+    <div th:if="${#lists.isEmpty(faqs)}">
+        <p style="text-align: center;">검색 결과가 없습니다.</p>
+    </div>
+    <div th:each="faq : ${faqs}">
+        <div class="faq-question">Q. <span th:text="${faq.question}"></span></div>
+        <div class="faq-answer">A. <span th:text="${faq.answer}"></span></div>
+    </div>
+</div>

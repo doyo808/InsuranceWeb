@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
@@ -25,11 +27,17 @@ public class PageController {
         
     }
 
-    @GetMapping("/helpdesk/{page}")
-    public String routeHelpdeskPage(@PathVariable("page") String page) {
-        // Map에서 찾아서 반환, 없으면 기본 페이지로 이동
-        return helpdeskPages.getOrDefault(page, "helpdesk/PP060801_001");
+    // 최초 페이지 SSR
+    @GetMapping("/helpdesk/customerservice")
+    public String helpdesk(
+            @RequestParam(value = "menu", defaultValue = "ars1") String menu,
+            Model model
+    ) {
+        model.addAttribute("menu", menu);
+        return "helpdesk/PP060200_000"; // 전체 페이지 SSR
     }
+
+	
     
     @GetMapping("/terms/{page}")
     public String routeTermsPage(@PathVariable("page") String page) {
