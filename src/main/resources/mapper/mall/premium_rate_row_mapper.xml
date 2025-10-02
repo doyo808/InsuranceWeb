@@ -13,4 +13,17 @@
 		AND gender = #{gender} 
 		AND #{age} BETWEEN age_from AND age_to
   </select>
+  <select id="getList" resultType="java.util.ArrayList">
+  	SELECT 
+  		RATE_ROW_ID, 
+  		PRODUCT_ID,
+  		AGE_FROM,
+  		AGE_TO,
+  		GENDER,
+  		AGE_WEIGHT,
+  		GENDER_WEIGHT,
+  		IS_SMOKER
+  	FROM 
+  		premium_rate_rows
+  </select>
 </mapper>

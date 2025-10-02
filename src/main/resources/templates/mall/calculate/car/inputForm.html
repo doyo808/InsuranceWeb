@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Document</title>
+    <title>자동차 보험료 계산 입력폼</title>
     <style>
         .modal {
             display: none;
@@ -98,7 +98,8 @@
                 이미지 들어가는 칸
             </div>
             <div>
-                <form id="dental-input">
+                <form id="dental-input" th:action="@{./1}" method="post">
+					<input type="hidden" th:name="_csrf.parameterName" th:value="${_csrf.token}" />
                     <h3>보장 받으실 분의 정보를 입력해주세요</h3>
                     <button type="button">계산기록</button>
                     <hr>
@@ -127,7 +128,7 @@
                     <dl class="user-form">
                         <dt>직업</dt>
                         <dd>
-                            <input type="text" name="job" id="job" value="nojob" readonly />
+                            <input type="text" id="job" value="nojob" readonly />
                             <button type="button" onclick="" class="btn-function">직업 찾기</button>
                         </dd>
                     </dl>
@@ -280,8 +281,6 @@
     <!-- submit 버튼을 클릭했을때 다음페이지로 넘겨줌-->
     <script>
         const dental_form = document.getElementById('dental-input');
-        dental_form.method = 'POST';
-        dental_form.action = './1';
         dental_form.addEventListener('change', e => {
             const isValid = validateForm(true, true);
             submitBtn.classList.toggle("disabled", !isValid);

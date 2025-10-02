@@ -49,17 +49,25 @@ public class MallController {
 		// 받은 정보를 임의로 세션에 저장해둠
 		String birth = request.getParameter("birth");
 		String gender = request.getParameter("gender");
-		String job = request.getParameter("job");
+//		String job = request.getParameter("job");
 		session.setAttribute("birth", birth);
 		session.setAttribute("gender", gender);
-		session.setAttribute("job", job);
+//		session.setAttribute("job", job);
+		
+		// 리스트 불러오기 TEST
+//		service.getList();
 		
 		// 계산된 보험료를 받아옴
 		// DB에서 연결을 하고 데이터를 검색하기때문에 오래 걸릴수도 있는 작업
 		// TODO Ajax를 이용해보면 좋을 것
-		double premiumRate = service.getPremiumRate(Integer.parseInt(id), birth, gender, job);
-		// 데이터를 모델에 따로 실어놓는다
+		double premiumRate = service.getPremiumRate(Integer.parseInt(id), birth, gender);
 		System.out.println(premiumRate);
+		if(premiumRate < 0) {
+			return "mall/calculate/notFound";
+		}
+		
+		
+		// 데이터를 모델에 따로 실어놓는다
 		model.addAttribute("premium", (Double) premiumRate);
 		
 		return "mall/calculate/car/selectCover";
@@ -83,9 +91,9 @@ public class MallController {
 	@GetMapping("/driver/{id}")
 	public String driver(@PathVariable("id") Long id) {
 		if(id==1) {
-			return "/mall/intro/car_discount/운전자보험";
+			return "/mall/intro/driver/운전자보험";
 		} else if(id==2) {
-			return "/mall/intro/car_discount/오토바이전용";
+			return "/mall/intro/driver/오토바이전용";
 		} else {
 			return "redirect:/home";
 		}

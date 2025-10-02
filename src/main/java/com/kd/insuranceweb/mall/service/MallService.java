@@ -3,13 +3,12 @@ package com.kd.insuranceweb.mall.service;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.kd.insuranceweb.mall.vo.PremiumRateRow;
 import com.kd.insuranceweb.mall.vo.mapper.PremiumRateRowMapper;
-
-//import com.kd.insuranceweb.mall.vo.mapper.PremiumRateMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +24,7 @@ public class MallService {
 	 * 값이 비거나 문제가 생기면 -1을 리턴한다
 	 * @return 보험료
 	 */
-	public double getPremiumRate(int id, String birth, String gender, String job) {
+	public double getPremiumRate(int id, String birth, String gender) {
 
 		// 현재 년도를 참조해서 나이를 계산한다
 		int age = (Calendar.getInstance().get(Calendar.YEAR) 
@@ -54,5 +53,10 @@ public class MallService {
 		} else {
 			return -1;
 		}
+	}
+	
+	public List<PremiumRateRow> getList() {
+		
+		return rateMapper.getList();
 	}
 }

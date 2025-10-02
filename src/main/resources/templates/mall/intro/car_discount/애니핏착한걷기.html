@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{/common/layout.html}">
 
 <head>
 	<meta charset="UTF-8">
 	<title>애니핏 착한걷기</title>
-	<link rel="stylesheet" th:href="@{/css/commonPage.css}" />
-	<link rel="stylesheet" th:href="@{/css/table.css}" />
-	<link rel="stylesheet" th:href="@{/css/custom-button.css}" />
-	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/mall/css/commonPage.css}" />
+	<link rel="stylesheet" th:href="@{/mall/css/table.css}" />
+	<link rel="stylesheet" th:href="@{/mall/css/custom-button.css}" />
+	<script th:src="@{/mall/js/jquery-3.7.1.min.js}"></script>
 </head>
 
 <body>
-	<main th:fragment="main">
+	<main layout:fragment="content" style="width: 100%; margin: 137px auto 0;">
 		<div class="header-cover main-section">
 			<!-- 상단 자동차 보험 소개 -->
 			<div class="breadcrumb container">홈 > 보험상품/대출 > 자동차보험 할인특약 안내 > <strong>애니핏 착한걷기</strong></div>
@@ -126,6 +128,7 @@
 			</div>
 		</div>
 
+		<script th:src="@{/mall/js/product.js}"></script>
 	</main>
 </body>
 

@@ -2,9 +2,9 @@
 
 /*테이블 스타일 정해두는곳*/
 .custom-table {
-	width: 100%;
+	width: fit-content;
 	text-align: center;
-	margin: 0;
+	margin: 0 auto;
 	border-collapse: collapse;
 }
 .custom-table caption {

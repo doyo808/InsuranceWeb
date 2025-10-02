@@ -207,8 +207,8 @@ body {
 /* 탭 메뉴 (상품소개/보장내용) */
 .tabs {
   display: flex;
-  /* border-bottom: 2px solid #ccc; */
   margin-bottom: 40px;
+  width: fit-content;
 }
 
 .tabs div {
