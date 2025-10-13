@@ -25,7 +25,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kd.insuranceweb.admin.dto.ClaimDetailDTO;
 import com.kd.insuranceweb.admin.dto.ClaimListRowDTO;
 import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
+import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
+import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
+import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
 import com.kd.insuranceweb.admin.service.ClaimService;
+import com.kd.insuranceweb.admin.service.ContractService;
+import com.kd.insuranceweb.admin.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +40,9 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 
 	private final ClaimService claimService;
-
+	private final ProductService productService;
+	private final ContractService contractService;
+	
 	// ===== 공통 페이지 =====
 	@GetMapping("/login")
 	public String login() {
@@ -43,7 +50,15 @@ public class AdminController {
 	}
 
 	@GetMapping("/main")
-	public String main() {
+	public String main(
+			@ModelAttribute("criteria") ClaimSearchCriteria criteria, 
+			Model model
+	) {
+		int pendingCount = claimService.getPendingCount(criteria);
+		model.addAttribute("pendingCount", pendingCount);
+		int sellingCount = productService.countProductsOnSale();
+		model.addAttribute("sellingCount", sellingCount); 
+		
 		return "admin/common/main";
 	}
 
@@ -53,21 +68,48 @@ public class AdminController {
 		return "admin/inquiry/inquiryList";
 	}
 
+	@GetMapping("/inquiryAnswer")
+	public String inquiryAnswer() {
+		return "admin/inquiry/inquiryAnswer";
+	}
+	
 	// ===== 계약 관리 =====
 	@GetMapping("/contract")
-	public String contractList() {
+	public String contractList(@ModelAttribute("criteria") ContractSearchCriteria criteria, Model model) {
+
+		
+		 // ★ 종료일 + 1일(배타 범위)
+	    if (criteria.getTo() != null) {
+	        criteria.setToExclusive(criteria.getTo().plusDays(1));
+	    }
+		
+	    int totalCount = contractService.countReceipts(criteria);
+	    List<ContractListRowDTO> rows = contractService.findReceiptsPage(criteria);
+
+	    model.addAttribute("criteria", criteria);
+	    model.addAttribute("contracts", rows);
+	    model.addAttribute("totalCount", totalCount);
 		return "admin/contract/contractList";
 	}
 
 	
 	// ===== 상품 관리 =====
 	@GetMapping("/product")
-	public String productList() {
-		return "admin/product/productList";
-	}
+	public String productList(@ModelAttribute("criteria") ProductSearchCriteria criteria, Model model) {
+	    int totalCount   = productService.countProducts(criteria);
+	    var products     = productService.findProductPage(criteria);
+	    int sellingCount = productService.countProductsOnSale();
+
+	    model.addAttribute("criteria", criteria);
+	    model.addAttribute("products", products);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("page",  criteria.getPage());
+	    model.addAttribute("perPage", criteria.getSize());
+	    model.addAttribute("sellingCount", sellingCount); 
+	    return "admin/product/productList";
+	    }
 
 	// ===== 보험금 청구 관리 =====
-	// 목록: GET /admin/claims
 	@GetMapping("/claim")
 	public String claimList(@ModelAttribute("criteria") ClaimSearchCriteria criteria, Model model) {
 	    if (criteria.getTo() != null) {

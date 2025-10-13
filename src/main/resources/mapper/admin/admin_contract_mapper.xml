@@ -1,0 +1,94 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.admin.mapper.AdminContractMapper">
+
+  <!-- (선택) 비페이징 전체 목록 -->
+  <select id="findContractList" resultType="contractList">
+    SELECT
+      ic.contract_id,
+      ic.start_date,
+      ic.end_date,
+      ic.total_premium,
+      ic.status,
+      p.person_name,
+      ip.product_name,
+      ip.product_types
+    FROM insurance_contracts ic
+    JOIN customers c ON ic.customer_id = c.customer_id
+    JOIN persons   p ON c.person_id = p.person_id
+    JOIN insurance_products ip ON ic.product_id = ip.product_id
+    ORDER BY ic.contract_id DESC
+  </select>
+
+  <!-- 총건수 -->
+  <select id="countReceipts"
+          parameterType="contractSearchCriteria"
+          resultType="int">
+    SELECT COUNT(*)
+    FROM insurance_contracts ic
+    JOIN customers c ON ic.customer_id = c.customer_id
+    JOIN persons   p ON c.person_id = p.person_id
+    JOIN insurance_products ip ON ic.product_id = ip.product_id
+    <where>
+      <if test="q != null and q.trim() != ''">
+        (
+          INSTR(LOWER(ip.product_name), LOWER(#{q})) &gt; 0
+          OR INSTR(LOWER(p.person_name), LOWER(#{q})) &gt; 0
+          OR INSTR(TO_CHAR(ic.contract_id), #{q}) &gt; 0
+        )
+      </if>
+
+      <!-- status를 '계약상태'로 쓸지, 'product_types'로 쓸지 결정 필요.
+           지금 DTO 주석이 product_types로 보이니, 그 경우 아래처럼 ip.product_types로 비교 -->
+      <if test="status != null and status != ''">
+        AND ip.product_types = #{status}
+      </if>
+
+      <if test="from != null">
+        AND ic.start_date &gt;= #{from}
+      </if>
+      <if test="toExclusive != null">
+        AND ic.start_date &lt; #{toExclusive}
+      </if>
+    </where>
+  </select>
+
+  <!-- 페이징 목록 -->
+  <select id="findReceiptsPage"
+          parameterType="contractSearchCriteria"
+          resultType="contractList">
+    SELECT
+      ic.contract_id,
+      ic.start_date,
+      ic.end_date,
+      ic.total_premium,
+      ic.status,
+      p.person_name,
+      ip.product_name,
+      ip.product_types
+    FROM insurance_contracts ic
+    JOIN customers c ON ic.customer_id = c.customer_id
+    JOIN persons   p ON c.person_id = p.person_id
+    JOIN insurance_products ip ON ic.product_id = ip.product_id
+    <where>
+      <if test="q != null and q.trim() != ''">
+        (
+          INSTR(LOWER(ip.product_name), LOWER(#{q})) &gt; 0
+          OR INSTR(LOWER(p.person_name), LOWER(#{q})) &gt; 0
+          OR INSTR(TO_CHAR(ic.contract_id), #{q}) &gt; 0
+        )
+      </if>
+      <if test="status != null and status != ''">
+        AND ip.product_types = #{status}
+      </if>
+      <if test="from != null">
+        AND ic.start_date &gt;= #{from}
+      </if>
+      <if test="toExclusive != null">
+        AND ic.start_date &lt; #{toExclusive}
+      </if>
+    </where>
+    ORDER BY ic.contract_id DESC
+    OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+</mapper>

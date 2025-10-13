@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
  * 상품 선택부터 계약 완료까지의 과정을 단계별로 담당합니다.
  */
 @Controller
-@RequestMapping("/mall")
+@RequestMapping("/mall2")
 @RequiredArgsConstructor
 public class MallControllerTemp {
 	
@@ -70,7 +70,7 @@ public class MallControllerTemp {
 		session.setAttribute("customer_name", dto.getCustomer_name());
 		session.setAttribute("MallPersonalBasicDTO", dto);
 		
-		return "redirect:/mall/detail";
+		return "redirect:/mall2/detail";
 	}
 	
 	/*
@@ -89,7 +89,7 @@ public class MallControllerTemp {
 		session.setAttribute("medical_history", dto.getMedical_history());
 		session.setAttribute("medical_history_text", dto.getMedical_history_text());
 		session.setAttribute("MallInsuredDetailDTO", dto);
-		return "redirect:/mall/notice";
+		return "redirect:/mall2/notice";
 	}
 	
 	/*
@@ -104,7 +104,7 @@ public class MallControllerTemp {
 		BigDecimal premium = (BigDecimal) session.getAttribute("premium");
 		
 		InsuranceApplyDto applyDto = (InsuranceApplyDto) session.getAttribute("init");
-		if (applyDto == null) { return "redirect:/mall/init"; }
+		if (applyDto == null) { return "redirect:/mall2/init"; }
 		productName = applyDto.getProductName();
 		premium = new BigDecimal(applyDto.getTotalPremium());
 		
@@ -151,7 +151,7 @@ public class MallControllerTemp {
 
 		sessionClear(session);
 		
-		return "redirect:/mall/complete";
+		return "redirect:/mall2/complete";
 	}
 
     /*

@@ -8,7 +8,9 @@
 }
 
 .main-wrapper {
+	width: 1200px;
 	text-align: center;
+	margin: 0 auto;
 }
 
 .content-wrapper {
@@ -38,6 +40,8 @@
    콘텐츠 박스 (.content-box)
    ========================================================================== */
 .content-box {
+	display: flex;
+	flex-direction: column;
 	text-align: left;
 	padding: var(--content-box-padding);
 }

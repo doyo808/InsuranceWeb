@@ -1,0 +1,73 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.admin.mapper.AdminProductMapper">
+
+	<!-- 총 개수 -->
+	<select id="countProducts" parameterType="map" resultType="int"> SELECT
+		COUNT(*) FROM insurance_products p <where>
+			<!-- 1) 검색어: 상품명/상품ID -->
+			<if test="criteria.q != null and criteria.q.trim() != ''">
+				AND (
+				/* 상품명 부분일치 (대소문자 무시 + TRIM) */
+				INSTR(LOWER(p.product_name), LOWER(TRIM(#{criteria.q}))) > 0
+
+				/* 상품ID 문자열 포함 검색 (TRIM) */
+				OR INSTR(TO_CHAR(p.product_id), TRIM(#{criteria.q})) > 0
+
+				/* 상품ID: 숫자면 동등 비교 */
+				OR (
+				REGEXP_LIKE(TRIM(#{criteria.q}), '^[0-9]+$')
+				AND p.product_id = TO_NUMBER(TRIM(#{criteria.q}))
+				)
+				)
+			</if>
+
+			<!-- 2) 보험유형 필터: product_types -->
+			<if test="criteria.status != null and criteria.status != ''">
+				AND p.product_types = #{criteria.status}
+			</if>
+
+			<!-- 3) 판매시작일 기간 -->
+			<if test="criteria.from != null and criteria.to != null">
+				AND p.start_date BETWEEN #{criteria.from} AND #{criteria.to}
+			</if>
+		</where>
+	</select>
+
+	<!-- 페이지 목록 (Oracle 11g 호환, ROW_NUMBER) -->
+	<select id="findProductPage" parameterType="map" resultType="productList">
+		SELECT * FROM ( SELECT p.product_id, p.product_types, p.product_name,
+		p.start_date, p.end_date, p.updated_at, ROW_NUMBER() OVER (ORDER BY
+		p.product_id DESC) AS rn FROM insurance_products p <where>
+			<!-- 1) 검색어: 상품명/상품ID -->
+			<if test="criteria.q != null and criteria.q.trim() != ''">
+				AND (
+				INSTR(LOWER(p.product_name), LOWER(TRIM(#{criteria.q}))) > 0
+				OR INSTR(TO_CHAR(p.product_id), TRIM(#{criteria.q})) > 0
+				OR (
+				REGEXP_LIKE(TRIM(#{criteria.q}), '^[0-9]+$')
+				AND p.product_id = TO_NUMBER(TRIM(#{criteria.q}))
+				)
+				)
+			</if>
+
+			<!-- 2) 보험유형 -->
+			<if test="criteria.status != null and criteria.status != ''">
+				AND p.product_types = #{criteria.status}
+			</if>
+
+			<!-- 3) 판매시작일 기간 -->
+			<if test="criteria.from != null and criteria.to != null">
+				AND p.start_date BETWEEN #{criteria.from} AND #{criteria.to}
+			</if>
+		</where>
+		) WHERE rn BETWEEN #{startRow} AND #{endRow} ORDER BY rn </select>
+
+
+<select id="countProductsOnSale" resultType="int">
+  SELECT COUNT(*)
+  FROM insurance_products p
+  WHERE p.start_date &lt;= TRUNC(SYSDATE)
+    AND p.end_date   &gt;= TRUNC(SYSDATE)
+</select>
+
+</mapper>
