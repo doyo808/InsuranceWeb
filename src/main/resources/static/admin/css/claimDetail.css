@@ -153,12 +153,7 @@
 .btn-row > :first-child { margin-right: auto; }
 
 /* 버튼(모디파이어만) */
-.btn.back {
-  background: #9ca3af;
-  color: #fff;
-  border-color: transparent;
-  text-decoration: none;
-}
+
 .btn.success {
   background: #16a34a;
   color: #fff;

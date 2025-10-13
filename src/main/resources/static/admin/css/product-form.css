@@ -1,0 +1,108 @@
+/* 이 파일은 페이지 전용. 공통(admin.css)의 토큰/컴포넌트는 재정의하지 않습니다. */
+
+/* 카드 내부 여백 유틸 */
+.card--padded {
+	padding: 20px;
+}
+
+.card {
+	border: none;
+}
+
+/* 섹션 간격 */
+.product-form__section {
+	margin-top: 18px;
+}
+
+/* grid 레이아웃 (반응형) */
+.form-grid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: 1fr;
+}
+
+.form-grid--2 {
+	grid-template-columns: 1fr;
+}
+
+.form-grid--3 {
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+	.form-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.form-grid--2 {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.form-grid--3 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+/* 설명/힌트 */
+.help {
+	margin-top: 6px;
+	font-size: 12px;
+	color: #6b7280;
+}
+
+/* 파일 힌트 리스트 */
+.file-hints {
+	margin: 8px 0 0;
+	padding-left: 18px;
+	color: #6b7280;
+	font-size: 12px;
+}
+
+/* 미리보기 */
+.preview {
+	margin-top: 14px;
+	display: grid;
+	gap: 12px;
+	grid-template-columns: 160px 1fr;
+	align-items: start;
+}
+
+.preview__img {
+	height: 100px;
+	border: 1px dashed rgba(0, 0, 0, .15);
+	border-radius: 8px;
+	display: grid;
+	place-items: center;
+	color: #6b7280;
+	font-size: 13px;
+	background: #fafafa;
+}
+
+.preview__meta {
+	display: grid;
+	gap: 8px;
+}
+
+.meta-row {
+	display: flex;
+	gap: 10px;
+	font-size: 13px;
+}
+
+.meta-key {
+	width: 64px;
+	color: #6b7280;
+}
+
+/* 하단 액션 바 */
+.form-actions {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	margin: 20px 0 40px;
+}
+
+.form-actions__right {
+	display: flex;
+	gap: 8px;
+}

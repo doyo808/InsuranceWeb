@@ -45,6 +45,7 @@
 
 				<div class="toolbar__spacer"></div>
 				<div class="toolbar__actions">
+					<button type="button" class="btn btn--ghost" id="btnReset">초기화</button>
 					<button type="submit" class="btn btn--primary">조회</button> <!-- ★ submit -->
 				</div>
 			</form>
@@ -66,7 +67,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- 샘플 행 1 -->
 					<tr th:each="row : ${contracts}">
 						<td th:text="${row.contract_id}"></td>
 						<td th:text="${row.product_name}"></td>
@@ -90,6 +90,27 @@
 		           total-items=${totalCount},
 		           href=@{/admin/contract} + '?page={page}'" preserve-query window="5">
 		</app-pagination>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				const form = document.querySelector('.toolbar__row');
+				const btnReset = document.getElementById('btnReset');
+
+				btnReset.addEventListener('click', () => {
+					// 값만 초기화
+					form.querySelector('[name="q"]').value = '';
+					form.querySelector('[name="status"]').value = '';
+					form.querySelector('[name="from"]').value = '';
+					form.querySelector('[name="to"]').value = '';
+
+					// 선택 1) 화면만 값 초기화하고, 목록은 그대로 두고 싶다면 여기서 끝.
+					return;
+
+					// 선택 2) 값 초기화 후 "현재 페이지 그대로" 재조회하고 싶다면 submit 실행
+					// form.submit();
+				});
+			});
+		</script>
 
 	</main>
 </body>
