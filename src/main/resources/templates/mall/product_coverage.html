@@ -378,7 +378,7 @@
 				const header = document.querySelector('input[name="_csrf_header"]').value;  
 				try {
 				        // 1. fetch API를 사용해 URL로 POST 요청을 보냅니다.
-				        const response = await fetch('/kdInsuranceTeam/mall/init', {
+				        const response = await fetch('/kdInsuranceTeam/mall2/init', {
 				            method: 'POST', // HTTP 요청 방식
 				            headers: {
 				                // 우리가 보내는 데이터가 JSON 형식임을 서버에 알림
@@ -393,7 +393,7 @@
 				            // 3. 서버가 성공적으로 처리하고 다음 페이지로 이동하라고 알려주면
 				            //    예를 들어 '/apply/confirm' 같은 확인 페이지로 이동합니다.
 				            console.log('서버에 데이터 전송 성공!');
-				            window.location.href = '/kdInsuranceTeam/mall/info';
+				            window.location.href = '/kdInsuranceTeam/mall2/info';
 				        } else {
 				            // 서버에서 오류가 발생한 경우
 				            alert('신청 처리 중 오류가 발생했습니다.');

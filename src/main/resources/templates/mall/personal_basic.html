@@ -27,7 +27,7 @@
 			<!-- ============================ -->
 			<!-- 필수입력사항: 이름, 전화번호, 이메일 -->
 			<!-- ============================ -->
-		<form id="personal-basic-form" th:action="@{/mall/info}" method="POST">
+		<form id="personal-basic-form" th:action="@{/mall2/info}" method="POST">
 			<!-- 피보험자 -->
 			<h2 class="custom-table-title">피보험자
 				<button type="button" id="bring-customer-info-button">계약자와 동일</button>
@@ -104,7 +104,7 @@
 			</table>
 			
 			<div class="button-wrap">
-				<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall/init`">이전</button>
+				<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall2/init`">이전</button>
 				<button type="submit" class="next-btn" form="personal-basic-form">다음</button>
 			</div>
 			

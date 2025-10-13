@@ -16,7 +16,7 @@
 	<div class="payment_wrapper">
 		<h1>보험료 결제에 관한<br> 정보를 입력해 주세요</h1>
 		<button onclick="requestPay()">보험료 결제하기 테스트버튼</button>
-	<form id="cardForm" th:action="@{/mall/payment}" method="POST">		
+	<form id="cardForm" th:action="@{/mall2/payment}" method="POST">		
 		<h3 class="custom-table-title">결제수단_카드</h3>
 		<table class="custom-table">
 			<tr><th>카드소유자</th>
@@ -38,7 +38,7 @@
 		<h3 class="custom-table-title">계속보험료 납입 계좌</h3>
 		
 		<div class="button-wrap">
-			<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall/notice`">이전</button>
+			<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall2/notice`">이전</button>
 			<button type="submit" class="next-btn">계약 완료하기</button>
 		</div>
 	</form>	
