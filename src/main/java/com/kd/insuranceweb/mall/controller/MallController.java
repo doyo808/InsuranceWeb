@@ -59,10 +59,8 @@ public class MallController {
 		
 		// 계산된 보험료를 받아옴
 		// DB에서 연결을 하고 데이터를 검색하기때문에 오래 걸릴수도 있는 작업
-		// TODO Ajax를 이용해보면 좋을 것
 		double premiumRate = service.getPremiumRate(Integer.parseInt(id), birth, gender);
-		
-		
+
 		System.out.println(premiumRate);
 		if(premiumRate < 0) {
 			return "mall/calculate/notFound";
