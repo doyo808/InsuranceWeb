@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>보험 상품 등록</title>
+
+	<!-- 페이지 전용 CSS -->
+	<th:block layout:fragment="extraHead">
+		<link rel="stylesheet" th:href="@{/admin/css/product-form.css}" />
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="adminContent" class="admin-main">
+		<form method="post" th:action="@{/admin/product}" th:object="${productForm}">
+		<h1 class="page-title">보험 상품 등록</h1>
+		<p class="page-desc">신규 보험 상품의 기본정보, 판매정보, 보장내용을 입력하고 약관/이미지를 첨부합니다.</p>
+
+		<!-- 기본 정보 -->
+		<section class="card card--padded product-form__section">
+			<h2 class="section__title">기본 정보</h2>
+			<div class="form-grid">
+				<div class="field">
+					<label class="field__label">상품명</label>
+					<input class="field__control" type="text" placeholder="예) 다이렉트 자동차보험 표준형" />
+				</div>
+
+				<div class="field">
+					<label class="field__label">상품 코드</label>
+					<input class="field__control" type="text" placeholder="예) IP2025-0001" />
+				</div>
+
+				<div class="field">
+					<label class="field__label">상품 유형</label>
+					<select class="field__control">
+						<option>선택하세요</option>
+						<option>자동차</option>
+						<option>운전자</option>
+						<option>화재</option>
+						<option>여행자</option>
+						<option>암</option>
+						<option>연금</option>
+						<option>반려동물</option>
+						<option>기타</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label class="field__label">판매 상태</label>
+					<select class="field__control">
+						<option>판매중</option>
+						<option>판매종료</option>
+						<option>준비중</option>
+					</select>
+				</div>
+			</div>
+		</section>
+
+		<!-- 판매/기간 정보 -->
+		<section class="card card--padded product-form__section">
+			<h2 class="section__title">판매 / 기간 정보</h2>
+			<div class="form-grid form-grid--3">
+				<!-- ✅ 판매 기간 (두 date를 한 컨테이너로 묶기) -->
+				<div class="field">
+					<label class="field__label">판매 기간</label>
+					<div class="daterange" data-daterange>
+						<!-- (옵션 A) th:object를 쓸 거면 th:field 유지 -->
+						<!-- <input class="field__control daterange__input" type="date" th:field="*{from}"> -->
+						<!-- <span class="daterange__sep">~</span> -->
+						<!-- <input class="field__control daterange__input" type="date" th:field="*{to}"> -->
+
+						<!-- (옵션 B) 간단히 name으로만 사용 -->
+						<input class="field__control daterange__input" type="date" name="from" id="saleFrom">
+						<span class="daterange__sep">~</span>
+						<input class="field__control daterange__input" type="date" name="to" id="saleTo">
+					</div>
+				</div>
+				<div class="field">
+					<label class="field__label">기본 보험료(월)</label>
+					<input class="field__control" type="number" min="0" step="1000" placeholder="예) 85000" />
+				</div>
+				<div class="field">
+					<label class="field__label">납입 주기</label>
+					<select class="field__control">
+						<option>월납</option>
+						<option>연납</option>
+						<option>일시납</option>
+					</select>
+				</div>
+				<div class="field">
+					<label class="field__label">가입 가능 나이 (최소)</label>
+					<input class="field__control" type="number" min="0" max="120" placeholder="예) 19" />
+				</div>
+				<div class="field">
+					<label class="field__label">가입 가능 나이 (최대)</label>
+					<input class="field__control" type="number" min="0" max="120" placeholder="예) 70" />
+				</div>
+			</div>
+		</section>
+
+		<!-- 보장 요약/상세 -->
+		<section class="card card--padded product-form__section">
+			<h2 class="section__title">보장 안내</h2>
+			<div class="form-grid">
+				<div class="field">
+					<label class="field__label">보장 요약</label>
+					<textarea class="field__control" rows="3" placeholder="예) 대인/대물 배상, 자기신체사고, 무보험차 상해 등"></textarea>
+				</div>
+				<div class="field">
+					<label class="field__label">상세 설명</label>
+					<p class="help">필수고지사항, 면책/감액 조건 등 유의사항을 포함해 주세요.</p>
+					<textarea class="field__control" rows="6" placeholder="상품의 상세 안내를 입력하세요. (줄바꿈/리스트 지원)"></textarea>
+				</div>
+			</div>
+		</section>
+
+		<!-- 첨부 파일 -->
+		<section class="card card--padded product-form__section">
+			<h2 class="section__title">첨부 파일</h2>
+			<div class="form-grid form-grid--2">
+				<div class="field">
+					<label class="field__label">상품 약관 (PDF)</label>
+					<input class="field__control" type="file" accept=".pdf" />
+					<ul class="file-hints">
+						<li>최대 10MB, PDF만 업로드 가능</li>
+					</ul>
+				</div>
+				<div class="field">
+					<label class="field__label">대표 이미지 (JPG/PNG)</label>
+					<input class="field__control" type="file" accept=".jpg,.jpeg,.png" />
+					<ul class="file-hints">
+						<li>권장 크기: 1200×630, 최대 5MB</li>
+					</ul>
+				</div>
+			</div>
+			<div class="preview">
+				<div class="preview__img" aria-label="이미지 미리보기">이미지 미리보기</div>
+				<div class="preview__meta">
+					<div class="meta-row"><span class="meta-key">파일명</span><span class="meta-val">등록된 파일 없음</span></div>
+					<div class="meta-row"><span class="meta-key">약관</span><span class="meta-val">업로드 전</span></div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 하단 액션 -->
+		<div class="form-actions">
+			<a th:href="@{/admin/product}" class="btn back">이전</a>
+			<div class="form-actions__right">
+				<button type="button" class="btn">임시 저장</button>
+				<button type="submit" class="btn btn--primary">등록</button>
+			</div>
+		</div>
+
+		</form>
+	</main>
+</body>
+
+</html>
