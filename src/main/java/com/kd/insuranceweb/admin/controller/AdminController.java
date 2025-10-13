@@ -108,6 +108,11 @@ public class AdminController {
 	    model.addAttribute("sellingCount", sellingCount); 
 	    return "admin/product/productList";
 	    }
+	
+	@GetMapping("/product/new")
+	public String productRegistration() {
+		return "admin/product/productRegistration";
+	}
 
 	// ===== 보험금 청구 관리 =====
 	@GetMapping("/claim")
