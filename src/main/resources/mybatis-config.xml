@@ -6,21 +6,26 @@
     		
 	<typeAliases>
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"/>
-          <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
-
-		<typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
-		
-        <typeAlias type="com.kd.insuranceweb.common.dto.PersonDTO" alias="person"></typeAlias>
-        <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
-        
-        <typeAlias type="com.kd.insuranceweb.club.dto.Card_company" alias="cardCompany"></typeAlias>
-        <typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit_interest_free" alias="cardBenefitInterestFree"></typeAlias>
-  		<typeAlias type="com.kd.insuranceweb.club.dto.ReviewDto" alias="reviewDto"></typeAlias>
-        
-        <typeAlias type="com.kd.insuranceweb.helpdesk.dto.FaqDto" alias="faqDto"></typeAlias>
-  		<typeAlias type="com.kd.insuranceweb.helpdesk.dto.NoticeDto" alias="noticeDto"></typeAlias>
+    	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
+    	  
+          <typeAlias type="com.kd.insuranceweb.test.dto.Employee" alias="emp"></typeAlias>
+          
+          <typeAlias type="com.kd.insuranceweb.common.dto.PersonDTO" alias="person"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
+          
+          <typeAlias type="com.kd.insuranceweb.club.dto.Card_company" alias="cardCompany"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.club.dto.Card_benefit_interest_free" alias="cardBenefitInterestFree"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.club.dto.ReviewDto" alias="reviewDto"></typeAlias>
+          
+          <typeAlias type="com.kd.insuranceweb.helpdesk.dto.FaqDto" alias="faqDto"></typeAlias>
+  		  <typeAlias type="com.kd.insuranceweb.helpdesk.dto.NoticeDto" alias="noticeDto"></typeAlias>
+		        
+    	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.admin.dto.ProductListRowDTO" alias="productList"></typeAlias>
+          <typeAlias type="com.kd.insuranceweb.admin.dto.ContractListRowDTO" alias="contractList"></typeAlias>
+  		  <typeAlias type="com.kd.insuranceweb.admin.dto.ContractSearchCriteria" alias="contractSearchCriteria"></typeAlias>
   	</typeAliases>
 
   
-  	
+  
 </configuration>

@@ -5,123 +5,126 @@
 <head>
 	<meta charset="utf-8" />
 	<title>보험 상품 내역</title>
-
-	<!-- 페이지 전용 CSS -->
-
-	<th:block layout:fragment="extraHead">
-		<link rel="stylesheet" th:href="@{/admin/css/contractList.css}" />
-	</th:block>
 </head>
 
 <body>
 	<main layout:fragment="adminContent" class="admin-main">
 		<h1 class="page-title">보험 상품 내역</h1>
+		<p class="page-desc">보험상품을 등록하고 해지합니다.</p>
 
-		<!-- 상단 툴바 -->
-		<section class="toolbar card">
-			<div class="toolbar__row">
-				<div class="field toolbar__item">
-					<label class="field__label">검색</label>
-					<input class="field__control" type="text" name="q" placeholder="상품명 또는 ID로 검색" />
-				</div>
-
-				<div class="field toolbar__item">
-					<label class="field__label">상태</label>
-					<select class="field__control" name="status">
-						<option value="">상태 전체</option>
-						<option value="">활성</option>
-						<option value="">비활성</option>
-					</select>
-				</div>
-
-				<div class="field toolbar__item">
-					<label class="field__label">카테고리</label>
-					<select class="field__control" name="status">
-						<option value="">카테고리 전체</option> 전체</option>
-						<option value="">자동차</option>
-						<option value="">주택</option>
-						<option value="">여행</option>
-						<option value="">건강</option>
-						<option value="">금융</option>
-						<option value="">펫</option>
-					</select>
-				</div>
-
-				<div class="field toolbar__item">
-					<label class="field__label">보험 유형</label>
-					<select class="field__control" name="status">
-						<option value="">보험 유형 전체</option>
-						<option value="">운전자</option>
-						<option value="">화재</option>
-						<option value="">여행자</option>
-						<option value="">암</option>
-						<option value="">연금</option>
-						<option value="">반려동물</option>
-					</select>
-				</div>
-
-				<div class="toolbar__spacer"></div>
-
-				<div class="toolbar__actions">
-					<button type="button" class="btn btn--primary">검색</button>
-				</div>
-
-				<div class="toolbar__actions">
-					<a href="#" class="btn btn--primary">새 상품 등록</a>
-				</div>
-			</div>
-
+		<section class="stats">
+			<article class="stat-card panel">
+				<p class="stat-card__label">현재 판매중인 보험 상품</p>
+				 <p class="stat-card__value" th:text="${sellingCount} + '개'"></p>
+			</article>
 		</section>
 
-		<!-- 목록 테이블 -->
+		<!-- 검색 폼 -->
+		<form method="get" th:action="@{/admin/product}" th:object="${criteria}" id="searchForm">
+			<section class="toolbar card">
+				<div class="toolbar__row">
+					<!-- 1) 검색어 (상품명/ID) : criteria.q -->
+					<div class="field toolbar__item">
+						<label class="field__label">검색어</label>
+						<input class="field__control" type="text" th:field="*{q}" placeholder="상품명 또는 ID로 검색">
+					</div>
+
+					<!-- 2) 보험 유형 : criteria.status => product_types -->
+					<div class="field toolbar__item">
+						<label class="field__label">보험 유형</label>
+						<select class="field__control" th:field="*{status}">
+						    <option value="">유형 전체</option>
+						    <option value="자동차">자동차</option>
+						    <option value="운전자">운전자</option>
+						    <option value="질병">질병</option>
+						    <option value="화재">화재</option>
+						    <option value="여행자">여행자</option>
+						  </select>
+					</div>
+
+					<!-- 3) 판매 시작일 기간: criteria.from ~ criteria.to (date) -->
+					<div class="field toolbar__item toolbar__item--grow">
+						<label class="field__label">판매 시작일</label>
+						<div class="daterange" data-daterange>
+							<input class="field__control" type="date" th:field="*{from}">
+							<span class="daterange__sep">~</span>
+							<input class="field__control" type="date" th:field="*{to}">
+						</div>
+					</div>
+
+					<div class="toolbar__actions">
+						<!-- 4) 초기화: 검색 조건만 클리어하고 목록은 그대로 유지(폼 제출 X) -->
+						<button type="button" class="btn btn--ghost" id="btnReset">초기화</button>
+
+						<!-- 5) 검색 -->
+						<button type="submit" class="btn btn--primary">검색</button>
+
+						<a th:href="@{/admin/product/new}" class="btn btn--primary">새 상품 등록</a>
+					</div>
+				</div>
+			</section>
+		</form>
+
+		<!-- 6) 목록 -->
 		<section class="table-wrap mt-12">
 			<table class="table">
 				<thead>
 					<tr>
 						<th>상품ID</th>
-						<th>상품명</th>
-						<th>카테고리</th>
 						<th>보험유형</th>
-						<th>상태</th>
-						<th>등록일</th>
+						<th>상품명</th>
+						<th>판매 시작일</th>
+						<th>판매 종료일</th>
+						<th>수정일</th>
 						<th>관리</th>
 					</tr>
 				</thead>
 				<tbody>
-					<!-- 샘플 행 1 -->
-					<tr class="row--hover">
-						<td>1001</td>
-						<td>안심플러스 운전자 보험</td>
-						<td class="cell--ellipsis">자동차</td>
-						<td class="cell--amount">운전자</td>
-						<td>
-							<span class="badge badge--pending">활성</span>
-						</td>
-						<td class="cell--amount">2023-01-15</td>
+					<tr th:each="row: ${products}">
+						<td th:text="${row.product_id}"></td>
+						<td th:text="${row.product_types}"></td>
+						<td th:text="${row.product_name}"></td>
+						<td th:text="${#temporals.format(row.start_date,'yyyy-MM-dd')}"></td>
+						<td th:text="${#temporals.format(row.end_date,'yyyy-MM-dd')}"></td>
+						<td th:text="${#temporals.format(row.updated_at,'yyyy-MM-dd')}"></td>
 						<td class="text-center">
-							<a class="btn btn--primary btn--xs">수정</a>
-							<button type="button" class="btn btn--primary btn--xs">해지</button>
+							<a class="btn btn--primary btn--xs"
+								th:href="@{/admin/products/{id}/edit(id=${row.product_id})}">수정</a>
 						</td>
 					</tr>
 
-
-					<!-- 데이터 없음 예시 (필요 시 주석 해제해 확인) -->
-					<!--
-          <tr>
-            <td class="cell--empty" colspan="7">
-              <div class="empty">
-                <div class="empty__title">표시할 접수 내역이 없습니다</div>
-                <div class="empty__desc">검색 조건을 변경해보세요.</div>
-              </div>
-            </td>
-          </tr>
-          -->
+					<!-- 데이터가 없을 때 -->
+					<tr th:if="${#lists.isEmpty(products)}">
+						<td class="cell--empty" colspan="7">
+							<div class="empty">
+								<div class="empty__title">표시할 상품이 없습니다</div>
+								<div class="empty__desc">검색 조건을 변경하거나 새 상품을 등록해보세요.</div>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</section>
 
-		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
+		<!-- 6) 페이지네이션: 한 페이지 8개, preserve-query로 검색조건 유지 -->
+		<app-pagination th:attr="current=${page}, total-items=${totalCount}, per-page=${perPage}"
+			href="/admin/product?page={page}" preserve-query window="5">
 		</app-pagination>
+
+		<!-- 초기화 JS: 목록은 그대로 두고, 입력만 지움 -->
+		<script>
+			(function () {
+				const form = document.getElementById('searchForm');
+				const btnReset = document.getElementById('btnReset');
+				btnReset?.addEventListener('click', () => {
+					// 입력값만 비우고 제출하지 않음(목록 유지)
+					form.querySelector('[name="q"]').value = '';
+					form.querySelector('[name="status"]').value = '';
+					form.querySelector('[name="from"]').value = '';
+					form.querySelector('[name="to"]').value = '';
+				});
+			})();
+		</script>
 
 	</main>
 </body>
