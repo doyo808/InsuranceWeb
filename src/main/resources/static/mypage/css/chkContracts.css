@@ -1,3 +1,7 @@
+.base-main {
+	width: 1200px;
+	margin: 0 auto;
+}
 
 /* 상단의 현재위치 */
 .navi-current {
