@@ -3,6 +3,8 @@
 
 <head>
 	<meta charset="UTF-8" />
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title layout:title-pattern="$CONTENT_TITLE - 관리자 시스템">관리자 시스템</title>
 
@@ -32,9 +34,9 @@
 		</div>
 	</div>
 
-	<!-- 푸터 (공통 프래그먼트) -->
+	<!-- 푸터 (공통 프래그먼트) 
 	<footer th:replace="~{common/fragments/footer :: footerFragment}"></footer>
-
+	-->
 	<!-- 전역 스크립트 (모듈화) -->
 	<script th:inline="javascript">
 		const contextPath = /*[[@{/}]]*/ '';
