@@ -82,8 +82,10 @@
                                                 <div class="login-content">
                                                         <div class="login-left">
                                                                 <h2 class="login-title">안녕하세요<br>로그인 해주세요</h2>
-                                                                <button class="btn login-btn">삼성화재 다이렉트 로그인</button>
-                                                                <button class="btn signup-btn">회원가입</button>
+                                                                <button class="btn login-btn" 
+																	th:onclick="location.href='login'">삼성화재 다이렉트 로그인</button>
+                                                                <button class="btn signup-btn"
+																	th:onclick="location.href='signup'">회원가입</button>
                                                         </div>
                                                         <div class="login-popup">
                                                                 <img src="common/images/login_bg.png" width="250" height="260" alt="로그인 이미지">
