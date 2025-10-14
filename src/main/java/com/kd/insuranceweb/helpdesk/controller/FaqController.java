@@ -1,13 +1,10 @@
 package com.kd.insuranceweb.helpdesk.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.kd.insuranceweb.helpdesk.dto.FaqDto;
 import com.kd.insuranceweb.helpdesk.service.FaqService;
@@ -18,57 +15,68 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/helpdesk")
 public class FaqController {
-	
-	private final FaqService faqService;
-	
-	@GetMapping("/PP060101_001")
-	public String faqList(@RequestParam(value="category", required=false, defaultValue="전체") String category,
-            @RequestParam(value="keyword", required=false) String keyword,
-            Model model) {
 
-	List<FaqDto> faqs;
-	
-	if (keyword != null && !keyword.isEmpty()) {
-		faqs = faqService.searchFaqs(keyword);
-		} else if (!"전체".equals(category)) {
-		faqs = faqService.getFaqsByCategory(category);
-		} else {
-		faqs = faqService.getAllFaqs();
-		}
-		
-		model.addAttribute("faqs", faqs);
-		model.addAttribute("selectedCategory", category);
-		model.addAttribute("keyword", keyword);
-		
-		return "helpdesk/PP060101_001";
-	}
-	
-	/**
-     * 고객센터 ARS 안내 페이지
-     * - menu: 초기 선택된 탭 (ars1~ars4)
-     * - tabs: 하드코딩 탭 정보 (th:each 미사용 가능)
-     */
-    @GetMapping("/PP060200_000")
-    public String helpdesk(
-            Model model,
-            @RequestParam(defaultValue="ars1") String menu
-    ) {
-        model.addAttribute("menu", menu);
+    private final FaqService faqService;
+    private static final int PAGE_SIZE = 10;
 
-        // 하드코딩 탭 정보 (th:each 없이도 사용 가능)
-        List<Map<String, String>> tabs = List.of(
-                Map.of("id","ars1"),
-                Map.of("id","ars2"),
-                Map.of("id","ars3"),
-                Map.of("id","ars4")
-        );
-        model.addAttribute("tabs", tabs);
+    private List<FaqDto> fetchFaqs(String category, String keyword, int page) {
+        int startRow = (page - 1) * PAGE_SIZE + 1;
+        int endRow = page * PAGE_SIZE;
 
-        return "helpdesk/PP060200_000"; // templates/helpdesk/PP060200_000.html
+        if (keyword != null && !keyword.isEmpty()) {
+            return faqService.searchFaqs(keyword, startRow, endRow);
+        } else if (!"전체".equals(category)) {
+            return faqService.getFaqsByCategory(category, startRow, endRow);
+        } else {
+            return faqService.getAllFaqs(startRow, endRow);
+        }
     }
 
+    private int fetchTotalCount(String category, String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return faqService.countSearchFaqs(keyword);
+        } else if (!"전체".equals(category)) {
+            return faqService.countFaqsByCategory(category);
+        } else {
+            return faqService.countAllFaqs();
+        }
+    }
+
+    @GetMapping("/PP060101_001")
+    public String faqPage(
+            @RequestParam(value="category", defaultValue="전체") String category,
+            @RequestParam(value="keyword", required=false) String keyword,
+            @RequestParam(value="page", defaultValue="1") int page,
+            Model model
+    ) {
+        List<FaqDto> faqs = fetchFaqs(category, keyword, page);
+        int totalCount = fetchTotalCount(category, keyword);
+        int totalPages = (int) Math.ceil(totalCount / (double) PAGE_SIZE);
+
+        model.addAttribute("faqs", faqs);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+
+        return "helpdesk/PP060101_001";
+    }
+
+    @PostMapping("/PP060101_001/search")
+    public String searchFaqs(
+            @RequestParam(value="category", defaultValue="전체") String category,
+            @RequestParam(value="keyword", required=false) String keyword,
+            @RequestParam(value="page", defaultValue="1") int page,
+            Model model
+    ) {
+        List<FaqDto> faqs = fetchFaqs(category, keyword, page);
+        int totalCount = fetchTotalCount(category, keyword);
+        int totalPages = (int) Math.ceil(totalCount / (double) PAGE_SIZE);
+
+        model.addAttribute("faqs", faqs);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+
+        return "helpdesk/PP060101_answer :: faqList";
+    }
 }
-
-
-
-

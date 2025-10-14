@@ -1,0 +1,27 @@
+<div th:fragment="faqList">
+    <!-- 내용 없을 때 -->
+    <div th:if="${faqs == null or #lists.isEmpty(faqs)}" class="faq-empty">해당 내용이 없습니다.</div>
+
+    <!-- FAQ 리스트 -->
+    <div th:each="faq : ${faqs}">
+        <div class="faq-question" th:text="${faq.question}"></div>
+        <div class="faq-answer" th:text="${faq.answer}"></div>
+    </div>
+
+    <!-- 페이지네이션 (10개씩 표시) -->
+    <div th:if="${faqs != null and !#lists.isEmpty(faqs)}" class="faq-pagination">
+        <span class="page-link arrow" th:attr="data-page=1">&laquo;</span>
+        <span class="page-link arrow" th:attr="data-page=${currentPage > 1 ? currentPage-1 : 1}">&lsaquo;</span>
+
+        <span class="page-link" th:each="i : ${#numbers.sequence(
+            ((currentPage-1)/10*10 + 1),
+            T(java.lang.Math).min(((currentPage-1)/10*10 + 10), totalPages)
+        )}"
+              th:text="${i}"
+              th:classappend="${i==currentPage}? ' active' : ''"
+              th:attr="data-page=${i}"></span>
+
+        <span class="page-link arrow" th:attr="data-page=${currentPage < totalPages ? currentPage+1 : totalPages}">&rsaquo;</span>
+        <span class="page-link arrow" th:attr="data-page=${totalPages}">&raquo;</span>
+    </div>
+</div>

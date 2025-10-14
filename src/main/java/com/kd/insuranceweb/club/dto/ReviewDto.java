@@ -13,17 +13,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewDto {
 	
-	private Long reviewId;
+	private Long review_id;
 	private String category;
 	private String subCategory;
 	private String content;
-	private String authorName;
-	private String authorId;
-	private String isVisible;
+	private String author_name;
+	private String author_id;
+	private String is_visible;
 	private Integer rating;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
-	private Date createdAt;
+	private Date created_at;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
-	private Date updatedAt;
+	private Date updated_at;
 
 }

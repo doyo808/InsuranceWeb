@@ -1,19 +1,30 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const tabs = document.querySelectorAll('.tab-menu a');
+document.addEventListener("DOMContentLoaded", function() {
+    const tabs = document.querySelectorAll(".tab-menu a");
+    const panes = document.querySelectorAll(".tab-pane");
+
     tabs.forEach(tab => {
-        tab.addEventListener('click', function(e) {
+        tab.addEventListener("click", function(e) {
             e.preventDefault();
-            const menu = this.getAttribute('data-tab');
+            const menu = this.dataset.tab;
 
-            // 모든 tab-pane 숨기기
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            // 탭 active 처리
+            tabs.forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
 
-            // 클릭한 탭의 콘텐츠 표시
-            document.getElementById(menu).classList.add('active');
+            // 콘텐츠 show/hide 처리
+            panes.forEach(p => p.classList.toggle("active", p.id === menu));
 
-            // 탭 메뉴 active 상태 변경
-            tabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
+            // URL 반영 (뒤로가기 지원)
+            history.pushState({}, "", `?menu=${menu}`);
         });
+    });
+
+    // 뒤로가기/앞으로가기 처리
+    window.addEventListener("popstate", () => {
+        const params = new URLSearchParams(location.search);
+        const menu = params.get("menu") || "ars1";
+
+        tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === menu));
+        panes.forEach(p => p.classList.toggle("active", p.id === menu));
     });
 });

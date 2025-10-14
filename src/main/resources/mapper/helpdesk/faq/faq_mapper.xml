@@ -5,32 +5,68 @@
 
 <mapper namespace="FaqMapper">
 
-    <select id="findAll" resultType="FaqDto">
-        SELECT faq_id, category, question, answer, created_at, updated_at
-        FROM faq
-        ORDER BY faq_id
+    <!-- 전체 페이징 -->
+	<select id="findAllPage" parameterType="map" resultType="FaqDto">
+	    SELECT * FROM (
+	        SELECT a.*, ROWNUM rnum
+	        FROM (
+	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            FROM faq
+	            ORDER BY faq_id
+	        ) a
+	        WHERE ROWNUM &lt;= #{endRow,jdbcType=INTEGER}
+	    )
+	    WHERE rnum &gt;= #{startRow,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 카테고리별 페이징 -->
+	<select id="findByCategoryPage" parameterType="map" resultType="FaqDto">
+	    SELECT * FROM (
+	        SELECT a.*, ROWNUM rnum
+	        FROM (
+	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            FROM faq
+	            WHERE category = #{category,jdbcType=VARCHAR}
+	            ORDER BY faq_id
+	        ) a
+	        WHERE ROWNUM &lt;= #{endRow,jdbcType=INTEGER}
+	    )
+	    WHERE rnum &gt;= #{startRow,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 키워드 검색 페이징 -->
+	<select id="searchByKeywordPage" parameterType="map" resultType="FaqDto">
+	    SELECT * FROM (
+	        SELECT a.*, ROWNUM rnum
+	        FROM (
+	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            FROM faq
+	            WHERE LOWER(question) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
+	               OR LOWER(answer) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
+	            ORDER BY faq_id
+	        ) a
+	        WHERE ROWNUM &lt;= #{endRow,jdbcType=INTEGER}
+	    )
+	    WHERE rnum &gt;= #{startRow,jdbcType=INTEGER}
+	</select>
+
+    <!-- 전체 건수 -->
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM faq
     </select>
 
-    <select id="findByCategory" parameterType="string" resultType="FaqDto">
-        SELECT faq_id, category, question, answer, created_at, updated_at
-        FROM faq
-        WHERE category = #{category}
-        ORDER BY faq_id
+    <!-- 카테고리별 건수 -->
+    <select id="countByCategory" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM faq WHERE category = #{category,jdbcType=VARCHAR}
     </select>
 
-    <select id="searchByKeyword" parameterType="string" resultType="FaqDto">
-        SELECT faq_id, category, question, answer, created_at, updated_at
-        FROM faq
-        WHERE LOWER(question) LIKE '%' || LOWER(#{keyword}) || '%'
-           OR LOWER(answer) LIKE '%' || LOWER(#{keyword}) || '%'
-        ORDER BY faq_id
+    <!-- 키워드 검색 건수 -->
+    <select id="countByKeyword" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM faq
+        WHERE LOWER(question) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
+           OR LOWER(answer) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
     </select>
-    
-    <select id="findById" parameterType="long" resultType="FaqDto">
-    	SELECT faq_id, category, question, answer, created_at, updated_at
-    	FROM faq
-    	WHERE faq_id = #{faq_Id}
-    </select>
+
     
     <insert id="insertFaq" parameterType="FaqDto">
     	INSERT INTO faq (faq_id, category, question, answer, created_at, updated_at)

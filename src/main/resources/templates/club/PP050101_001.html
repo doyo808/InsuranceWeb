@@ -64,8 +64,8 @@
                      th:text="${r.content.length() > 20 ? #strings.concat(r.content.substring(0,20),'...') : r.content}"></div>
                 <div class="accordion-info">
                     <span class="category" th:text="${r.subCategory}"></span>
-                    <span class="name" th:text="${r.authorName}"></span>
-                    <span class="date" th:text="${#dates.format(r.createdAt,'yyyy.MM.dd')}"></span>
+                    <span class="name" th:text="${r.author_name}"></span>
+                    <span class="date" th:text="${#dates.format(r.created_at,'yyyy.MM.dd')}"></span>
                 </div>
                 <span class="accordion-arrow">→</span>
             </div>
