@@ -18,12 +18,12 @@ public interface NoticeService {
 	int getNoticeCount(String keyword);
 	
 	// 상세 조회 (사용자/관리자 공통)
-	NoticeDto getNoticeDetail(Long noticeId);
+	NoticeDto getNoticeDetail(Long notice_id);
 	
 	// 관리자용 CRUD
 	void createNotice(NoticeDto notice);
 	void updateNotice(NoticeDto notice);
-	void deleteNotice(Long noticeId);
+	void deleteNotice(Long notice_id);
 	
 	
 	

@@ -1,29 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const faqList = document.getElementById('faqList');
     const keywordInput = document.getElementById('keyword');
     const searchBtn = document.getElementById('searchBtn');
     const categories = document.querySelectorAll('.faq-categories span');
-    const faqList = document.getElementById('faqList');
+
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 
     let currentCategory = "전체";
+    let currentPage = 1;
 
-    // AJAX로 FAQ 로드
-    function loadFaqs(category, keyword, push = true) {
-        fetch(contextPath + 'helpdesk/PP060101_001/search', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `category=${encodeURIComponent(category)}&keyword=${encodeURIComponent(keyword)}`
-        })
-        .then(res => res.text())
-        .then(html => {
-            faqList.innerHTML = html;
-            bindFaqToggle();
-        })
-        .catch(err => console.error(err));
-    }
-
-    // FAQ 클릭 시 토글
     function bindFaqToggle() {
-        const questions = document.querySelectorAll('.faq-question');
+        const questions = faqList.querySelectorAll('.faq-question');
         questions.forEach(q => {
             q.addEventListener('click', () => {
                 questions.forEach(other => {
@@ -34,18 +22,42 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 검색 버튼 클릭
-    if (searchBtn && keywordInput) {
-        searchBtn.addEventListener('click', function () {
-            currentCategory = document.querySelector('.faq-categories span.active')?.dataset.category || '전체';
-            loadFaqs(currentCategory, keywordInput.value);
+    function bindPagination() {
+        const pageLinks = faqList.querySelectorAll('.page-link');
+        pageLinks.forEach(link => {
+            const page = parseInt(link.dataset.page);
+            link.addEventListener('click', () => {
+                loadFaqs(currentCategory, keywordInput.value, page);
+            });
         });
     }
 
-    // 엔터키 입력 시 검색
-    keywordInput.addEventListener('keypress', function(e) {
+    function loadFaqs(category, keyword, page = 1) {
+        currentCategory = category;
+        currentPage = page;
+
+        fetch(`${contextPath}helpdesk/PP060101_001/search`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                [csrfHeader]: csrfToken
+            },
+            body: `category=${encodeURIComponent(category)}&keyword=${encodeURIComponent(keyword)}&page=${page}`
+        })
+        .then(res => res.text())
+        .then(html => {
+            faqList.innerHTML = html;
+            bindFaqToggle();
+            bindPagination();
+        })
+        .catch(err => console.error(err));
+    }
+
+    // 검색
+    searchBtn.addEventListener('click', () => loadFaqs(currentCategory, keywordInput.value, 1));
+    keywordInput.addEventListener('keypress', e => {
         if (e.key === 'Enter') {
-            e.preventDefault(); // form submit 막기
+            e.preventDefault();
             searchBtn.click();
         }
     });
@@ -55,12 +67,11 @@ document.addEventListener('DOMContentLoaded', function () {
         cat.addEventListener('click', function () {
             categories.forEach(c => c.classList.remove('active'));
             this.classList.add('active');
-
-            currentCategory = this.dataset.category || '전체';
-            loadFaqs(currentCategory, keywordInput.value);
+            loadFaqs(this.dataset.category, keywordInput.value, 1);
         });
     });
 
-    // 초기 FAQ 토글 바인딩
+    // 초기 바인딩
     bindFaqToggle();
+    bindPagination();
 });

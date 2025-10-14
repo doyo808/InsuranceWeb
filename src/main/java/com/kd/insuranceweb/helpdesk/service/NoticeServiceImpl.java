@@ -49,9 +49,9 @@ public class NoticeServiceImpl implements NoticeService {
 
 	//상세조회
 	@Override
-	public NoticeDto getNoticeDetail(Long noticeId) {
+	public NoticeDto getNoticeDetail(Long notice_id) {
 		
-		return sql.selectOne("NoticeMapper.selectNoticeDetail", noticeId);
+		return sql.selectOne("NoticeMapper.selectNoticeDetail", notice_id);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	@Transactional
-	public void deleteNotice(Long noticeId) {
-		sql.delete("NoticeMapper.deleteNotice", noticeId);
+	public void deleteNotice(Long notice_id) {
+		sql.delete("NoticeMapper.deleteNotice", notice_id);
 		
 	}
 

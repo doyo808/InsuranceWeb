@@ -1,16 +1,20 @@
 $(document).ready(function () {
 
-    // --- 커스텀 드롭다운 ---
+    // ================================
+    // 1. 드롭다운 처리
+    // ================================
     $('.dropdown').each(function () {
         const $dropdown = $(this);
 
+        // 드롭다운 버튼 클릭
         $dropdown.find('.dropdown-btn').on('click', function (e) {
             e.stopPropagation();
             const $menu = $dropdown.find('.dropdown-menu');
-            $('.dropdown-menu').not($menu).hide();
+            $('.dropdown-menu').not($menu).hide(); // 다른 메뉴 닫기
             $menu.toggle();
         });
 
+        // 드롭다운 항목 클릭
         $dropdown.find('.dropdown-menu li').on('click', function () {
             const selectedText = $(this).text().trim();
             $dropdown.find('.dropdown-btn').html(selectedText + ' <span class="arrow">▼</span>');
@@ -23,26 +27,28 @@ $(document).ready(function () {
         $('.dropdown-menu').hide();
     });
 
-    // --- 아코디언 ---
+    // ================================
+    // 2. 아코디언 처리
+    // ================================
     $('.accordion-header').on('click', function () {
         const $item = $(this).closest('.accordion-item');
-        $('.accordion-item').not($item).removeClass('active');
+        $('.accordion-item').not($item).removeClass('active'); // 다른 항목 닫기
         $item.toggleClass('active');
     });
 
-    // --- 검색 버튼 클릭 ---
+    // ================================
+    // 3. 검색 버튼 클릭
+    // ================================
     $('.search-btn').on('click', function () {
-        const st = $('.search-box .dropdown-btn').text().trim();
-        const searchType = st === '내용' ? 'content' : st === '작성자' ? 'authorName' : '';
+        const st = $('.search-box .dropdown-btn').first().text().trim();
+        const searchType = st === '내용' ? 'content' : st === '작성자' ? 'author_name' : '';
         const searchKeyword = $('.search-input').val().trim();
         const subCategory = $('.dropdown.right .dropdown-btn').text().trim();
         const category = $('.tabs a.active span').text().trim();
 
-        const url = new URL(window.location.origin + '/club/PP050101_001');
+        const url = new URL(window.location.origin + contextPath + 'club/PP050101_001');
         url.searchParams.set('category', category);
-        if (subCategory && subCategory !== '전체') {
-            url.searchParams.set('subCategory', subCategory);
-        }
+        if (subCategory && subCategory !== '전체') url.searchParams.set('subCategory', subCategory);
         if (searchKeyword) {
             url.searchParams.set('searchType', searchType);
             url.searchParams.set('searchKeyword', searchKeyword);
@@ -51,26 +57,37 @@ $(document).ready(function () {
         window.location.href = url.toString();
     });
 
-    // --- 탭 메뉴 클릭 ---
+    // ================================
+    // 4. 탭 메뉴 클릭
+    // ================================
     $('.tabs a').on('click', function (e) {
         e.preventDefault();
-        const category = $(this).text().trim();
-        const st = $('.search-box .dropdown-btn').text().trim();
-        const searchType = st === '내용' ? 'content' : st === '작성자' ? 'authorName' : '';
+
+        // span 안쪽 글자를 정확히 가져오기
+        const category = $(this).find('span').text().trim();
+        const st = $('.search-box .dropdown-btn').first().text().trim();
+        const searchType = st === '내용' ? 'content' : st === '작성자' ? 'author_name' : '';
         const searchKeyword = $('.search-input').val().trim();
         const subCategory = $('.dropdown.right .dropdown-btn').text().trim();
 
-        const url = new URL(window.location.origin + '/club/PP050101_001');
+        const url = new URL(window.location.origin + contextPath + 'club/PP050101_001');
         url.searchParams.set('category', category);
-        if (subCategory && subCategory !== '전체') {
-            url.searchParams.set('subCategory', subCategory);
-        }
+        if (subCategory && subCategory !== '전체') url.searchParams.set('subCategory', subCategory);
         if (searchKeyword) {
             url.searchParams.set('searchType', searchType);
             url.searchParams.set('searchKeyword', searchKeyword);
         }
         url.searchParams.set('page', 1);
         window.location.href = url.toString();
+    });
+
+    // ================================
+    // 5. 페이징 클릭 처리
+    // ================================
+    $('.pagination-list a').on('click', function (e) {
+        e.preventDefault();
+        const href = $(this).attr('href');
+        if (href) window.location.href = href;
     });
 
 });

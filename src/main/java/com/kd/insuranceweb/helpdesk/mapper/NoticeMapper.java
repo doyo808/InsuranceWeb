@@ -44,8 +44,8 @@ public class NoticeMapper {
 
 	
 	// ID별 공지 조회
-	public NoticeDto selectNoticeDetail(Long noticeId) {
-		return sql.selectOne("NoticeMapper.selectNoticeDetail", noticeId);
+	public NoticeDto selectNoticeDetail(Long notice_id) {
+		return sql.selectOne("NoticeMapper.selectNoticeDetail", notice_id);
 	}
 	
 	// 입력

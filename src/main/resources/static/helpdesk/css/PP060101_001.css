@@ -90,6 +90,12 @@ body {
     margin: 20px auto;
 }
 
+.faq-empty {
+    text-align: center;
+    font-size: 18px;
+    margin: 30px 0;
+}
+
 .faq-question {
     display: flex;
     align-items: center;
@@ -135,4 +141,31 @@ body {
 
 .faq-question.active + .faq-answer {
     display: block;
+}
+
+.faq-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.faq-pagination .page-link {
+    cursor: pointer;
+    color: #000;            /* 기본 숫자 색 검정 */
+    font-weight: normal;     /* 기본 폰트 */
+    border: none;            /* 네모 박스 제거 */
+    background: transparent;
+    padding: 0 4px;
+    text-decoration: none;
+}
+
+.faq-pagination .page-link.active {
+    font-weight: bold;       /* 선택된 페이지 볼드 */
+    text-decoration: none;   /* 밑줄 제거 */
+}
+
+.faq-pagination .page-link.arrow {
+    font-weight: bold;       /* 화살표 강조 */
 }

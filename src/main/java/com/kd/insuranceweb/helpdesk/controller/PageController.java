@@ -27,21 +27,31 @@ public class PageController {
         
     }
 
-    // 최초 페이지 SSR
+    // 최초 helpdesk 페이지 SSR
     @GetMapping("/helpdesk/customerservice")
     public String helpdesk(
             @RequestParam(value = "menu", defaultValue = "ars1") String menu,
             Model model
     ) {
         model.addAttribute("menu", menu);
-        return "helpdesk/PP060200_000"; // 전체 페이지 SSR
+        return "helpdesk/PP060200_000"; // 기본 페이지
     }
 
-	
-    
+    // helpdesk 내부 페이지 라우팅 (Map 기반)
+    @GetMapping("/helpdesk/{page}")
+    public String routeHelpdeskPage(
+            @PathVariable("page") String page,
+            @RequestParam(value = "menu", defaultValue = "ars1") String menu,
+            Model model
+    ) {
+        model.addAttribute("menu", menu);
+        // map에서 찾고 없으면 기본 페이지 반환
+        return helpdeskPages.getOrDefault(page, "helpdesk/PP060200_000");
+    }
+
+    // terms 페이지 라우팅
     @GetMapping("/terms/{page}")
     public String routeTermsPage(@PathVariable("page") String page) {
-        // /terms/content/**는 TermsController가 처리하므로 충돌 없음
         return termsPages.getOrDefault(page, "terms/PU010401_001");
     }
 
