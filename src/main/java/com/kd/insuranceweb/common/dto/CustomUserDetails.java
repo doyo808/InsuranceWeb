@@ -6,7 +6,7 @@ import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, LoginUser {
 
     private PersonDTO person;
     private CustomerDTO customer;
@@ -81,4 +81,12 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true; 
     }
+
+	@Override
+	public String toString() {
+		return "CustomUserDetails [person=" + person + ", customer=" + customer + ", customer_id=" + customer_id
+				+ ", person_id=" + person_id + ", login_id=" + login_id + ", password_hash=" + password_hash + "]";
+	}
+    
+    
 }

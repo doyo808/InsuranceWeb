@@ -75,7 +75,10 @@
 							<tr>
 								<td>2024-07-28 14:30</td>
 								<td>보험금 청구 처리</td>
-								<td class="bold">김민지</td>
+								<td class="bold"
+								    th:text="${loginUser != null ? loginUser.emp_name : ''}">
+								    김민지
+								</td>
 							</tr>
 						</tbody>
 					</table>
