@@ -1,7 +1,9 @@
 package com.kd.insuranceweb.helpdesk.mapper;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,20 +20,45 @@ public class FaqMapper {
 	
 	private final SqlSessionTemplate sql;
 	
-	// 전체 조회
-	public List<FaqDto> findAll(){
-		return sql.selectList("FaqMapper.findAll");
+	// 전체 페이징
+	public List<FaqDto> findAllPage(int startRow, int endRow){
+	    Map<String, Integer> params = new HashMap<>();
+	    params.put("startRow", startRow);
+	    params.put("endRow", endRow);
+	    return sql.selectList("FaqMapper.findAllPage", params);
 	}
 	
-	// 카테고리 조회
-	public List<FaqDto> findByCategory(String category){
-		return sql.selectList("FaqMapper.findByCategory", category);
+	// 카테고리별 페이징
+	public List<FaqDto> findByCategoryPage(String category, int startRow, int endRow){
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("category", category);
+	    params.put("startRow", startRow);
+	    params.put("endRow", endRow);
+	    return sql.selectList("FaqMapper.findByCategoryPage", params);
 	}
 	
-	// 키워드 검색
-	public List<FaqDto> searchByKeyword(String keyword){
-		return sql.selectList("FaqMapper.searchByKeyword", keyword);
+	// 키워드 검색 페이징
+	public List<FaqDto> searchByKeywordPage(String keyword, int startRow, int endRow){
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("keyword", keyword);
+	    params.put("startRow", startRow);
+	    params.put("endRow", endRow);
+	    return sql.selectList("FaqMapper.searchByKeywordPage", params);
 	}
+	
+	// 건수
+	public int countAll() {
+	    return sql.selectOne("FaqMapper.countAll");
+	}
+
+	public int countByCategory(String category){
+	    return sql.selectOne("FaqMapper.countByCategory", category);
+	}
+
+	public int countByKeyword(String keyword){
+	    return sql.selectOne("FaqMapper.countByKeyword", keyword);
+	}
+	
 
 	// ID 조회	
 	public FaqDto findById(Long faqId){
@@ -52,10 +79,5 @@ public class FaqMapper {
 	public int deleteFaq(Long faqId) {
 		return sql.delete("FaqMapper.deleteFaq", faqId);
 	}
-	
-	
-	
-	
-	
 	
 }

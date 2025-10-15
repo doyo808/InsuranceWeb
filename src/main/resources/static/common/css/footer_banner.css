@@ -133,7 +133,7 @@
 }
 
 /* 항목별 아이콘 (직접 파일 넣기) */
-/*
+/* 이미지 나중에 적용
 .footer-banner .faq li.faq-accident a::before {
   background-image: url("icons/accident.png");
 }

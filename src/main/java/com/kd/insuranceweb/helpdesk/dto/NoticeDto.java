@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 //모든 필드 생성자
 public class NoticeDto {
-	private Long noticeId;
+	private Long notice_id;
 	private String title;
 	private String content;
 	private String writer;
-	private String isVisible;	
+	private String is_visible;	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
-	private Date createdAt;
+	private Date created_at;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
-	private Date updatedAt;
+	private Date updated_at;
 
 }

@@ -59,7 +59,7 @@
     <select id="selectReviewById" parameterType="long" resultType="reviewDto">
     	SELECT review_id, category, subcategory, content, author_name, author_id, is_visible, rating, created_at
     	FROM review	
-    	WHERE review_id = #{reviewId}
+    	WHERE review_id = #{review_id}
     </select>
     
     <!-- 등록 -->
@@ -68,7 +68,7 @@
 			review_id, category, subcategory, content, author_name, author_id, is_visible, rating, created_at
         ) VALUES (
             SEQ_REVIEW_ID.NEXTVAL,
-            #{category}, #{subCategory}, #{content}, #{authorName}, #{authorId}, #{isVisible}, #{rating},
+            #{category}, #{subCategory}, #{content}, #{author_name}, #{author_id}, #{is_visible}, #{rating},
             SYSDATE, SYSDATE
         )
     </insert>
@@ -80,10 +80,10 @@
             category = #{category},
             subcategory = #{subCategory},
             content = #{content},
-            is_visible = #{isVisible},
+            is_visible = #{is_visible},
             rating = #{rating},
             updated_at = SYSDATE
-        WHERE review_id = #{reviewId}
+        WHERE review_id = #{review_id}
     </update>
 
     <!-- 삭제 -->

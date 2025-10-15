@@ -1,16 +1,55 @@
 $(document).ready(function () {
-
     let currentPage = 1;
     const PAGE_SIZE = 10;
     let totalCount = 0;
 
-    // ✅ URL 파라미터에서 값 읽기
+    // ===============================
+    // 1. ContextPath 가져오기
+    // ===============================
+    let ctxPath = '';
+    try {
+        if (typeof contextPath !== 'undefined' && contextPath) {
+            ctxPath = contextPath;
+        }
+    } catch (e) {}
+    
+    if (!ctxPath || ctxPath === '/') {
+        const pathName = window.location.pathname;
+        const pathParts = pathName.split('/').filter(p => p.length > 0);
+        if (pathParts.length > 0) {
+            ctxPath = '/' + pathParts[0] + '/';
+        } else {
+            ctxPath = '/';
+        }
+    }
+    if (!ctxPath.endsWith('/')) ctxPath += '/';
+    console.log('[DEBUG] ctxPath:', ctxPath);
+
+    // ===============================
+    // 2. CSRF 토큰 설정 (Spring Security)
+    // ===============================
+    const csrfToken = $("meta[name='_csrf']").attr("content");
+    const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            if (csrfToken && csrfHeader) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            }
+        }
+    });
+
+    // ===============================
+    // 3. URL 파라미터 읽기
+    // ===============================
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
     }
 
-    // 공지사항 리스트 출력
+    // ===============================
+    // 4. 공지사항 목록 렌더링
+    // ===============================
     function renderNotices(notices) {
         const container = $('#search-results');
         container.empty();
@@ -21,10 +60,9 @@ $(document).ready(function () {
         }
 
         notices.forEach(function (notice) {
-            const formattedDate = notice.createdAt || '-';
-
+            const formattedDate = notice.created_at || '-';
             const item = $(`
-                <div class="notice-item" data-id="${notice.noticeId}">
+                <div class="notice-item" data-id="${notice.notice_id}">
                     <span class="notice-title">${notice.title}</span>
                     <span class="notice-date">${formattedDate}</span>
                 </div>
@@ -35,7 +73,9 @@ $(document).ready(function () {
         $('#current-page').text(currentPage);
     }
 
-    // 페이징 버튼 렌더링
+    // ===============================
+    // 5. 페이징 버튼 렌더링
+    // ===============================
     function renderPagination() {
         const totalPages = Math.ceil(totalCount / PAGE_SIZE);
         let paginationHtml = '';
@@ -53,10 +93,12 @@ $(document).ready(function () {
         $('.pagination').html(paginationHtml);
     }
 
-    // 공지사항 조회
+    // ===============================
+    // 6. 공지사항 로드 (AJAX)
+    // ===============================
     function loadNotices(page = 1, keyword = '') {
         $.ajax({
-            url: '/helpdesk/list',
+            url: ctxPath + 'helpdesk/list',
             type: 'GET',
             data: { page: page, keyword: keyword },
             dataType: 'json',
@@ -66,13 +108,16 @@ $(document).ready(function () {
                 currentPage = data.currentPage;
                 renderPagination();
             },
-            error: function () {
+            error: function (xhr) {
+                console.error('[공지사항 로드 실패]', xhr);
                 alert('공지사항을 불러오는데 실패했습니다.');
             }
         });
     }
 
-    // 검색
+    // ===============================
+    // 7. 검색 기능
+    // ===============================
     $('#search-form').on('submit', function (e) {
         e.preventDefault();
         const keyword = $('#search-input').val().trim();
@@ -80,39 +125,41 @@ $(document).ready(function () {
         loadNotices(currentPage, keyword);
     });
 
-    // ✅ 상세페이지 이동 시 현재 page, keyword 전달
+    // ===============================
+    // 8. 상세페이지 이동
+    // ===============================
     $('#search-results').on('click', '.notice-item', function () {
         const noticeId = $(this).data('id');
         const keyword = $('#search-input').val().trim();
-        window.location.href = '/helpdesk/detail/' + noticeId + '?page=' + currentPage + '&keyword=' + encodeURIComponent(keyword);
+        window.location.href =
+            ctxPath + 'helpdesk/detail/' + noticeId +
+            '?page=' + currentPage +
+            '&keyword=' + encodeURIComponent(keyword);
     });
 
-    // 페이지 버튼 클릭 처리
+    // ===============================
+    // 9. 페이지 버튼 클릭 처리
+    // ===============================
     $('.pagination').on('click', 'button', function () {
         const btnId = $(this).attr('id');
         const keyword = $('#search-input').val().trim();
         const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
-        if (btnId === 'first-page') {
-            loadNotices(1, keyword);
-        } else if (btnId === 'prev-page' && currentPage > 1) {
-            loadNotices(currentPage - 1, keyword);
-        } else if (btnId === 'next-page' && currentPage < totalPages) {
-            loadNotices(currentPage + 1, keyword);
-        } else if (btnId === 'last-page') {
-            loadNotices(totalPages, keyword);
-        } else if ($(this).hasClass('page-btn')) {
+        if (btnId === 'first-page') loadNotices(1, keyword);
+        else if (btnId === 'prev-page' && currentPage > 1) loadNotices(currentPage - 1, keyword);
+        else if (btnId === 'next-page' && currentPage < totalPages) loadNotices(currentPage + 1, keyword);
+        else if (btnId === 'last-page') loadNotices(totalPages, keyword);
+        else if ($(this).hasClass('page-btn')) {
             const page = Number($(this).data('page'));
-            if (page !== currentPage) {
-                loadNotices(page, keyword);
-            }
+            if (page !== currentPage) loadNotices(page, keyword);
         }
     });
 
-    // ✅ 초기 로딩 시 URL 파라미터 반영
+    // ===============================
+    // 10. 초기 로딩 시 URL 파라미터 반영
+    // ===============================
     const initialPage = parseInt(getQueryParam('page')) || 1;
     const initialKeyword = getQueryParam('keyword') || '';
     $('#search-input').val(initialKeyword);
     loadNotices(initialPage, initialKeyword);
-
 });

@@ -8,7 +8,7 @@ $(function () {
         $("#termsContent").html("<p>로딩 중...</p>");
 
         $.ajax({
-            url: "/kdInsuranceTeam/terms/content/" + date, // contextpath 추가
+            url: contextPath + "terms/content/" + date,  // contextPath 활용
             type: "GET",
             success: function(data) {
                 $("#termsContent").html(data); // 성공 시 약관 내용 표시
