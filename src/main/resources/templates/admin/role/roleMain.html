@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/common/layout}">
+
+<head>
+    <meta charset="utf-8" />
+    <title>권한관리</title>
+</head>
+
+<body>
+<main layout:fragment="adminContent" class="admin-main">
+
+    <h1>권한관리 메인</h1>
+	
+	<div class="login-info-box" style="margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+	    <p><strong>접속자:</strong> <span th:text="${loginUser.emp_name}"></span> (<span th:text="${loginUser.username}"></span>)</p>
+	    <p><strong>권한목록:</strong>
+	        <span th:each="auth, stat : ${loginUser.authNames}"
+	              th:text="${auth + (stat.last ? '' : ', ')}"></span>
+	    </p>
+	</div>
+	
+	<a th:href="@{/admin/role/roles}">권한편집</a>
+	<a th:href="@{/admin/role/employees}">사원편집</a>
+	<a th:href="@{/admin/role/history}">변경이력</a>
+
+</main>
+
+</body>
+</html>

@@ -23,9 +23,19 @@
 	<resultMap id="roleResultMap" type="java.lang.String">
 	    <result column="role_name" property="role_name" javaType="java.lang.String" />
 	</resultMap>
+	<resultMap id="roleKorResultMap" type="java.lang.String">
+	    <result column="role_desc" property="role_desc" javaType="java.lang.String" />
+	</resultMap>
 	
 	<select id="findRolesByEmpId" parameterType="Integer" resultMap="roleResultMap">
 	    SELECT r.role_name
+	    FROM roles r
+	    JOIN employee_role er ON r.role_id = er.role_id
+	    WHERE er.emp_id = #{emp_id}
+	</select>
+	
+	<select id="findRolesKorNameByEmpId" parameterType="Integer" resultMap="roleKorResultMap">
+	    SELECT r.role_desc
 	    FROM roles r
 	    JOIN employee_role er ON r.role_id = er.role_id
 	    WHERE er.emp_id = #{emp_id}

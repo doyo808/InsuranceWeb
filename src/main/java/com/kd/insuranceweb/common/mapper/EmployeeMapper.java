@@ -12,4 +12,6 @@ public interface EmployeeMapper {
 	EmployeeDto findByLoginId(@Param("username") String username);
 
 	List<String> findRolesByEmpId(@Param("emp_id") Integer emp_id);
+	List<String> findRolesKorNameByEmpId(@Param("emp_id") Integer emp_id);
+	
 }

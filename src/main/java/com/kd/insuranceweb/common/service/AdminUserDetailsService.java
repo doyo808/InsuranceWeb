@@ -51,6 +51,7 @@ public class AdminUserDetailsService implements UserDetailsService {
 								emp.getEmp_name(),
 								emp.getUsername(),
 								emp.getPassword(),
-								authorities);
+								authorities,
+								employeeMapper.findRolesKorNameByEmpId(emp.getEmp_id()));
 	}
 }
