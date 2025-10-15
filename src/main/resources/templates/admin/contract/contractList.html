@@ -12,6 +12,14 @@
 	<main layout:fragment="adminContent" class="admin-main">
 		<h1 class="page-title">보험 계약 접수 목록</h1>
 
+		<p class="page-desc">고객이 가입한 보험상품에 대한 계약을 관리하고 처리합니다.</p>
+
+		<section class="stats">
+			<article class="stat-card panel">
+				<p class="stat-card__label">접수된 계약 건수</p>
+				<p class="stat-card__value" th:text="${pendingCount} + '건'"></p>
+			</article>
+		</section>
 		<!-- 상단 툴바 -->
 		<!-- 상단 툴바: form으로 감싸고 GET 제출 -->
 		<section class="toolbar card">
@@ -27,13 +35,18 @@
 					<select class="field__control" name="status" th:value="${criteria.status}">
 						<option value="">전체</option>
 						<option value="PENDING">접수</option>
-						<option value="APPROVED">승인</option>
-						<option value="REJECTED">반려</option>
+						<option value="APPROVED">승인완료</option>
+						<option value="ACTIVE">계약진행중</option>
+						<option value="EXPIRED">계약종료</option>
+						<option value="CANCELLED">해지</option>
+						<option value="REJECTED">거절</option>
+						<option value="SUSPENDED">일시중지</option>
+						<option value="TERMINATED">중도해지</option>
 					</select>
 				</div>
 
 				<div class="field toolbar__item toolbar__item--grow">
-					<label class="field__label">접수일자</label>
+					<label class="field__label">계약 시작일자</label>
 					<div class="daterange" data-daterange>
 						<input class="field__control daterange__input" type="date" name="from"
 							th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}" />
@@ -75,10 +88,22 @@
 						<td th:text="${row.start_date} + ' ~ ' + ${row.end_date}"></td>
 						<td th:text="${row.total_premium}"></td>
 						<td>
-							<span th:text="${row.status}" class="badge badge--pending"></span>
+							<span th:switch="${row.status}">
+								<span th:case="'PENDING'">접수</span>
+								<span th:case="'APPROVED'">승인완료</span>
+								<span th:case="'ACTIVE'">계약진행중</span>
+								<span th:case="'EXPIRED'">계약종료</span>
+								<span th:case="'CANCELLED'">해지</span>
+								<span th:case="'REJECTED'">거절</span>
+								<span th:case="'SUSPENDED'">일시중지</span>
+								<span th:case="'TERMINATED'">중도해지</span>
+								<span th:case="*">기타</span>
+							</span>
 						</td>
+
 						<td class="text-center">
-							<a class="btn btn--primary btn--xs">상세</a>
+							<a class="btn btn--primary btn--xs"
+								th:href="@{/admin/contractDetail(contractId=${row.contract_id})}">상세</a>
 						</td>
 					</tr>
 				</tbody>

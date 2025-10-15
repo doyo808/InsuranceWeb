@@ -23,6 +23,10 @@
           <typeAlias type="com.kd.insuranceweb.admin.dto.ProductListRowDTO" alias="productList"></typeAlias>
           <typeAlias type="com.kd.insuranceweb.admin.dto.ContractListRowDTO" alias="contractList"></typeAlias>
   		  <typeAlias type="com.kd.insuranceweb.admin.dto.ContractSearchCriteria" alias="contractSearchCriteria"></typeAlias>
+  		  <typeAlias type="com.kd.insuranceweb.admin.dto.ContractDetailDTO" alias="contractDetail"></typeAlias>
+  		  
+  		  <typeAlias type="com.kd.insuranceweb.admin.dto.AdminActivityLogDTO" alias="adminActivityLog"></typeAlias>
+  		 
   	</typeAliases>
 
   

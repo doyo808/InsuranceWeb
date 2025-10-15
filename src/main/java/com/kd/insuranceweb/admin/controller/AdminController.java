@@ -25,9 +25,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kd.insuranceweb.admin.dto.ClaimDetailDTO;
 import com.kd.insuranceweb.admin.dto.ClaimListRowDTO;
 import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
+import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
 import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
+import com.kd.insuranceweb.admin.service.AdminActivityService;
 import com.kd.insuranceweb.admin.service.ClaimService;
 import com.kd.insuranceweb.admin.service.ContractService;
 import com.kd.insuranceweb.admin.service.ProductService;
@@ -43,6 +45,8 @@ public class AdminController {
 	private final ProductService productService;
 	private final ContractService contractService;
 	
+	private final AdminActivityService activityService;
+	
 	// ===== 공통 페이지 =====
 	@GetMapping("/login")
 	public String login() {
@@ -54,11 +58,15 @@ public class AdminController {
 			@ModelAttribute("criteria") ClaimSearchCriteria criteria, 
 			Model model
 	) {
-		int pendingCount = claimService.getPendingCount(criteria);
-		model.addAttribute("pendingCount", pendingCount);
+		int claimsPendingCount = claimService.getPendingCount(criteria);
+		model.addAttribute("claimsPendingCount", claimsPendingCount);
 		int sellingCount = productService.countProductsOnSale();
 		model.addAttribute("sellingCount", sellingCount); 
+		int contractsPendingCount = contractService.getPendingCount();
+	    model.addAttribute("contractsPendingCount", contractsPendingCount);
 		
+	    model.addAttribute("recentActivities", activityService.getRecentActivities());
+	    
 		return "admin/common/main";
 	}
 
@@ -76,7 +84,6 @@ public class AdminController {
 	// ===== 계약 관리 =====
 	@GetMapping("/contract")
 	public String contractList(@ModelAttribute("criteria") ContractSearchCriteria criteria, Model model) {
-
 		
 		 // ★ 종료일 + 1일(배타 범위)
 	    if (criteria.getTo() != null) {
@@ -86,12 +93,46 @@ public class AdminController {
 	    int totalCount = contractService.countReceipts(criteria);
 	    List<ContractListRowDTO> rows = contractService.findReceiptsPage(criteria);
 
+	    int pendingCount = contractService.getPendingCount();
+	    model.addAttribute("pendingCount", pendingCount);
 	    model.addAttribute("criteria", criteria);
 	    model.addAttribute("contracts", rows);
 	    model.addAttribute("totalCount", totalCount);
 		return "admin/contract/contractList";
 	}
+	
+	@GetMapping("/contractDetail")
+	public String contractDetail(@RequestParam("contractId") Integer contractId, Model model) {
+		ContractDetailDTO detail = contractService.getContractDetail(contractId);
+		model.addAttribute("detail", detail);
+		
+	    return "admin/contract/contractDetail";
 
+	}
+
+	@PostMapping("/contract/{id}/approve")
+	public String approveContract(@PathVariable("id") Integer contractId,
+	                              RedirectAttributes ra) {
+	    contractService.approveContract(contractId);
+	    ra.addFlashAttribute("toast", "계약이 승인되었습니다.");
+	    return "redirect:/admin/contractDetail?contractId=" + contractId;
+	}
+
+	@PostMapping("/contract/{id}/reject")
+	public String rejectContract(@PathVariable("id") Integer contractId,
+	                             @RequestParam("reason") String reason,
+	                             RedirectAttributes ra) {
+	    if (reason == null || reason.trim().isEmpty() || reason.length() > 500) {
+	        ra.addFlashAttribute("error", "거절 사유는 1~500자 내로 입력해 주세요.");
+	        return "redirect:/admin/contractDetail?contractId=" + contractId;
+	    }
+	    contractService.rejectContract(contractId, reason.trim());
+	    ra.addFlashAttribute("toast", "거절 처리가 완료되었습니다.");
+	    return "redirect:/admin/contractDetail?contractId=" + contractId;
+	}
+
+
+	
 	
 	// ===== 상품 관리 =====
 	@GetMapping("/product")

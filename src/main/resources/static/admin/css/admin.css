@@ -10,7 +10,7 @@
 	--color-primary: rgb(77, 158, 240);
 	--radius: 12px;
 	--shadow: 0 4px 16px rgba(0, 0, 0, .06);
-	
+
 	--topbar-h: 56px;
 }
 
@@ -332,10 +332,10 @@ a {
 }
 
 .btn.back {
-    background: #9ca3af;
-    color: #fff;
-    border-color: transparent;
-    text-decoration: none;
+	background: #9ca3af;
+	color: #fff;
+	border-color: transparent;
+	text-decoration: none;
 }
 
 /* ===== Forms (공통) - 로그인/검색 등에서 재사용 ===== */
@@ -375,67 +375,70 @@ a {
 /* ===== Auth (관리자 로그인 전용) ===== */
 /* 헤더가 있든 없든 로그인 블록을 화면 중앙 정렬 */
 .auth {
-  min-height: calc(100vh - 56px); /* .topbar 높이 고려 */
-  display: grid;
-  place-items: center;
-  padding: 48px 20px;
+	min-height: calc(100vh - 56px);
+	/* .topbar 높이 고려 */
+	display: grid;
+	place-items: center;
+	padding: 48px 20px;
 }
 
 /* 로그인 카드(폼 박스) */
 .auth-card {
-  width: min(560px, 100%);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 28px;
+	width: min(560px, 100%);
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+	padding: 28px;
 }
 
 
 
 /* 카드 헤더(제목/설명) */
 .auth-card__head {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
+
 .auth-title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 800;
+	margin: 0;
+	font-size: 24px;
+	font-weight: 800;
 }
+
 .auth-desc {
-  margin: 6px 0 0;
-  font-size: 14px;
-  color: var(--color-text-weak);
+	margin: 6px 0 0;
+	font-size: 14px;
+	color: var(--color-text-weak);
 }
 
 /* 폼 필드 간격 (공통 .field 그대로 쓰되 로그인에선 좀 더 여유) */
 .auth-form {
-  display: grid;
-  gap: 16px;
+	display: grid;
+	gap: 16px;
 }
 
 /* 아이디/비밀번호 아래 미세 안내문(선택) */
 .field__hint {
-  margin-top: 4px;
-  font-size: 12px;
-  color: var(--color-text-weak);
+	margin-top: 4px;
+	font-size: 12px;
+	color: var(--color-text-weak);
 }
 
 /* 아이디 저장/비밀번호 찾기 줄 */
 .auth-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 2px;
 }
 
 /* 체크박스 라벨 정렬 보조 */
 .form-check {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
 }
 
 /* 제출 버튼 full-width는 .btn--block 재사용 */
@@ -443,103 +446,150 @@ a {
 /* 푸터(회원가입/도움말 링크 등) */
 /* ===== Footer (공통) ===== */
 .footer {
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface);
-  padding: 24px 0;
-  margin-top: 48px;
+	border-top: 1px solid var(--color-border);
+	background: var(--color-surface);
+	padding: 24px 0;
+	margin-top: 48px;
 }
 
 .footer__inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 0 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
 }
 
 .footer__links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
 }
 
 .footer__link {
-  font-size: 13px;
-  color: var(--color-text-weak);
-  text-decoration: none;
-  transition: color .2s ease;
+	font-size: 13px;
+	color: var(--color-text-weak);
+	text-decoration: none;
+	transition: color .2s ease;
 }
 
 .footer__link:hover {
-  color: var(--color-primary);
+	color: var(--color-primary);
 }
 
 .footer__copy {
-  font-size: 13px;
-  color: var(--color-text-weak);
+	font-size: 13px;
+	color: var(--color-text-weak);
 }
 
 /* 로그인 화면에서 자주 쓰는 조용한 링크 스타일 */
 .link {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 600;
+	color: var(--color-primary);
+	text-decoration: none;
+	font-weight: 600;
 }
+
 .link:hover {
-  filter: brightness(0.96);
-  text-decoration: underline;
+	filter: brightness(0.96);
+	text-decoration: underline;
 }
 
 /* 상단바를 간소화해서 쓰고 싶을 때(선택) */
 .topbar--minimal {
-  border-bottom: 1px solid rgba(17, 115, 212, .12);
-  background: var(--color-surface);
+	border-bottom: 1px solid rgba(17, 115, 212, .12);
+	background: var(--color-surface);
 }
+
 .topbar--minimal .brand__name {
-  font-size: 15px;
+	font-size: 15px;
 }
 
 /* 작은 화면에서 카드 패딩 축소 */
 @media (max-width: 480px) {
-  .auth-card { padding: 20px; }
-  .auth-title { font-size: 20px; }
+	.auth-card {
+		padding: 20px;
+	}
+
+	.auth-title {
+		font-size: 20px;
+	}
 }
 
 /* 페이지네이션 */
 .pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 18px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin: 18px 0;
 }
+
 .pagination__btn {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--color-border);
-  text-decoration: none;
-  font-weight: 600;
-  color: var(--color-text);
-  background: var(--color-surface);
+	padding: 8px 12px;
+	border-radius: 8px;
+	border: 1px solid var(--color-border);
+	text-decoration: none;
+	font-weight: 600;
+	color: var(--color-text);
+	background: var(--color-surface);
 }
-.pagination__btn.is-disabled { opacity: .5; pointer-events: none; }
+
+.pagination__btn.is-disabled {
+	opacity: .5;
+	pointer-events: none;
+}
 
 .pagination__list {
-  display: flex; gap: 6px; list-style: none; margin: 0; padding: 0;
-}
-.pagination__page {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 10px;
-  border: 1px solid var(--color-border);
-  text-decoration: none; font-weight: 700;
-  color: var(--color-text); background: var(--color-surface);
-}
-.pagination__page.is-active {
-  border-color: rgba(17,115,212,.35);
-  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
-  color: var(--color-primary);
+	display: flex;
+	gap: 6px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
+.pagination__page {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	border: 1px solid var(--color-border);
+	text-decoration: none;
+	font-weight: 700;
+	color: var(--color-text);
+	background: var(--color-surface);
+}
+
+.pagination__page.is-active {
+	border-color: rgba(17, 115, 212, .35);
+	background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+	color: var(--color-primary);
+}
+
+.chart-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	gap: 24px;
+	align-items: stretch;
+}
+
+.chart-card {
+	padding: 24px;
+	border-radius: 12px;
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+	height: 400px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+canvas {
+	width: 100% !important;
+	height: 300px !important;
+}

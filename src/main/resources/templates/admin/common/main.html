@@ -7,20 +7,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>관리자 메인 대시보드</title>
 
-
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
+	<!-- Chart.js -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 	<main layout:fragment="adminContent">
 		<main class="page">
-
-
-
 
 			<!-- Shortcuts -->
 			<section class="section mt-12" aria-label="주요 기능 바로가기">
@@ -40,6 +38,7 @@
 							<span class="material-symbols-outlined" aria-hidden>description</span>
 						</div>
 						<p class="shortcut__label">보험 계약 접수</p>
+						<p class="kpi-card__value" th:text="'접수된 계약 ' + ${contractsPendingCount} + '건'"></p>
 					</a>
 
 					<a th:href="@{/admin/claim}" class="shortcut">
@@ -47,7 +46,7 @@
 							<span class="material-symbols-outlined" aria-hidden>paid</span>
 						</div>
 						<p class="shortcut__label">보험금 청구</p>
-						<p class="kpi-card__value" th:text="'신규 ' + ${pendingCount} + '건'"></p>
+						<p class="kpi-card__value" th:text="'신규 청구 ' + ${claimsPendingCount} + '건'"></p>
 					</a>
 
 					<a th:href="@{/admin/inquiry}" class="shortcut">
@@ -56,6 +55,25 @@
 						</div>
 						<p class="shortcut__label">고객 문의 내역</p>
 					</a>
+				</div>
+			</section>
+
+			<!-- 📊 이번 달 계약/청구 통계 그래프 -->
+			<section class="section mt-12" aria-label="이번 달 계약/청구 통계">
+				<h2 class="section__title">이번 달 계약 / 청구 통계</h2>
+
+				<div class="chart-grid">
+					<!-- 계약 그래프 -->
+					<div class="chart-card">
+						<h3 class="text-lg font-semibold text-gray-800 mb-3">계약 현황</h3>
+						<canvas id="contractChart"></canvas>
+					</div>
+
+					<!-- 청구 그래프 -->
+					<div class="chart-card">
+						<h3 class="text-lg font-semibold text-gray-800 mb-3">청구 현황</h3>
+						<canvas id="claimChart"></canvas>
+					</div>
 				</div>
 			</section>
 
@@ -72,16 +90,115 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>2024-07-28 14:30</td>
-								<td>보험금 청구 처리</td>
-								<td class="bold">김민지</td>
+							<tr th:each="log : ${recentActivities}">
+								<td th:text="${log.createdAt}">2024-07-28 14:30</td>
+								<td th:text="${log.actionDesc}">보험금 청구 처리</td>
+								<td th:text="${log.employeeName}" class="bold">김민지</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</section>
-			</div>
+
+			<!-- Chart Script -->
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					// 계약 그래프
+					const ctxContract = document.getElementById("contractChart").getContext("2d");
+					new Chart(ctxContract, {
+						type: "bar",
+						data: {
+							labels: ["신규 계약", "해지 계약"],
+							datasets: [{
+								label: "계약 건수",
+								data: [42, 8], // 샘플 데이터
+								backgroundColor: [
+									"rgba(17, 115, 212, 0.7)",
+									"rgba(240, 70, 70, 0.7)"
+								],
+								borderColor: [
+									"rgb(17, 115, 212)",
+									"rgb(240, 70, 70)"
+								],
+								borderWidth: 1,
+								borderRadius: 6
+							}]
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: {display: false},
+								title: {
+									display: true,
+									text: "이번 달 계약 현황"
+								}
+							},
+							scales: {
+								y: {
+									beginAtZero: true,
+									ticks: {color: "#6b7280"},
+									grid: {color: "rgba(0,0,0,0.08)"}
+								},
+								x: {
+									ticks: {color: "#6b7280"},
+									grid: {display: false}
+								}
+							}
+						}
+					});
+
+					// 청구 그래프
+					const ctxClaim = document.getElementById("claimChart").getContext("2d");
+					new Chart(ctxClaim, {
+						type: "bar",
+						data: {
+							labels: ["총 청구 금액", "지급 완료 금액"],
+							datasets: [{
+								label: "금액 (만원)",
+								data: [100, 200], // 샘플 데이터
+								backgroundColor: [
+									"rgba(255, 206, 86, 0.7)",
+									"rgba(75, 192, 192, 0.7)"
+								],
+								borderColor: [
+									"rgb(255, 206, 86)",
+									"rgb(75, 192, 192)"
+								],
+								borderWidth: 1,
+								borderRadius: 6
+							}]
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: {display: false},
+								title: {
+									display: true,
+									text: "이번 달 청구 현황"
+								},
+								tooltip: {
+									callbacks: {
+										label: function (ctx) {
+											return ctx.parsed.y + "만원";
+										}
+									}
+								}
+							},
+							scales: {
+								y: {
+									beginAtZero: true,
+									ticks: {color: "#6b7280"},
+									grid: {color: "rgba(0,0,0,0.08)"}
+								},
+								x: {
+									ticks: {color: "#6b7280"},
+									grid: {display: false}
+								}
+							}
+						}
+					});
+				});
+			</script>
 		</main>
 	</main>
 </body>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kd.insuranceweb.admin.mapper.AdminActivityMapper">
+
+	<!-- 관리자 활동 로그 등록 -->
+	<insert id="insertActivity" parameterType="adminActivityLog">
+		INSERT INTO ADMIN_ACTIVITY_LOG (
+			EMP_ID,
+			EMP_NAME,
+			ACTION_TYPE,
+			ACTION_DESC,
+			TARGET_ID,
+			CREATED_AT
+		)
+		VALUES (
+			#{employee_id},
+			#{employee_name},
+			#{action_type},
+			#{action_desc},
+			#{target_id},
+			SYSTIMESTAMP
+		)
+	</insert>
+
+	<!-- 최근 활동 10개 조회 (ROWNUM 사용: Oracle 모든 버전 호환) -->
+	<select id="getRecentActivities" resultType="adminActivityLog">
+		SELECT *
+		FROM (
+			SELECT
+				al.LOG_ID,
+				e.EMP_NAME,
+				al.ACTION_DESC,
+				TO_CHAR(al.CREATED_AT, 'YYYY-MM-DD HH24:MI') AS CREATED_AT
+			FROM ADMIN_ACTIVITY_LOG al
+			JOIN EMPLOYEES e ON al.EMP_ID = e.EMP_ID
+			ORDER BY al.CREATED_AT DESC
+		)
+		WHERE ROWNUM &lt;= 10
+	</select>
+
+</mapper>
