@@ -4,6 +4,9 @@
 
 <head>
 	<meta charset="utf-8" />
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+
 	<title>보험 상품 등록</title>
 
 	<!-- 페이지 전용 CSS -->
@@ -14,7 +17,7 @@
 
 <body>
 	<main layout:fragment="adminContent" class="admin-main">
-		<form method="post" th:action="@{/admin/product}" th:object="${productForm}">
+		<form method="post" id="insurance-form" th:action="@{/admin/product}" th:object="${productForm}">
 			<h1 class="page-title">보험 상품 등록</h1>
 			<p class="page-desc">신규 보험 상품의 기본정보, 판매정보, 보장내용을 입력하고 약관/이미지를 첨부합니다.</p>
 
@@ -160,14 +163,14 @@
 				<div class="form-grid form-grid--2">
 					<div class="field">
 						<label class="field__label">상품 약관 (PDF)</label>
-						<input class="field__control" type="file" accept=".pdf" />
+						<input class="field__control" type="file" name="conditions" accept=".pdf" />
 						<ul class="file-hints">
 							<li>최대 10MB, PDF만 업로드 가능</li>
 						</ul>
 					</div>
 					<div class="field">
 						<label class="field__label">대표 이미지 (JPG/PNG)</label>
-						<input class="field__control" type="file" accept=".jpg,.jpeg,.png" />
+						<input class="field__control" type="file" name="thumbnail" accept=".jpg,.jpeg,.png" />
 						<ul class="file-hints">
 							<li>권장 크기: 1200×630, 최대 5MB</li>
 						</ul>
@@ -192,6 +195,9 @@
 				</div>
 			</div>
 
+			<!-- 결과화면 임시-->
+			 
+			<div id="result" style="margin-top: 20px; font-weight: bold;"></div>
 		</form>
 
 		<script>
