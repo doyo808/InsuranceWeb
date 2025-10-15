@@ -11,4 +11,27 @@
   	 
   	FROM roles
   </select>
+  
+    <!-- 수정 -->
+    <update id="update" parameterType="com.kd.insuranceweb.admin.dto.RoleDto">
+        UPDATE roles
+        SET role_name = #{role_name},
+            role_desc = #{role_desc}
+        WHERE role_id = #{role_id}
+    </update>
+
+    <!-- 삽입 -->
+    <insert id="insert" parameterType="com.kd.insuranceweb.admin.dto.RoleDto">
+        INSERT INTO roles (role_id, role_name, role_desc)
+        VALUES (role_seq.nextval, #{role_name}, #{role_desc})
+    </insert>
+
+    <!-- 다중 삭제 -->
+    <delete id="deleteAll" parameterType="list">
+        DELETE FROM roles
+        WHERE role_id IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

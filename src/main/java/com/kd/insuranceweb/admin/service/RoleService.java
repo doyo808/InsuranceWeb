@@ -18,5 +18,17 @@ public class RoleService {
 	public List<RoleDto> getAllRoles() {
 		return mapper.selectAll();
 	}
+
+	public int update(RoleDto role) {
+		return mapper.update(role);
+	}
+
+	public int insert(RoleDto role) {
+		return mapper.insert(role);
+	}
+
+	public int deleteAll(List<Integer> roleIds) {
+		return mapper.deleteAll(roleIds);
+	}
 	
 }
