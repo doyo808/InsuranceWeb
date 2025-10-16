@@ -16,7 +16,8 @@
 				<a class="topbar__link" th:href="@{/admin/contract}">계약 접수</a>
 				<a class="topbar__link" th:href="@{/admin/claim}">보험금 청구관리</a>
 				<a class="topbar__link" th:href="@{/admin/inquiry}">고객 문의관리</a>
-				
+				<a class="topbar__link" th:href="@{/admin/role/main}">권한관리</a>
+				<p th:text="${loginUser != null ? loginUser.emp_name : ''}"></p>
 			</nav>
 		</div>
 	</div>
