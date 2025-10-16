@@ -49,6 +49,7 @@ public class AdminUserDetailsService implements UserDetailsService {
         // 4. UserDetails 객체 생성
 		return new AdminUserDetails(emp.getEmp_id(),
 								emp.getEmp_name(),
+								emp.getDept_id(),
 								emp.getUsername(),
 								emp.getPassword(),
 								authorities,

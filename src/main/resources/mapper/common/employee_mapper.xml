@@ -11,6 +11,7 @@
 	    SELECT 
 	           emp_id,
 	           emp_name,
+	           dept_id,
 	           username,
 	           password
 	    FROM employees
@@ -41,5 +42,38 @@
 	    WHERE er.emp_id = #{emp_id}
 	</select>
     
+    <!-- 전 직원 조회 (부서명 포함) -->
+    <select id="selectAllWithDept" resultType="com.kd.insuranceweb.admin.dto.EmployeeDeptDto">
+	    SELECT 
+	        e.emp_id,
+	        e.emp_name,
+	        d.dept_name
+	    FROM employees e
+	    LEFT JOIN departments d ON e.dept_id = d.dept_id
+	    ORDER BY e.emp_id
+	</select>
+	<!-- 부서별 사원 조회 -->
+	<select id="selectByDeptIdWithDept" parameterType="java.lang.Integer" resultType="com.kd.insuranceweb.admin.dto.EmployeeDeptDto">
+	    SELECT 
+	        e.emp_id,
+	        e.emp_name,
+	        d.dept_name
+	    FROM employees e
+	    LEFT JOIN departments d ON e.dept_id = d.dept_id
+	    WHERE e.dept_id = #{dept_id} AND emp_id != 1001
+	    ORDER BY e.emp_id
+	</select>
+
+    
+    <!-- emp_id로 조회 -->
+    <select id="findById" parameterType="int" resultType="com.kd.insuranceweb.common.dto.EmployeeDto">
+        SELECT 
+            e.EMP_ID AS emp_id,
+            e.EMP_NAME AS emp_name,
+            d.DEPT_NAME AS dept_name
+        FROM EMPLOYEES e
+        LEFT JOIN DEPARTMENTS d ON e.DEPT_ID = d.DEPT_ID
+        WHERE e.EMP_ID = #{emp_id}
+    </select>
 </mapper>
 

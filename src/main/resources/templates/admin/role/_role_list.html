@@ -7,65 +7,188 @@
 <head>
     <meta charset="utf-8" />
     <title>권한목록</title>
+    <style>
+        .admin-main {
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background-color: #f8f9fa;
+            padding: 24px;
+            color: #333;
+        }
+
+        .admin-main h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #212529;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        /* --- 페이지 전용 스타일 --- */
+
+        /* 테이블과 하단 버튼들을 감싸는 흰색 컨테이너 */
+        .content-box {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 테이블 스타일 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .data-table thead th {
+            background-color: #f8f9fa; /* 헤더 배경색 */
+            border-bottom: 2px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .data-table tbody td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef; /* 행 구분선 */
+            vertical-align: middle;
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none; /* 마지막 행의 하단선 제거 */
+        }
+        
+        /* 테이블 안의 입력 필드(input) 스타일 */
+        .data-table input[type="text"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box; /* padding을 포함하여 width 100% 유지 */
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .data-table input[type="text"]:focus {
+            outline: none;
+            border-color: #86b7fe; /* 포커스 시 파란색 테두리 */
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        /* 체크박스 스타일 */
+        .data-table input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+        }
+        
+        /* --- 버튼 스타일 --- */
+        .action-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between; /* 양쪽 끝으로 정렬 */
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        /* 초록색 버튼 (수정/저장) */
+        .btn-success {
+            background-color: #198754;
+            color: white;
+        }
+        .btn-success:hover { background-color: #157347; }
+        
+        /* 파란색 버튼 (추가) */
+        .btn-primary {
+            background-color: #0d6efd;
+            color: white;
+        }
+        .btn-primary:hover { background-color: #0b5ed7; }
+        
+        /* 빨간색 버튼 (선택 삭제) */
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover { background-color: #bb2d3b; }
+
+        /* 회색 버튼 (메인으로) */
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover { background-color: #5c636a; }
+
+    </style>
 </head>
 
 <body>
 <main layout:fragment="adminContent" class="admin-main">
 
-    <h1>권한편집소</h1>
-    
-    <table border="1" style="border-collapse: collapse; width: 100%;">
-        <thead>
-            <tr>
-                <th>선택</th>
-                <th>권한번호</th>
-                <th>권한코드</th>
-                <th>권한설명</th>
-                <th>작업</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- 기존 권한 리스트: 수정 가능 -->
-            <tr th:each="role : ${roles}">
-                <form th:action="@{/admin/role/save}" method="post">
-                    <td><input type="checkbox" name="selected_role_ids" th:value="${role.role_id}"></td>
-                    <td th:text="${role.role_id}"></td>
-                    <td><input type="text" name="role_name" th:value="${role.role_name}" /></td>
-                    <td><input type="text" name="role_desc" th:value="${role.role_desc}" /></td>
-                    <td>
-                        <input type="hidden" name="role_id" th:value="${role.role_id}" />
-                        <button type="submit">수정/저장</button>
-                    </td>
-                </form>
-            </tr>
+    <h1>권한편집</h1>
 
-            <!-- 새 권한 추가용 row -->
-            <tr>
-                <form th:action="@{/admin/role/add}" method="post">
-                    <td></td>
-                    <td><input type="text" placeholder="권한번호 자동입력" readonly></td>
-                    <td><input type="text" name="role_name" placeholder="권한코드 입력"></td>
-                    <td><input type="text" name="role_desc" placeholder="권한설명 입력"></td>
-                    <td>
-                        <button type="submit">추가</button>
-                    </td>
-                </form>
-            </tr>
-        </tbody>
-    </table>
+    <div class="content-box">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>선택</th>
+                    <th>권한번호</th>
+                    <th>권한코드</th>
+                    <th>권한설명</th>
+                    <th>작업</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="role : ${roles}">
+                    <form th:action="@{/admin/role/save}" method="post">
+                        <td><input type="checkbox" name="selected_role_ids" th:value="${role.role_id}"></td>
+                        <td th:text="${role.role_id}"></td>
+                        <td><input type="text" name="role_name" th:value="${role.role_name}" /></td>
+                        <td><input type="text" name="role_desc" th:value="${role.role_desc}" /></td>
+                        <td>
+                            <input type="hidden" name="role_id" th:value="${role.role_id}" />
+                            <button type="submit" class="btn btn-success">수정/저장</button>
+                        </td>
+                    </form>
+                </tr>
 
-    <br/>
+                <tr>
+                    <form th:action="@{/admin/role/add}" method="post">
+                        <td></td>
+                        <td><input type="text" placeholder="자동 생성" readonly></td>
+                        <td><input type="text" name="role_name" placeholder="권한코드 입력"></td>
+                        <td><input type="text" name="role_desc" placeholder="권한설명 입력"></td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">추가</button>
+                        </td>
+                    </form>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <!-- 숨겨진 삭제 form -->
-    <form id="deleteForm" th:action="@{/admin/role/deleteAll}" method="post">
+    <form id="deleteForm" th:action="@{/admin/role/deleteAll}" method="post" style="display: none;">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
     </form>
 
-    <!-- 선택 삭제 버튼 -->
-    <button type="button" onclick="deleteSelectedRoles()">선택 삭제</button>
-
-    <br/><br/>
-    <a th:href="@{/admin/role/main}">메인으로</a>
+    <div class="action-container">
+        <button type="button" onclick="deleteSelectedRoles()" class="btn btn-danger">선택 삭제</button>
+        <a th:href="@{/admin/role/main}" class="btn btn-secondary">메인으로</a>
+    </div>
 
     <script>
     function deleteSelectedRoles() {
@@ -91,7 +214,9 @@
         });
 
         // submit
-        form.submit();
+        if (confirm(checkboxes.length + '개의 권한을 정말 삭제하시겠습니까?')) {
+            form.submit();
+        }
     }
     </script>
 

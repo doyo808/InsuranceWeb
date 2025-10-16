@@ -7,14 +7,134 @@
 <head>
     <meta charset="utf-8" />
     <title>사원관리</title>
+    <style>
+        .admin-main {
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background-color: #f8f9fa;
+            padding: 24px;
+            color: #333;
+        }
+
+        .admin-main h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #212529;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .content-box {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* --- 테이블 스타일 --- */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .data-table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .data-table tbody td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+        
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* --- 버튼 스타일 --- */
+        .action-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        /* 테이블 안의 작은 버튼 */
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 13px;
+        }
+
+        /* 파란색 버튼 */
+        .btn-primary {
+            background-color: #0d6efd;
+            color: white;
+        }
+        .btn-primary:hover { background-color: #0b5ed7; }
+        
+        /* 회색 버튼 */
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover { background-color: #5c636a; }
+    </style>
 </head>
 
 <body>
 <main layout:fragment="adminContent" class="admin-main">
 
-    <h1>사원편집소</h1>
-
-	<a th:href="@{/admin/role/main}">메인으로</a>
+    <h1>사원 관리</h1>
+	
+    <div class="content-box">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>직원 ID</th>
+                    <th>직원이름</th>
+                    <th>부서명</th>
+                    <th>권한 관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="emp : ${employees}">
+                    <td th:text="${emp.emp_id}"></td>
+                    <td th:text="${emp.emp_name}"></td>
+                    <td th:text="${emp.dept_name}"></td>
+                    <td>
+                        <a th:href="@{'/admin/role/employee/' + ${emp.emp_id} + '/roles'}" class="btn btn-primary btn-sm">
+                            권한 보기
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	
+	<div class="action-container">
+	    <a th:href="@{/admin/role/main}" class="btn btn-secondary">메인으로</a>
+	</div>
+	
 </main>
 
 </body>

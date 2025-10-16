@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.kd.insuranceweb.admin.dto.EmployeeDeptDto;
 import com.kd.insuranceweb.common.dto.EmployeeDto;
 
 @Mapper
@@ -14,4 +15,8 @@ public interface EmployeeMapper {
 	List<String> findRolesByEmpId(@Param("emp_id") Integer emp_id);
 	List<String> findRolesKorNameByEmpId(@Param("emp_id") Integer emp_id);
 	
+	List<EmployeeDeptDto> selectAllWithDept();
+	List<EmployeeDeptDto> selectByDeptIdWithDept(@Param("dept_id") Integer dept_id);
+
+	EmployeeDto findById(@Param("emp_id") Integer empId);
 }

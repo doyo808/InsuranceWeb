@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/common/layout}">
+
+<head>
+    <meta charset="utf-8" />
+    <title>사원 권한 관리</title>
+    <style>
+        .admin-main {
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background-color: #f8f9fa;
+            padding: 24px;
+            color: #333;
+        }
+
+        .admin-main h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #212529;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        /* 카드형 컨테이너 */
+        .content-box {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px; /* 컨테이너 간 간격 */
+        }
+        
+        /* --- 사원 정보 스타일 --- */
+        .employee-info p {
+            margin: 0 0 8px 0;
+            font-size: 15px;
+            color: #495057;
+        }
+        .employee-info strong {
+            color: #343a40;
+            margin-right: 8px;
+        }
+
+        /* --- 테이블 스타일 --- */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        .data-table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+        }
+        .data-table tbody td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+        .no-data {
+            text-align: center;
+            color: #6c757d;
+            padding: 30px;
+        }
+
+        /* --- 폼 & 버튼 스타일 --- */
+        .grant-form {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 요소 사이 간격 */
+        }
+
+        .grant-form select {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 15px;
+            min-width: 200px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .grant-form select:focus {
+            outline: none;
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .action-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-sm { padding: 5px 10px; font-size: 13px; }
+        .btn-primary { background-color: #0d6efd; color: white; }
+        .btn-primary:hover { background-color: #0b5ed7; }
+        .btn-danger { background-color: #dc3545; color: white; }
+        .btn-danger:hover { background-color: #bb2d3b; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5c636a; }
+    </style>
+</head>
+
+<body>
+<main layout:fragment="adminContent" class="admin-main">
+
+    <h1>사원 권한 관리</h1>
+
+    <div class="content-box employee-info">
+        <p><strong>사원 ID:</strong> <span th:text="${employee.emp_id}"></span></p>
+        <p><strong>사원 이름:</strong> <span th:text="${employee.emp_name}"></span></p>
+        <p><strong>부서:</strong> <span th:text="${employee.dept_name}"></span></p>
+    </div>
+
+    <div class="content-box">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>권한번호</th>
+                    <th>권한코드</th>
+                    <th>권한설명</th>
+                    <th>부여일자</th>
+                    <th>작업</th>
+                </tr>
+            </thead>
+            <tbody th:if="${!roles.isEmpty()}">
+                <tr th:each="role : ${roles}">
+                    <td th:text="${role.role_id}"></td>
+                    <td th:text="${role.role_name}"></td>
+                    <td th:text="${role.role_desc}"></td>
+                    <td th:text="${#dates.format(role.grant_date, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td>
+                        <form th:action="@{'/admin/role/employee/' + ${employee.emp_id} + '/revoke'}" method="post" style="display:inline;">
+                            <input type="hidden" name="role_id" th:value="${role.role_id}" />
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('이 권한을 회수하시겠습니까?');">회수</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody th:if="${roles.isEmpty()}">
+                <tr><td colspan="5" class="no-data">현재 이 사원에게 부여된 권한이 없습니다.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-box">
+        <form th:action="@{'/admin/role/employee/' + ${employee.emp_id} + '/grant'}" method="post" class="grant-form">
+            <select name="role_id" required>
+                <option value="" disabled selected>부여할 권한 선택</option>
+                <option th:each="r : ${allRoles}" th:value="${r.role_id}" th:text="${r.role_name}"></option>
+            </select>
+            <button type="submit" class="btn btn-primary">권한 부여</button>
+        </form>
+    </div>
+
+    <div class="action-container">
+        <a th:href="@{/admin/role/employees}" class="btn btn-secondary">사원 목록으로 돌아가기</a>
+    </div>
+
+</main>
+</body>
+</html>

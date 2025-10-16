@@ -7,15 +7,191 @@
 <head>
     <meta charset="utf-8" />
     <title>권한이력</title>
+    <style>
+        .admin-main {
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background-color: #f8f9fa;
+            padding: 24px;
+            color: #333;
+        }
+
+        .admin-main h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #212529;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .content-box {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .search-form input[type="text"],
+        .search-form input[type="date"] {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .search-form input:focus {
+            outline: none;
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        .data-table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+        }
+        .data-table tbody td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+
+        .action-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-primary { background-color: #0d6efd; color: white; }
+        .btn-primary:hover { background-color: #0b5ed7; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5c636a; }
+    </style>
 </head>
 
 <body>
 <main layout:fragment="adminContent" class="admin-main">
 
-    <h1>권한변경이력</h1>
+    <h1>권한 변경 이력</h1>
 
-	<a th:href="@{/admin/role/main}">메인으로</a>
+    <div class="content-box">
+        <form class="search-form" id="clientSearchForm" onsubmit="return false;">
+            <span>대상사원:</span>
+            <input type="text" name="target_emp_name" placeholder="대상이름"/>
+            <span>시작일:</span>
+            <input type="date" name="start_date"/>
+            <span>종료일:</span>
+            <input type="date" name="end_date"/>
+            <button type="submit" class="btn btn-primary">검색</button>
+        </form>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>로그ID</th>
+                    <th>실행자</th>
+                    <th>대상사원</th>
+                    <th>권한</th>
+                    <th>액션</th>
+                    <th>날짜</th>
+                    <th>비고</th>
+                </tr>
+            </thead>
+            <tbody id="logTableBody">
+                <tr th:each="log : ${logs}">
+                    <td th:text="${log.log_id}"></td>
+                    <td th:text="${log.changed_by_name}"></td>
+                    <td class="target-name" th:text="${log.target_emp_name}"></td>
+                    <td th:text="${log.role_name}"></td>
+                    <td th:text="${log.action_type}"></td>
+                    <td class="action-date" th:text="${#dates.format(log.action_date,'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${log.remarks}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	
+	<div class="action-container">
+	    <a th:href="@{/admin/role/main}" class="btn btn-secondary">메인으로</a>
+	</div>
 </main>
+
+<script>
+    document.getElementById('clientSearchForm').addEventListener('submit', function(event) {
+        // 1. form의 기본 동작(서버 전송)을 막습니다.
+        event.preventDefault();
+
+        // 2. 검색 필드에서 값을 가져옵니다.
+        const nameQuery = this.querySelector('input[name="target_emp_name"]').value.toLowerCase();
+        const startDateQuery = this.querySelector('input[name="start_date"]').value;
+        const endDateQuery = this.querySelector('input[name="end_date"]').value;
+
+        // Date 객체로 변환 (값이 있을 경우에만)
+        const startDate = startDateQuery ? new Date(startDateQuery) : null;
+        if(startDate) startDate.setHours(0, 0, 0, 0); // 날짜의 시작
+
+        const endDate = endDateQuery ? new Date(endDateQuery) : null;
+        if(endDate) endDate.setHours(23, 59, 59, 999); // 날짜의 끝
+
+        // 3. 테이블의 모든 행(tr)을 가져옵니다.
+        const tableRows = document.getElementById('logTableBody').getElementsByTagName('tr');
+
+        // 4. 각 행을 순회하며 필터링합니다.
+        for (let i = 0; i < tableRows.length; i++) {
+            const row = tableRows[i];
+            const nameCell = row.querySelector('.target-name');
+            const dateCell = row.querySelector('.action-date');
+
+            if (nameCell && dateCell) {
+                const targetName = nameCell.textContent.toLowerCase();
+                const actionDate = new Date(dateCell.textContent);
+
+                // 5. 검색 조건과 비교합니다.
+                const nameMatch = targetName.includes(nameQuery);
+                const startDateMatch = !startDate || actionDate >= startDate;
+                const endDateMatch = !endDate || actionDate <= endDate;
+                
+                // 6. 조건에 맞으면 행을 보여주고, 아니면 숨깁니다.
+                if (nameMatch && startDateMatch && endDateMatch) {
+                    row.style.display = ''; // 보이기
+                } else {
+                    row.style.display = 'none'; // 숨기기
+                }
+            }
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -10,17 +10,22 @@ public class AdminUserDetails implements UserDetails, LoginUser {
 
 	private Integer emp_id;
 	private String emp_name;
+	private Integer dept_id;
 	private String username;
 	private String password;
 	private List<GrantedAuthority> authorities;
 	private List<String> authNames;
 	
+	public boolean hasRole(String roleName) {
+	    return authNames != null && authNames.contains(roleName);
+	}
 	
-	public AdminUserDetails(Integer emp_id, String emp_name, String username, String password,
+	public AdminUserDetails(Integer emp_id, String emp_name, Integer dept_id, String username, String password,
 			List<GrantedAuthority> authorities, List<String> authNames) {
 		super();
 		this.emp_id = emp_id;
 		this.emp_name = emp_name;
+		this.dept_id = dept_id;
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
@@ -49,7 +54,10 @@ public class AdminUserDetails implements UserDetails, LoginUser {
 	public String getEmp_name() {
 		return emp_name;
 	}
-
+	
+	public Integer getDept_id() {
+		return dept_id;
+	}
 	
 	public List<String> getAuthNames() {
 		return authNames;
@@ -57,7 +65,7 @@ public class AdminUserDetails implements UserDetails, LoginUser {
 
 	@Override
 	public String toString() {
-		return "AdminUserDetails [emp_id=" + emp_id + ", emp_name=" + emp_name + ", username=" + username
+		return "AdminUserDetails [emp_id=" + emp_id + ", emp_name=" + emp_name + ", dept_id=" + dept_id + ", username=" + username
 				+ ", password=" + password + ", authorities=" + authorities + ", authNames=" + authNames + "]";
 	}
 

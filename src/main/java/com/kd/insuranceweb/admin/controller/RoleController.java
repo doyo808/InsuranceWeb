@@ -1,8 +1,11 @@
 package com.kd.insuranceweb.admin.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kd.insuranceweb.admin.dto.EmployeeDeptDto;
 import com.kd.insuranceweb.admin.dto.RoleDto;
+import com.kd.insuranceweb.admin.mapper.EmployeeRoleMapper;
 import com.kd.insuranceweb.admin.service.RoleService;
+import com.kd.insuranceweb.common.dto.AdminUserDetails;
+import com.kd.insuranceweb.common.mapper.EmployeeMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +28,8 @@ import lombok.RequiredArgsConstructor;
 public class RoleController {
 
 	private final RoleService roleService;
+	private final EmployeeMapper employeeMapper;
+	private final EmployeeRoleMapper employeeRoleMapper;
 	
 	@GetMapping("/main")
 	public String roleManagementPage() {
@@ -74,17 +83,39 @@ public class RoleController {
 	//   직원편집소
 	// ======================
     @GetMapping("/employees")
-    public String employeeRoles(Model model) {
-//        model.addAttribute("employees", empService.getAll());
+    public String employeeRoles(@AuthenticationPrincipal AdminUserDetails loginUser, Model model) {
+
+        List<EmployeeDeptDto> employees;
+
+        if (loginUser.getAuthNames().contains("시스템 전체 관리자")) {
+            // 전체 사원 조회
+            employees = employeeMapper.selectAllWithDept();
+        } else if (loginUser.getAuthNames().contains("부서 관리자")) {
+            // 본인 부서 사원 조회
+            employees = employeeMapper.selectByDeptIdWithDept(loginUser.getDept_id());
+        } else {
+            employees = null;
+        }
+
+        model.addAttribute("employees", employees);
         return "admin/role/_employee_role";
     }
+
 
 	// ======================
 	//   히스토리
 	// ======================
     @GetMapping("/history")
-    public String history(Model model) {
-//        model.addAttribute("logs", logService.getAll());
+    public String history(
+            @RequestParam(value = "target_emp_name", required = false) String targetEmpName,
+            @RequestParam(value = "start_date", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @RequestParam(value = "end_date", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+            Model model) {
+
+        var logs = employeeRoleMapper.selectAuthLogs(targetEmpName, startDate, endDate);
+        model.addAttribute("logs", logs);
+
         return "admin/role/_history";
     }
+
 }

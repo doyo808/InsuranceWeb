@@ -19,4 +19,6 @@ public class EmployeeDto {
 	Date update_date;
 	
 	List<String> roles;
+	String dept_name;
+	
 }
