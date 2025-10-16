@@ -10,7 +10,7 @@
 	    SELECT * FROM (
 	        SELECT a.*, ROWNUM rnum
 	        FROM (
-	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            SELECT faq_id, category, question, answer, writer, created_at, updated_at
 	            FROM faq
 	            ORDER BY faq_id
 	        ) a
@@ -24,7 +24,7 @@
 	    SELECT * FROM (
 	        SELECT a.*, ROWNUM rnum
 	        FROM (
-	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            SELECT faq_id, category, question, answer, writer, created_at, updated_at
 	            FROM faq
 	            WHERE category = #{category,jdbcType=VARCHAR}
 	            ORDER BY faq_id
@@ -39,7 +39,7 @@
 	    SELECT * FROM (
 	        SELECT a.*, ROWNUM rnum
 	        FROM (
-	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            SELECT faq_id, category, question, answer, writer, created_at, updated_at
 	            FROM faq
 	            WHERE LOWER(question) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
 	               OR LOWER(answer) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'

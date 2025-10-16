@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/admin/common/layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>공지사항</title>
+
+</head>
+
+<body>
+	<main layout:fragment="adminContent" class="admin-main">
+		<h1 class="page-title">공지사항</h1>
+		<p class="section__title inquiry-subtitle">고객의 소중한 문의를 확인하고 신속하게 답변해주세요.</p>
+
+		<!-- 상단 툴바 -->
+		<section class="toolbar card">
+			<div class="toolbar__row">
+				<div class="field toolbar__item">
+					<label class="field__label">검색어</label>
+					<input class="field__control" type="text" name="q" placeholder="고객명, 문의 내역으로 검색" />
+				</div>
+
+				<div class="field toolbar__item">
+					<label class="field__label">문의 유형</label>
+					<select class="field__control" name="status">
+						<option value="">문의 유형 전체</option>
+						<option value="">상품 문의</option>
+						<option value="">계약 변경</option>
+						<option value="">보험금 청구</option>
+						<option value="">기타</option>
+					</select>
+				</div>
+
+				<div class="field toolbar__item">
+					<label class="field__label">처리 상태</label>
+					<select class="field__control" name="status">
+						<option value="">처리 상태 전체</option>
+						<option value="">답변 완료</option>
+						<option value="">처리 중</option>
+						<option value="">미처리</option>
+						<option value="">기타</option>
+					</select>
+				</div>
+
+				<div class="field toolbar__item toolbar__item--grow">
+					<label class="field__label">문의일자</label>
+					<div class="daterange" data-daterange>
+						<input class="field__control daterange__input" type="date" name="from"
+							> <!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
+						<span class="daterange__sep">~</span>
+						<input class="field__control daterange__input" type="date" name="to"
+							>
+					</div>
+				</div>
+
+				<div class="toolbar__spacer"></div>
+
+				<div class="toolbar__actions">
+					<button type="button" class="btn btn--primary">조회</button>
+				</div>
+			</div>
+
+		</section>
+
+		<!-- 목록 테이블 -->
+		<section class="table-wrap mt-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>사용</th>
+						<th>작성일</th>
+						<th>수정일</th>
+						<th>상세</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="notice, iterStat : ${noticeList}">
+				        <td th:text="${iterStat.count}">1</td>
+				        <td th:text="${notice.title}" style="text-align: left;">제목</td>
+				        <td th:text="${notice.writer}">작성자</td>
+				        <td th:text="${notice.is_visible}">Y</td>
+				        <td th:text="${#dates.format(notice.created_at, 'yyyy-MM-dd')}">2025-01-01</td>
+				        <td th:text="${notice.updated_at != null ? #dates.format(notice.updated_at, 'yyyy-MM-dd') : '-'}">-</td>
+				        <td>
+				            <a th:href="@{/admin/notice/detail/{id}(id=${notice.notice_id})}" class="btn btn--primary btn--xs">상세</a>
+				        </td>
+				    </tr>
+	
+				    <tr th:if="${#lists.isEmpty(noticeList)}">
+				        <td colspan="7" class="text-center">등록된 공지가 없습니다.</td>
+				    </tr>				
+				</tbody>
+			</table>
+		</section>
+
+		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
+		</app-pagination>
+
+	</main>
+</body>
+
+</html>
