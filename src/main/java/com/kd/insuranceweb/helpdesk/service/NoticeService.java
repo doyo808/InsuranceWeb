@@ -11,6 +11,9 @@ public interface NoticeService {
 	// 사용자용: 표시된 공지만 조회
 	List<NoticeDto> getNoticeList(String keyword, int offset, int limit);
 	
+	// 메인페이지용: 최신 4개 공지 조회
+    List<NoticeDto> getLatestNotices();
+	
 	// 관리자용: 전체 공지 조회
 	List<NoticeDto> getAllNotices(String keyword, int offset, int limit);
 	
@@ -24,7 +27,5 @@ public interface NoticeService {
 	void createNotice(NoticeDto notice);
 	void updateNotice(NoticeDto notice);
 	void deleteNotice(Long notice_id);
-	
-	
 	
 }

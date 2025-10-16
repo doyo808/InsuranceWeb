@@ -17,7 +17,9 @@ public class FaqDto {
 	private String category;
 	private String question;
 	private String answer;
+	private String writer;
 	private Date created_at;
 	private Date updated_at;
+	
 
 }

@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -31,6 +33,12 @@ import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
 import com.kd.insuranceweb.admin.service.ClaimService;
 import com.kd.insuranceweb.admin.service.ContractService;
 import com.kd.insuranceweb.admin.service.ProductService;
+import com.kd.insuranceweb.club.dto.ReviewDto;
+import com.kd.insuranceweb.club.service.ReviewService;
+import com.kd.insuranceweb.helpdesk.dto.FaqDto;
+import com.kd.insuranceweb.helpdesk.dto.NoticeDto;
+import com.kd.insuranceweb.helpdesk.service.FaqService;
+import com.kd.insuranceweb.helpdesk.service.NoticeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +50,11 @@ public class AdminController {
 	private final ClaimService claimService;
 	private final ProductService productService;
 	private final ContractService contractService;
+	
+	//윤한식 추가 Controller
+	private final NoticeService noticeService;
+	private final FaqService faqService;
+	private final ReviewService reviewService;
 	
 	// ===== 공통 페이지 =====
 	@GetMapping("/login")
@@ -233,5 +246,50 @@ public class AdminController {
 	        .contentType(MediaType.parseMediaType(contentType))
 	        .body(resource);
 	}
+	
+	
+	// 윤한식 ===== 고객가입후기 =====
+	@GetMapping("/review")
+	public String reviewList(
+	        @RequestParam(value = "category", required = false) String category,
+	        @RequestParam(value = "searchType", required = false) String searchType,
+	        @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+	        Model model) {
+	
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("category", category);
+	    params.put("searchType", searchType);
+	    params.put("searchKeyword", searchKeyword);
+	    // 페이징 없이 전체 표시 (필요 시 startRow, endRow 추가)
+	    params.put("startRow", 1);
+	    params.put("endRow", 1000);
+	
+	    List<ReviewDto> reviewList = reviewService.getReviewList(params);
+	    model.addAttribute("reviewList", reviewList);
+	
+	    return "admin/review/reviewList";
+	}
+	
+	// 윤한식 ===== NOTICE =====
+	@GetMapping("/notice")
+	public String noticeList(Model model) {
+		// DB에서 전체 공지 조회 (관리자용)
+		List<NoticeDto> noticeList = noticeService.getAllNotices(null, 0, 100);
+        model.addAttribute("noticeList", noticeList);
+        return "admin/notice/noticeList";
+	}
+	
+	// 윤한식 ===== FAQ =====
+	@GetMapping("/faq")
+	public String faqList(Model model) {
+        int startRow = 1;
+        int endRow = 20; // 예시로 20개 표시
+        List<FaqDto> faqList = faqService.getAllFaqs(startRow, endRow);
+        model.addAttribute("faqList", faqList);
+        return "admin/faq/faqList";
+    }
+	
+	
+	
 
 }

@@ -28,6 +28,13 @@ public class NoticeServiceImpl implements NoticeService {
         return sql.selectList("NoticeMapper.selectNoticeList", params);
 		
 	}
+	
+	// 메인페이지용: 최신 4개 공지 조회
+	@Override
+	public List<NoticeDto> getLatestNotices() {
+	    return sql.selectList("NoticeMapper.selectLatestNotices");
+	}
+	
 
 	// 관리자용: 전체 공지 조회
 	@Override
