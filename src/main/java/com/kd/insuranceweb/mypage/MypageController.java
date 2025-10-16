@@ -26,8 +26,8 @@ public class MypageController {
 	
 	// 계약내용 확인
 	@GetMapping("/MPDG0070")
-	public String chkContracts(Model model) {
-		List<ContractDto> dataList = mypageService.getAllContracts();
+	public String chkContracts(@AuthenticationPrincipal CustomUserDetails loginUser, Model model) {
+		List<ContractDto> dataList = mypageService.getAllContracts(loginUser.getCustomer_id());
 		List<ContractDto> dataListActive = mypageService.getActiveContracts();
         model.addAttribute("dataList", dataList);
         model.addAttribute("dataListActive", dataListActive);

@@ -93,11 +93,13 @@ public class MypageService {
     private static final Map<String, String> STATUS_MAP = Map.of(
         "PENDING", "신청",
         "ACTIVE", "유지",
-        "EXPIRED", "만료"
+        "EXPIRED", "만료",
+        "APPROVED", "승인",
+        "REJECTED", "반려"
     );
 
-    public List<ContractDto> getAllContracts() {
-        List<ContractDto> contracts = myContractMapper.selectAllContracts();
+    public List<ContractDto> getAllContracts(Integer customer_id) {
+        List<ContractDto> contracts = myContractMapper.selectAllContracts(customer_id);
         return translateStatus(contracts);
     }
 
