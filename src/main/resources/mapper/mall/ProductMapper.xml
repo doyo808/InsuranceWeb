@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.mall.mapper.ProductMapper">
+
+    <!-- 1) 보험상품 등록: Oracle 시퀀스 selectKey로 productId 세팅 -->
+    <insert id="insertInsuranceProduct" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDto">
+        <selectKey keyProperty="productId" resultType="long" order="BEFORE">
+            SELECT INSURANCE_PRODUCTS_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO insurance_products
+            (product_id, product_types, product_name, product_desc, start_date, end_date,
+             thumbnail_path, conditions_path, created_at)
+        VALUES
+            (#{productId}, #{productType}, #{productName}, #{productDesc},
+             #{startDate, jdbcType=DATE}, #{endDate, jdbcType=DATE},
+             #{thumbnailPath}, #{conditionsPath}, SYSDATE)
+    </insert>
+
+    <!-- 2) 담보 일괄 INSERT ALL -->
+    <insert id="insertCoverageDefinitions" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDto">
+        <!-- coverages 컬렉션이 비어있지 않을 때만 실행되도록 호출부(서비스)에서 체크 권장 -->
+        INSERT ALL
+        <foreach collection="coverages" item="c" separator="\n">
+            INTO coverage_definitions
+            (coverage_id, product_id, cover_name, cover_desc, coverage_amount, base_premium, cover_required)
+            VALUES
+            (COVERAGE_DEFINITIONS_SEQ.NEXTVAL, #{productId},
+             #{c.coverName}, #{c.coverDesc}, #{c.coverageAmount}, #{c.basePremium}, #{c.coverRequired})
+        </foreach>
+        SELECT * FROM DUAL
+    </insert>
+
+    <!-- 3) 요율 일괄 INSERT ALL -->
+    <insert id="insertPremiumRateRows" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDto">
+        INSERT ALL
+        <foreach collection="premiumRates" item="r" separator="\n">
+            INTO premium_rate_rows
+            (rate_row_id, product_id, age_from, age_to, gender, age_weight, gender_weight, is_smoker)
+            VALUES
+            (PREMIUM_RATE_ROWS_SEQ.NEXTVAL, #{productId},
+             #{r.ageFrom}, #{r.ageTo}, #{r.gender}, #{r.ageWeight}, #{r.genderWeight}, #{r.isSmoker})
+        </foreach>
+        SELECT * FROM DUAL
+    </insert>
+
+</mapper>
