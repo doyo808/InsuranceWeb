@@ -48,6 +48,7 @@
 
 .toggle-btn img {
 	display: block;
+	
 }
 
 .side_menu:before {
@@ -143,10 +144,37 @@ a {
 }
 
 /* /common/css/drawer.css */
-:root { --sidebar-width: 64px; }
-.drawer{ position:fixed; top:0; right:var(--sidebar-width); left:auto;
-         width:min(880px,95vw); height:100vh; margin:0; padding:0; border:0; }
-.drawer::backdrop{ background:rgba(0,0,0,.45); }
-.drawer-head{ display:flex; align-items:center; justify-content:space-between;
-              height:56px; padding:0 16px; border-bottom:1px solid #eee; }
-.drawer-content{ height:calc(100vh - 56px); overflow:auto; padding:0; }
+:root {
+	--sidebar-width: 64px;
+}
+
+.drawer {
+	position: fixed;
+	top: 0;
+	right: var(--sidebar-width);
+	left: auto;
+	width: min(880px, 95vw);
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.drawer::backdrop {
+	background: rgba(0, 0, 0, .45);
+}
+
+.drawer-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 56px;
+	padding: 0 16px;
+	border-bottom: 1px solid #eee;
+}
+
+.drawer-content {
+	height: calc(100vh - 56px);
+	overflow: auto;
+	padding: 0;
+}

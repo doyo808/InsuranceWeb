@@ -3,7 +3,9 @@ package com.kd.insuranceweb.admin.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
 
@@ -16,4 +18,13 @@ public interface AdminContractMapper {
 	    // ★ 추가: 페이징용
 	    List<ContractListRowDTO> findReceiptsPage(ContractSearchCriteria criteria);
 
+	    ContractDetailDTO findContractDetail(@Param("contractId") Integer contract_id);
+
+	    int approveContract(@Param("contractId") Integer contract_id);
+
+		int rejectContract(@Param("contractId") Integer contract_id, @Param("reason") String reason);
+		
+		int countPendingContracts();
+	    
 }
+
