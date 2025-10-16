@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kd.insuranceweb.admin.annotation.AdminActionLog;
+import com.kd.insuranceweb.admin.dto.AdminActivityLogDTO;
 import com.kd.insuranceweb.admin.dto.ClaimDetailDTO;
 import com.kd.insuranceweb.admin.dto.ClaimListRowDTO;
 import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
@@ -64,8 +66,9 @@ public class AdminController {
 		model.addAttribute("sellingCount", sellingCount); 
 		int contractsPendingCount = contractService.getPendingCount();
 	    model.addAttribute("contractsPendingCount", contractsPendingCount);
-		
-	    model.addAttribute("recentActivities", activityService.getRecentActivities());
+	    
+	    List<AdminActivityLogDTO> recentActivities = activityService.getRecentActivities();
+	    model.addAttribute("recentActivities", recentActivities);
 	    
 		return "admin/common/main";
 	}
@@ -111,6 +114,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/contract/{id}/approve")
+	@AdminActionLog(type="CONTRACT", value="보험 계약 승인")
 	public String approveContract(@PathVariable("id") Integer contractId,
 	                              RedirectAttributes ra) {
 	    contractService.approveContract(contractId);
@@ -119,6 +123,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/contract/{id}/reject")
+	@AdminActionLog(type="CONTRACT", value="보험 계약 거절")
 	public String rejectContract(@PathVariable("id") Integer contractId,
 	                             @RequestParam("reason") String reason,
 	                             RedirectAttributes ra) {
@@ -154,7 +159,7 @@ public class AdminController {
 	public String productRegistration() {
 		return "admin/product/productRegistration";
 	}
-
+	
 	// ===== 보험금 청구 관리 =====
 	@GetMapping("/claim")
 	public String claimList(@ModelAttribute("criteria") ClaimSearchCriteria criteria, Model model) {
@@ -172,8 +177,7 @@ public class AdminController {
 	    model.addAttribute("size", criteria.getSize());
 	    return "admin/claim/claimList";
 	}
-
-
+	
 
 	// 상세
 	@GetMapping("/claimDetail")
@@ -189,14 +193,17 @@ public class AdminController {
 
 	//승인
 	@PostMapping("/claim/{claimId}/approve")
-	public String approve(@PathVariable("claimId") Integer claimId) {
+	@AdminActionLog(type="CLAIM", value="보험 청구 승인")
+	public String approve(@PathVariable("claimId") Integer claimId, RedirectAttributes ra) {
 		claimService.approveClaim(claimId);
+		ra.addFlashAttribute("success", "청구가 승인되었습니다.");
 		// 상세로 되돌아가려면 ID를 함께 리다이렉트!
 		return "redirect:/admin/claimDetail?claimId=" + claimId;
 	}
 
 	//거절
 	@PostMapping("/claim/{claimId}/reject")
+	@AdminActionLog(type="CLAIM", value="보험 청구 거절")
 	public String reject(@PathVariable("claimId") Integer claimId,
 		    @RequestParam("reason") String reason,
 		    RedirectAttributes ra

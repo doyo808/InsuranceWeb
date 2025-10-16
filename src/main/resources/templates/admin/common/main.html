@@ -86,14 +86,14 @@
 							<tr>
 								<th scope="col">시간</th>
 								<th scope="col">활동</th>
-								<th scope="col">사용자</th>
+								<th scope="col">관리자</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="log : ${recentActivities}">
-								<td th:text="${log.createdAt}">2024-07-28 14:30</td>
-								<td th:text="${log.actionDesc}">보험금 청구 처리</td>
-								<td th:text="${log.employeeName}" class="bold">김민지</td>
+								<td th:text="${log.created_at}"></td>
+								<td th:text="${log.action_desc}"></td>
+								<td th:text="${log.employee_name}" class="bold"></td>
 							</tr>
 						</tbody>
 					</table>

@@ -7,42 +7,39 @@ import org.springframework.stereotype.Component;
 import com.kd.insuranceweb.admin.annotation.AdminActionLog;
 import com.kd.insuranceweb.admin.service.AdminActivityService;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Aspect
 @Component
-@RequiredArgsConstructor
 public class AdminActionAspect {
 
     private final AdminActivityService activityService;
+    
+    public AdminActionAspect(AdminActivityService activityService) {
+        this.activityService = activityService;
+        log.info("✅ AdminActionAspect Bean 등록 완료");
+    }
 
-    @AfterReturning("@annotation(actionLog)")
+    // @AdminActionLog 붙은 메서드가 정상 리턴하면 실행
+    @AfterReturning(value = "@annotation(actionLog)", argNames = "joinPoint,actionLog")
     public void afterAction(JoinPoint joinPoint, AdminActionLog actionLog) {
         try {
-            // 현재 로그인 관리자 정보 (Spring Security 세션에서)
-            String employeeName = "관리자"; // SecurityContextHolder에서 가져오도록 교체 가능
-            Long employeeId = 1L;
+            // TODO: 실제 로그인 연동 전까지 임시값
+            Integer employee_id = 1;
+            String employee_name = "관리자";
 
+            log.info("✅ AOP 실행됨: " + actionLog.value());
+            
             activityService.recordActivity(
-                employeeId,
-                employeeName,
+                employee_id,
+                employee_name,
                 actionLog.type(),
-                actionLog.value(),
-                extractTargetId(joinPoint.getArgs())
+                actionLog.value()
             );
         } catch (Exception e) {
             log.error("관리자 활동 로그 기록 실패", e);
         }
     }
 
-    private String extractTargetId(Object[] args) {
-        for (Object arg : args) {
-            if (arg instanceof Number) {
-                return arg.toString();
-            }
-        }
-        return null;
-    }
 }

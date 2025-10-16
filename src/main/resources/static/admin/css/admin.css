@@ -20,6 +20,7 @@
 	box-sizing: border-box;
 }
 
+
 html,
 body {
 	height: 100%;
@@ -54,7 +55,7 @@ a {
 }
 
 .topbar__inner {
-	max-width: 1120px;
+	width: 1120px;
 	margin: 0 auto;
 	padding: 12px 20px;
 	display: flex;
@@ -117,6 +118,7 @@ a {
 
 /* ===== Main Layout (공통) ===== */
 .main {
+	width: 1200px;
 	min-height: calc(100vh - 56px);
 	padding: 48px 20px;
 }

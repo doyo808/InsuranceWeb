@@ -16,10 +16,9 @@ public class AdminActivityServiceImpl implements AdminActivityService {
 	private final AdminActivityMapper mapper;
 
 	@Override
-	public void recordActivity(Long employeeId, String employeeName, String actionType, String actionDesc,
-			String targetId) {
+	public void recordActivity(Integer employeeId, String employeeName, String actionType, String actionDesc) {
 		mapper.insertActivity(
-				new AdminActivityLogDTO(null, employeeId, employeeName, actionType, actionDesc, targetId, null));
+				new AdminActivityLogDTO(employeeId, employeeName, actionType, actionDesc, null));
 	}
 
 	@Override
