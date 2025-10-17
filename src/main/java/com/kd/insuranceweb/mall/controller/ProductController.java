@@ -33,6 +33,7 @@ public class ProductController {
             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
             @RequestPart(value = "conditions", required = false) MultipartFile conditions) {
 
+    	System.out.println("product api 입니다");
         try {
             // 파일 저장(예: uploads/...), 경로를 DTO에 세팅
             String thumbPath = saveFile(thumbnail, "thumbnails");
@@ -51,6 +52,7 @@ public class ProductController {
     }
 
     private String saveFile(MultipartFile file, String dir) throws IOException {
+    	System.out.println("파일업로드중");
         if (file == null || file.isEmpty()) return null;
         Path uploadDir = Paths.get("uploads", dir);
         Files.createDirectories(uploadDir);

@@ -45,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
 	 @Transactional
 	 public void registerProduct(ProductRequestDTO dto) {
 		 
+		 System.out.println("db에 상품 등록중");
 		// 1) 상품 insert -> dto.productId에 시퀀스값 채워짐
 	     productMapper.insertInsuranceProduct(dto);
 	     // 나중에 id값이 필요할때 사용

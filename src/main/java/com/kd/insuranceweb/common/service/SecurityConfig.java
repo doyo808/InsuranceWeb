@@ -21,7 +21,7 @@ public class SecurityConfig {
     			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
     			"/api/auth/status", "/cert/**",
-    			"/admin/**",
+    			"/admin/**","/api/products/**",
     			"/helpdesk/**", "/terms/**", "/club/PP050101_001",
 
     			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","/club/event/index", "/club/event/analysis",
@@ -46,7 +46,9 @@ public class SecurityConfig {
     	                .logoutSuccessUrl("/") // 로그아웃 후 이동
     	                .invalidateHttpSession(true)
     	                .deleteCookies("JSESSIONID")
-    	        )
+    	        ).exceptionHandling(ex -> ex
+    	                .authenticationEntryPoint(new AjaxAuthenticationEntryPoint()) // ✅ 추가
+    	                )
     	        .build();
     }
     

@@ -4,7 +4,7 @@
 <mapper namespace="com.kd.insuranceweb.mall.mapper.ProductMapper">
 
     <!-- 1) 보험상품 등록: Oracle 시퀀스 selectKey로 productId 세팅 -->
-    <insert id="insertInsuranceProduct" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDto">
+    <insert id="insertInsuranceProduct" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDTO">
         <selectKey keyProperty="productId" resultType="long" order="BEFORE">
             SELECT INSURANCE_PRODUCTS_SEQ.NEXTVAL FROM DUAL
         </selectKey>
@@ -18,7 +18,7 @@
     </insert>
 
     <!-- 2) 담보 일괄 INSERT ALL -->
-    <insert id="insertCoverageDefinitions" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDto">
+    <insert id="insertCoverageDefinitions" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDTO">
         <!-- coverages 컬렉션이 비어있지 않을 때만 실행되도록 호출부(서비스)에서 체크 권장 -->
         INSERT ALL
         <foreach collection="coverages" item="c" separator="\n">
@@ -32,7 +32,7 @@
     </insert>
 
     <!-- 3) 요율 일괄 INSERT ALL -->
-    <insert id="insertPremiumRateRows" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDto">
+    <insert id="insertPremiumRateRows" parameterType="com.kd.insuranceweb.mall.model.dto.ProductRequestDTO">
         INSERT ALL
         <foreach collection="premiumRates" item="r" separator="\n">
             INTO premium_rate_rows
