@@ -26,7 +26,6 @@ public class SecurityConfig {
     DaoAuthenticationProvider adminAuthenticationProvider(AdminUserDetailsService adminUserDetailsService, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(adminUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
-        // 필요하다면 여기에 추가적인 인증 실패/성공 핸들러 등을 설정할 수 있습니다.
         return provider;
     }
     // --- 일반 사용자용 인증 Provider 설정 ---
@@ -44,18 +43,18 @@ public class SecurityConfig {
     
     /**
      * 관리자용 SecurityFilterChain
-     * @Order(1) : 필터 체인 우선순위를 1번으로 설정. 더 구체적인 경로가 먼저 검사되어야 합니다.
+     * @Order(1)
      */
     @Bean
     @Order(1)
     SecurityFilterChain adminFilterChain(HttpSecurity http, 
             @Qualifier("adminAuthenticationProvider") DaoAuthenticationProvider adminAuthenticationProvider) throws Exception {
     	String[] whiteList = {
-    			"/admin/login", "/admin/main",
+    			"/admin/login",
     			"/*/css/**", "/*/js/**", "/*/images/**"
     	};
         http
-            .securityMatcher("/admin/**") // 이 필터 체인은 /admin/으로 시작하는 경로에만 적용됩니다.
+            .securityMatcher("/admin/**") // 이 필터 체인은 /admin/으로 시작하는 경로에만 적용
             .authenticationProvider(adminAuthenticationProvider) // 관리자용 인증 Provider 사용
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(whiteList).permitAll() // 관리자 로그인 페이지는 허용
@@ -79,7 +78,7 @@ public class SecurityConfig {
 
     /**
      * 일반 사용자용 SecurityFilterChain
-     * @Order(2) : 관리자 필터 체인 다음으로 적용됩니다.
+     * @Order(2)
      */
     @Bean
     SecurityFilterChain userFilterChain(HttpSecurity http,
