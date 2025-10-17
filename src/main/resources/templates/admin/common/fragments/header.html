@@ -22,7 +22,30 @@
 				<a class="topbar__link" th:href="@{/admin/role/main}">권한관리</a>
 				<p th:text="${loginUser != null ? loginUser.emp_name : ''}"></p>
 
+				<p id="admin-logout" th:text="${loginUser != null ? '로그아웃' : ''}"
+					style="cursor: pointer; color: darkblue"></p>
+			
 			</nav>
 		</div>
 	</div>
+	
+
+	<!-- 숨겨진 로그아웃 폼 -->
+	<form id="logoutForm" th:action="@{/admin/logout}" method="post" style="display:none;">
+	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	</form>
+
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	document.addEventListener('DOMContentLoaded', function() {
+	    const logoutBtn = document.getElementById('admin-logout');
+	    const logoutForm = document.getElementById('logoutForm');
+	    if(logoutBtn && logoutForm) {
+	        logoutBtn.addEventListener('click', function() {
+	            logoutForm.submit(); // CSRF 포함 POST 요청
+	        });
+	    }
+	});
+	/*]]>*/
+	</script>
 </div>
