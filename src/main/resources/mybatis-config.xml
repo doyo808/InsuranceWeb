@@ -9,8 +9,6 @@
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"/>
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
     	  
-          
-          
           <typeAlias type="com.kd.insuranceweb.common.dto.PersonDTO" alias="person"></typeAlias>
           <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
           
@@ -30,6 +28,7 @@
   		  
   		  <typeAlias type="com.kd.insuranceweb.admin.dto.AdminActivityLogDTO" alias="adminActivityLog"></typeAlias>
   		 
+  		  
   	</typeAliases>
 
   

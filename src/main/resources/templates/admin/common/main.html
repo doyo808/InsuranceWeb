@@ -101,103 +101,37 @@
 			</section>
 
 			<!-- Chart Script -->
-			<script>
-				document.addEventListener("DOMContentLoaded", function () {
-					// 계약 그래프
-					const ctxContract = document.getElementById("contractChart").getContext("2d");
-					new Chart(ctxContract, {
-						type: "bar",
-						data: {
-							labels: ["신규 계약", "해지 계약"],
-							datasets: [{
-								label: "계약 건수",
-								data: [42, 8], // 샘플 데이터
-								backgroundColor: [
-									"rgba(17, 115, 212, 0.7)",
-									"rgba(240, 70, 70, 0.7)"
-								],
-								borderColor: [
-									"rgb(17, 115, 212)",
-									"rgb(240, 70, 70)"
-								],
-								borderWidth: 1,
-								borderRadius: 6
-							}]
-						},
-						options: {
-							responsive: true,
-							plugins: {
-								legend: {display: false},
-								title: {
-									display: true,
-									text: "이번 달 계약 현황"
-								}
-							},
-							scales: {
-								y: {
-									beginAtZero: true,
-									ticks: {color: "#6b7280"},
-									grid: {color: "rgba(0,0,0,0.08)"}
-								},
-								x: {
-									ticks: {color: "#6b7280"},
-									grid: {display: false}
-								}
-							}
-						}
-					});
+			<script th:inline="javascript">
+			  document.addEventListener("DOMContentLoaded", function () {
+			    const contractStats = /*[[${contractStats}]]*/ {};
+			    const claimStats = /*[[${claimStats}]]*/ {};
 
-					// 청구 그래프
-					const ctxClaim = document.getElementById("claimChart").getContext("2d");
-					new Chart(ctxClaim, {
-						type: "bar",
-						data: {
-							labels: ["총 청구 금액", "지급 완료 금액"],
-							datasets: [{
-								label: "금액 (만원)",
-								data: [100, 200], // 샘플 데이터
-								backgroundColor: [
-									"rgba(255, 206, 86, 0.7)",
-									"rgba(75, 192, 192, 0.7)"
-								],
-								borderColor: [
-									"rgb(255, 206, 86)",
-									"rgb(75, 192, 192)"
-								],
-								borderWidth: 1,
-								borderRadius: 6
-							}]
-						},
-						options: {
-							responsive: true,
-							plugins: {
-								legend: {display: false},
-								title: {
-									display: true,
-									text: "이번 달 청구 현황"
-								},
-								tooltip: {
-									callbacks: {
-										label: function (ctx) {
-											return ctx.parsed.y + "만원";
-										}
-									}
-								}
-							},
-							scales: {
-								y: {
-									beginAtZero: true,
-									ticks: {color: "#6b7280"},
-									grid: {color: "rgba(0,0,0,0.08)"}
-								},
-								x: {
-									ticks: {color: "#6b7280"},
-									grid: {display: false}
-								}
-							}
-						}
-					});
-				});
+			    new Chart(document.getElementById("contractChart"), {
+			      type: "bar",
+			      data: {
+			        labels: ["신규 계약", "해지 계약"],
+			        datasets: [{
+			          label: "계약 건수",
+					  data: [contractStats.newContracts, contractStats.endedContracts],
+			          backgroundColor: ["rgba(17,115,212,0.7)", "rgba(240,70,70,0.7)"]
+			        }]
+			      },
+			      options: { responsive: true, plugins: { legend: { display: false } } }
+			    });
+
+			    new Chart(document.getElementById("claimChart"), {
+			      type: "bar",
+			      data: {
+			        labels: ["총 청구 금액", "지급 완료 금액"],
+			        datasets: [{
+			          label: "금액 (만원)",
+			          data: [claimStats.totalAmount, claimStats.approvedAmount],
+			          backgroundColor: ["rgba(255,206,86,0.7)", "rgba(75,192,192,0.7)"]
+			        }]
+			      },
+			      options: { responsive: true, plugins: { legend: { display: false } } }
+			    });
+			  });
 			</script>
 		</main>
 	</main>

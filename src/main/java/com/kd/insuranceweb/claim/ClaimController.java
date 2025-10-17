@@ -3,11 +3,11 @@ package com.kd.insuranceweb.claim;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kd.insuranceweb.admin.service.ClaimService;
+
 import jakarta.servlet.http.HttpSession;
 
 
@@ -25,8 +27,11 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/claim")
 public class ClaimController {
 	
-    final private String tempDir = "C:/javaweb_yhs/InsuranceWebUploadedFiles/claims/temp/";
+    final private String tempDir = "C:/InsuranceWebUploadedFiles/claims/{claimId}/";
     final private String finalDir = "/upload/claims/";
+    
+    @Autowired
+    private ClaimService claimService;
     
 	private static final Set<String> ALLOWED_MIME_TYPES = Set.of(
 		    "application/pdf",
@@ -147,11 +152,14 @@ public class ClaimController {
 
 	        model.addAttribute("successMessage", "업로드 성공!");
 	        return "claim/claimpage5"; 
+	        
 	    } catch (IOException e) {
 	        model.addAttribute("errorMessage", escapeForJs(e.getMessage()));
 	        return "claim/claimpage4"; 
 	    }
 	}
+	
+	
 	
 	// 임시파일 삭제!! 컨트롤러 페이지에서 업로드 후 불안정적으로 나가게 될 시 작동
 	@PostMapping("/cancel")

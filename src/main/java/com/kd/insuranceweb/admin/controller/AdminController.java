@@ -34,6 +34,7 @@ import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
 import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
 import com.kd.insuranceweb.admin.service.AdminActivityService;
+import com.kd.insuranceweb.admin.service.AdminDashboardService;
 import com.kd.insuranceweb.admin.service.ClaimService;
 import com.kd.insuranceweb.admin.service.ContractService;
 import com.kd.insuranceweb.admin.service.ProductService;
@@ -61,6 +62,8 @@ public class AdminController {
 	private final FaqService faqService;
 	private final ReviewService reviewService;
 	
+	private final AdminDashboardService adminDashboardService;
+	
 	// ===== 공통 페이지 =====
 	@GetMapping("/login")
 	public String login() {
@@ -72,6 +75,7 @@ public class AdminController {
 			@ModelAttribute("criteria") ClaimSearchCriteria criteria, 
 			Model model
 	) {
+		// Shortcut 영역
 		int claimsPendingCount = claimService.getPendingCount(criteria);
 		model.addAttribute("claimsPendingCount", claimsPendingCount);
 		int sellingCount = productService.countProductsOnSale();
@@ -79,8 +83,16 @@ public class AdminController {
 		int contractsPendingCount = contractService.getPendingCount();
 	    model.addAttribute("contractsPendingCount", contractsPendingCount);
 	    
+	    // 이번 달 계약 / 청구 통계
+        model.addAttribute("contractStats", adminDashboardService.getMonthlyContractStats());
+        model.addAttribute("claimStats", adminDashboardService.getMonthlyClaimStats());
+        
+        // 최근 관리자 활동
 	    List<AdminActivityLogDTO> recentActivities = activityService.getRecentActivities();
 	    model.addAttribute("recentActivities", recentActivities);
+	    
+	    
+	    
 	    
 		return "admin/common/main";
 	}
