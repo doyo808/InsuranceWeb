@@ -7,10 +7,14 @@
 }
 
 .breadcrumb {
-	position: fixed;
-	top: 0;       /* 상단 */
-	right: 300px;  /* 오른쪽 여백 */
-	padding: 5px 10px; 
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto 30px;
+    padding: 8px 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: right;
+    box-sizing: border-box;
 }
 
 .container h1 {
