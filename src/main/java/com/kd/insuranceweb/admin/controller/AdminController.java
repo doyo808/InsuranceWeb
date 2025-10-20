@@ -33,11 +33,13 @@ import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
 import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
+import com.kd.insuranceweb.admin.dto.UiPathNoticeDto;
 import com.kd.insuranceweb.admin.service.AdminActivityService;
 import com.kd.insuranceweb.admin.service.AdminDashboardService;
 import com.kd.insuranceweb.admin.service.ClaimService;
 import com.kd.insuranceweb.admin.service.ContractService;
 import com.kd.insuranceweb.admin.service.ProductService;
+import com.kd.insuranceweb.admin.service.UiPathService;
 import com.kd.insuranceweb.club.dto.ReviewDto;
 import com.kd.insuranceweb.club.service.ReviewService;
 import com.kd.insuranceweb.helpdesk.dto.FaqDto;
@@ -63,6 +65,7 @@ public class AdminController {
 	private final ReviewService reviewService;
 	
 	private final AdminDashboardService adminDashboardService;
+	private final UiPathService uiPathService;
 	
 	// ===== 공통 페이지 =====
 	@GetMapping("/login")
@@ -91,8 +94,10 @@ public class AdminController {
 	    List<AdminActivityLogDTO> recentActivities = activityService.getRecentActivities();
 	    model.addAttribute("recentActivities", recentActivities);
 	    
-	    
-	    
+	    // uiPath 뉴스요약
+	    UiPathNoticeDto uiPath = uiPathService.getRecentNotice();
+	    model.addAttribute("uiPath_notice_title", uiPath.getTitle());
+	    model.addAttribute("uiPath_notice_content", uiPath.getContent());
 	    
 		return "admin/common/main";
 	}

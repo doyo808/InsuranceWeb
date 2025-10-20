@@ -50,7 +50,7 @@ public class SecurityConfig {
     SecurityFilterChain adminFilterChain(HttpSecurity http, 
             @Qualifier("adminAuthenticationProvider") DaoAuthenticationProvider adminAuthenticationProvider) throws Exception {
     	String[] whiteList = {
-    			"/admin/login",
+    			"/admin/login", "/internal/notice/receive",
     			"/*/css/**", "/*/js/**", "/*/images/**"
     	};
         http
@@ -68,6 +68,7 @@ public class SecurityConfig {
                 .permitAll()
             )
             .csrf(csrf -> csrf
+            	.ignoringRequestMatchers("/internal/notice/receive")
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())) 
             .logout(logout -> logout
                 .logoutUrl("/admin/logout")                  // 관리자 로그아웃 URL
