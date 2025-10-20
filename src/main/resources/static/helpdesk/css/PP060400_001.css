@@ -21,29 +21,33 @@
     text-align: center;
     font-size: 38px;
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
 }
 
 
 /* 제목 + 날짜 섹션 */
 .notice-title-section {
-    display: flex;
+	font-size: 24px;
+	font-weight: bold;
+	display: flex;	
     justify-content: space-between;
     align-items: center;
+	border-top: 2px solid black;
     border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
+	padding-top: 50px;
+    padding-bottom: 50px;
     margin-bottom: 30px;
+	
 }
 
 /* 날짜 스타일 (우측) */
 .notice-date {
-    font-size: 14px;
-    color: #888;
+    font-size: 16px;   
 }
 
 
 /* 내용 전체 박스 */
-.notice-content {
+.notice-desc {
     background-color: #f5fbfe;
     padding: 30px 20px;
     font-size: 16px;

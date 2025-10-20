@@ -21,16 +21,17 @@
     text-align: center;
     font-size: 38px;
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
 }
 
 .search-container {
-    max-width: 600px;
-    margin: auto;
-    padding-top: 20px;
+	width: 100%; /* 부모 container의 폭 전체 사용 */
+	margin-top: 20px;
 }
 
 .search-box {
+	max-width: 800px; /* 검색 입력창 최대 폭 */
+	margin: 0 auto;    /* 중앙 정렬 */
     display: flex;
     align-items: center;
     justify-content: space-between; /* 아이템을 오른쪽으로 밀어내기 */
@@ -63,8 +64,11 @@ button {
 
 /* 공지사항 리스트 아이템 스타일 */
 .notice-list {
-    margin-top: 20px;
-    border-top: 1px solid #ccc;
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto 0;
+    border-top: 2px solid black;
+    box-sizing: border-box;
 }
 
 .notice-item {
@@ -83,7 +87,7 @@ button {
 
 .notice-title {
     flex: 1;
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
     white-space: nowrap;
     overflow: hidden;
@@ -93,13 +97,9 @@ button {
 .notice-date {
     margin-left: 20px;
     color: #999;
-    font-size: 14px;
+    font-size: 16px;
     white-space: nowrap;
 }
-
-
-
-
 
 .pagination {
     display: flex;
