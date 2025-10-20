@@ -21,7 +21,7 @@
     text-align: center;
     font-size: 38px;
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
 }
 
 /* 탭 메뉴 전체 */
@@ -39,7 +39,7 @@
   outline: none;
   cursor: pointer;
   padding: 12px 20px;
-  font-size: 16px;
+  font-size: 20px;
   color: #888;  /* 비활성 상태 글자색 */
   font-weight: 500;
   transition: all 0.3s;
@@ -78,14 +78,14 @@
 }
 
 .tab-text h2 {
-  font-size: 18px;
+  font-size: 28px;
   margin-bottom: 10px;
   color: #333;
 }
 
 .tab-text ul {
   padding-left: 20px;
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
 }
 
@@ -121,7 +121,7 @@
 /* tab1 카드 전체: 세로 배치 */
 #tab1 .tab-card {
 	width: 1176px;           /* 고정 가로 */
-	height: 362px;
+	height: 302px;
 	display: flex;
 	flex-direction: column; /* 카드 내부 세로 배치 */
 	gap: 20px;
@@ -143,7 +143,7 @@
 #tab1 .tab-image.tab1-image {
   width: 120px;
   height: 120px;
-  background-image: url('/images/notebook-lock.svg');
+  background-image: url('../images/notebook-lock.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -159,22 +159,26 @@
 }
 
 #tab2 .tab-card {
-  flex: 0 0 48%;          /* 항상 가로 2개 */
+  width: 576px;
+  height: 320px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-
-  background-color: #f5f5f7; /* 카드 자체 배경 회색 */
+  justify-content: space-between;
+  background-color: #f5f5f7; 
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  flex: 0 0 auto; /* flex 부모 영향 제거 */
 }
 
 #tab2 .card-body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  height: auto; /* 내부 요소에 맞춰 늘어나지 않도록 */
 }
+
 
 #tab2 .tab-image {
   width: 100px;
@@ -185,24 +189,12 @@
 }
 
 #tab2 .tab-image.tab2-image1 {
-  background-image: url('/images/lock.svg');
+  background-image: url('../images/lock.svg');
 }
 
 #tab2 .tab-image.tab2-image2 {
-  background-image: url('/images/shield.svg');
+  background-image: url('../images/shield.svg');
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* 테이블 전체 스타일 */
@@ -223,14 +215,14 @@
 
 /* th 스타일 */
 .pc-info-table th {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   padding: 16px 0;
 }
 
 /* td 스타일 */
 .pc-info-table td {
-  font-size: 14px;
+  font-size: 16px;
   padding: 12px 0;
   color: #777;
 }
@@ -245,8 +237,7 @@
 /* 공지 전체 영역 */
 .common-notice {
   margin-top: 40px;
-  padding: 25px 0;  
-  font-size: 14px;
+  padding: 25px 0; 
   color: #555;
 }
 
@@ -254,7 +245,7 @@
 .common-notice h3 {
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 16px;
   color: #000;
@@ -279,7 +270,7 @@
   padding-left: 14px;
   line-height: 1.7;
   color: #666;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* 리스트 앞에 점 스타일 */
