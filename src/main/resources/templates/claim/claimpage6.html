@@ -91,14 +91,7 @@
 	</style>
 </head>
 <body>
-    <!-- 헤더 -->
-    <header th:replace="common/fragments/header :: headerFragment"></header>
-
-    <!-- 사이드바 -->
-    <aside th:replace="common/fragments/sidebar :: sidebarFragment"></aside>
-
-    <!-- 본문 -->
-    <main layout:fragment="content" style="width: 1200px; margin: 0 auto;">
+    <main layout:fragment="content">
 		<header>
 		  <h1>질병/상해 보험금청구</h1>
 		</header>
@@ -229,8 +222,5 @@
 		  });
 		</script>
     </main>
-
-    <!-- 푸터 -->
-    <footer th:replace="common/fragments/footer :: footerFragment"></footer>
 </body>
 </html>

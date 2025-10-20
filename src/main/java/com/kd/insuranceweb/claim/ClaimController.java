@@ -2,12 +2,13 @@ package com.kd.insuranceweb.claim;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +18,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kd.insuranceweb.admin.service.ClaimService;
+import com.kd.insuranceweb.claim.dto.Claim;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 
 
 @Controller
 @RequestMapping("/claim")
+@RequiredArgsConstructor
 public class ClaimController {
-	
-    final private String tempDir = "C:/InsuranceWebUploadedFiles/claims/{claimId}/";
-    final private String finalDir = "/upload/claims/";
     
     @Autowired
     private ClaimService claimService;
+    
+    private final ClaimMapper claimMapper;
     
 	private static final Set<String> ALLOWED_MIME_TYPES = Set.of(
 		    "application/pdf",
@@ -42,13 +44,11 @@ public class ClaimController {
 	@GetMapping("/claimpage1")
 	public String claimPage1() {
 		
-		
 		return "claim/claimpage1";
 	}
 	
 	@GetMapping("/claimpage2")
 	public String claimPage2() {
-		
 		
 		return "/claim/claimpage2";
 	}
@@ -82,82 +82,64 @@ public class ClaimController {
 	
 	@PostMapping("/claimpage4")
 	public String claimPage4(
-	//        @RequestParam("accidentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date accidentDate,
+	        @RequestParam("accidentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date accidentDate,
 	        @RequestParam("accidentType") String accidentType,
 	        @RequestParam(value = "accidentDesc", required = false) String accidentDesc,
 	        @RequestParam(value = "diseaseType", required = false) String diseaseType,
 	        @RequestParam(value = "diseaseDetail", required = false) String diseaseDetail,
-	        @RequestParam("medicalSupport") String medicalSupport,
-	        HttpSession session,
-	        Model model
-	) {
-	    // ✅ 세션 만료시간 30분(1800초) 설정
-	    session.setMaxInactiveInterval(30 * 60);
+	        @RequestParam("medical_benefits") String medical_benefits,
+	        HttpSession session,	
+	        Model model) {
 
-	    // ✅ 세션에 값 저장
-//	    session.setAttribute("accidentDate", accidentDate);
+		String medicalBenefits = medical_benefits.equals("yes") ? "Y" : "N";
+		
+	    // ✅ 1. 값 잘 들어오는지 확인
+	    System.out.println("사고일: " + accidentDate);
+	    System.out.println("사고유형: " + accidentType);
+	    System.out.println("사고내용: " + accidentDesc);
+	    System.out.println("질병종류: " + diseaseType);
+	    System.out.println("진단내용: " + diseaseDetail);
+	    System.out.println("의료급여여부: " + medicalBenefits);
+
+	    // ✅ 2. 세션 저장 (필요 시 다음 페이지에서도 활용)
+	    session.setAttribute("accidentDate", accidentDate);
 	    session.setAttribute("accidentType", accidentType);
 	    session.setAttribute("accidentDesc", accidentDesc);
 	    session.setAttribute("diseaseType", diseaseType);
 	    session.setAttribute("diseaseDetail", diseaseDetail);
-	    session.setAttribute("medicalSupport", medicalSupport);
+	    session.setAttribute("medicalSupport", medicalBenefits);
 
-	    // 뷰에 전달
-	  //  model.addAttribute("accidentDate", accidentDate);
+	    // ✅ 3. 모델로 다음 페이지에 전달
+	    model.addAttribute("accidentDate", accidentDate);
 	    model.addAttribute("accidentType", accidentType);
-	    model.addAttribute("accidentDesc", accidentDesc);
-	    model.addAttribute("diseaseType", diseaseType);
-	    model.addAttribute("diseaseDetail", diseaseDetail);
-	    model.addAttribute("medicalSupport", medicalSupport);
 
-	    // ✅ 다음 파일 업로드 페이지로 이동
-	    return "claim/claimpage4"; 
+	    // ✅ 4. 다음 페이지로 이동
+	    return "claim/claimpage4";
 	}
+
 	
 	@PostMapping("/claimpage5")
-	public String uploadFiles(
-	        @RequestParam("receipt") MultipartFile receipt,
-	        @RequestParam("details") MultipartFile details,
-	        @RequestParam(value = "etc", required = false) MultipartFile etc,
-	        Model model,
-	        HttpSession session
-	) {
-	    long size_max = 3 * 1024 * 1024; // byte단위
-	    
-	    try {
-	        if (receipt.isEmpty() || details.isEmpty() || etc == null || etc.isEmpty()) {
-	            throw new IOException("필수 파일이 누락되었습니다.");
-	        }
-	        
-	        if ((receipt != null && receipt.getSize() > size_max) ||
-	        	    (details != null && details.getSize() > size_max) ||
-	        	    (etc != null && etc.getSize() > size_max)) {
+	public String uploadClaimFiles(
+            @RequestParam("receipt") MultipartFile receiptFile,
+            @RequestParam("details") MultipartFile detailFile,
+            @RequestParam(value = "etc", required = false) MultipartFile etcFile,
+            Model model
+    ) {
+        try {
+            // DB에 청구 데이터 생성 (Claim ID 발급)
+            Long claimId = claimService.createNewClaim(); // 간단하게 새 claim 생성
+            
+            // 파일 저장
+            claimService.saveClaimFiles(claimId, receiptFile, detailFile, etcFile);
 
-	        	    throw new IOException("각 파일의 크기가 3MB를 초과했습니다.");
-	        }
-	        // ✅ MIME 타입 검사
-	        validateMimeType(receipt);
-	        validateMimeType(details);
-	        validateMimeType(etc);
+            model.addAttribute("claimId", claimId);
+            return "redirect:/claim/claimpage5"; // 다음 단계 페이지로 이동
 
-	        // 세션에 파일 정보 저장
-	        List<String> uploadedFiles = (List<String>) session.getAttribute("uploadedFiles");
-	        if (uploadedFiles == null) uploadedFiles = new ArrayList<>();
-
-	        uploadedFiles.add(saveFileToTemp(receipt, tempDir));
-	        uploadedFiles.add(saveFileToTemp(details, tempDir));
-	        uploadedFiles.add(saveFileToTemp(etc, tempDir));
-
-	        session.setAttribute("uploadedFiles", uploadedFiles);
-
-	        model.addAttribute("successMessage", "업로드 성공!");
-	        return "claim/claimpage5"; 
-	        
-	    } catch (IOException e) {
-	        model.addAttribute("errorMessage", escapeForJs(e.getMessage()));
-	        return "claim/claimpage4"; 
-	    }
-	}
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "파일 업로드 중 오류가 발생했습니다: " + e.getMessage());
+            return "claim/claimpage5";
+        }
+    }
 	
 	
 	
@@ -227,63 +209,74 @@ public class ClaimController {
 	@PostMapping("/finish")
 	public String finishClaim(HttpSession session) {
 	    // ===== 세션에서 데이터 꺼내오기 =====
-	    String insuredName = (String) session.getAttribute("insuredName");
-	    String insuredId1 = (String) session.getAttribute("insuredId1");
-	    String insuredId2 = (String) session.getAttribute("insuredId2");
 	    String beneficiaryName = (String) session.getAttribute("beneficiaryName");
-	    String beneficiaryId1 = (String) session.getAttribute("beneficiaryId1");
-	    String beneficiaryId2 = (String) session.getAttribute("beneficiaryId2");
 	    String email1 = (String) session.getAttribute("email1");
 	    String email2 = (String) session.getAttribute("email2");
 	    String bank = (String) session.getAttribute("bank");
 	    String account = (String) session.getAttribute("account");
 	    String owner = (String) session.getAttribute("owner");
+	    String postcode = (String) session.getAttribute("postcode");
+	    String address = (String) session.getAttribute("address");
+	    String detailAddress = (String) session.getAttribute("detailAddress");
+
+	    String accidentType = (String) session.getAttribute("accidentType");
+	    Date accidentDate = (Date) session.getAttribute("accidentDate");
+	    String accidentDesc = (String) session.getAttribute("accidentDesc");
+	    String medicalBenefits = (String) session.getAttribute("medical_benefits");
 
 	    @SuppressWarnings("unchecked")
 	    List<String> uploadedFiles = (List<String>) session.getAttribute("uploadedFiles");
 
-	    // ===== 가공 (앞뒤 합치기) =====
-	    String insuredId = insuredId1 + insuredId2;
-	    String beneficiaryId = beneficiaryId1 + beneficiaryId2;
+	    // ===== 이메일 조합 =====
 	    String email = (email1 != null && email2 != null) ? email1 + "@" + email2 : null;
 
 	    // ===== Claim 객체 생성 =====
 	    Claim claim = new Claim();
-	    
-//	    claim.setCustomerId(3001L); // TODO: 실제 고객 ID 가져오기
-//	    claim.setClaimType((String) session.getAttribute("type")); // 신규접수/추가접수 등
-//	    claim.setClaimDate(new Date());
-//	    claim.setCompensationType("H"); // TODO: 세션/화면에서 받아온 값 쓰기
-//	    claim.setAccidentDate((Date) session.getAttribute("accidentDate"));
-//	    claim.setAccidentDescription((String) session.getAttribute("accidentDescription"));
-//
-//	    claim.setInsuredName(insuredName);
-//	    claim.setInsuredId(insuredId);
-//	    claim.setBeneficiaryName(beneficiaryName);
-//	    claim.setBeneficiaryId(beneficiaryId);
-//	    claim.setRelation((String) session.getAttribute("relation"));
-//	    claim.setEmail(email);
-//	    claim.setPostcode((String) session.getAttribute("postcode"));
-//	    claim.setAddress((String) session.getAttribute("address"));
-//	    claim.setDetailAddress((String) session.getAttribute("detailAddress"));
-//
-//	    claim.setBankName(bank);
-//	    claim.setBankAccount(account);
-//	    claim.setOwner(owner);
-//
-//	    // 파일 경로 (업로드된 파일들 매핑)
-//	    if (uploadedFiles != null && uploadedFiles.size() >= 2) {
-//	        claim.setReceiptFilePath(uploadedFiles.get(0));
-//	        claim.setDetailFilePath(uploadedFiles.get(1));
-//	        if (uploadedFiles.size() > 2) {
-//	            claim.setEtcFilePath(uploadedFiles.get(2));
-//	        }
-//	    }
-//
-//	    claim.setClaimStatus(1); // 진행중 상태
-//
-//	    // ===== Mapper 호출 =====
-//	    claimMapper.insertClaim(claim);
+
+	    // 필수 기본값
+	    claim.setClaim_type("신규");          // 신규 접수
+	    claim.setClaim_date(new Date());      // 청구일 = 현재 시각
+	    claim.setClaim_status(0);             // 0: 접수(PENDING)
+	    claim.setCompletion_date(null);
+	    claim.setTotal_paid_amount(0L);
+
+	    // 사고 관련 정보
+	    claim.setAccident_type(accidentType);
+	    claim.setAccident_date(accidentDate);
+	    claim.setAccident_description(accidentDesc);
+	    claim.setMedical_benefits(medicalBenefits);
+
+	    // 수익자 정보
+	    claim.setBeneficiary_name(beneficiaryName);
+	    claim.setBeneficiary_email(email);
+	    claim.setBank_name(bank);
+	    claim.setBank_account(account);
+	    claim.setBeneficiary_postcode(postcode);
+	    claim.setBeneficiary_address(
+	        (address != null ? address : "") + 
+	        (detailAddress != null ? " " + detailAddress : "")
+	    );
+
+	    // 예금주(owner)는 은행계좌 소유자명으로 저장
+	    if (owner != null && !owner.isEmpty()) {
+	        claim.setBeneficiary_name(owner);
+	    }
+
+	    // 파일 경로 매핑
+	    if (uploadedFiles != null && uploadedFiles.size() >= 2) {
+	        claim.setReceipt_file_path(uploadedFiles.get(0));
+	        claim.setDetail_file_path(uploadedFiles.get(1));
+	        if (uploadedFiles.size() > 2) {
+	            claim.setEtc_file_path(uploadedFiles.get(2));
+	        }
+	    }
+
+	    // 계약/고객 ID (필요 시 세션에서 가져오기)
+	    claim.setContract_id((Long) session.getAttribute("contractId"));
+	    claim.setCustomer_id((Long) session.getAttribute("customerId"));
+
+	    // ===== Mapper 호출 =====
+	    claimMapper.insertClaim(claim);
 
 	    // ===== 세션 정리 =====
 	    session.invalidate();
@@ -292,16 +285,7 @@ public class ClaimController {
 	    return "redirect:/claim/claimpage1";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	private void validateMimeType(MultipartFile file) throws IOException {
 	    String contentType = file.getContentType();
 	    if (contentType == null || !ALLOWED_MIME_TYPES.contains(contentType)) {

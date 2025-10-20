@@ -306,6 +306,23 @@ public class AdminController {
 	        .body(resource);
 	}
 	
+	// ✅ 관리자/고객용 파일 다운로드
+    /*@GetMapping("/{claimId}/file/{type}")
+    public ResponseEntity<Resource> downloadClaimFile(
+            @PathVariable Long claimId,
+            @PathVariable String type
+    ) throws MalformedURLException {
+
+        String filePath = claimService.getFilePath(claimId, type);
+        Path path = Paths.get(filePath);
+        Resource resource = new UrlResource(path.toUri());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + path.getFileName().toString() + "\"")
+                .body(resource);
+    }*/
+	
 	
 	// 윤한식 ===== 고객가입후기 =====
 	@GetMapping("/review")

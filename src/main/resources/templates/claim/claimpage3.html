@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/common/layout.html}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/common/layout.html}">
 <head>
   <meta charset="UTF-8">
   <title>보험금 청구 - 사고 정보</title>
-  <link rel="stylesheet" th:href="@{/css/claim.css}">
   <style>
     .section { margin: 20px 0; }
     .label { font-weight: bold; margin-bottom: 8px; display: block; }
@@ -45,6 +43,7 @@
     }
   </style>
 </head>
+
 <body>
 	<main layout:fragment="content">
 		<div class="container">
@@ -103,8 +102,8 @@
 		    <div class="section">
 		      <label class="label">의료급여 수급권자 여부</label>
 		      <div class="radio-group">
-		        <label><input type="radio" name="medicalSupport" value="yes"> 예 (의료급여 1·2종에 해당)</label>
-		        <label><input type="radio" name="medicalSupport" value="no" checked> 아니요</label>
+		        <label><input type="radio" name="medical_benefits" value="yes"> 예 (의료급여 1·2종에 해당)</label>
+		        <label><input type="radio" name="medical_benefits" value="no" checked> 아니요</label>
 		      </div>
 		    </div>
 
