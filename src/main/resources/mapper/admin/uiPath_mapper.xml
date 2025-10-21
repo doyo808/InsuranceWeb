@@ -12,5 +12,9 @@
 	)
 	WHERE ROWNUM = 1
   </select>
- 
+  
+  <insert id="insert" parameterType="string">
+    INSERT INTO uipath_notice (id, content, created)
+    VALUES (uipath_notice_seq.NEXTVAL, #{content}, SYSTIMESTAMP)
+  </insert>
 </mapper>

@@ -13,11 +13,8 @@ public class UiPathService {
 	
 	private final UiPathMapper mapper;
 	
-	public void addNotice(String message) {
-		// TODO Auto-generated method stub
-		// 여기서 db로 등록
-		// 제목: ex> 2025-10-20 뉴스 요약본 / 내용: rpa결과값(form으로 입력받음)
-		
+	public int addNotice(String content) {
+		return mapper.insert(content);
 	}
 
 	public UiPathNoticeDto getRecentNotice() {

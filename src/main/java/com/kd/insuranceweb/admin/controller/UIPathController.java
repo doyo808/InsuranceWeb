@@ -21,12 +21,13 @@ public class UIPathController {
 	}
 	
 	@PostMapping("/internal/notice/receive")
-	@ResponseBody
-	public String receiveNotice(@RequestParam String message, @RequestParam String key) {
-	    if (!"superSecret123".equals(key)) {
+	public String receiveNotice(
+			@RequestParam("content") String content,
+			@RequestParam("key") String key) {
+	    if (!"superSecret123!".equals(key)) {
 	        return "Invalid key";
 	    }
-	    uiPathService.addNotice(message);
-	    return "등록 완료";
+	    uiPathService.addNotice(content);
+	    return "redirect:/admin/main";
 	}
 }
