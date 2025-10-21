@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         email: false,
         emailCheckedAndAvailable: false,
         agreement: false,
-		cert: false
+		cert: true
     };
 
     const checkFormValidity = () => {
