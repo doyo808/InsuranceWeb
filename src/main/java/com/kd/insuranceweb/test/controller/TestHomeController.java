@@ -8,18 +8,18 @@ public class TestHomeController {
 	
 	@GetMapping(value = {"/test/home", "/test", "/test/index"}) 
 	public String index() {
-		return "/test/index";
+		return "test/index";
 	}
 	
 	// fragment 테스트
 	@GetMapping("/test/sample") 
 	public String sample() {
-		return "/test/sample";
+		return "test/sample";
 	}
 	
 	
 	//@GetMapping("/helpdesk/link")
 	//public String test() {
-	//	return "/helpdesk/PP060801_001.html";
+	//	return "helpdesk/PP060801_001.html";
 	//}
 }

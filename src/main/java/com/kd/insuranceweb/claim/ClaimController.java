@@ -50,7 +50,7 @@ public class ClaimController {
 	public String claimPage2() {
 		
 		
-		return "/claim/claimpage2";
+		return "claim/claimpage2";
 	}
 	
 	@PostMapping("/claimpage3")
