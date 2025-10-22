@@ -74,23 +74,43 @@
                                         
                                         <div class="login-box">
                                               <div class="login-content">
-                                                    <div class="login-left">
-                                                        <h2 class="login-title">안녕하세요<br>로그인 해주세요</h2>
-														<button class="btn login-btn" 
-														        th:onclick="|location.href='@{/login}'|">
-														    KD화재 다이렉트 로그인
-														</button>
+												
+												
+												<div class="login-left" th:if="${loginUser == null}">
+												    <h2 class="login-title">안녕하세요<br>로그인 해주세요</h2>
+												    <button class="btn login-btn" 
+												            th:onclick="|location.href='@{/login}'|">
+												        KD화재 다이렉트 로그인
+												    </button>
+												    <button class="btn signup-btn" 
+												            th:onclick="|location.href='@{/signup}'|">
+												        회원가입
+												    </button>
+												</div>
 
-														<button class="btn signup-btn" 
-														        th:onclick="|location.href='@{/signup}'|">
-														    회원가입
-														</button>
-                                                    </div>
+												<div class="login-left" th:if="${loginUser != null}">
+												    <h2 class="login-title">
+												        <span th:text="${loginUser.person_name}">000</span>님<br>환영합니다.
+												    </h2>
+												    
+												    <button class="btn login-btn" 
+												            th:onclick="|location.href='@{/mypage/MPDG0070}'|">
+												        계약조회
+												    </button>
+
+												    <button class="btn signup-btn" 
+												            th:onclick="|location.href='@{/mypage/MPDG0093}'|">
+												        마이페이지
+												    </button>
+												</div>
+													
+													
                                                  <div class="login-popup">
                                                      <img src="common/images/login_bg.png" width="250" height="260" alt="로그인 이미지">
                                                	 </div>
                                               </div>
-                                         </div>                          
+                                         </div>
+										                           
                                   </section>
                         </div>                
                         
