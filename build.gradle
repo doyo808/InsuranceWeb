@@ -43,10 +43,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.google.cloud:google-cloud-vision:3.65.0'
 	implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	// 윤한식 게시판 편집기 summernote 의존성 추가
-    implementation 'org.webjars:summernote:0.8.20'
-    implementation 'org.webjars:jquery:3.6.0' // Summernote 의존
+	implementation 'org.springframework.boot:spring-boot-starter-aop'   
 }
 
 

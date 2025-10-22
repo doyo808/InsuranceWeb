@@ -6,13 +6,8 @@
     <meta charset="UTF-8">
     <title>FAQ 등록/수정</title>
 
-    <!-- Summernote CSS -->
+    <!-- Summernote CSS (CDN) -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Summernote JS -->
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.min.js"></script>
 
     <!-- 페이지 전용 CSS -->
     <th:block layout:fragment="extraHead">
@@ -23,7 +18,7 @@
 <main layout:fragment="adminContent" class="admin-main">
     <h1 class="page-title" th:text="${isNew} ? 'FAQ 등록' : 'FAQ 상세/수정'"></h1>
 
-    <form th:action="@{/admin/faq/save}" method="post" class="faq-form card p-16" enctype="multipart/form-data">
+    <form th:action="@{/admin/faq/save}" method="post" class="faq-form card" enctype="multipart/form-data">
         <input type="hidden" name="faqId" th:value="${faq.faq_id}" />
 
         <div class="field">
@@ -46,8 +41,7 @@
 
         <div class="field">
             <label>답변</label>
-            <textarea id="summernote" class="field__control" name="answer" rows="10" required
-                      th:text="${faq.answer}"></textarea>
+            <textarea id="summernote" name="answer" th:utext="${faq.answer}"></textarea>
         </div>
 
         <div class="field">
@@ -66,55 +60,58 @@
     </form>
 </main>
 
+<!-- jQuery + Summernote JS (CDN) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
 <script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            lang: 'ko-KR',
-            placeholder: '답변을 입력하세요.',
-            tabsize: 2,
-            height: 300,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ],
-            callbacks: {
-                onImageUpload: function(files) {
-                    for (let i = 0; i < files.length; i++) {
-                        uploadImage(files[i]);
-                    }
+$(document).ready(function() {
+    $('#summernote').summernote({
+        placeholder: '답변을 입력하세요.',
+        tabsize: 2,
+        height: 300,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        callbacks: {
+            onImageUpload: function(files) {
+                for (let i = 0; i < files.length; i++) {
+                    uploadImage(files[i]);
                 }
             }
-        });
-
-        function uploadImage(file) {
-            let data = new FormData();
-            data.append("file", file);
-
-            $.ajax({
-                url: '/admin/faq/uploadImage',
-                type: 'POST',
-                data: data,
-                contentType: false,
-                processData: false,
-                success: function(res) {
-                    if(res.url) {
-                        $('#summernote').summernote('insertImage', res.url);
-                    } else {
-                        alert("이미지 업로드 실패: " + res.error);
-                    }
-                },
-                error: function(err) {
-                    console.error(err);
-                    alert("업로드 중 오류가 발생했습니다.");
-                }
-            });
         }
     });
+
+    function uploadImage(file) {
+        let data = new FormData();
+        data.append("file", file);
+
+        $.ajax({
+            url: '/admin/faq/uploadImage', // 컨트롤러에서 처리
+            type: 'POST',
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function(res) {
+                if(res.url) {
+                    $('#summernote').summernote('insertImage', res.url);
+                } else {
+                    alert("이미지 업로드 실패: " + res.error);
+                }
+            },
+            error: function(err) {
+                console.error(err);
+                alert("업로드 중 오류가 발생했습니다.");
+            }
+        });
+    }
+});
 </script>
 </body>
 </html>
