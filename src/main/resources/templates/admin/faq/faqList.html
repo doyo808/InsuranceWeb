@@ -80,7 +80,8 @@
                     <td th:text="${#dates.format(faq.created_at, 'yyyy-MM-dd')}">작성일</td>
                     <td th:text="${#dates.format(faq.updated_at, 'yyyy-MM-dd')}">수정일</td>
                     <td class="text-center">
-                        <a th:href="@{'/admin/faq/detail/' + ${faq.faq_id}}" class="btn btn--primary btn--xs">상세</a>
+						<!-- faq_id를 사용해 상세 페이지 이동 -->
+						<a th:href="@{'/admin/faq/' + ${faq.faq_id}}" class="btn btn--primary btn--xs">상세</a>
                     </td>
                 </tr>
 
@@ -100,10 +101,10 @@
 	    <ul class="pagination__list">
 	        <!-- 이전 -->
 	        <li>
-	            <a th:class="'pagination__page' + (${currentPage == 1} ? ' is-disabled' : '')"
-	               th:href="@{|/admin/faq?page=${currentPage > 1 ? currentPage-1 : 1}&category=${category}&keyword=${keyword}&writer=${writer}&fromDate=${fromDate}&toDate=${toDate}|}">
-	                이전
-	            </a>
+				<a th:class="'pagination__page' + (${currentPage == 1} ? ' is-disabled' : '')"
+				   th:href="${currentPage == 1} ? '#' : @{/admin/faq(page=${currentPage-1}, category=${category}, keyword=${keyword}, writer=${writer}, fromDate=${fromDate}, toDate=${toDate})}">
+				   이전
+				</a>
 	        </li>
 
 	        <!-- 페이지 번호 -->
@@ -115,10 +116,10 @@
 
 	        <!-- 다음 -->
 	        <li>
-	            <a th:class="'pagination__page' + (${currentPage == totalPages || totalPages == 0} ? ' is-disabled' : '')"
-	               th:href="@{|/admin/faq?page=${currentPage < totalPages ? currentPage+1 : totalPages}&category=${category}&keyword=${keyword}&writer=${writer}&fromDate=${fromDate}&toDate=${toDate}|}">
-	                다음
-	            </a>
+				<a th:class="'pagination__page' + (${currentPage == totalPages || totalPages == 0} ? ' is-disabled' : '')"
+				   th:href="${currentPage == totalPages || totalPages == 0} ? '#' : @{/admin/faq(page=${currentPage+1}, category=${category}, keyword=${keyword}, writer=${writer}, fromDate=${fromDate}, toDate=${toDate})}">
+				   다음
+				</a>
 	        </li>
 	    </ul>
 	</section>

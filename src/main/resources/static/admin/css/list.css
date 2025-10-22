@@ -131,6 +131,12 @@
   color: var(--color-primary);
 }
 
+.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+
 /* 반응형 */
 @media (max-width: 640px) {
   .cell--ellipsis { max-width: 180px; }

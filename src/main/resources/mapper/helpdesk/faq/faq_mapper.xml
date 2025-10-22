@@ -127,8 +127,8 @@
 	</select>
     
     <insert id="insertFaq" parameterType="FaqDto">
-    	INSERT INTO faq (faq_id, category, question, answer, created_at, updated_at)
-        VALUES (#{faq_id}, #{category}, #{question}, #{answer}, SYSDATE, SYSDATE)
+    	INSERT INTO faq (faq_id, category, question, answer, writer, created_at, updated_at)
+        VALUES (faq_seq.nextval, #{category}, #{question}, #{answer}, #{writer}, SYSDATE, SYSDATE)
     </insert>
     	
     <update id="updateFaq" parameterType="FaqDto">

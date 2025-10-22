@@ -1,55 +1,42 @@
-/* ===== FAQ 전용 폼 ===== */
-.faq-form {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 16px;
+/* Summernote 아이콘 깨짐 방지 */
+.note-editor,
+.note-toolbar,
+.note-editable {
+    box-sizing: border-box !important;
 }
 
-.faq-form .field {
-    margin-bottom: 16px;
+.note-toolbar {
+    background: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    padding: 5px 10px !important;
 }
 
-.faq-form label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
+.note-btn,
+.note-btn button,
+.note-toolbar button {
+    all: revert !important;
+    background: #f9f9f9 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    padding: 4px 6px !important;
+    margin: 2px !important;
+    cursor: pointer !important;
+    color: #222 !important;
 }
 
-.faq-form input.field__control,
-.faq-form select.field__control {
-    width: 100%;
-    height: 40px;
-    padding: 10px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
+.note-btn i,
+.note-btn svg {
+    vertical-align: middle !important;
 }
 
-.faq-form #summernote {
-    height: 300px;
-    /* 기존 field__control 적용 안 받도록 초기화 */
-    padding: 0;
-    margin: 0;
+.note-editable {
+    min-height: 250px !important;
+    padding: 10px !important;
+    font-size: 14px !important;
+    background: #fff !important;
 }
 
-/* 툴바 영역 */
-.faq-toolbar {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 20px;
+.note-editor.note-frame {
+    border: 1px solid #ccc !important;
+    border-radius: 6px !important;
 }
-
-.faq-toolbar .btn {
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.faq-toolbar .btn-primary { background-color: #1163d4; color: #fff; }
-.faq-toolbar .btn-secondary { background-color: #f3f3f3; color: #333; }
-.faq-toolbar .btn-danger { background-color: #e53935; color: #fff; }
-

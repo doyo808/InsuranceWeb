@@ -1,117 +1,93 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/admin/common/layout}">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ 등록/수정</title>
 
-    <!-- Summernote CSS (CDN) -->
+    <!-- Summernote CSS -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
 
-    <!-- 페이지 전용 CSS -->
-    <th:block layout:fragment="extraHead">
-        <link rel="stylesheet" th:href="@{/admin/css/faqDetail.css}" />
-    </th:block>
+    <!-- Summernote 툴바/아이콘 충돌 방지 스타일 -->
+    <link rel="stylesheet" th:href="@{/css/faqDetail.css}">
+
+    <!-- jQuery + Summernote JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+    <!-- Summernote 초기화 -->
+    <script th:inline="javascript">
+        $(function() {
+            $('#summernote').summernote({
+                placeholder: '답변을 입력하세요.',
+                height: 320,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview']]
+                ]
+            });
+        });
+    </script>
+
+    <th:block layout:fragment="extraHead"></th:block>
 </head>
+
 <body>
 <main layout:fragment="adminContent" class="admin-main">
-    <h1 class="page-title" th:text="${isNew} ? 'FAQ 등록' : 'FAQ 상세/수정'"></h1>
+    <section style="max-width:1000px; margin:32px auto;">
+        <h1 class="page-title" th:text="${isNew} ? 'FAQ 등록' : 'FAQ 상세/수정'">FAQ 등록/수정</h1>
 
-    <form th:action="@{/admin/faq/save}" method="post" class="faq-form card" enctype="multipart/form-data">
-        <input type="hidden" name="faqId" th:value="${faq.faq_id}" />
+        <form th:action="@{/admin/faq/save}" method="post" enctype="multipart/form-data"
+              class="card" style="padding:20px;">
+            <input type="hidden" name="faq_id" th:value="${faq.faq_id}" />
 
-        <div class="field">
-            <label>분류</label>
-            <select name="category" class="field__control" required>
-                <option value="">선택</option>
-                <option value="계약관리" th:selected="${faq.category=='계약관리'}">계약관리</option>
-                <option value="자동차보험" th:selected="${faq.category=='자동차보험'}">자동차보험</option>
-                <option value="자동차보상" th:selected="${faq.category=='자동차보상'}">자동차보상</option>
-                <option value="장기보험" th:selected="${faq.category=='장기보험'}">장기보험</option>
-                <option value="일반보험" th:selected="${faq.category=='일반보험'}">일반보험</option>
-                <option value="기타" th:selected="${faq.category=='기타'}">기타</option>
-            </select>
-        </div>
+            <div class="field" style="margin-bottom:12px;">
+                <label>분류</label>
+                <select name="category" class="field__control" required>
+                    <option value="">선택</option>
+                    <option value="계약관리" th:selected="${faq.category=='계약관리'}">계약관리</option>
+                    <option value="자동차보험" th:selected="${faq.category=='자동차보험'}">자동차보험</option>
+                    <option value="자동차보상" th:selected="${faq.category=='자동차보상'}">자동차보상</option>
+                    <option value="장기보험" th:selected="${faq.category=='장기보험'}">장기보험</option>
+                    <option value="일반보험" th:selected="${faq.category=='일반보험'}">일반보험</option>
+                    <option value="기타" th:selected="${faq.category=='기타'}">기타</option>
+                </select>
+            </div>
 
-        <div class="field">
-            <label>질문</label>
-            <input class="field__control" type="text" name="question" th:value="${faq.question}" required/>
-        </div>
+            <div class="field" style="margin-bottom:12px;">
+                <label>질문</label>
+                <input class="field__control" type="text" name="question" th:value="${faq.question}" required/>
+            </div>
 
-        <div class="field">
-            <label>답변</label>
-            <textarea id="summernote" name="answer" th:utext="${faq.answer}"></textarea>
-        </div>
+            <div class="field" style="margin-bottom:12px;">
+                <label>답변</label>
+                <textarea id="summernote" name="answer" th:utext="${faq.answer}"></textarea>
+            </div>
 
-        <div class="field">
-            <label>작성자</label>
-            <input class="field__control" type="text" name="writer" th:value="${faq.writer}" required/>
-        </div>
+            <div class="field" style="margin-bottom:12px;">
+                <label>작성자</label>
+                <input class="field__control" type="text" name="writer"
+                       th:value="${faq.writer != null} ? ${faq.writer} : ${loginId}" readonly />
+            </div>
 
-        <div class="faq-toolbar">
-            <button type="submit" class="btn btn-primary" th:text="${isNew} ? '저장' : '수정'"></button>
-            <a th:href="@{/admin/faq}" class="btn btn-secondary">목록</a>
-            <button th:if="${!isNew}" type="button" class="btn btn-danger"
-                    th:onclick="'if(confirm(\'삭제하시겠습니까?\')){location.href=\'/admin/faq/' + ${faq.faq_id} + '/delete\';}'">
-                삭제
-            </button>
-        </div>
-    </form>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;">
+                <a th:href="@{/admin/faq}" class="btn btn--secondary">목록</a>
+
+                <!-- 신규/수정 버튼 분기 -->
+                <button type="submit" class="btn btn--primary"
+                        th:text="${isNew} ? '저장' : '수정'"></button>
+            </div>
+        </form>
+    </section>
 </main>
-
-<!-- jQuery + Summernote JS (CDN) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
-
-<script>
-$(document).ready(function() {
-    $('#summernote').summernote({
-        placeholder: '답변을 입력하세요.',
-        tabsize: 2,
-        height: 300,
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ],
-        callbacks: {
-            onImageUpload: function(files) {
-                for (let i = 0; i < files.length; i++) {
-                    uploadImage(files[i]);
-                }
-            }
-        }
-    });
-
-    function uploadImage(file) {
-        let data = new FormData();
-        data.append("file", file);
-
-        $.ajax({
-            url: '/admin/faq/uploadImage', // 컨트롤러에서 처리
-            type: 'POST',
-            data: data,
-            contentType: false,
-            processData: false,
-            success: function(res) {
-                if(res.url) {
-                    $('#summernote').summernote('insertImage', res.url);
-                } else {
-                    alert("이미지 업로드 실패: " + res.error);
-                }
-            },
-            error: function(err) {
-                console.error(err);
-                alert("업로드 중 오류가 발생했습니다.");
-            }
-        });
-    }
-});
-</script>
 </body>
 </html>

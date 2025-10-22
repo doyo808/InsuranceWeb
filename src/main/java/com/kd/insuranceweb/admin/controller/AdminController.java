@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -374,12 +375,21 @@ public class AdminController {
     }
 	
 	//** 신규 등록 페이지 **/
-    @GetMapping("/faq/new")
-    public String newFaqForm(Model model) {
-        model.addAttribute("faq", new FaqDto());
-        model.addAttribute("isNew", true);
-        return "admin/faq/faqDetail";
-    }
+	@GetMapping("/faq/new")
+	public String newFaqForm(Model model, Principal principal) {
+	    model.addAttribute("faq", new FaqDto());
+	    model.addAttribute("isNew", true);
+
+	    // 로그인 아이디를 작성자로 모델에 추가
+	    if (principal != null) {
+	        model.addAttribute("loginId", principal.getName());
+	    } else {
+	        model.addAttribute("loginId", ""); // 비로그인 시 기본값
+	    }
+
+	    return "admin/faq/faqDetail";
+	}
+
 
     /** 상세 보기 (수정용) **/
     @GetMapping("/faq/{id}")
