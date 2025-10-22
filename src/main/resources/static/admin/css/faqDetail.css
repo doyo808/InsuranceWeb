@@ -1,0 +1,79 @@
+/* faqDetail.css - FAQ 등록/수정 페이지 전용 */
+
+/* ====== 전체 폼 스타일 ====== */
+.faq-form {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-form .field {
+    margin-bottom: 16px;
+}
+
+.faq-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.faq-form input.field__control,
+.faq-form select.field__control,
+.faq-form textarea.field__control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* 작성자, 질문 입력 필드 */
+.faq-form input.field__control,
+.faq-form select.field__control {
+    height: 40px;
+}
+
+/* ====== Summernote 편집기 ====== */
+.faq-form #summernote {
+    height: 300px;
+}
+
+.faq-form .note-toolbar button {
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
+}
+
+.faq-form .note-toolbar .btn-group {
+    margin-right: 4px;
+}
+
+/* 툴바 영역 */
+.faq-toolbar {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.faq-toolbar .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.faq-toolbar .btn-primary {
+    background-color: #1163d4;
+    color: #fff;
+}
+
+.faq-toolbar .btn-secondary {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+.faq-toolbar .btn-danger {
+    background-color: #e53935;
+    color: #fff;
+}
