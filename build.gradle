@@ -43,6 +43,7 @@ dependencies {
 	implementation 'com.google.cloud:google-cloud-vision:3.65.0'
 	implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 }
 
 
