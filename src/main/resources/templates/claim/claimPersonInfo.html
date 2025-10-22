@@ -104,34 +104,36 @@
 
 <body>
 	<main layout:fragment="content">
-		<header>
-			<h1>질병/상해 보험금청구</h1>
-		</header>
 
 		<div class="container">
 			<h2>피보험자 및 수익자 정보 입력</h2>
 
 			<!-- ✅ 폼 시작 -->
-			<form th:action="@{/claim/claimpage6}" method="post">
+			<form th:action="@{/claim/personInfo}" method="post">
 				<!-- 피보험자 정보 -->
 				<div class="form-section">
 					<h3>피보험자 정보</h3>
 					<div class="form-grid">
 						<label for="insuredName">성명</label>
-						<input type="text" id="insuredName" name="insuredName" required>
+						<input type="text" id="insuredName" name="insuredName"
+						       th:value="${personInfo != null ? personInfo.NAME : ''}" required>
 
 						<label for="insuredId1">주민등록번호</label>
-						<div style="display: flex; align-items: center;">
-							<input type="text" id="insuredId1" name="insuredId1" maxlength="6" style="width: 45%;">
-							<span style="margin: 0 8px;">-</span>
-							<input type="password" id="insuredId2" name="insuredId2" maxlength="7" style="width: 55%;">
+						<div style="display:flex;align-items:center;">
+						  <input type="text" id="insuredId1" name="insuredId1" maxlength="6" style="width:45%;"
+						         th:value="${personInfo != null and personInfo.PERSONAL_ID != null
+						                   ? #strings.substring(personInfo.PERSONAL_ID, 0, 6) : ''}">
+						  <span style="margin:0 8px;">-</span>
+						  <input type="password" id="insuredId2" name="insuredId2" maxlength="7" style="width:55%;"
+						         th:value="${personInfo != null and personInfo.PERSONAL_ID != null
+						                   ? #strings.substring(personInfo.PERSONAL_ID, 6, 13) : ''}">
 						</div>
 
-						<label for="insuredJob">직업</label>
-						<input type="text" id="insuredJob" name="insuredJob">
-
-						<label for="insuredCompany">회사명</label>
-						<input type="text" id="insuredCompany" name="insuredCompany">
+						<label for="beneficiaryId1">연락처</label>
+						<div style="display: flex; align-items: center;">
+							<input type="text" id="phone" name="phone" maxlength="11" style="width:60%;"
+							       th:value="${personInfo != null ? personInfo.PHONE_NUMBER : ''}">
+						</div>
 
 					</div>
 				</div>
@@ -164,12 +166,12 @@
 
 						<label for="beneficiaryAddress">주소</label>
 						<div>
-							<input type="text" id="postcode" name="beneficiaryAddress" placeholder="우편번호"
+							<input type="text" id="postcode" name="beneficiaryPostcode" placeholder="우편번호"
 								style="width: 100px; margin-bottom: 5px;">
 							<button type="button" id="addressSearchBtn" style="margin-left: 5px;">우편번호 찾기</button>
-							<input type="text" id="address" name="beneficiaryAddress" placeholder="기본 주소"
+							<input type="text" id="address" name="beneficiaryAddress1" placeholder="기본 주소"
 								style="width: 100%; margin-bottom: 5px;">
-							<input type="text" id="detailAddress" name="beneficiaryAddress" placeholder="상세 주소"
+							<input type="text" id="detailAddress" name="beneficiaryAddress2" placeholder="상세 주소"
 								style="width: 100%;">
 						</div>
 

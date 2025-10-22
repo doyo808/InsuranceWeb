@@ -99,16 +99,13 @@
 
 <body>
 	<main layout:fragment="content">
-		<header>
-			<h1>서류 등록</h1>
-		</header>
 
 		<div class="container">
 			<section class="section">
 				<h2>서류를 등록해 주세요</h2>
 
 				<!-- ✅ form 추가 -->
-				<form th:action="@{/claim/claimpage5}" method="post" enctype="multipart/form-data">
+				<form th:action="@{/claim/uploadDocuments}" method="post" enctype="multipart/form-data">
 
 					<div class="file-upload">
 						<label for="receipt">필수 병원 진료비 영수증(최대 3MB)</label>

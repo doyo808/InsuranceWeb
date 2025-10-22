@@ -255,73 +255,41 @@ public class AdminController {
 	@GetMapping("/claim/{id}/file")
 	public ResponseEntity<Resource> downloadClaimFile(
 	        @PathVariable("id") Integer claimId,
-	        @RequestParam("type") String type // detail | receipt | etc
-	) throws Exception {
+	        @RequestParam("type") String type) throws Exception {
 
-	    // 1) DB에서 해당 청구건의 파일 경로를 읽는다 (신뢰할 수 있는 소스만 사용)
 	    ClaimDetailDTO dto = claimService.getClaimDetail(claimId);
 	    if (dto == null) {
 	        return ResponseEntity.notFound().build();
 	    }
 
-	    String filePath;
-	    switch (type) {
-	        case "detail":  filePath = dto.getDetail_file_path();  break;
-	        case "receipt": filePath = dto.getReceipt_file_path(); break;
-	        case "etc":     filePath = dto.getEtc_file_path();     break;
-	        default:        return ResponseEntity.badRequest().build();
-	    }
-	    if (filePath == null || filePath.isBlank()) {
+	    // ✅ DB에 저장된 경로 그대로 사용
+	    String pathStr = switch (type) {
+	        case "detail" -> dto.getDetail_file_path();
+	        case "receipt" -> dto.getReceipt_file_path();
+	        case "etc" -> dto.getEtc_file_path();
+	        default -> null;
+	    };
+
+	    if (pathStr == null || pathStr.isBlank()) {
 	        return ResponseEntity.notFound().build();
 	    }
 
-	    // 2) 경로 정규화 + (선택) 안전 체크
-	    Path path = Paths.get(filePath).normalize().toAbsolutePath();
-
-	    // 선택) 업로드 루트 경로를 지정했다면 루트 밖 접근 차단
-	    // Path base = Paths.get("C:/javaweb_yhs/InsuranceWebUploadedFiles").toAbsolutePath().normalize();
-	    // if (!path.startsWith(base)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
-	    if (!Files.exists(path) || !Files.isReadable(path)) {
+	    Path filePath = Paths.get(System.getProperty("user.dir"), pathStr).normalize();
+	    if (!Files.exists(filePath)) {
 	        return ResponseEntity.notFound().build();
 	    }
 
-	    // 3) 리소스 스트리밍
-	    Resource resource = new UrlResource(path.toUri());
-	    if (!resource.exists()) {
-	        return ResponseEntity.notFound().build();
-	    }
-
-	    // 4) Content-Type & 다운로드 파일명
-	    String contentType = Files.probeContentType(path);
+	    Resource resource = new UrlResource(filePath.toUri());
+	    String contentType = Files.probeContentType(filePath);
 	    if (contentType == null) contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
-
-	    String filename = path.getFileName().toString();
-	    String encoded  = org.springframework.web.util.UriUtils.encode(filename, StandardCharsets.UTF_8);
+	    String fileName = filePath.getFileName().toString();
+	    String encodedFileName = org.springframework.web.util.UriUtils.encode(fileName, StandardCharsets.UTF_8);
 
 	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encoded)
-	        .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(Files.size(path)))
-	        .contentType(MediaType.parseMediaType(contentType))
-	        .body(resource);
+	            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
+	            .contentType(MediaType.parseMediaType(contentType))
+	            .body(resource);
 	}
-	
-	// ✅ 관리자/고객용 파일 다운로드
-    /*@GetMapping("/{claimId}/file/{type}")
-    public ResponseEntity<Resource> downloadClaimFile(
-            @PathVariable Long claimId,
-            @PathVariable String type
-    ) throws MalformedURLException {
-
-        String filePath = claimService.getFilePath(claimId, type);
-        Path path = Paths.get(filePath);
-        Resource resource = new UrlResource(path.toUri());
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + path.getFileName().toString() + "\"")
-                .body(resource);
-    }*/
 	
 	
 	// 윤한식 ===== 고객가입후기 =====

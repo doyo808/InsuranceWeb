@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout.html}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>보험금 청구 완료</title>
+    <style>
+        .error-container {
+            max-width: 600px;
+            margin: 120px auto;
+            text-align: center;
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .error-container h1 {
+            color: #007bff;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .error-container p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 30px;
+			white-space: pre-line;
+        }
+        .error-container a {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .error-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<main layout:fragment="content">
+    <div class="error-container">
+        <h1>보험금 청구가 완료되었습니다</h1>
+        <p th:text="${errorMessage}">빠른시일 내에 검토하여 안내드리겠습니다.</p>
+        <a th:href="@{/}">홈으로 돌아가기</a>
+    </div>
+</main>
+
+</html>

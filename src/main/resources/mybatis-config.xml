@@ -6,9 +6,6 @@
     		
 	<typeAliases>
 
-    	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"/>
-    	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
-    	  
           <typeAlias type="com.kd.insuranceweb.common.dto.PersonDTO" alias="person"></typeAlias>
           <typeAlias type="com.kd.insuranceweb.common.dto.CustomerDTO" alias="customer"></typeAlias>
           
@@ -20,10 +17,13 @@
   		  <typeAlias type="com.kd.insuranceweb.helpdesk.dto.NoticeDto" alias="noticeDto"></typeAlias>
 		        
     	  <typeAlias type="com.kd.insuranceweb.claim.dto.Claim" alias="claim"></typeAlias>
+    	  <typeAlias type="com.kd.insuranceweb.claim.dto.ContractDTO" alias="contractChoice"/>
     	  
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"></typeAlias>
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
+    	  
           <typeAlias type="com.kd.insuranceweb.admin.dto.ProductListRowDTO" alias="productList"></typeAlias>
+          
           <typeAlias type="com.kd.insuranceweb.admin.dto.ContractListRowDTO" alias="contractList"></typeAlias>
   		  <typeAlias type="com.kd.insuranceweb.admin.dto.ContractSearchCriteria" alias="contractSearchCriteria"></typeAlias>
   		  <typeAlias type="com.kd.insuranceweb.admin.dto.ContractDetailDTO" alias="contractDetail"></typeAlias>

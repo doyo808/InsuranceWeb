@@ -85,9 +85,6 @@
 </head>
 <body>
 	<main layout:fragment="content">
-		<header>
-		    <h1>질병/상해 보험금청구</h1>
-		  </header>
 
 		  <div class="container">
 		    <section>
@@ -111,8 +108,6 @@
 		        </div>
 		      </div>
 		    </section>
-			
-			<!-- PDF파일 경로 삽입해야함-->
 			
 			<div style="margin-top:20px;">
 			  <a th:href="@{/claim/document/guide.pdf}" download class="btn-primary" style="margin-right:10px;">
@@ -170,7 +165,7 @@
 		    </section>
 
 		    <div class="button-area">
-		      <a href="./claimpage2" class="btn-primary">보험금청구</a>
+		      <a th:href="@{/claim/contractsChoice}" class="btn-primary">보험금청구</a>
 		    </div>
 		  </div>	
 	</main>

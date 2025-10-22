@@ -5,33 +5,53 @@
 
 	<!-- 보험금 청구 INSERT -->
 	<insert id="insertClaim" parameterType="claim">
-		INSERT INTO CLAIMS (
-			claim_id, contract_id, customer_id, claim_type, claim_date,
-			accident_date, compensation_type, accident_description,
-			beneficiary_name, bank_account, bank_name, beneficiary_email,
-			claim_status, completion_date, total_paid_amount,
-			detail_file_path, receipt_file_path, etc_file_path,
-			beneficiary_postcode, beneficiary_address, medical_benefits, accident_type
-		) VALUES (
-			CLAIMS_SEQ.NEXTVAL, 
-			#{contract_id}, #{customer_id}, #{claim_type}, #{claim_date},
-			#{accident_date}, #{compensation_type}, #{accident_description},
-			#{beneficiary_name}, #{bank_account}, #{bank_name}, #{beneficiary_email},
-			#{claim_status}, #{completion_date}, #{total_paid_amount},
-			#{detail_file_path}, #{receipt_file_path}, #{etc_file_path},
-			#{beneficiary_postcode}, #{beneficiary_address}, #{medical_benefits}, #{accident_type}
-		)
-	</insert>
+
+		<!-- Oracle에서 자동 생성 키값을 가져오기 -->
+    <selectKey
+			keyProperty="claim_id" resultType="int" order="AFTER">
+			SELECT CLAIMS_SEQ.CURRVAL FROM DUAL
+		</selectKey> INSERT
+		INTO CLAIMS ( CLAIM_ID, CONTRACT_ID, CLAIM_TYPE, CLAIM_DATE,
+		ACCIDENT_DATE, ACCIDENT_DESCRIPTION, BENEFICIARY_NAME, BANK_ACCOUNT,
+		BANK_NAME, BENEFICIARY_EMAIL, CLAIM_STATUS, COMPLETION_DATE,
+		TOTAL_PAID_AMOUNT, DETAIL_FILE_PATH, RECEIPT_FILE_PATH, ETC_FILE_PATH,
+		BENEFICIARY_POSTCODE, BENEFICIARY_ADDRESS, MEDICAL_BENEFITS,
+		ACCIDENT_TYPE ) VALUES ( CLAIMS_SEQ.NEXTVAL, #{contract_id,
+		jdbcType=NUMERIC}, #{claim_type, jdbcType=VARCHAR}, #{claim_date,
+		jdbcType=DATE}, #{accident_date, jdbcType=DATE}, #{accident_description,
+		jdbcType=VARCHAR}, #{beneficiary_name, jdbcType=VARCHAR},
+		#{bank_account, jdbcType=VARCHAR}, #{bank_name, jdbcType=VARCHAR},
+		#{beneficiary_email, jdbcType=VARCHAR}, #{claim_status,
+		jdbcType=NUMERIC}, #{completion_date, jdbcType=DATE},
+		#{total_paid_amount, jdbcType=NUMERIC}, #{detail_file_path,
+		jdbcType=VARCHAR}, #{receipt_file_path, jdbcType=VARCHAR},
+		#{etc_file_path, jdbcType=VARCHAR}, #{beneficiary_postcode,
+		jdbcType=VARCHAR}, #{beneficiary_address, jdbcType=VARCHAR},
+		#{medical_benefits, jdbcType=VARCHAR}, #{accident_type,
+		jdbcType=VARCHAR} ) </insert>
+
+
+	<!-- 필요한 경우에만 사용 -->
+	<select id="getContractsByCustomer" resultType="contractChoice"> SELECT
+		c.contract_id, ip.product_name, c.start_date, c.end_date, c.status FROM
+		insurance_contracts c JOIN insurance_products ip ON c.product_id =
+		ip.product_id JOIN customers cu ON c.customer_id = cu.customer_id WHERE
+		cu.customer_id = #{customer_id} <if
+			test="months != null">
+			AND c.start_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{months})
+		</if>
+		ORDER BY c.contract_id DESC </select>
+
 
 	<!-- 단일 조회 -->
-	<select id="selectClaim" parameterType="long" resultType="claim">
+	<select id="selectClaim" parameterType="Integer" resultType="claim">
 		SELECT *
 		FROM CLAIMS
 		WHERE claim_id = #{claim_id}
 	</select>
 
 	<!-- ID로 조회 -->
-	<select id="selectClaimById" parameterType="long" resultType="claim">
+	<select id="selectClaimById" parameterType="Integer" resultType="claim">
 		SELECT *
 		FROM CLAIMS
 		WHERE claim_id = #{claim_id}
@@ -48,43 +68,53 @@
 	<update id="updateClaim" parameterType="claim">
 		UPDATE CLAIMS
 		SET
-			contract_id = #{contract_id},
-			customer_id = #{customer_id},
-			claim_type = #{claim_type},
-			claim_date = #{claim_date},
-			accident_date = #{accident_date},
-			compensation_type = #{compensation_type},
-			accident_description = #{accident_description},
-			beneficiary_name = #{beneficiary_name},
-			bank_account = #{bank_account},
-			bank_name = #{bank_name},
-			beneficiary_email = #{beneficiary_email},
-			claim_status = #{claim_status},
-			completion_date = #{completion_date},
-			total_paid_amount = #{total_paid_amount},
-			detail_file_path = #{detail_file_path},
-			receipt_file_path = #{receipt_file_path},
-			etc_file_path = #{etc_file_path},
-			beneficiary_postcode = #{beneficiary_postcode},
-			beneficiary_address = #{beneficiary_address},
-			medical_benefits = #{medical_benefits},
-			accident_type = #{accident_type}
+		contract_id = #{contract_id},
+		claim_type = #{claim_type},
+		claim_date = #{claim_date},
+		accident_date = #{accident_date},
+		accident_description = #{accident_description},
+		beneficiary_name = #{beneficiary_name},
+		bank_account = #{bank_account},
+		bank_name = #{bank_name},
+		beneficiary_email = #{beneficiary_email},
+		claim_status = #{claim_status},
+		completion_date = #{completion_date},
+		total_paid_amount = #{total_paid_amount},
+		detail_file_path = #{detail_file_path},
+		receipt_file_path = #{receipt_file_path},
+		etc_file_path = #{etc_file_path},
+		beneficiary_postcode = #{beneficiary_postcode},
+		beneficiary_address = #{beneficiary_address},
+		medical_benefits = #{medical_benefits},
+		accident_type = #{accident_type}
 		WHERE claim_id = #{claim_id}
 	</update>
 
 	<!-- DELETE -->
-	<delete id="deleteClaim" parameterType="long">
+	<delete id="deleteClaim" parameterType="Integer">
 		DELETE FROM CLAIMS WHERE claim_id = #{claim_id}
 	</delete>
 
 	<!-- 파일 경로만 업데이트 -->
-	<update id="updateClaimFilePaths">
+	<update id="updateClaimFilePaths" parameterType="claim">
 		UPDATE CLAIMS
-		SET 
-			detail_file_path = #{detail_file_path},
-			receipt_file_path = #{receipt_file_path},
-			etc_file_path = #{etc_file_path}
-		WHERE claim_id = #{claim_id}
+		SET
+		detail_file_path = #{detail_file_path, jdbcType=VARCHAR},
+		receipt_file_path = #{receipt_file_path, jdbcType=VARCHAR},
+		etc_file_path = #{etc_file_path, jdbcType=VARCHAR}
+		WHERE claim_id = #{claim_id, jdbcType=NUMERIC}
 	</update>
+
+	<select id="selectPersonInfoByCustomerId" parameterType="Integer"
+		resultType="map">
+		SELECT
+		p.person_name AS name,
+		p.personal_id AS personal_id,
+		p.email AS email,
+		p.phone_number AS phone_number
+		FROM customers c
+		JOIN persons p ON c.person_id = p.person_id
+		WHERE c.customer_id = #{customer_id}
+	</select>
 
 </mapper>
