@@ -89,8 +89,7 @@ public class SecurityConfig {
     			"/signup/**", "/common/error/**",
     			"/*/css/**", "/*/js/**", "/*/images/**",
     			"/api/auth/status", "/cert/**",
-    			"/helpdesk/**", "/terms/**", "/club/PP050101_001.html",
-
+    			"/helpdesk/**", "/terms/**", "/club/PP050101_001",
     			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","/club/event/index", "/club/event/analysis",
     	};
     	
