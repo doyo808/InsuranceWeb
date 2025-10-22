@@ -29,20 +29,24 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> registerProduct(
-            @RequestPart("productJson") ProductRequestDTO productJson,
+            @RequestPart("productJson") ProductRequestDTO requestData,
             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
             @RequestPart(value = "conditions", required = false) MultipartFile conditions) {
 
     	System.out.println("product api 입니다");
+    	System.out.println(requestData);
         try {
             // 파일 저장(예: uploads/...), 경로를 DTO에 세팅
             String thumbPath = saveFile(thumbnail, "thumbnails");
             String condPath = saveFile(conditions, "conditions");
 
-            productJson.setThumbnailPath(thumbPath);
-            productJson.setConditionsPath(condPath);
+            System.out.println("이미지 경로:"+thumbPath);
+            System.out.println("약관 경로"+condPath);
+            
+            requestData.setThumbnail(thumbPath);
+            requestData.setConditions(condPath);
 
-            productService.registerProduct(productJson);
+            productService.registerProduct(requestData);
             return ResponseEntity.ok(Map.of("message", "상품 등록 완료"));
         } catch (Exception e) {
             e.printStackTrace();
