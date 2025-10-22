@@ -12,12 +12,14 @@ public class CustomUserDetails implements UserDetails, LoginUser {
     private CustomerDTO customer;
     private final Integer customer_id;
     private final Integer person_id;
+    private final String person_name;
     private final String login_id;
     private final String password_hash;
 
-    public CustomUserDetails(Integer customerId, Integer personId, String loginId, String passwordHash) {
+    public CustomUserDetails(Integer customerId, Integer personId, String personName, String loginId, String passwordHash) {
         this.customer_id = customerId;
         this.person_id = personId;
+        this.person_name = personName;
         this.login_id = loginId;
         this.password_hash = passwordHash;
     }
@@ -44,6 +46,10 @@ public class CustomUserDetails implements UserDetails, LoginUser {
 
     public Integer getPerson_id() {
         return person_id;
+    }
+    
+    public String getPerson_name() {
+        return person_name;
     }
 
     @Override
@@ -84,9 +90,12 @@ public class CustomUserDetails implements UserDetails, LoginUser {
 
 	@Override
 	public String toString() {
-		return "CustomUserDetails [person=" + person + ", customer=" + customer + ", customer_id=" + customer_id
-				+ ", person_id=" + person_id + ", login_id=" + login_id + ", password_hash=" + password_hash + "]";
+		return "CustomUserDetails [customer_id=" + customer_id
+				+ ", person_id=" + person_id + ", person_name=" + person_name + ", login_id=" + login_id
+				+ ", password_hash=" + password_hash + "]";
 	}
+
+
     
     
 }

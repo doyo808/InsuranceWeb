@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.CustomerDTO;
+import com.kd.insuranceweb.common.dto.PersonDTO;
 import com.kd.insuranceweb.common.mapper.CustomerMapper;
+import com.kd.insuranceweb.common.mapper.PersonMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomUserDetailsService implements UserDetailsService {
 	
 	private final CustomerMapper customerMapper;
+	private final PersonMapper personMapper;
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override
@@ -37,9 +40,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (customer == null) {
 			throw new UsernameNotFoundException("사용자를 찾을 수 없습니다." + login_id);
 		}
+		PersonDTO person = personMapper.selectById(customer.getPerson_id());
 		
 		return new CustomUserDetails(customer.getCustomer_id(),
 								customer.getPerson_id(),
+								person.getPerson_name(),
 								customer.getLogin_id(),
 								customer.getPassword_hash());
 	}

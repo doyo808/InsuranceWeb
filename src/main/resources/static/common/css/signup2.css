@@ -129,21 +129,17 @@ h1 {
 /* 최종 '가입 완료' 버튼 */
 /* =================================================== */
 .submit-btn {
-    width: 100%;
+    width: 300px;
     padding: 15px;
     font-size: 18px;
     font-weight: bold;
     color: #fff;
-    background-color: #333;
+    background-color: #3b92e5;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 40px;
+    margin: 50px 0 100px 400px;
     transition: background-color 0.2s;
-}
-
-.submit-btn:hover {
-    background-color: #555;
 }
 
 .submit-btn:disabled {

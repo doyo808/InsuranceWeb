@@ -150,6 +150,20 @@ h1 {
     font-size: 0.9em;
 }
 
+#certBtn {
+	width: 100px;
+	padding: 15px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+	background-color: #3b92e5; 
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	margin: 10px 0 0 500px;
+}
+
 /* 최종 '다음' 버튼 */
 #signup-next-btn {
     width: 300px;
@@ -161,8 +175,8 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 40px;
     transition: background-color 0.2s;
+	margin: 50px 0 100px 400px;
 }
 #signup-next-btn:disabled {
 	background-color: gray;
