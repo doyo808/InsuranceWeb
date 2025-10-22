@@ -74,17 +74,9 @@
 					<label>사고일/발병일</label>
 					<div class="value" th:text="${#temporals.format(detail.accident_date,'yyyy-MM-dd')}"></div>
 				</div>
-				<div class="item">
-					<label>보상구분</label>
-					<div class="value" th:text="${detail.compensation_type}"></div>
-				</div>
 				<div class="item span-2">
 					<label>사고 내용</label>
 					<div class="value" th:text="${detail.accident_description}"></div>
-				</div>
-				<div class="item">
-					<label>질병 코드</label>
-					<div class="value" th:text="${detail.diagnosis_cd}"></div>
 				</div>
 				<div class="item">
 					<label>접수 날짜</label>
@@ -123,27 +115,27 @@
 					<div class="value">
 						<ul class="file-list">
 							<li th:if="${detail.detail_file_path}">
-								<a class="btn btn--sm"
-									th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='detail')}">
-									상세서류 다운로드
-								</a>
-								<span class="muted" th:text="${detailFileName}"></span>
+							  <a class="btn btn--sm"
+							     th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='detail')}">
+							    상세서류 다운로드
+							  </a>
+							  <span class="muted" th:text="${detailFileName}"></span>
 							</li>
 
 							<li th:if="${detail.receipt_file_path}">
-								<a class="btn btn--sm"
-									th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='receipt')}">
-									영수증 다운로드
-								</a>
-								<span class="muted" th:text="${receiptFileName}"></span>
+							  <a class="btn btn--sm"
+							     th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='receipt')}">
+							    영수증 다운로드
+							  </a>
+							  <span class="muted" th:text="${receiptFileName}"></span>
 							</li>
 
 							<li th:if="${detail.etc_file_path}">
-								<a class="btn btn--sm"
-									th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='etc')}">
-									기타서류 다운로드
-								</a>
-								<span class="muted" th:text="${etcFileName}"></span>
+							  <a class="btn btn--sm"
+							     th:href="@{/admin/claim/{id}/file(id=${detail.claim_id}, type='etc')}">
+							    기타서류 다운로드
+							  </a>
+							  <span class="muted" th:text="${etcFileName}"></span>
 							</li>
 						</ul>
 					</div>

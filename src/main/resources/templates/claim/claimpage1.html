@@ -85,40 +85,35 @@
 </head>
 <body>
 	<main layout:fragment="content">
-		<header>
-		    <h1>질병/상해 보험금청구</h1>
-		  </header>
 
 		  <div class="container">
 		    <section>
 		      <h2>보험금청구 절차</h2>
 		      <div class="step-box">
 		        <div class="step">
-		          <img src="icon1.png" alt="">
+		          <img th:src="@{/claim/images/icon1.svg}" alt="">
 		          보험금청구<br>사고내용/서류/계좌등록
 		        </div>
 		        <div class="step">
-		          <img src="icon2.png" alt="">
+		          <img th:src="@{/claim/images/icon2.svg}" alt="">
 		          담당자 지정
 		        </div>
 		        <div class="step">
-		          <img src="icon3.png" alt="">
+		          <img th:src="@{/claim/images/icon3.svg}" alt="">
 		          사고조사 또는 심사
 		        </div>
 		        <div class="step">
-		          <img src="icon4.png" alt="">
+		          <img th:src="@{/claim/images/icon4.svg}" alt="">
 		          보험금 확정 및 지급
 		        </div>
 		      </div>
 		    </section>
 			
-			<!-- PDF파일 경로 삽입해야함-->
-			
 			<div style="margin-top:20px;">
-			  <a href="/@@@@@@@@@@@@@@@@@@@@@pdf/claim_guide.pdf" download class="btn-primary" style="margin-right:10px;">
+			  <a th:href="@{/claim/document/guide.pdf}" download class="btn-primary" style="margin-right:10px;">
 			    세부 절차 안내 (PDF)
 			  </a>
-			  <a href="/@@@@@@@@@@@@@@@@@@@@@pdf/faq.pdf" download class="btn-primary">
+			  <a th:href="@{/claim/document/faq.pdf}" download class="btn-primary">
 			    자주 하는 질문 (PDF)
 			  </a>
 			</div>
@@ -170,7 +165,7 @@
 		    </section>
 
 		    <div class="button-area">
-		      <a href="./claimpage2" class="btn-primary">보험금청구</a>
+		      <a th:href="@{/claim/contractsChoice}" class="btn-primary">보험금청구</a>
 		    </div>
 		  </div>	
 	</main>

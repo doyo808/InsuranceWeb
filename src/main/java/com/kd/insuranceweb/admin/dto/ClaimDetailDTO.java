@@ -10,14 +10,11 @@ public class ClaimDetailDTO {
   // claims table
   private Integer claim_id; // 청구ID
   private String  claim_type;  // 청구유형
-  private String  compensation_type; // 보상구분(인: H/물: P)
   private String  accident_description; // 사고내용
   private LocalDate  accident_date; //사고/발병일 
   private LocalDate  claim_date; // 청구(접수)날짜
   
   private Integer claim_status; // 청구상태 (1, 2, 3)
-  
-  private String diagnosis_cd; // 질병 코드
   
   private String beneficiary_name; // 수익자 이름
   private String beneficiary_email; // 수익자 이메일

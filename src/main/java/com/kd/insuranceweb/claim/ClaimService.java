@@ -1,55 +1,45 @@
 package com.kd.insuranceweb.claim;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.kd.insuranceweb.claim.dto.Claim;
+import com.kd.insuranceweb.claim.dto.ContractDTO;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class ClaimService {
 
-    @Autowired
-    private ClaimMapper claimMapper;
+    private final ClaimMapper claimMapper;
 
-    // 신규 청구 데이터 생성 (간단한 claim_id 발급)
-    public Long createNewClaim() {
-        Claim claim = new Claim();
-        claimMapper.insertClaim(claim);
-        return claim.getClaimId();
+    /** 보험금 청구 DB 저장 */
+    public void insertClaim(Claim claim) {
+        try {
+            log.info("📝 ClaimService.insertClaim 실행 - {}", claim);
+            claimMapper.insertClaim(claim);
+            log.info("✅ 보험금 청구 insert 성공 (claim_id={})", claim.getClaim_id());
+        } catch (Exception e) {
+            log.error("❌ ClaimService.insertClaim 실패", e);
+            throw new RuntimeException("보험금 청구 저장 실패: " + e.getMessage(), e);
+        }
+    }
+    
+    public void updateClaimFilePaths(Claim claim) {
+        claimMapper.updateClaimFilePaths(claim);
     }
 
-    // 파일 저장 로직
-    public void saveClaimFiles(Long claimId, MultipartFile receipt, MultipartFile detail, MultipartFile etc) throws IOException {
-        String baseDir = System.getProperty("user.dir") + "/uploaded/claims/" + claimId + "/";
-        Files.createDirectories(Paths.get(baseDir));
-
-        String receiptPath = saveFile(baseDir, receipt);
-        String detailPath = saveFile(baseDir, detail);
-        String etcPath = etc != null && !etc.isEmpty() ? saveFile(baseDir, etc) : null;
-
-        claimMapper.updateClaimFilePaths(claimId, detailPath, receiptPath, etcPath);
+    /** 고객의 계약 목록 조회 (contractsChoice) */
+    public List<ContractDTO> getContractsByCustomer(Integer customerId, Integer months) {
+        return claimMapper.getContractsByCustomer(customerId, months);
     }
-
-    private String saveFile(String baseDir, MultipartFile file) throws IOException {
-        if (file == null || file.isEmpty()) return null;
-        String uniqueName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(baseDir + uniqueName);
-        file.transferTo(filePath);
-        return filePath.toString();
-    }
-
-    public String getFilePath(Long claimId, String type) {
-        Claim claim = claimMapper.selectClaimById(claimId);
-        return switch (type) {
-            case "receipt" -> claim.getReceiptFilePath();
-            case "detail" -> claim.getDetailFilePath();
-            case "etc" -> claim.getEtcFilePath();
-            default -> throw new IllegalArgumentException("Invalid file type: " + type);
-        };
+    
+    public Map<String, Object> getPersonInfoByCustomerId(Integer customerId) {
+        return claimMapper.selectPersonInfoByCustomerId(customerId);
     }
 }
