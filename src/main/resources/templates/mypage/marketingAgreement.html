@@ -6,9 +6,18 @@
 	<meta charset="UTF-8" />
 	<title>마케팅 정보 활용 동의/철회</title>
 	<link rel="stylesheet" th:href="@{/mypage/css/marketingAgreement.css}" />
+	<style>
+		.main__wrapper {
+			margin: 100px auto;
+		}
+		.temp-spacer {
+			height: 150px;
+		}
+	</style>
 </head>
 <body>
 	<main layout:fragment="content">
+		<div class="temp-spacer"></div>
 		<div class="main-wrapper">
 			
 			<h1>마케팅 정보 활용에 동의하면<br>다양한 정보를 받을 수 있어요</h1>
@@ -273,7 +282,7 @@
 			<button class="consent-submit-button" type="submit">
 				동의내용 저장하기</button>
 			</form>
-			
+			<div class="temp-spacer"></div>
 		</div>
 		<script th:src="@{/mypage/js/marketingAgreement.js}"></script>
 	</main>
