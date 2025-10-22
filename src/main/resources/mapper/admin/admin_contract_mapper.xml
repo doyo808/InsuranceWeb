@@ -34,10 +34,19 @@
 				)
 			</if>
 
-			<!-- status를 '계약상태'로 쓸지, 'product_types'로 쓸지 결정 필요.
-           지금 DTO 주석이 product_types로 보이니, 그 경우 아래처럼 ip.product_types로 비교 -->
 			<if test="status != null and status != ''">
-				AND ip.product_types = #{status}
+				AND ic.status =
+				CASE #{status}
+				WHEN '접수' THEN 'PENDING'
+				WHEN '승인완료' THEN 'APPROVED'
+				WHEN '계약진행중' THEN 'ACTIVE'
+				WHEN '계약종료' THEN 'EXPIRED'
+				WHEN '해지' THEN 'CANCELLED'
+				WHEN '거절' THEN 'REJECTED'
+				WHEN '일시중지' THEN 'SUSPENDED'
+				WHEN '중도해지' THEN 'TERMINATED'
+				ELSE ic.status
+				END
 			</if>
 
 			<if test="from != null">
@@ -65,9 +74,22 @@
 				OR INSTR(TO_CHAR(ic.contract_id), #{q}) &gt; 0
 				)
 			</if>
+
 			<if test="status != null and status != ''">
-				AND ip.product_types = #{status}
+				AND ic.status =
+				CASE #{status}
+				WHEN '접수' THEN 'PENDING'
+				WHEN '승인완료' THEN 'APPROVED'
+				WHEN '계약진행중' THEN 'ACTIVE'
+				WHEN '계약종료' THEN 'EXPIRED'
+				WHEN '해지' THEN 'CANCELLED'
+				WHEN '거절' THEN 'REJECTED'
+				WHEN '일시중지' THEN 'SUSPENDED'
+				WHEN '중도해지' THEN 'TERMINATED'
+				ELSE ic.status
+				END
 			</if>
+
 			<if test="from != null">
 				AND ic.start_date &gt;= #{from}
 			</if>
@@ -76,8 +98,59 @@
 			</if>
 		</where>
 		ORDER BY ic.contract_id DESC ) inner_q WHERE ROWNUM &lt;= #{offset} +
-		#{size} ) WHERE rn &gt; #{offset} 
-		</select>
+		#{size} ) WHERE rn &gt; #{offset} </select>
 
+	<select id="findContractDetail" resultType="contractDetail">
+		SELECT
+		ic.contract_id,
+		ic.start_date,
+		ic.end_date,
+		ic.total_premium,
+		ic.status,
+
+		pc.person_name AS customer_name,
+		pc.phone_number,
+		pc.email,
+
+		pi.person_name AS insured_name,
+		i.gender AS gender,
+		i.birth_date,
+		i.is_smoker,
+		i.drinks,
+		i.driving_status AS driving_status,
+		i.medical_history AS medical_history,
+
+		ip.product_name,
+		ip.product_types
+
+		FROM insurance_contracts ic
+		JOIN customers c ON ic.customer_id = c.customer_id
+		JOIN persons pc ON c.person_id = pc.person_id
+		JOIN insureds i ON ic.insured_id = i.insured_id
+		JOIN persons pi ON i.person_id = pi.person_id
+		JOIN insurance_products ip ON ic.product_id = ip.product_id
+
+		WHERE ic.contract_id = #{contractId}
+	</select>
+
+	<!-- 계약 승인 -->
+	<update id="approveContract" parameterType="int">
+		UPDATE insurance_contracts
+		SET status = 'APPROVED'
+		WHERE contract_id = #{contractId}
+	</update>
+
+	<!-- 계약 거절 -->
+	<update id="rejectContract" parameterType="int">
+		UPDATE insurance_contracts
+		SET status = 'REJECTED'
+		WHERE contract_id = #{contractId}
+	</update>
+
+	<select id="countPendingContracts" resultType="int">
+		SELECT COUNT(*)
+		FROM insurance_contracts
+		WHERE status = 'PENDING'
+	</select>
 
 </mapper>

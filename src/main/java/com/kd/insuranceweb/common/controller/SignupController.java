@@ -36,7 +36,7 @@ public class SignupController {
 			HttpServletRequest request) {
 		
 		if (br.hasErrors()) {
-			return "/common/signup";
+			return "common/signup";
 		}
 		
 		HttpSession session = request.getSession();
@@ -50,7 +50,7 @@ public class SignupController {
 		if (session.getAttribute("signupDataStep1") == null) {
 			return "redirect:/signup";
 		}
-		return "/common/signup2";
+		return "common/signup2";
 	}
 	// 로그인 아이디, 비밀번호, 마케팅정보동의 <폼>
 	@PostMapping("/complete")
@@ -67,7 +67,7 @@ public class SignupController {
 
 		// 세션초기화
 		session.removeAttribute("signupDataStep1");
-		return "/common/signup3";
+		return "common/signup3";
 	}
 	
 

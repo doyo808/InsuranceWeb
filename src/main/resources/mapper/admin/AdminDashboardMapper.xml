@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kd.insuranceweb.admin.mapper.AdminDashboardMapper">
+
+	<!-- 📌 KPI -->
+
+
+	<select id="countPendingContracts" resultType="int">
+		SELECT COUNT(*)
+		FROM INSURANCE_CONTRACTS
+		WHERE STATUS = 'PENDING'
+	</select>
+
+	<select id="countPendingClaims" resultType="int">
+		SELECT COUNT(*)
+		FROM CLAIMS
+		WHERE CLAIM_STATUS = 1
+	</select>
+
+
+	<!-- 📊 이번 달 계약 통계 -->
+	<select id="countNewContractsThisMonth" resultType="int">
+		SELECT COUNT(*)
+		FROM INSURANCE_CONTRACTS
+		WHERE EXTRACT(YEAR FROM START_DATE) = EXTRACT(YEAR FROM SYSDATE)
+		AND EXTRACT(MONTH FROM START_DATE) = EXTRACT(MONTH FROM SYSDATE)
+	</select>
+
+	<!-- 🆕 이번 달 종료(만료) 계약 건수 -->
+	<select id="countEndedContractsThisMonth" resultType="int">
+		SELECT COUNT(*)
+		FROM INSURANCE_CONTRACTS
+		WHERE EXTRACT(YEAR FROM END_DATE) = EXTRACT(YEAR FROM SYSDATE)
+		AND EXTRACT(MONTH FROM END_DATE) = EXTRACT(MONTH FROM SYSDATE)
+	</select>
+
+
+	<!-- 💰 이번 달 청구 통계 -->
+	<select id="sumClaimsThisMonth" resultType="int">
+		SELECT NVL(SUM(CLAIM_AMOUNT), 0) / 10000
+		FROM CLAIMS
+		WHERE EXTRACT(YEAR FROM CLAIM_DATE) = EXTRACT(YEAR FROM SYSDATE)
+		AND EXTRACT(MONTH FROM CLAIM_DATE) = EXTRACT(MONTH FROM SYSDATE)
+	</select>
+
+	<select id="sumApprovedClaimsThisMonth" resultType="int">
+		SELECT NVL(SUM(CLAIM_AMOUNT), 0) / 10000
+		FROM CLAIMS
+		WHERE CLAIM_STATUS = 2
+		AND EXTRACT(YEAR FROM CLAIM_DATE) = EXTRACT(YEAR FROM SYSDATE)
+		AND EXTRACT(MONTH FROM CLAIM_DATE) = EXTRACT(MONTH FROM SYSDATE)
+	</select>
+
+	<!-- 🕓 최근 관리자 활동 -->
+	<select id="selectRecentActivities" resultType="map">
+		SELECT
+		TO_CHAR(a.CREATED_AT, 'YYYY-MM-DD HH24:MI') AS CREATED_AT,
+		a.ACTION_DESC,
+		e.EMPLOYEE_NAME
+		FROM ADMIN_ACTIVITY_LOG a
+		JOIN EMPLOYEES e ON a.EMP_ID = e.EMP_ID
+		ORDER BY a.CREATED_AT DESC
+		FETCH FIRST 5 ROWS ONLY
+	</select>
+
+</mapper>

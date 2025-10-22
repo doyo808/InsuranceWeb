@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kd.insuranceweb.mypage.mapper.MyContractMapper">
-    <select id="selectAllContracts" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
+    <select id="selectAllContracts" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
         SELECT 
             contract_id,
             product_name,
@@ -15,8 +15,10 @@
             status
         FROM contract_view
         WHERE 
-        	(start_date IS NULL OR start_date >= ADD_MONTHS(SYSDATE, -36))
-        	OR status = 'ACTIVE'
+		    customer_id = #{customer_id}
+		    AND ((start_date IS NULL OR start_date >= ADD_MONTHS(SYSDATE, -36))
+		         OR status = 'ACTIVE')
+
         ORDER BY start_date DESC
     </select>
     

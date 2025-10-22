@@ -26,25 +26,25 @@ public class MypageController {
 	
 	// 계약내용 확인
 	@GetMapping("/MPDG0070")
-	public String chkContracts(Model model) {
-		List<ContractDto> dataList = mypageService.getAllContracts();
+	public String chkContracts(@AuthenticationPrincipal CustomUserDetails loginUser, Model model) {
+		List<ContractDto> dataList = mypageService.getAllContracts(loginUser.getCustomer_id());
 		List<ContractDto> dataListActive = mypageService.getActiveContracts();
         model.addAttribute("dataList", dataList);
         model.addAttribute("dataListActive", dataListActive);
-		return "/mypage/chkContracts.html";
+		return "mypage/chkContracts";
 	}
 	
 	// 계약 상세정보
 	@GetMapping("/MPDG0071/{id}")
 	public String contractDetail(@PathVariable("id") Integer contract_id, Model model) {
 		model.addAttribute("contract_id", contract_id);
-		return "/mypage/contractDetail.html";
+		return "mypage/contractDetail";
 	}
 	
 	// 보험료 납입
 	@GetMapping("/MPDG0080")
 	public String payPremium() {
-		return "/mypage/payPremium.html";
+		return "mypage/payPremium";
 	}
 	
 	// 내 정보 확인/변경
@@ -55,7 +55,7 @@ public class MypageController {
 		
 		loginUser = mypageService.getPersonAndCustomerInfo(loginUser);
 		model.addAttribute("loginUser", loginUser);
-		return "/mypage/EditMyInfo.html";
+		return "mypage/EditMyInfo";
 	}
 	@PostMapping("/edit")
 	public String doEditMyInfo(CustomerDTO customer) {
@@ -72,7 +72,7 @@ public class MypageController {
 		MarketingConsentDTO dto = mypageService.getMarketingConsentDTO(loginUser.getCustomer_id());
 		model.addAttribute("marketingConsentDTO", dto);
 		System.out.println(dto);
-		return "/mypage/marketingAgreement.html";
+		return "mypage/marketingAgreement";
 	}
 	
 	// 마케팅 정보 활용 동의/철회 업데이트

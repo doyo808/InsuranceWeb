@@ -72,7 +72,18 @@ public class MypageService {
 	
 	// 마케팅 동의 페이지 로딩시 DTO 주입
 	public MarketingConsentDTO getMarketingConsentDTO(Integer customer_id) {
-		return marketingConsentMapper.selectByCustomerId(customer_id);
+	    MarketingConsentDTO dto = marketingConsentMapper.selectByCustomerId(customer_id);
+
+	    if (dto == null) {
+	        dto = new MarketingConsentDTO();
+	    }
+
+	    if (dto.getConsent_collection() == null) dto.setConsent_collection("N");
+	    if (dto.getConsent_marketing() == null) dto.setConsent_marketing("N");
+	    if (dto.getConsent_sharing() == null) dto.setConsent_sharing("N");
+	    if (dto.getConsent_lookup() == null) dto.setConsent_lookup("N");
+
+	    return dto;
 	}
 	// 마케팅 동의정보 등록, 수정
 	public int saveOrUpdateMarketingConsent(Integer customer_id, MarketingConsentDTO dto) {
@@ -93,11 +104,13 @@ public class MypageService {
     private static final Map<String, String> STATUS_MAP = Map.of(
         "PENDING", "신청",
         "ACTIVE", "유지",
-        "EXPIRED", "만료"
+        "EXPIRED", "만료",
+        "APPROVED", "승인",
+        "REJECTED", "반려"
     );
 
-    public List<ContractDto> getAllContracts() {
-        List<ContractDto> contracts = myContractMapper.selectAllContracts();
+    public List<ContractDto> getAllContracts(Integer customer_id) {
+        List<ContractDto> contracts = myContractMapper.selectAllContracts(customer_id);
         return translateStatus(contracts);
     }
 

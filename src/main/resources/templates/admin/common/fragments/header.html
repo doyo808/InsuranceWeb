@@ -1,23 +1,51 @@
 <div th:fragment="headerFragment">
 	<div class="topbar">
 		<div class="topbar__inner">
+
+
 			<a th:href="@{/admin/main}" class="brand" aria-label="홈으로">
-				<span class="brand__icon" aria-hidden="true">
-					<!--아이콘 자리-->
-				</span>
-				<span class="brand__name">삼성화재 다이렉트 착</span>
+				<span class="brand__name">관리자 홈</span>
 			</a>
 
 
 			<nav class="topbar__links" aria-label="주요 메뉴">
-				<a th:href="@{/home}">홈홈</a>
-				<a class="topbar__link" th:href="@{/admin/main}">홈</a>
+				<a class="topbar__link" th:href="@{/home}">고객용 홈페이지</a>
 				<a class="topbar__link" th:href="@{/admin/product}">상품관리</a>
 				<a class="topbar__link" th:href="@{/admin/contract}">계약 접수</a>
 				<a class="topbar__link" th:href="@{/admin/claim}">보험금 청구관리</a>
 				<a class="topbar__link" th:href="@{/admin/inquiry}">고객 문의관리</a>
-				
+
+				<a class="topbar__link" th:href="@{/admin/review}">고객가입후기 관리</a>
+				<a class="topbar__link" th:href="@{/admin/notice}">공지사항 관리</a>
+				<a class="topbar__link" th:href="@{/admin/faq}">FAQ 관리</a>
+
+				<a class="topbar__link" th:href="@{/admin/role/main}">권한관리</a>
+				<p th:text="${loginUser != null ? loginUser.emp_name : ''}"></p>
+
+				<p id="admin-logout" th:text="${loginUser != null ? '로그아웃' : ''}"
+					style="cursor: pointer; color: darkblue"></p>
+			
 			</nav>
 		</div>
 	</div>
+	
+
+	<!-- 숨겨진 로그아웃 폼 -->
+	<form id="logoutForm" th:action="@{/admin/logout}" method="post" style="display:none;">
+	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	</form>
+
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	document.addEventListener('DOMContentLoaded', function() {
+	    const logoutBtn = document.getElementById('admin-logout');
+	    const logoutForm = document.getElementById('logoutForm');
+	    if(logoutBtn && logoutForm) {
+	        logoutBtn.addEventListener('click', function() {
+	            logoutForm.submit(); // CSRF 포함 POST 요청
+	        });
+	    }
+	});
+	/*]]>*/
+	</script>
 </div>

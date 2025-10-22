@@ -21,12 +21,12 @@ public class NoticeController {
 
     private final NoticeService noticeService;
     private static final int PAGE_SIZE = 10;
-
+    
     // 사용자용 리스트 HTML 페이지 반환
     @GetMapping("/PP060400_000")
     public String helpdeskNoticePage() {
         return "helpdesk/PP060400_000"; // 템플릿 경로 반환
-    }
+    }    
 
     // 1. 사용자 : 표시된 공지 전체 조회
     @GetMapping("/list")

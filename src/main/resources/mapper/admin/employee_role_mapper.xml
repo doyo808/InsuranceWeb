@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.admin.mapper.EmployeeRoleMapper">
+	
+    <!-- 특정 사원의 권한 목록 조회 -->
+    <select id="findRolesByEmployee" parameterType="int" resultType="com.kd.insuranceweb.admin.dto.RoleDto">
+        SELECT
+            r.role_id,
+            r.role_name,
+            r.role_desc,
+            er.grant_date
+        FROM EMPLOYEE_ROLE er
+        JOIN ROLES r ON er.role_id = r.role_id
+        WHERE er.emp_id = #{emp_id}
+        ORDER BY er.grant_date DESC
+    </select>
+
+    <!-- 권한 추가 -->
+    <insert id="grantRoleToEmployee">
+        INSERT INTO EMPLOYEE_ROLE (emp_id, role_id, grant_date)
+        VALUES (#{emp_id}, #{role_id}, SYSDATE)
+    </insert>
+
+    <!-- 권한 삭제 -->
+    <delete id="revokeRoleFromEmployee">
+        DELETE FROM EMPLOYEE_ROLE
+        WHERE emp_id = #{emp_id} AND role_id = #{role_id}
+    </delete>
+
+    <!-- 권한 로그 추가 -->
+    <insert id="insertAuthLog">
+        INSERT INTO AUTH_LOGS (
+            LOG_ID, ACTION_TYPE, TARGET_EMP_ID, ROLE_ID, CHANGED_BY_ID, ACTION_DATE, REMARKS
+        ) VALUES (
+            auth_log_seq.NEXTVAL, #{action_type}, #{target_emp_id}, #{role_id}, #{changed_by_id}, SYSDATE, #{remarks}
+        )
+    </insert>
+    
+    <!-- 로그 조회 -->
+    <select id="selectAuthLogs" resultType="com.kd.insuranceweb.admin.dto.AuthLogDto">
+	  SELECT 
+	      a.log_id,
+	      a.action_type,
+	      a.target_emp_id,
+	      t.emp_name AS target_emp_name,
+	      a.role_id,
+	      r.role_name,
+	      a.changed_by_id,
+	      c.emp_name AS changed_by_name,
+	      a.action_date,
+	      a.remarks
+	  FROM auth_logs a
+	  LEFT JOIN employees t ON a.target_emp_id = t.emp_id
+	  LEFT JOIN employees c ON a.changed_by_id = c.emp_id
+	  LEFT JOIN roles r ON a.role_id = r.role_id
+	  WHERE 1=1
+	    <if test="target_emp_name != null and target_emp_name != ''">
+	        AND target_emp_name LIKE CONCAT('%', #{target_emp_name}, '%')
+	    </if>
+	    <if test="start_date != null">
+	      AND a.action_date &gt;= #{start_date}
+	    </if>
+	    <if test="end_date != null">
+	      AND a.action_date &lt;= #{end_date}
+	    </if>
+	  ORDER BY a.action_date DESC
+	</select>
+</mapper>

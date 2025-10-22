@@ -10,7 +10,7 @@
 	    SELECT * FROM (
 	        SELECT a.*, ROWNUM rnum
 	        FROM (
-	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            SELECT faq_id, category, question, answer, writer, created_at, updated_at
 	            FROM faq
 	            ORDER BY faq_id
 	        ) a
@@ -24,7 +24,7 @@
 	    SELECT * FROM (
 	        SELECT a.*, ROWNUM rnum
 	        FROM (
-	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            SELECT faq_id, category, question, answer, writer, created_at, updated_at
 	            FROM faq
 	            WHERE category = #{category,jdbcType=VARCHAR}
 	            ORDER BY faq_id
@@ -39,7 +39,7 @@
 	    SELECT * FROM (
 	        SELECT a.*, ROWNUM rnum
 	        FROM (
-	            SELECT faq_id, category, question, answer, created_at, updated_at
+	            SELECT faq_id, category, question, answer, writer, created_at, updated_at
 	            FROM faq
 	            WHERE LOWER(question) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
 	               OR LOWER(answer) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
@@ -48,7 +48,7 @@
 	        WHERE ROWNUM &lt;= #{endRow,jdbcType=INTEGER}
 	    )
 	    WHERE rnum &gt;= #{startRow,jdbcType=INTEGER}
-	</select>
+	</select>	
 
     <!-- 전체 건수 -->
     <select id="countAll" resultType="int">
@@ -67,6 +67,64 @@
            OR LOWER(answer) LIKE '%' || LOWER(#{keyword,jdbcType=VARCHAR}) || '%'
     </select>
 
+	<!-- 관리자용 검색 조건 페이지 -->
+    <select id="searchByAdminCriteria" parameterType="map" resultType="FaqDto">
+        SELECT * FROM (
+            SELECT a.*, ROWNUM rnum
+            FROM (
+                SELECT faq_id, category, question, answer, writer, created_at, updated_at
+                FROM faq
+                WHERE 1=1
+                  <if test="category != null and category != ''">
+                    AND category = #{category}
+                  </if>
+                  <if test="keyword != null and keyword != ''">
+                    AND (LOWER(question) LIKE '%' || LOWER(#{keyword}) || '%' 
+                      OR LOWER(answer) LIKE '%' || LOWER(#{keyword}) || '%')
+                  </if>
+                  <if test="writer != null and writer != ''">
+                    AND writer = #{writer}
+                  </if>
+                  <if test="fromDate != null and fromDate != ''">
+                    AND created_at &gt;= TO_DATE(#{fromDate}, 'YYYY-MM-DD')
+                  </if>
+                  <if test="toDate != null and toDate != ''">
+                    AND created_at &lt;= TO_DATE(#{toDate}, 'YYYY-MM-DD')
+                  </if>
+                ORDER BY faq_id
+            ) a
+            WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE rnum &gt;= #{startRow}
+    </select>
+
+    <!-- 관리자용 건수 -->
+    <select id="countAllAdmin" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM faq
+        WHERE 1=1
+          <if test="category != null and category != ''">
+            AND category = #{category}
+          </if>
+          <if test="keyword != null and keyword != ''">
+            AND (LOWER(question) LIKE '%' || LOWER(#{keyword}) || '%' 
+              OR LOWER(answer) LIKE '%' || LOWER(#{keyword}) || '%')
+          </if>
+          <if test="writer != null and writer != ''">
+            AND writer = #{writer}
+          </if>
+          <if test="fromDate != null and fromDate != ''">
+            AND created_at &gt;= TO_DATE(#{fromDate}, 'YYYY-MM-DD')
+          </if>
+          <if test="toDate != null and toDate != ''">
+            AND created_at &lt;= TO_DATE(#{toDate}, 'YYYY-MM-DD')
+          </if>
+    </select>
+    
+    <select id="getFaqById" parameterType="long" resultType="FaqDto">
+	    SELECT FAQ_ID, CATEGORY, QUESTION, ANSWER, WRITER, CREATED_AT, UPDATED_AT
+	    FROM FAQ
+	    WHERE FAQ_ID = #{id}
+	</select>
     
     <insert id="insertFaq" parameterType="FaqDto">
     	INSERT INTO faq (faq_id, category, question, answer, created_at, updated_at)

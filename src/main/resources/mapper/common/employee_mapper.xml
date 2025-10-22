@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.common.mapper.EmployeeMapper">
+
+    <!-- 
+      1. 직원 기본 정보 조회 쿼리
+    -->
+	<select id="findByLoginId" parameterType="string" resultType="com.kd.insuranceweb.common.dto.EmployeeDto">
+	    SELECT 
+	           emp_id,
+	           emp_name,
+	           dept_id,
+	           username,
+	           password
+	    FROM employees
+	    WHERE username = #{username} AND is_active = 'Y'
+	</select>
+    
+    <!-- 
+      2. 직원의 ID로 권한 목록을 조회하는 쿼리
+    -->
+	<resultMap id="roleResultMap" type="java.lang.String">
+	    <result column="role_name" property="role_name" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="roleKorResultMap" type="java.lang.String">
+	    <result column="role_desc" property="role_desc" javaType="java.lang.String" />
+	</resultMap>
+	
+	<select id="findRolesByEmpId" parameterType="Integer" resultMap="roleResultMap">
+	    SELECT r.role_name
+	    FROM roles r
+	    JOIN employee_role er ON r.role_id = er.role_id
+	    WHERE er.emp_id = #{emp_id}
+	</select>
+	
+	<select id="findRolesKorNameByEmpId" parameterType="Integer" resultMap="roleKorResultMap">
+	    SELECT r.role_desc
+	    FROM roles r
+	    JOIN employee_role er ON r.role_id = er.role_id
+	    WHERE er.emp_id = #{emp_id}
+	</select>
+    
+    <!-- 전 직원 조회 (부서명 포함) -->
+    <select id="selectAllWithDept" resultType="com.kd.insuranceweb.admin.dto.EmployeeDeptDto">
+	    SELECT 
+	        e.emp_id,
+	        e.emp_name,
+	        d.dept_name
+	    FROM employees e
+	    LEFT JOIN departments d ON e.dept_id = d.dept_id
+	    ORDER BY e.emp_id
+	</select>
+	<!-- 부서별 사원 조회 -->
+	<select id="selectByDeptIdWithDept" parameterType="java.lang.Integer" resultType="com.kd.insuranceweb.admin.dto.EmployeeDeptDto">
+	    SELECT 
+	        e.emp_id,
+	        e.emp_name,
+	        d.dept_name
+	    FROM employees e
+	    LEFT JOIN departments d ON e.dept_id = d.dept_id
+	    WHERE e.dept_id = #{dept_id} AND emp_id != 1001
+	    ORDER BY e.emp_id
+	</select>
+
+    
+    <!-- emp_id로 조회 -->
+    <select id="findById" parameterType="int" resultType="com.kd.insuranceweb.common.dto.EmployeeDto">
+        SELECT 
+            e.EMP_ID AS emp_id,
+            e.EMP_NAME AS emp_name,
+            d.DEPT_NAME AS dept_name
+        FROM EMPLOYEES e
+        LEFT JOIN DEPARTMENTS d ON e.DEPT_ID = d.DEPT_ID
+        WHERE e.EMP_ID = #{emp_id}
+    </select>
+</mapper>
+

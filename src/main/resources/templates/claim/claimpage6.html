@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/common/layout.html}">
+      layout:decorate="~{common/layout.html}">
 <head>
     <meta charset="UTF-8">
     <title layout:title-pattern="$CONTENT_TITLE - 내 보험 시스템">공통 타이틀</title>
@@ -91,17 +91,7 @@
 	</style>
 </head>
 <body>
-    <!-- 헤더 -->
-    <header th:replace="common/fragments/header :: headerFragment"></header>
-
-    <!-- 사이드바 -->
-    <aside th:replace="common/fragments/sidebar :: sidebarFragment"></aside>
-
-    <!-- 본문 -->
-    <main layout:fragment="content" style="width: 1200px; margin: 0 auto;">
-		<header>
-		  <h1>질병/상해 보험금청구</h1>
-		</header>
+    <main layout:fragment="content">
 		
 		<div class="container">
 		  <section class="section">
@@ -229,8 +219,5 @@
 		  });
 		</script>
     </main>
-
-    <!-- 푸터 -->
-    <footer th:replace="common/fragments/footer :: footerFragment"></footer>
 </body>
 </html>
