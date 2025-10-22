@@ -80,6 +80,8 @@
 		}
 
 		.button-area {
+			display: flex;
+			justify-content: space-around;
 			text-align: center;
 			margin: 40px 0;
 		}
@@ -116,23 +118,23 @@
 					<div class="form-grid">
 						<label for="insuredName">성명</label>
 						<input type="text" id="insuredName" name="insuredName"
-						       th:value="${personInfo != null ? personInfo.NAME : ''}" required>
+							th:value="${personInfo != null ? personInfo.NAME : ''}" required>
 
 						<label for="insuredId1">주민등록번호</label>
 						<div style="display:flex;align-items:center;">
-						  <input type="text" id="insuredId1" name="insuredId1" maxlength="6" style="width:45%;"
-						         th:value="${personInfo != null and personInfo.PERSONAL_ID != null
+							<input type="text" id="insuredId1" name="insuredId1" maxlength="6" style="width:45%;"
+								th:value="${personInfo != null and personInfo.PERSONAL_ID != null
 						                   ? #strings.substring(personInfo.PERSONAL_ID, 0, 6) : ''}">
-						  <span style="margin:0 8px;">-</span>
-						  <input type="password" id="insuredId2" name="insuredId2" maxlength="7" style="width:55%;"
-						         th:value="${personInfo != null and personInfo.PERSONAL_ID != null
+							<span style="margin:0 8px;">-</span>
+							<input type="password" id="insuredId2" name="insuredId2" maxlength="7" style="width:55%;"
+								th:value="${personInfo != null and personInfo.PERSONAL_ID != null
 						                   ? #strings.substring(personInfo.PERSONAL_ID, 6, 13) : ''}">
 						</div>
 
 						<label for="beneficiaryId1">연락처</label>
 						<div style="display: flex; align-items: center;">
 							<input type="text" id="phone" name="phone" maxlength="11" style="width:60%;"
-							       th:value="${personInfo != null ? personInfo.PHONE_NUMBER : ''}">
+								th:value="${personInfo != null ? personInfo.PHONE_NUMBER : ''}">
 						</div>
 
 					</div>
@@ -143,7 +145,8 @@
 					<h3>수익자 정보 (예금주/안내대상자)</h3>
 					<div class="form-grid">
 						<label for="beneficiaryName">성명</label>
-						<input type="text" id="beneficiaryName" name="beneficiaryName" required>
+						<input type="text" id="beneficiaryName" name="beneficiaryName"
+						  th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.name : ''}">
 
 						<label for="beneficiaryId1">주민등록번호</label>
 						<div style="display: flex; align-items: center;">
@@ -205,10 +208,12 @@
 					▸ 잘못된 정보 입력 시 보험금 지급이 지연될 수 있습니다.
 				</div>
 
-				<!-- 버튼 -->
 				<div class="button-area">
+					<a th:href="@{/claim/targetType}" class="btn-primary" style="background:#6c757d;">이전</a>
 					<button type="submit" class="btn-primary">다음</button>
 				</div>
+
+
 			</form>
 			<!-- ✅ 폼 끝 -->
 		</div>

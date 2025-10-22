@@ -75,6 +75,8 @@
 		}
 
 		.button-area {
+			display: flex;
+			justify-content: space-around;
 			text-align: center;
 			margin: 40px 0;
 		}
@@ -87,8 +89,8 @@
 			font-weight: bold;
 			padding: 14px 28px;
 			border-radius: 8px;
-			text-decoration: none;
 			border: none;
+			cursor: pointer;
 		}
 
 		.btn-primary:hover {
@@ -123,8 +125,10 @@
 						<input type="file" id="etc" name="etc" accept="application/pdf,image/png,image/jpeg">
 					</div>
 
+
 					<div class="button-area">
-						<button type="submit" id="nextBtn" class="btn-primary">다음</button>
+						<a th:href="@{/claim/accidentInfo}" class="btn-primary" style="background:#6c757d;">이전</a>
+						<button type="submit" class="btn-primary">다음</button>
 					</div>
 
 				</form>
@@ -136,7 +140,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<script>
 			let goingNext = false;
 
