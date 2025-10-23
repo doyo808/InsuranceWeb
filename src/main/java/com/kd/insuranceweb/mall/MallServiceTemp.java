@@ -34,7 +34,8 @@ public class MallServiceTemp {
 	
 	// 계약완료(피보험자 기본정보, 상세정보 등록 -> 계약 등록 -> 보장항목 등록)
 	@Transactional
-	public int completeContract(MallPersonalBasicDTO mpbDTO, MallInsuredDetailDTO midDTO, InsuranceApplyDto iaDto, Integer customer_id) {
+	public int completeContract(
+			MallPersonalBasicDTO mpbDTO, MallInsuredDetailDTO midDTO, InsuranceApplyDto iaDto, Integer customer_id) {
 		// 사람,피보험자 항목 체크 후 등록
 		int person_id = personExists(mpbDTO.getInsured_email());
 		if (person_id == -1) {person_id = insertPerson(mpbDTO);}

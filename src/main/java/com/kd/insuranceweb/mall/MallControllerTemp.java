@@ -116,14 +116,7 @@ public class MallControllerTemp {
 			customerName = "임시 계약자";
 			session.setAttribute("customer_name", customerName);
 		}
-		if (productName == null) {
-			productName = "임시 상품";
-			session.setAttribute("product_name", productName);
-		}
-		if (premium == null) {
-			premium = new BigDecimal("12345");
-			session.setAttribute("premium", premium);
-		}
+		
 		model.addAttribute("insured_name", insuredName);
 		model.addAttribute("customer_name", customerName);
 		model.addAttribute("product_name", productName);
@@ -137,7 +130,11 @@ public class MallControllerTemp {
 	 * 결제 정보를 입력받고, 서비스 로직을 호출하여 계약 정보를 DB에 저장합니다.
 	 */
 	@GetMapping("/payment")
-	public String paymentForm() {
+	public String paymentForm(HttpSession session, Model model) {
+		InsuranceApplyDto applyDto = (InsuranceApplyDto) session.getAttribute("init");
+		if (applyDto == null) { return "redirect:/mall2/init"; }
+		BigDecimal premium = new BigDecimal(applyDto.getTotalPremium());
+		model.addAttribute("premium", premium);
 		return "mall/payment_form";
 	}
 	@PostMapping("/payment")
