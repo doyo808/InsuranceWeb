@@ -20,6 +20,8 @@ public class Claim {
 	    private Date claim_date;
 	    private Date accident_date;
 	    private String accident_description;
+	    private String disease_type;
+	    private String disease_detail;
 
 	    private String beneficiary_name;
 	    private String bank_account;

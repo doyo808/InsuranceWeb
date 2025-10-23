@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,6 +54,10 @@ public class ClaimController {
         session.removeAttribute("claim");
         session.removeAttribute("personInfo");
         session.removeAttribute("selectedContract");
+        session.removeAttribute("beneficiaryInfo");
+        session.removeAttribute("target");
+        session.removeAttribute("type");
+        session.removeAttribute("relationDefault");
         return "claim/claimpage1";
     }
 
@@ -135,6 +140,7 @@ public class ClaimController {
             @RequestParam("beneficiaryName") String beneficiaryName,
             @RequestParam("beneficiaryId1") String beneficiaryId1,
             @RequestParam("beneficiaryId2") String beneficiaryId2,
+            @RequestParam(value = "relation", required = false) String relation,
             @RequestParam(value = "email1", required = false) String email1,
             @RequestParam(value = "email2", required = false) String email2,
             @RequestParam(value = "beneficiaryPostcode", required = false) String postcode,
@@ -145,6 +151,7 @@ public class ClaimController {
             @RequestParam(value = "account", required = false) String account,
             HttpSession session) {
 
+        // ✅ Claim 객체 업데이트
         Claim claim = getOrCreateClaim(session);
         claim.setBeneficiary_name(beneficiaryName);
         claim.setBank_name(bank);
@@ -152,10 +159,27 @@ public class ClaimController {
         claim.setBeneficiary_email((email1 != null ? email1 : "") + (email2 != null ? "@" + email2 : ""));
         claim.setBeneficiary_postcode(postcode);
         claim.setBeneficiary_address(address + (detailAddress != null ? " " + detailAddress : ""));
-
         session.setAttribute("claim", claim);
+
+        // ✅ 수익자 정보 Map으로 세션에 별도 저장
+        Map<String, Object> beneficiaryInfo = new HashMap<>();
+        beneficiaryInfo.put("name", beneficiaryName);
+        beneficiaryInfo.put("personalId", beneficiaryId1 + beneficiaryId2);
+        beneficiaryInfo.put("relation", relation);
+        beneficiaryInfo.put("email1", email1);
+        beneficiaryInfo.put("email2", email2);
+        beneficiaryInfo.put("postcode", postcode);
+        beneficiaryInfo.put("address1", address);
+        beneficiaryInfo.put("address2", detailAddress);
+        beneficiaryInfo.put("bank", bank);
+        beneficiaryInfo.put("owner", owner);
+        beneficiaryInfo.put("account", account);
+
+        session.setAttribute("beneficiaryInfo", beneficiaryInfo);
+
         return "claim/claimAccidentInfo";
     }
+
 
     // ---------------------------
     // 5️⃣ 사고 정보
@@ -172,20 +196,29 @@ public class ClaimController {
             @RequestParam("accidentType") String accidentType,
             @RequestParam(value = "accidentDesc", required = false) String accidentDesc,
             @RequestParam("medical_benefits") String medical_benefits,
+            @RequestParam(value = "diseaseType", required = false) String diseaseType,   // ✅ name 일치
+            @RequestParam(value = "diseaseDetail", required = false) String diseaseDetail, // ✅ 추가
             HttpSession session,
             Model model) {
 
+        // ✅ 세션에서 claim 객체 꺼내거나 새로 생성
         Claim claim = getOrCreateClaim(session);
+
+        // ✅ 값 매핑
         claim.setAccident_date(accidentDate);
         claim.setAccident_type(accidentType);
         claim.setAccident_description(accidentDesc);
+        claim.setDisease_type(diseaseType);    // ✅ name="diseaseType"과 일치
+        claim.setDisease_detail(diseaseDetail);
         claim.setMedical_benefits("yes".equals(medical_benefits) ? "Y" : "N");
 
+        // ✅ 세션에 갱신된 claim 저장
         session.setAttribute("claim", claim);
-        model.addAttribute("accidentDate", accidentDate);
-        model.addAttribute("accidentType", accidentType);
 
-        return "claim/claimDocument";
+        // ✅ 다음 페이지로 데이터 전달 (필요 시)
+        model.addAttribute("claim", claim);
+
+        return "claim/claimDocument"; // 다음 페이지 (서류등록 화면)
     }
 
     // ---------------------------
@@ -268,6 +301,10 @@ public class ClaimController {
             session.removeAttribute("claim");
             session.removeAttribute("personInfo");
             session.removeAttribute("selectedContract");
+            session.removeAttribute("beneficiaryInfo");
+            session.removeAttribute("target");
+            session.removeAttribute("type");
+            session.removeAttribute("relationDefault");
 
             return "redirect:/claim/claimFinish";
 

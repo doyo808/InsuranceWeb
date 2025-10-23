@@ -146,58 +146,71 @@
 					<div class="form-grid">
 						<label for="beneficiaryName">성명</label>
 						<input type="text" id="beneficiaryName" name="beneficiaryName"
-						  th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.name : ''}">
+							th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.name : ''}" required>
 
 						<label for="beneficiaryId1">주민등록번호</label>
 						<div style="display: flex; align-items: center;">
-							<input type="text" id="beneficiaryId1" name="beneficiaryId1" maxlength="6"
-								style="width: 45%;">
+							<input type="text" id="beneficiaryId1" name="beneficiaryId1" maxlength="6" style="width: 45%;"
+								th:value="${session.beneficiaryInfo != null and session.beneficiaryInfo['personalId'] != null
+									? #strings.substring(session.beneficiaryInfo['personalId'], 0, 6) : ''}">
 							<span style="margin: 0 8px;">-</span>
-							<input type="password" id="beneficiaryId2" name="beneficiaryId2" maxlength="7"
-								style="width: 55%;">
+							<input type="password" id="beneficiaryId2" name="beneficiaryId2" maxlength="7" style="width: 55%;"
+								th:value="${session.beneficiaryInfo != null and session.beneficiaryInfo['personalId'] != null
+									? #strings.substring(session.beneficiaryInfo['personalId'], 6, 13) : ''}">
 						</div>
 
 						<label for="relation">피보험자와 관계</label>
-						<input type="text" id="relation" name="relation" placeholder="예: 본인, 배우자, 자녀" required>
+						<input type="text" id="relation" name="relation" placeholder="예: 본인, 배우자, 자녀"
+							th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.relation : ''}"
+							required>
 
 						<label for="email1">이메일</label>
 						<div style="display: flex; align-items: center;">
-							<input type="text" id="email1" name="email1" style="width: 45%;">
+							<input type="text" id="email1" name="email1" style="width: 45%;"
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.email1 : ''}">
 							<span style="margin: 0 8px;">@</span>
-							<input type="text" id="email2" name="email2" style="width: 55%;">
+							<input type="text" id="email2" name="email2" style="width: 55%;"
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.email2 : ''}">
 						</div>
 
 						<label for="beneficiaryAddress">주소</label>
 						<div>
 							<input type="text" id="postcode" name="beneficiaryPostcode" placeholder="우편번호"
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.postcode : ''}"
 								style="width: 100px; margin-bottom: 5px;">
 							<button type="button" id="addressSearchBtn" style="margin-left: 5px;">우편번호 찾기</button>
 							<input type="text" id="address" name="beneficiaryAddress1" placeholder="기본 주소"
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.address1 : ''}"
 								style="width: 100%; margin-bottom: 5px;">
 							<input type="text" id="detailAddress" name="beneficiaryAddress2" placeholder="상세 주소"
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.address2 : ''}"
 								style="width: 100%;">
 						</div>
 
-
 						<label for="bank">입금계좌</label>
 						<div>
-							<!-- 은행 선택 -->
 							<select id="bank" name="bank">
 								<option value="">은행 선택</option>
-								<option value="kookmin">국민은행</option>
-								<option value="woori">우리은행</option>
-								<option value="shinhan">신한은행</option>
-								<option value="ibk">기업은행</option>
+								<option value="kookmin"
+									th:selected="${session.beneficiaryInfo != null and session.beneficiaryInfo.bank == 'kookmin'}">
+									국민은행</option>
+								<option value="woori"
+									th:selected="${session.beneficiaryInfo != null and session.beneficiaryInfo.bank == 'woori'}">
+									우리은행</option>
+								<option value="shinhan"
+									th:selected="${session.beneficiaryInfo != null and session.beneficiaryInfo.bank == 'shinhan'}">
+									신한은행</option>
+								<option value="ibk"
+									th:selected="${session.beneficiaryInfo != null and session.beneficiaryInfo.bank == 'ibk'}">
+									기업은행</option>
 							</select>
 
-							<!-- 계좌 소유자 -->
-							<input type="text" id="owner" name="owner" placeholder="예금주명">
+							<input type="text" id="owner" name="owner" placeholder="예금주명"
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.owner : ''}">
 
-							<!-- 계좌번호 -->
-							<input type="text" id="account" name="account" placeholder="계좌번호">
+							<input type="text" id="account" name="account" placeholder="계좌번호"
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.account : ''}">
 						</div>
-
-
 					</div>
 				</div>
 
