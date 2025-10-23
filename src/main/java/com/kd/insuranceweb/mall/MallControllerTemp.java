@@ -188,26 +188,27 @@ public class MallControllerTemp {
 		return "mall/contract_complete";
 	}
 	
-	
+	private static final String[] SESSION_KEYS = {
+		    "init",
+		    "MallPersonalBasicDTO",
+		    "MallInsuredDetailDTO",
+		    "insured_name",
+		    "insured_phone_number",
+		    "insured_email",
+		    "customer_name",
+		    "is_smoker",
+		    "drinks",
+		    "driving_status",
+		    "medical_history",
+		    "medical_history_text"
+		};
     /**
      * 보험 계약 신청 과정에서 사용된 세션 속성들을 정리하는 private 헬퍼 메소드.
      * @param session 현재 HttpSession 객체
      */
 	private void sessionClear(HttpSession session) {
-		// 계약 플로우에서 사용된 DTO 정리
-		session.removeAttribute("init");
-		session.removeAttribute("MallPersonalBasicDTO");
-		session.removeAttribute("MallInsuredDetailDTO");
-		
-		// 개별적으로 저장했던 속성들 정리
-		session.removeAttribute("insured_name");
-		session.removeAttribute("insured_phone_number");
-		session.removeAttribute("insured_email");
-		session.removeAttribute("customer_name");
-		session.removeAttribute("is_smoker");
-		session.removeAttribute("drinks");
-		session.removeAttribute("driving_status");
-		session.removeAttribute("medical_history");
-		session.removeAttribute("medical_history_text");
+		for (String key : SESSION_KEYS) {
+	        session.removeAttribute(key);
+	    }
 	}
 }

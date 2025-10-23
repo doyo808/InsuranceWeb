@@ -10,5 +10,5 @@ import com.kd.insuranceweb.mypage.dto.ContractDto;
 @Mapper
 public interface MyContractMapper {
 	List<ContractDto> selectAllContracts(@Param("customer_id") Integer customer_id);
-	List<ContractDto> selectActiveContracts();
+	List<ContractDto> selectActiveContracts(@Param("customer_id") Integer customer_id);
 }

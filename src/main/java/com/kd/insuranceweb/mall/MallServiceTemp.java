@@ -1,6 +1,7 @@
 package com.kd.insuranceweb.mall;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,11 @@ public class MallServiceTemp {
 	    contractParams.put("customer_id", customer_id);
 	    contractParams.put("insured_id", insured_id);
 	    contractParams.put("total_premium", new BigDecimal(iaDto.getTotalPremium()));
+	    
+	    LocalDate startDate = LocalDate.now();
+	    LocalDate endDate = startDate.plusYears(10);
+	    contractParams.put("start_date", java.sql.Date.valueOf(startDate));
+	    contractParams.put("end_date", java.sql.Date.valueOf(endDate));
 	    
 	    // 2. 수정된 Mapper 메소드를 호출합니다.
 	    //    이 메소드가 실행된 직후, contractParams 맵에는 'contract_id'가 채워집니다.
