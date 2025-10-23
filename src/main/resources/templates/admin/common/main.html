@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/admin/common/layout}">
+	layout:decorate="~{admin/common/layout}">
 
 <head>
 	<meta charset="utf-8" />
@@ -77,6 +77,13 @@
 				</div>
 			</section>
 
+			<!-- 보험뉴스 요약 섹션 -->
+			<section class="news-summary">
+			    <h3 th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' 보험뉴스 요약'"></h3>
+				<p th:utext="${#strings.replace(uiPath_notice_content, '\n', '<br/>')}"></p>
+			</section>
+			
+			
 			<!-- Recent Activity -->
 			<section class="section mt-12" aria-label="최근 활동">
 				<h2 class="section__title">최근 활동</h2>
@@ -99,6 +106,8 @@
 					</table>
 				</div>
 			</section>
+			
+
 
 			<!-- Chart Script -->
 			<script th:inline="javascript">

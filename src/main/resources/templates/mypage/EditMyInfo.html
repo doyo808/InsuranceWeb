@@ -1,17 +1,26 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/common/layout.html}">
+      layout:decorate="~{common/layout.html}">
 <head>
 	<meta charset="UTF-8" />
 	<title>내 정보 확인/변경</title>
 	<link rel="stylesheet" th:href="@{/mypage/css/EditMyInfo.css}" />
+	<style>
+		.main__wrapper {
+			margin: 100px auto;
+		}
+		#temp-spacer {
+			height: 150px;
+		}
+	</style>
 </head>
 <body>
 	<main layout:fragment="content">
 		<form 	th:action="@{/mypage/edit}" 
 				th:data-check-email-url="@{/signup/check-email}" 
 				method="POST">
+		<div id="temp-spacer"></div>
 		<div class="main__wrapper">
 			<h1>내 정보를<br>변경할 수 있어요</h1>
 			

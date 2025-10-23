@@ -28,14 +28,14 @@
 }
 
 .footer-banner .notice-content h2 {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 15px;
 }
 
 .footer-banner .notice-content div {
   margin-bottom: 8px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   white-space: nowrap;
   overflow: hidden;
@@ -61,11 +61,11 @@
 
 .footer-banner .claim p {
   margin: 6px 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .footer-banner .claim h4 {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: bold;
   color: #2b6de0;
   margin: 8px 0 15px 0;
@@ -78,11 +78,11 @@
 }
 
 .footer-banner .claim ul li {
-  margin-bottom: 6px;
+  margin-bottom: 14px;
 }
 
 .footer-banner .claim ul li strong {
-  margin-right: 6px;
+  margin-right: 14px;
 }
 
 /* FAQ / 링크 영역 (리스트형) */
@@ -117,7 +117,7 @@
   text-decoration: none;
   color: #333;
   flex: 1;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* 공통 아이콘 스타일 */

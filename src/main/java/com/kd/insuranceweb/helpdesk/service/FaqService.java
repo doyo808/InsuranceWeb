@@ -25,5 +25,23 @@ public interface FaqService {
 
     // 키워드 검색 FAQ 개수 (페이징용)
     int countSearchFaqs(String keyword);
+    
+    // ---------------- 관리자용 페이징 ----------------
+    List<FaqDto> getAdminFaqListPaged(String category, String keyword, String writer,
+                                      String fromDate, String toDate, int startRow, int endRow);
+
+    int getAdminFaqCount(String category, String keyword, String writer,
+                         String fromDate, String toDate);
+    
+    int insertFaq(FaqDto faq);
+    
+    int updateFaq(FaqDto faq);
+    
+    int deleteFaq(Long id);
+    
+    FaqDto getFaqById(Long id);
+
+
+    
 
 }
