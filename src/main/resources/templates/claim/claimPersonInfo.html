@@ -156,7 +156,9 @@
 							<span style="margin: 0 8px;">-</span>
 							<input type="password" id="beneficiaryId2" name="beneficiaryId2" maxlength="7" style="width: 55%;"
 								th:value="${session.beneficiaryInfo != null and session.beneficiaryInfo['personalId'] != null
-									? #strings.substring(session.beneficiaryInfo['personalId'], 6, 13) : ''}">
+									and #strings.length(session.beneficiaryInfo['personalId']) >= 7
+									? #strings.substring(session.beneficiaryInfo['personalId'], 6)
+									: ''}">
 						</div>
 
 						<label for="relation">피보험자와 관계</label>
