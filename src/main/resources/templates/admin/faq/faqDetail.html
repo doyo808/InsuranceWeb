@@ -36,6 +36,39 @@
                 ]
             });
         });
+		
+		// 삭제 확인 및 전송
+	    function deleteFaq(faqId) {
+	        if (!confirm("정말 삭제하시겠습니까?")) return;
+
+	        // contextPath 포함 URL 생성
+	        const deleteUrl = /*[[@{/admin/faq/}]]*/ '' + faqId + '/delete';
+	        const listUrl   = /*[[@{/admin/faq}]]*/ '';
+
+	        // CSRF 토큰
+	        const csrfToken = /*[[${_csrf.token}]]*/ '';
+	        const csrfHeader = /*[[${_csrf.headerName}]]*/ 'X-CSRF-TOKEN';
+
+	        // POST 요청
+	        fetch(deleteUrl, {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/x-www-form-urlencoded',
+	                [csrfHeader]: csrfToken // 동적 헤더 이름 사용
+	            },
+	            body: '' // POST지만 form 데이터 없음
+	        })
+	        .then(res => {
+	            if (res.ok) {
+	                alert('삭제되었습니다.');
+	                location.href = listUrl;
+	            } else {
+	                alert('삭제 실패 (' + res.status + ')');
+	            }
+	        })
+	        .catch(err => alert('오류 발생: ' + err));
+	    }
+		
     </script>
 
     <th:block layout:fragment="extraHead"></th:block>
@@ -83,8 +116,10 @@
                 <a th:href="@{/admin/faq}" class="btn btn--secondary">목록</a>
 
                 <!-- 신규/수정 버튼 분기 -->
-                <button type="submit" class="btn btn--primary"
-                        th:text="${isNew} ? '저장' : '수정'"></button>
+                <button type="submit" class="btn btn--primary" th:text="${isNew} ? '저장' : '수정'"></button>
+				
+				<!-- 삭제 버튼 (기존 데이터일 때만 표시) -->
+				<button type="button" class="btn btn--danger" th:if="${!isNew}" th:onclick="'deleteFaq(' + ${faq.faq_id} + ');'">삭제</button>
             </div>
         </form>
     </section>
