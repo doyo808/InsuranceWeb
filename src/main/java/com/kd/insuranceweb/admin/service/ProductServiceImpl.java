@@ -13,6 +13,8 @@ import com.kd.insuranceweb.admin.dto.ProductListRowDTO;
 import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
 import com.kd.insuranceweb.admin.mapper.AdminProductMapper;
 import com.kd.insuranceweb.mall.mapper.ProductMapper;
+import com.kd.insuranceweb.mall.model.dto.CoverageDto;
+import com.kd.insuranceweb.mall.model.dto.PremiumRateDto;
 import com.kd.insuranceweb.mall.model.dto.ProductRequestDTO;
 
 @Service
@@ -47,20 +49,31 @@ public class ProductServiceImpl implements ProductService {
 		 
 		 System.out.println("db에 상품 등록중");
 		 System.out.println(dto.toString());
-		// 1) 상품 insert -> dto.productId에 시퀀스값 채워짐
+		 // 1) 상품 insert -> dto.productId에 시퀀스값 채워짐
 	     productMapper.insertInsuranceProduct(dto);
+	     
 	     // 나중에 id값이 필요할때 사용
 	     Long productId = dto.getProductId();
 	
+	     // 전달받은 담보,요율 데이터들
+	     List<CoverageDto> cover = dto.getCoverages();
+	     List<PremiumRateDto> premium = dto.getPremiumRates();
+	     
 	     // 2) 담보 insert all (만약 coverages가 null/empty면 호출하지 않음)
-	     if (dto.getCoverages() != null && !dto.getCoverages().isEmpty()) {
+	     if (cover != null && !cover.isEmpty()) {
 	         // productId는 mapper에서 #{productId}로 사용하므로 dto에 그대로 둠
-	         productMapper.insertCoverageDefinitions(dto);
+	    	 for (CoverageDto c : cover) {
+	    		 c.setProduct_id(productId);
+	    		 productMapper.insertCoverageDefinition(c);
+	    	 }
 	     }
 	
 	     // 3) 요율 insert all
-	     if (dto.getPremiumRates() != null && !dto.getPremiumRates().isEmpty()) {
-	         productMapper.insertPremiumRateRows(dto);
+	     if (premium != null && !premium.isEmpty()) {
+	    	 for(PremiumRateDto p : premium) {
+	    		 p.setProduct_id(productId);
+	    		 productMapper.insertPremiumRateRow(p);	    		 
+	    	 }
 	     }
 	 }
 }

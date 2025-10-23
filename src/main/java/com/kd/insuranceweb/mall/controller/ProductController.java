@@ -29,7 +29,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> registerProduct(
-            @RequestPart("productJson") ProductRequestDTO requestData,
+            @RequestPart("requestData") ProductRequestDTO requestData,
             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
             @RequestPart(value = "conditions", required = false) MultipartFile conditions) {
 
@@ -41,11 +41,12 @@ public class ProductController {
             String condPath = saveFile(conditions, "conditions");
 
             System.out.println("이미지 경로:"+thumbPath);
-            System.out.println("약관 경로"+condPath);
+            System.out.println("약관 경로:"+condPath);
             
             requestData.setThumbnail(thumbPath);
             requestData.setConditions(condPath);
 
+            // 서비스에서 db에 대한 처리를함
             productService.registerProduct(requestData);
             return ResponseEntity.ok(Map.of("message", "상품 등록 완료"));
         } catch (Exception e) {
@@ -61,6 +62,7 @@ public class ProductController {
         Path uploadDir = Paths.get("uploads", dir);
         Files.createDirectories(uploadDir);
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        //업로드 시간 + 파일명으로 업로드 파일들 구분
         Path filePath = uploadDir.resolve(fileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         return filePath.toString();

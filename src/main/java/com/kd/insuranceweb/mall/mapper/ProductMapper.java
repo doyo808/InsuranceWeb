@@ -2,6 +2,8 @@ package com.kd.insuranceweb.mall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kd.insuranceweb.mall.model.dto.CoverageDto;
+import com.kd.insuranceweb.mall.model.dto.PremiumRateDto;
 import com.kd.insuranceweb.mall.model.dto.ProductRequestDTO;
 
 @Mapper
@@ -11,9 +13,10 @@ public interface ProductMapper {
     int insertInsuranceProduct(ProductRequestDTO product);
 
     // 2. 담보들 일괄 INSERT ALL
-    int insertCoverageDefinitions(ProductRequestDTO product); // product.productId & product.coverages 사용
-
+    // int insertCoverageDefinitions(ProductRequestDTO product); // product.productId & product.coverages 사용
+    int insertCoverageDefinition(CoverageDto product);
+    
     // 3. 요율들 일괄 INSERT ALL
-    int insertPremiumRateRows(ProductRequestDTO product); // product.productId & product.premiumRates 사용
-
+    // int insertPremiumRateRows(ProductRequestDTO product); // product.productId & product.premiumRates 사용
+    int insertPremiumRateRow(PremiumRateDto product);
 }

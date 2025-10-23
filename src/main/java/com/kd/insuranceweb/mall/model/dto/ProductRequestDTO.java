@@ -8,7 +8,7 @@ import lombok.Data;
 public class ProductRequestDTO {
 	
 	private Long productId;        // insertInsuranceProduct의 selectKey가 채움
-	private String productType;
+	private String product_type;
     private String product_name;
     private String product_desc;
     private String thumbnail;

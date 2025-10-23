@@ -253,13 +253,12 @@
 					product_name: form.product_name.value,
 					product_desc: form.product_desc.value,
 					product_type: form.product_types.value,
-					thumbnail: form.thumbnail.files[0],
-					conditions: form.conditions.files[0],
 					coverages: coverages,
 					premiumRates: rates
 				};
 				formData.append("requestData", new Blob([JSON.stringify(requestData)], { type: 'application/json' }));
-				
+				formData.append("thumbnail", form.thumbnail.files[0]);
+				formData.append("conditions", form.conditions.files[0]);
 				console.log(formData);
 
 				// Ajax 전송 
