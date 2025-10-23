@@ -47,7 +47,7 @@ public String openEditMyInfo(
             model.addAttribute("loginUser", loginUser);
         }
     }
-    return "/mypage/EditMyInfo.html";
+    return "mypage/EditMyInfo";
 }
 
 ※ 주의사항

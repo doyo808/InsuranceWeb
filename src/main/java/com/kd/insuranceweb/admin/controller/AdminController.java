@@ -1,5 +1,7 @@
 package com.kd.insuranceweb.admin.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kd.insuranceweb.admin.annotation.AdminActionLog;
@@ -33,11 +37,13 @@ import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
 import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
+import com.kd.insuranceweb.admin.dto.UiPathNoticeDto;
 import com.kd.insuranceweb.admin.service.AdminActivityService;
 import com.kd.insuranceweb.admin.service.AdminDashboardService;
 import com.kd.insuranceweb.admin.service.ClaimService;
 import com.kd.insuranceweb.admin.service.ContractService;
 import com.kd.insuranceweb.admin.service.ProductService;
+import com.kd.insuranceweb.admin.service.UiPathService;
 import com.kd.insuranceweb.club.dto.ReviewDto;
 import com.kd.insuranceweb.club.service.ReviewService;
 import com.kd.insuranceweb.helpdesk.dto.FaqDto;
@@ -63,6 +69,7 @@ public class AdminController {
 	private final ReviewService reviewService;
 	
 	private final AdminDashboardService adminDashboardService;
+	private final UiPathService uiPathService;
 	
 	// ===== 공통 페이지 =====
 	@GetMapping("/login")
@@ -91,8 +98,10 @@ public class AdminController {
 	    List<AdminActivityLogDTO> recentActivities = activityService.getRecentActivities();
 	    model.addAttribute("recentActivities", recentActivities);
 	    
-	    
-	    
+	    // uiPath 뉴스요약
+	    UiPathNoticeDto uiPath = uiPathService.getRecentNotice();
+	    model.addAttribute("uiPath_notice_title", uiPath.getTitle());
+	    model.addAttribute("uiPath_notice_content", uiPath.getContent());
 	    
 		return "admin/common/main";
 	}
@@ -324,15 +333,130 @@ public class AdminController {
 	}
 	
 	// 윤한식 ===== FAQ =====
+//	@GetMapping("/faq")
+//	public String faqList(Model model) {
+//        int startRow = 1;
+//        int endRow = 20; // 예시로 20개 표시
+//        List<FaqDto> faqList = faqService.getAllFaqs(startRow, endRow);
+//        model.addAttribute("faqList", faqList);
+//        return "admin/faq/faqList";
+//    }
+	
 	@GetMapping("/faq")
-	public String faqList(Model model) {
-        int startRow = 1;
-        int endRow = 20; // 예시로 20개 표시
-        List<FaqDto> faqList = faqService.getAllFaqs(startRow, endRow);
+    public String faqList(
+            @RequestParam(value = "category", required = false, defaultValue = "") String category,
+            @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+            @RequestParam(value = "writer", required = false, defaultValue = "") String writer,
+            @RequestParam(value = "fromDate", required = false) String fromDate,
+            @RequestParam(value = "toDate", required = false) String toDate,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            Model model) {
+
+        int pageSize = 20; 
+        int startRow = (page - 1) * pageSize + 1;
+        int endRow = page * pageSize;
+
+        List<FaqDto> faqList = faqService.getAdminFaqListPaged(
+                category, keyword, writer, fromDate, toDate, startRow, endRow);
+
+        int faqCount = faqService.getAdminFaqCount(category, keyword, writer, fromDate, toDate);
+        int totalPages = (int) Math.ceil(faqCount / (double) pageSize);
+
         model.addAttribute("faqList", faqList);
+        model.addAttribute("faqCount", faqCount);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("writer", writer);
+        model.addAttribute("fromDate", fromDate);
+        model.addAttribute("toDate", toDate);
+
         return "admin/faq/faqList";
     }
 	
+	//** 신규 등록 페이지 **/
+    @GetMapping("/faq/new")
+    public String newFaqForm(Model model) {
+        model.addAttribute("faq", new FaqDto());
+        model.addAttribute("isNew", true);
+        return "admin/faq/faqDetail";
+    }
+
+    /** 상세 보기 (수정용) **/
+    @GetMapping("/faq/{id}")
+    public String getFaqDetail(@PathVariable("id") Long id, Model model) {
+        FaqDto faq = faqService.getFaqById(id);
+        model.addAttribute("faq", faq);
+        model.addAttribute("isNew", false);
+        return "admin/faq/faqDetail";
+    }
+
+    /** 저장 (신규 또는 수정 공용) **/
+    @PostMapping("/faq/save")
+    public String saveFaq(@ModelAttribute FaqDto faq) {
+        if (faq.getFaq_id() == null) {
+            faqService.insertFaq(faq);
+        } else {
+            faqService.updateFaq(faq);
+        }
+        return "redirect:/admin/faq";
+    }
+    
+    
+    /** 삭제 **/
+    @PostMapping("/faq/{id}/delete")
+    public String deleteFaq(@PathVariable("id") Long id) {
+        faqService.deleteFaq(id);
+        return "redirect:/admin/faq";
+    }
+    
+    
+ 	// Summernote 이미지 업로드
+    @PostMapping("/uploadImage")
+    @ResponseBody
+    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) {
+        Map<String, Object> result = new HashMap<>();
+        if (file.isEmpty()) {
+            result.put("error", "파일이 없습니다.");
+            return result;
+        }
+
+        try {
+            // 1) 업로드 루트 폴더 (예: 프로젝트 외부, 서버 상의 안전한 위치)
+            String uploadDir = "C:/javaweb_yhs/InsuranceWebUploadedFiles/faq_images/";
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+
+            // 2) 저장할 파일명 (UUID 또는 timestamp + 원본 이름)
+            String originalFilename = file.getOriginalFilename();
+            String filename = System.currentTimeMillis() + "_" + originalFilename;
+
+            Path filepath = Paths.get(uploadDir, filename);
+            Files.write(filepath, file.getBytes());
+
+            // 3) 브라우저에서 접근할 수 있는 URL (컨텍스트 경로 기준)
+            String fileUrl = "/faq/images/" + filename; // /faq/images/ 매핑 필요
+
+            result.put("url", fileUrl);
+            result.put("success", true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            result.put("error", "파일 저장 실패");
+        }
+
+        return result;
+    }
+
+    // 업로드된 이미지를 서빙
+    @GetMapping("/images/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<byte[]> serveImage(@PathVariable String filename) throws IOException {
+        Path path = Paths.get("C:/javaweb_yhs/InsuranceWebUploadedFiles/faq_images/", filename);
+        if (!Files.exists(path)) return ResponseEntity.notFound().build();
+        byte[] bytes = Files.readAllBytes(path);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
+    }
 	
 	
 

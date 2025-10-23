@@ -29,11 +29,11 @@ public class HomeController {
 	}
 	@GetMapping("/signup")
 	public String signup() {
-		return "/common/signup";
+		return "common/signup";
 	}
 //	레이아웃 확인용 매핑
 //	@GetMapping("/signup/complete")
 //	public String signupcom() {
-//		return "/common/signup3";
+//		return "common/signup3";
 //	}
 }

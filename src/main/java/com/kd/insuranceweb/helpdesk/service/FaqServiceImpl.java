@@ -57,4 +57,54 @@ public class FaqServiceImpl implements FaqService {
     public int countSearchFaqs(String keyword) {
         return sql.selectOne("FaqMapper.countByKeyword", keyword);
     }
+    
+ // ---------------- 관리자용 ----------------
+    @Override
+    public List<FaqDto> getAdminFaqListPaged(String category, String keyword, String writer,
+                                             String fromDate, String toDate, int startRow, int endRow) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("category", category);
+        params.put("keyword", keyword);
+        params.put("writer", writer);
+        params.put("fromDate", fromDate);
+        params.put("toDate", toDate);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+        return sql.selectList("FaqMapper.searchByAdminCriteria", params);
+    }
+
+    @Override
+    public int getAdminFaqCount(String category, String keyword, String writer,
+                                String fromDate, String toDate) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("category", category);
+        params.put("keyword", keyword);
+        params.put("writer", writer);
+        params.put("fromDate", fromDate);
+        params.put("toDate", toDate);
+        return sql.selectOne("FaqMapper.countAllAdmin", params);
+    }
+    
+    @Override
+    public int insertFaq(FaqDto faq) {
+        return sql.insert("FaqMapper.insertFaq", faq);
+    }
+
+    @Override
+    public int updateFaq(FaqDto faq) {
+        return sql.update("FaqMapper.updateFaq", faq);
+    }
+
+    @Override
+    public int deleteFaq(Long id) {
+        return sql.delete("FaqMapper.deleteFaq", id);
+    }
+
+    @Override
+    public FaqDto getFaqById(Long id) {
+        return sql.selectOne("FaqMapper.getFaqById", id);
+    }
+
+
+
 }

@@ -1,112 +1,127 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/admin/common/layout}">
+	layout:decorate="~{admin/common/layout}">
 
 <head>
-	<meta charset="utf-8" />
-	<title>FAQ</title>
-
+    <meta charset="utf-8" />
+    <title>FAQ</title>
 </head>
 
 <body>
-	<main layout:fragment="adminContent" class="admin-main">
-		<h1 class="page-title">FAQ 내역</h1>
-		<p class="section__title inquiry-subtitle">고객의 소중한 문의를 확인하고 신속하게 답변해주세요.</p>
+<main layout:fragment="adminContent" class="admin-main">
+    <h1 class="page-title">FAQ 관리</h1>
+    <p class="section__title inquiry-subtitle">
+        카테고리별로 FAQ를 체계적으로 정리하여 사용자가 빠르게 답변을 확인할 수 있도록 관리해주세요.
+    </p>
 
-		<!-- 상단 툴바 -->
-		<section class="toolbar card">
-			<div class="toolbar__row">
-				<div class="field toolbar__item">
-					<label class="field__label">검색어</label>
-					<input class="field__control" type="text" name="q" placeholder="고객명, 문의 내역으로 검색" />
-				</div>
+    <!-- 상단 툴바 -->
+    <section class="toolbar card">
+        <form th:action="@{/admin/faq}" method="get" class="toolbar__row">
+            <div class="field toolbar__item">
+                <label class="field__label">분류</label>
+                <select class="field__control" name="category" th:value="${category}">
+                    <option value="">전체</option>
+                    <option value="계약관리" th:selected="${category == '계약관리'}">계약관리</option>
+                    <option value="자동차보험" th:selected="${category == '자동차보험'}">자동차보험</option>
+                    <option value="자동차보상" th:selected="${category == '자동차보상'}">자동차보상</option>
+                    <option value="장기보험" th:selected="${category == '장기보험'}">장기보험</option>
+                    <option value="일반보험" th:selected="${category == '일반보험'}">일반보험</option>
+                    <option value="기타" th:selected="${category == '기타'}">기타</option>
+                </select>
+            </div>
 
-				<div class="field toolbar__item">
-					<label class="field__label">문의 유형</label>
-					<select class="field__control" name="status">
-						<option value="">문의 유형 전체</option>
-						<option value="">상품 문의</option>
-						<option value="">계약 변경</option>
-						<option value="">보험금 청구</option>
-						<option value="">기타</option>
-					</select>
-				</div>
+            <div class="field toolbar__item">
+                <label class="field__label">검색어</label>
+                <input class="field__control" type="text" name="keyword" placeholder="질문/답변 내용 검색" th:value="${keyword}" />
+            </div>
 
-				<div class="field toolbar__item">
-					<label class="field__label">처리 상태</label>
-					<select class="field__control" name="status">
-						<option value="">처리 상태 전체</option>
-						<option value="">답변 완료</option>
-						<option value="">처리 중</option>
-						<option value="">미처리</option>
-						<option value="">기타</option>
-					</select>
-				</div>
+            <div class="field toolbar__item">
+                <label class="field__label">작성자</label>
+                <input class="field__control" type="text" name="writer" placeholder="작성자 검색" th:value="${writer}" />
+            </div>
 
-				<div class="field toolbar__item toolbar__item--grow">
-					<label class="field__label">문의일자</label>
-					<div class="daterange" data-daterange>
-						<input class="field__control daterange__input" type="date" name="from"
-							> <!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
-						<span class="daterange__sep">~</span>
-						<input class="field__control daterange__input" type="date" name="to"
-							>
-					</div>
-				</div>
+            <div class="field toolbar__item toolbar__item--grow">
+                <label class="field__label">작성일자</label>
+                <div class="daterange" data-daterange>
+                    <input class="field__control daterange__input" type="date" name="fromDate" th:value="${fromDate}" />
+                    <span class="daterange__sep">~</span>
+                    <input class="field__control daterange__input" type="date" name="toDate" th:value="${toDate}" />
+                </div>
+            </div>
 
-				<div class="toolbar__spacer"></div>
-
-				<div class="toolbar__actions">
-					<button type="button" class="btn btn--primary">조회</button>
-				</div>
+            <div class="toolbar__spacer"></div>
+			<div class="toolbar__actions">
+			    <button type="submit" class="btn btn--primary">조회</button>
+			    <a th:href="@{/admin/faq/new}" class="btn btn--secondary">신규</a>
 			</div>
+        </form>
+    </section>
 
-		</section>
+    <!-- 목록 테이블 -->
+    <section class="table-wrap mt-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>분류</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>수정일</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="faq, stat : ${faqList}" class="row--hover">
+                    <td th:text="${stat.count}">1</td>
+                    <td th:text="${faq.category}">분류</td>
+                    <td th:text="${faq.question}" style="text-align: left;">제목</td>
+                    <td th:text="${faq.writer}">작성자</td>
+                    <td th:text="${#dates.format(faq.created_at, 'yyyy-MM-dd')}">작성일</td>
+                    <td th:text="${#dates.format(faq.updated_at, 'yyyy-MM-dd')}">수정일</td>
+                    <td class="text-center">
+                        <a th:href="@{'/admin/faq/detail/' + ${faq.faq_id}}" class="btn btn--primary btn--xs">상세</a>
+                    </td>
+                </tr>
 
-		<!-- 목록 테이블 -->
-		<section class="table-wrap mt-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>분류</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>수정일</th>
-						<th>관리</th>
-					</tr>
-				</thead>
-				<tbody>
-				  <tr th:each="faq, stat : ${faqList}" class="row--hover">
-				    <td th:text="${stat.count}">1</td>
-				    <td th:text="${faq.category}">분류</td>
-				    <td th:text="${faq.question}" style="text-align: left;">제목</td>
-				    <td th:text="${faq.writer}">작성자</td>
-				    <td th:text="${#dates.format(faq.created_at, 'yyyy-MM-dd')}">작성일</td>
-				    <td th:text="${#dates.format(faq.updated_at, 'yyyy-MM-dd')}">수정일</td>
-				    <td class="text-center">
-				      <a th:href="@{'/admin/faq/detail/' + ${faq.faq_id}}" class="btn btn--primary btn--xs">상세</a>
-				    </td>
-				  </tr>
+                <tr th:if="${#lists.isEmpty(faqList)}">
+                    <td class="cell--empty" colspan="7">
+                        <div class="empty">
+                            <div class="empty__title">표시할 FAQ가 없습니다</div>
+                            <div class="empty__desc">검색 조건을 변경해보세요.</div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>	
+	<!-- 중앙정렬 페이징 -->
+	<section class="pagination-wrap" style="display:flex; justify-content:center; margin-top:30px;">
+	    <ul class="pagination__list">
+	        <!-- 이전 -->
+	        <li>
+	            <a th:class="'pagination__page' + (${currentPage == 1} ? ' is-disabled' : '')"
+	               th:href="@{|/admin/faq?page=${currentPage > 1 ? currentPage-1 : 1}&category=${category}&keyword=${keyword}&writer=${writer}&fromDate=${fromDate}&toDate=${toDate}|}">
+	                이전
+	            </a>
+	        </li>
 
-				  <!-- 데이터가 없을 때 -->
-				  <tr th:if="${#lists.isEmpty(faqList)}">
-				    <td class="cell--empty" colspan="7">
-				      <div class="empty">
-				        <div class="empty__title">표시할 FAQ가 없습니다</div>
-				        <div class="empty__desc">검색 조건을 변경해보세요.</div>
-				      </div>
-				    </td>
-				  </tr>
-				</tbody>
-			</table>
-		</section>
+	        <!-- 페이지 번호 -->
+	        <li th:each="i : ${#numbers.sequence(1, totalPages)}">
+	            <a th:class="'pagination__page' + (${i == currentPage} ? ' is-active' : '')"
+	               th:href="@{|/admin/faq?page=${i}&category=${category}&keyword=${keyword}&writer=${writer}&fromDate=${fromDate}&toDate=${toDate}|}"
+	               th:text="${i}">1</a>
+	        </li>
 
-		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
-		</app-pagination>
-
-	</main>
+	        <!-- 다음 -->
+	        <li>
+	            <a th:class="'pagination__page' + (${currentPage == totalPages || totalPages == 0} ? ' is-disabled' : '')"
+	               th:href="@{|/admin/faq?page=${currentPage < totalPages ? currentPage+1 : totalPages}&category=${category}&keyword=${keyword}&writer=${writer}&fromDate=${fromDate}&toDate=${toDate}|}">
+	                다음
+	            </a>
+	        </li>
+	    </ul>
+	</section>
+</main>
 </body>
-
 </html>
