@@ -199,11 +199,6 @@
 		</form>
 
 		<script>
-			function getCookie(name) {
-			  const value = `; ${document.cookie}`;
-			  const parts = value.split(`; ${name}=`);
-			  if (parts.length === 2) return parts.pop().split(';').shift();
-			}
 			
 			function addCoverage() {
 				const tpl = document.getElementById("coverage-template");
@@ -260,13 +255,15 @@
 				formData.append("thumbnail", form.thumbnail.files[0]);
 				formData.append("conditions", form.conditions.files[0]);
 				console.log(formData);
-
+				
+				const token = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+				const header = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+				
 				// Ajax 전송 
 				fetch(contextPath + 'api/products', {
 					method: 'POST',
 					headers: { 
-						"X-Requested-With": "XMLHttpRequest",
-					    'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+						[header]: token // CSRF 헤더 동적으로 설정
 					 },
 					 credentials: 'include',
 					body: formData

@@ -37,17 +37,17 @@ public class ProductController {
     	System.out.println(requestData);
         try {
             // 파일 저장(예: uploads/...), 경로를 DTO에 세팅
-            String thumbPath = saveFile(thumbnail, "thumbnails");
-            String condPath = saveFile(conditions, "conditions");
-
-            System.out.println("이미지 경로:"+thumbPath);
-            System.out.println("약관 경로:"+condPath);
-            
-            requestData.setThumbnail(thumbPath);
-            requestData.setConditions(condPath);
+//            String thumbPath = saveFile(thumbnail, "thumbnails");
+//            String condPath = saveFile(conditions, "conditions");
+//
+//            System.out.println("이미지 경로:"+thumbPath);
+//            System.out.println("약관 경로:"+condPath);
+//            
+//            requestData.setThumbnail(thumbPath);
+//            requestData.setConditions(condPath);
 
             // 서비스에서 db에 대한 처리를함
-            productService.registerProduct(requestData);
+            productService.registerProduct(requestData, thumbnail, conditions);
             return ResponseEntity.ok(Map.of("message", "상품 등록 완료"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,6 +56,7 @@ public class ProductController {
         }
     }
 
+    /*
     private String saveFile(MultipartFile file, String dir) throws IOException {
     	System.out.println("파일업로드중");
         if (file == null || file.isEmpty()) return null;
@@ -67,4 +68,5 @@ public class ProductController {
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         return filePath.toString();
     }
+    */
 }
