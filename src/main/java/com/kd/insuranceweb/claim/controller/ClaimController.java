@@ -202,7 +202,6 @@ public class ClaimController {
             @RequestParam(value = "accidentDesc", required = false) String accidentDesc,
             @RequestParam("medical_benefits") String medical_benefits,
             @RequestParam(value = "diseaseType", required = false) String diseaseType,   // ✅ name 일치
-            @RequestParam(value = "diseaseDetail", required = false) String diseaseDetail, // ✅ 추가
             HttpSession session,
             Model model) {
 
@@ -214,7 +213,6 @@ public class ClaimController {
         claim.setAccident_type(accidentType);
         claim.setAccident_description(accidentDesc);
         claim.setDisease_type(diseaseType);    // ✅ name="diseaseType"과 일치
-        claim.setDisease_detail(diseaseDetail);
         claim.setMedical_benefits("yes".equals(medical_benefits) ? "Y" : "N");
 
         // ✅ 세션에 갱신된 claim 저장

@@ -67,10 +67,10 @@
           <option value="기타" th:selected="${claim != null and claim.disease_type=='기타'}">기타</option>
         </select>
 
-        <textarea id="diseaseDetail" name="diseaseDetail" class="input-box"
+        <textarea id="diseaseDetail" name="accidentDesc" class="input-box"
                   placeholder="진단 내용을 입력하세요"
                   th:classappend="${claim == null or claim.accident_type!='disease' or #strings.isEmpty(claim.disease_type)} ? ' hidden' : ''"
-                  th:text="${claim != null ? claim.disease_detail : ''}"></textarea>
+                  th:text="${claim != null ? claim.accident_description : ''}"></textarea>
       </div>
 
       <!-- 의료급여 수급권자 여부 -->

@@ -5,6 +5,7 @@ import java.util.List;
 import com.kd.insuranceweb.admin.dto.ClaimDetailDTO;
 import com.kd.insuranceweb.admin.dto.ClaimListRowDTO;
 import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
+import com.kd.insuranceweb.admin.dto.CoverageItemDTO;
 
 
 public interface ClaimService {
@@ -25,7 +26,10 @@ public interface ClaimService {
     ClaimDetailDTO getClaimDetail(Integer claimId);
 
     // 승인/거절
-    void approveClaim(Integer claimId);
     void rejectClaim(Integer claimId, String reason);
+    
+    List<CoverageItemDTO> getClaimCoverages(Integer claimId);
+    
+    public void approveClaim(Integer claimId, Long totalPaidAmount);
 }
 
