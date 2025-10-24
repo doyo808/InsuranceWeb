@@ -13,10 +13,8 @@ public interface ProductMapper {
     int insertInsuranceProduct(ProductRequestDTO product);
 
     // 2. 담보들 일괄 INSERT ALL
-    // int insertCoverageDefinitions(ProductRequestDTO product); // product.productId & product.coverages 사용
     int insertCoverageDefinition(CoverageDto product);
     
     // 3. 요율들 일괄 INSERT ALL
-    // int insertPremiumRateRows(ProductRequestDTO product); // product.productId & product.premiumRates 사용
     int insertPremiumRateRow(PremiumRateDto product);
 }

@@ -1,10 +1,5 @@
 package com.kd.insuranceweb.mall.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -36,37 +31,13 @@ public class ProductController {
     	System.out.println("product api 입니다");
     	System.out.println(requestData);
         try {
-            // 파일 저장(예: uploads/...), 경로를 DTO에 세팅
-//            String thumbPath = saveFile(thumbnail, "thumbnails");
-//            String condPath = saveFile(conditions, "conditions");
-//
-//            System.out.println("이미지 경로:"+thumbPath);
-//            System.out.println("약관 경로:"+condPath);
-//            
-//            requestData.setThumbnail(thumbPath);
-//            requestData.setConditions(condPath);
-
             // 서비스에서 db에 대한 처리를함
             productService.registerProduct(requestData, thumbnail, conditions);
             return ResponseEntity.ok(Map.of("message", "상품 등록 완료"));
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", e.getMessage()));
         }
     }
-
-    /*
-    private String saveFile(MultipartFile file, String dir) throws IOException {
-    	System.out.println("파일업로드중");
-        if (file == null || file.isEmpty()) return null;
-        Path uploadDir = Paths.get("uploads", dir);
-        Files.createDirectories(uploadDir);
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        //업로드 시간 + 파일명으로 업로드 파일들 구분
-        Path filePath = uploadDir.resolve(fileName);
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        return filePath.toString();
-    }
-    */
 }

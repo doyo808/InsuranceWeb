@@ -90,19 +90,19 @@ public class ProductServiceImpl implements ProductService {
 						 fileService.moveToProductDir(dto.getConditions(), "conditions");
 					 } catch (IOException e) {
 						 // 로깅/알림 처리
-						 e.printStackTrace();
+//						 e.printStackTrace();
 					 }
 				 }
 			 });
 		 } catch (IOException ioe) {
-			System.out.println("파일업로드중 문제가 생김" + ioe);
+			System.out.println("파일업로드중 문제가 생김");
 		 } catch (Exception e) {
 			// (3) DB 실패 시 임시 파일 삭제
             try {
                 fileService.deleteTempFile(dto.getThumbnail());
                 fileService.deleteTempFile(dto.getConditions());
             } catch (IOException ex) {
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
             throw e; // 트랜잭션 롤백
 		 }

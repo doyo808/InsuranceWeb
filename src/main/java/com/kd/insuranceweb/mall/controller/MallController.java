@@ -73,21 +73,6 @@ public class MallController {
 		return "mall/calculate/car/selectCover";
 	}
 	
-	@GetMapping("/car_discount/{id}")
-	public String car_discount(@PathVariable("id") Long id) {
-		if(id==1) {
-			return "mall/intro/car_discount/마일리지";
-		} else if(id==2) {
-			return "mall/intro/car_discount/마일리지환급바로";
-		} else if(id==3) {
-			return "mall/intro/car_discount/애니핏착한걷기";
-		} else if(id==4) {
-			return "mall/intro/car_discount/Eco모빌리티";
-		} else {
-			return "redirect:/home";
-		}
-	}
-	
 	@GetMapping("/driver/{id}")
 	public String driver(@PathVariable("id") Long id) {
 		if(id==1) {
