@@ -1,6 +1,7 @@
 // 페이지가 로드되면 포트원 라이브러리를 초기화
 // "가맹점 식별코드"는 포트원 관리자 콘솔에서 확인 가능
-IMP.init("imp72048686"); // TODO: 본인의 가맹점 식별코드로 변경
+IMP.init("imp72048686"); 
+const isDevelopment = window.location.hostname === 'localhost';
 
 function requestPay() {
     // 1. 고유한 주문번호와 빌링키(고객번호) 생성
@@ -21,6 +22,7 @@ function requestPay() {
             // 3. 결제 성공 시, 백엔드에 결제 검증 요청
             console.log("결제 성공! 검증을 시작합니다.");
             verifyPaymentOnServer(rsp.imp_uid, rsp.merchant_uid);
+			
         } else {
             alert("결제에 실패했습니다. 에러: " + rsp.error_msg);
         }
@@ -30,6 +32,8 @@ function requestPay() {
 // 백엔드 서버에 결제 검증을 요청하는 함수
 async function verifyPaymentOnServer(imp_uid, merchant_uid) {
     try {
+		if (isDevelopment) {return true;}
+		
         const response = await fetch('/payment/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -42,7 +46,7 @@ async function verifyPaymentOnServer(imp_uid, merchant_uid) {
         const isVerified = await response.json();
 
         if (isVerified) {
-            alert("결제 성공 및 검증 완료! 정기결제가 등록되었습니다.");
+            alert("결제 성공 및 검증 완료!");
             // TODO: 결제 성공 페이지로 이동 또는 UI 업데이트
         } else {
             alert("결제는 성공했으나 서버 검증에 실패했습니다. 관리자에게 문의하세요.");

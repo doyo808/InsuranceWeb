@@ -114,8 +114,8 @@ public class MypageService {
         return translateStatus(contracts);
     }
 
-    public List<ContractDto> getActiveContracts() {
-        List<ContractDto> contracts = myContractMapper.selectActiveContracts();
+    public List<ContractDto> getActiveContracts(Integer customer_id) {
+        List<ContractDto> contracts = myContractMapper.selectActiveContracts(customer_id);
         return translateStatus(contracts);
     }
 

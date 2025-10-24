@@ -22,7 +22,7 @@
         ORDER BY start_date DESC
     </select>
     
-    <select id="selectActiveContracts" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
+    <select id="selectActiveContracts" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
         SELECT 
             contract_id,
             product_name,
@@ -33,7 +33,9 @@
             total_premium,
             status
         FROM contract_view
-        WHERE  status = 'ACTIVE' 
+        WHERE  
+        	customer_id = #{customer_id}
+        	AND status = 'ACTIVE' 
         ORDER BY start_date DESC
     </select>
 </mapper>

@@ -116,14 +116,7 @@ public class MallControllerTemp {
 			customerName = "임시 계약자";
 			session.setAttribute("customer_name", customerName);
 		}
-		if (productName == null) {
-			productName = "임시 상품";
-			session.setAttribute("product_name", productName);
-		}
-		if (premium == null) {
-			premium = new BigDecimal("12345");
-			session.setAttribute("premium", premium);
-		}
+		
 		model.addAttribute("insured_name", insuredName);
 		model.addAttribute("customer_name", customerName);
 		model.addAttribute("product_name", productName);
@@ -137,7 +130,11 @@ public class MallControllerTemp {
 	 * 결제 정보를 입력받고, 서비스 로직을 호출하여 계약 정보를 DB에 저장합니다.
 	 */
 	@GetMapping("/payment")
-	public String paymentForm() {
+	public String paymentForm(HttpSession session, Model model) {
+		InsuranceApplyDto applyDto = (InsuranceApplyDto) session.getAttribute("init");
+		if (applyDto == null) { return "redirect:/mall2/init"; }
+		BigDecimal premium = new BigDecimal(applyDto.getTotalPremium());
+		model.addAttribute("premium", premium);
 		return "mall/payment_form";
 	}
 	@PostMapping("/payment")
@@ -188,26 +185,27 @@ public class MallControllerTemp {
 		return "mall/contract_complete";
 	}
 	
-	
+	private static final String[] SESSION_KEYS = {
+		    "init",
+		    "MallPersonalBasicDTO",
+		    "MallInsuredDetailDTO",
+		    "insured_name",
+		    "insured_phone_number",
+		    "insured_email",
+		    "customer_name",
+		    "is_smoker",
+		    "drinks",
+		    "driving_status",
+		    "medical_history",
+		    "medical_history_text"
+		};
     /**
      * 보험 계약 신청 과정에서 사용된 세션 속성들을 정리하는 private 헬퍼 메소드.
      * @param session 현재 HttpSession 객체
      */
 	private void sessionClear(HttpSession session) {
-		// 계약 플로우에서 사용된 DTO 정리
-		session.removeAttribute("init");
-		session.removeAttribute("MallPersonalBasicDTO");
-		session.removeAttribute("MallInsuredDetailDTO");
-		
-		// 개별적으로 저장했던 속성들 정리
-		session.removeAttribute("insured_name");
-		session.removeAttribute("insured_phone_number");
-		session.removeAttribute("insured_email");
-		session.removeAttribute("customer_name");
-		session.removeAttribute("is_smoker");
-		session.removeAttribute("drinks");
-		session.removeAttribute("driving_status");
-		session.removeAttribute("medical_history");
-		session.removeAttribute("medical_history_text");
+		for (String key : SESSION_KEYS) {
+	        session.removeAttribute(key);
+	    }
 	}
 }
