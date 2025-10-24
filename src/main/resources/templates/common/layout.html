@@ -15,7 +15,7 @@
 	<script src="https://kit.fontawesome.com/df2bfc0a98.js" crossorigin="anonymous"></script>
 	<style> body {margin:0;} </style>
 </head>
-<body>
+<body th:data-profile="${profile}">
     <!-- 헤더 -->
     <header th:replace="~{common/fragments/header :: headerFragment}"></header>
 
@@ -32,7 +32,10 @@
 	
 	
 	<script th:inline="javascript">
-	  const contextPath = /*[[@{/}]]*/ '';
+		const profileFromDataset = document.body.dataset.profile;
+		if (profileFromDataset === "dev") { console.log("개발환경용 JS 실행"); }
+	   
+		 const contextPath = /*[[@{/}]]*/ '';
 	</script>
 	<script th:src="@{/common/js/headerbar.js}"></script>
 	<script th:src="@{/common/js/sidebar.js}"></script>
