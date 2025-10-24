@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/claim")
 @RequiredArgsConstructor
 public class ClaimController {
+	
+	@Value("${file.upload-dir}")
+	private String baseUploadDir;
+
 
     private final ClaimService claimService;
 
@@ -246,7 +251,7 @@ public class ClaimController {
             // 업로드 폴더 생성
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String folderName = "customer_" + customerId + "_" + timestamp;
-            String uploadDir = System.getProperty("user.dir") + "/uploaded/" + folderName + "/";
+            String uploadDir = baseUploadDir + folderName + "/";
             new File(uploadDir).mkdirs();
 
             Claim claim = getOrCreateClaim(session);
