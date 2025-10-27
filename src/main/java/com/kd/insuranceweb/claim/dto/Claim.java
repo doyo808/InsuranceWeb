@@ -16,6 +16,7 @@ public class Claim {
 	    private Integer person_id;
 	    private Integer contract_id;
 
+	    private String insured_name;
 	    private String claim_type;
 	    private Date claim_date;
 	    private Date accident_date;

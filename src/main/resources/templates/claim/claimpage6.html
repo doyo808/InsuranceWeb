@@ -28,7 +28,6 @@
 			margin-bottom: 16px;
 		}
 
-		/* 동의 그룹 박스 */
 		.agreement-box {
 			border: 1px solid #ddd;
 			border-radius: 12px;
@@ -37,7 +36,6 @@
 			background: #fafafa;
 		}
 
-		/* 그룹 제목 */
 		.agreement-title {
 			display: block;
 			font-size: 15px;
@@ -46,7 +44,6 @@
 			color: #222;
 		}
 
-		/* 개별 항목 */
 		.agreement-item {
 			display: flex;
 			align-items: center;
@@ -58,7 +55,6 @@
 			height: 18px;
 			margin-right: 10px;
 			accent-color: #007bff;
-			/* 체크박스 컬러 */
 		}
 
 		.agreement-item label {
@@ -67,7 +63,21 @@
 			cursor: pointer;
 		}
 
-		/* 설명 텍스트 */
+		.detail-btn {
+			margin-left: auto;
+			padding: 2px 8px;
+			background: #007bff;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 13px;
+		}
+
+		.detail-btn:hover {
+			background: #0056b3;
+		}
+
 		.desc {
 			font-size: 13px;
 			color: #666;
@@ -97,6 +107,91 @@
 		.btn-primary:hover {
 			background: #0056b3;
 		}
+
+		.warning-msg {
+			color: red;
+			font-size: 14px;
+			text-align: center;
+			margin-top: 12px;
+			display: none;
+			animation: fadeIn 0.3s ease;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		/* ✅ 모달 스타일 */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			backdrop-filter: blur(1px);
+		}
+
+		.modal-content {
+			background: #fff;
+			margin: 8% auto;
+			border-radius: 10px;
+			width: 90%;
+			max-width: 500px;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+			overflow: hidden;
+			animation: slideDown 0.3s ease;
+		}
+
+		@keyframes slideDown {
+			from {
+				transform: translateY(-20px);
+				opacity: 0;
+			}
+
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+
+		.modal-header {
+			background: #007bff;
+			color: white;
+			padding: 12px 20px;
+			font-weight: bold;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.modal-body {
+			padding: 20px;
+			max-height: 400px;
+			overflow-y: auto;
+			font-size: 14px;
+			color: #333;
+			line-height: 1.6;
+		}
+
+		.close-btn {
+			cursor: pointer;
+			font-size: 20px;
+			color: white;
+			font-weight: bold;
+		}
+
+		.close-btn:hover {
+			color: #ddd;
+		}
 	</style>
 </head>
 
@@ -125,25 +220,25 @@
 					<div class="agreement-item">
 						<input type="checkbox" class="agree-item required" id="agree1" name="agree1">
 						<label for="agree1">수집·이용에 관한 사항</label>
-						<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+						<button type="button" class="detail-btn" data-content="collect">보기</button>
 					</div>
 
 					<div class="agreement-item">
 						<input type="checkbox" class="agree-item required" id="agree2" name="agree2">
 						<label for="agree2">제공에 관한 사항</label>
-						<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+						<button type="button" class="detail-btn" data-content="provide">보기</button>
 					</div>
 
 					<div class="agreement-item">
 						<input type="checkbox" class="agree-item required" id="agree3" name="agree3">
 						<label for="agree3">조회에 관한 사항</label>
-						<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+						<button type="button" class="detail-btn" data-content="inquiry">보기</button>
 					</div>
 
 					<div class="agreement-item">
 						<input type="checkbox" class="agree-item required" id="agree4" name="agree4">
 						<label for="agree4">소비자 권익보호에 관한 사항</label>
-						<button type="button" class="detail-btn" data-content="collect">&gt;</button>
+						<button type="button" class="detail-btn" data-content="rights">보기</button>
 					</div>
 				</div>
 
@@ -158,77 +253,104 @@
 						</div>
 					</div>
 
+					<!-- 🚨 경고 문구 -->
+					<p class="warning-msg" id="warningMsg">필수 항목에 모두 동의해 주세요.</p>
+
 					<div class="button-area">
 						<a th:href="@{/claim/uploadDocuments}" class="btn-primary" style="background:#6c757d;">이전</a>
-						<button type="submit" class="btn-primary">다음</button>
+						<button type="submit" class="btn-primary" id="nextBtn">다음</button>
 					</div>
 				</form>
 
-
 			</section>
+		</div>
+
+		<!-- ✅ 모달 구조 -->
+		<div id="modal" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span id="modalTitle">상세 내용</span>
+					<span class="close-btn">&times;</span>
+				</div>
+				<div class="modal-body" id="modalText">내용을 불러오는 중...</div>
+			</div>
 		</div>
 
 		<script>
 			const agreeAll = document.getElementById('agreeAll');
 			const agreeItems = document.querySelectorAll('.agree-item');
 			const requiredItems = document.querySelectorAll('.agree-item.required');
-			const nextBtn = document.getElementById('nextBtn');
+			const form = document.querySelector('form');
+			const warningMsg = document.getElementById('warningMsg');
 
-			// 전체 선택/해제
-			agreeAll.addEventListener('change', () => {
-				agreeItems.forEach(item => item.checked = agreeAll.checked);
-				checkRequired(); // 필수 확인
+			// ✅ 전체선택
+			agreeAll.addEventListener('change', (e) => {
+				const checked = e.target.checked;
+				agreeItems.forEach(item => item.checked = checked);
 			});
 
-			// 개별 체크 상태 감시
+			// ✅ 개별체크 → 전체선택 상태 갱신
 			agreeItems.forEach(item => {
 				item.addEventListener('change', () => {
-					// 전체동의 상태 업데이트
 					const allChecked = [...agreeItems].every(el => el.checked);
 					agreeAll.checked = allChecked;
-
-					// 필수 체크 확인
-					checkRequired();
 				});
 			});
 
-			// 필수 체크 여부 확인 → 버튼 활성/비활성
-			function checkRequired() {
-				const requiredChecked = [...requiredItems].every(el => el.checked);
-				nextBtn.disabled = !requiredChecked;
-			}
+			// ✅ 제출 전 필수 항목 검사
+			form.addEventListener('submit', function (e) {
+				const allChecked = [...requiredItems].every(el => el.checked);
+				if (!allChecked) {
+					e.preventDefault();
+					warningMsg.style.display = 'block';
+					return false;
+				} else {
+					warningMsg.style.display = 'none';
+				}
+			});
 
+			// ✅ 모달 내용
 			const modalContents = {
 				collect: `
-		      <h3>수집·이용에 관한 사항</h3>
-		      <p><strong>수집ㆍ이용목적</strong><br>
-		      보험사고 조사 및 보험금 지급·심사(손해사정 포함) 등</p>
-		      <p><strong>보유 및 이용기간</strong><br>
-		      동의일로부터 거래 종료 후 5년까지 ...</p>
-		    `,
+					<h3>수집·이용에 관한 사항</h3>
+					<p><strong>수집·이용목적</strong><br>
+					보험사고 조사, 보험금 지급 심사(손해사정 포함), 보험금 지급 및 관련 업무처리</p>
+					<p><strong>보유·이용기간</strong><br>
+					동의일로부터 거래 종료 후 5년까지 보관 후 파기</p>
+				`,
 				provide: `
-		      <h3>제공에 관한 사항</h3>
-		      <p>이곳에 제공 동의 상세내용을 넣으면 됩니다.</p>
-		    `,
+					<h3>제공에 관한 사항</h3>
+					<p>보험금 청구 관련 기관(병원, 금융기관 등)에 필요한 범위 내에서 제공됩니다.</p>
+				`,
 				inquiry: `
-		      <h3>조회에 관한 사항</h3>
-		      <p>이곳에 조회 동의 상세내용을 넣으면 됩니다.</p>
-		    `,
+					<h3>조회에 관한 사항</h3>
+					<p>보험계약 관련 사실 확인 및 사고조사를 위해 관련 기관의 자료를 조회할 수 있습니다.</p>
+				`,
 				rights: `
-		      <h3>소비자 권익보호에 관한 사항</h3>
-		      <p>이곳에 권익보호 동의 상세내용을 넣으면 됩니다.</p>
-		    `
+					<h3>소비자 권익보호에 관한 사항</h3>
+					<p>고객은 언제든지 개인정보 제공 동의를 철회할 수 있으며, 동의 철회 시 관련 업무 진행이 제한될 수 있습니다.</p>
+				`
 			};
 
-			document.querySelectorAll(".detail-btn").forEach(btn => {
-				btn.addEventListener("click", () => {
-					const key = btn.getAttribute("data-content");
-					modalText.innerHTML = modalContents[key] || "내용 준비 중";
-					modal.style.display = "block";
+			const modal = document.getElementById('modal');
+			const modalText = document.getElementById('modalText');
+			const modalTitle = document.getElementById('modalTitle');
+			const closeBtn = document.querySelector('.close-btn');
+
+			document.querySelectorAll('.detail-btn').forEach(btn => {
+				btn.addEventListener('click', () => {
+					const key = btn.getAttribute('data-content');
+					modalText.innerHTML = modalContents[key] || '내용 준비 중';
+					modalTitle.textContent = btn.previousElementSibling.textContent.trim();
+					modal.style.display = 'block';
 				});
+			});
+
+			closeBtn.addEventListener('click', () => modal.style.display = 'none');
+			window.addEventListener('click', (e) => {
+				if (e.target === modal) modal.style.display = 'none';
 			});
 		</script>
 	</main>
 </body>
-
 </html>

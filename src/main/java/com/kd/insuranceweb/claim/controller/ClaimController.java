@@ -27,6 +27,8 @@ import com.kd.insuranceweb.claim.ClaimService;
 import com.kd.insuranceweb.claim.dto.Claim;
 import com.kd.insuranceweb.claim.dto.ContractDTO;
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
+import com.kd.insuranceweb.mypage.MypageService;
+import com.kd.insuranceweb.mypage.dto.ContractDto;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +52,31 @@ public class ClaimController {
             "image/jpeg",
             "text/plain"
     );
+    
+ // 청구내역 확인
+    @GetMapping("/claimList")
+    public String getClaimList(
+            @RequestParam(name = "months", required = false, defaultValue = "3") Integer months,
+            @RequestParam(name = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(name = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @AuthenticationPrincipal CustomUserDetails user,
+            Model model) {
+
+        // 로그인한 사용자
+        Integer customerId = user.getCustomer_id();
+
+        // 기간에 맞게 데이터 조회
+        List<Claim> txns = claimService.getClaimsByDateRange(customerId, months, startDate, endDate);
+
+        model.addAttribute("txns", txns);
+        model.addAttribute("months", months);
+        model.addAttribute("start", startDate);
+        model.addAttribute("end", endDate);
+
+        return "claim/chkClaims";
+    }
+
+
 
     // ---------------------------
     // 1️⃣ 청구 시작

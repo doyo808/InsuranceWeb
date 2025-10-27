@@ -1,5 +1,6 @@
 package com.kd.insuranceweb.claim;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,4 +43,18 @@ public class ClaimService {
     public Map<String, Object> getPersonInfoByCustomerId(Integer customerId) {
         return claimMapper.selectPersonInfoByCustomerId(customerId);
     }
+    
+    public List<Claim> getClaimsByCustomer(Integer customerId, Integer months, String start, String end) {
+        return claimMapper.selectClaimsByCustomer(customerId, months, start, end);
+    }
+
+    public List<Claim> getClaimsByDateRange(Integer customerId, Integer months, Date start, Date end) {
+        if (months != null && months > 0) {
+            return claimMapper.selectClaimsByMonths(customerId, months);
+        } else {
+            return claimMapper.selectClaimsByDates(customerId, start, end);
+        }
+    
+    }
+    
 }
