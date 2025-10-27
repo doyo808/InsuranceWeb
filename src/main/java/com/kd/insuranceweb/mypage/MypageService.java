@@ -1,6 +1,8 @@
 package com.kd.insuranceweb.mypage;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +16,10 @@ import com.kd.insuranceweb.common.mapper.CustomerMapper;
 import com.kd.insuranceweb.common.mapper.PersonMapper;
 import com.kd.insuranceweb.mypage.dto.ContractDto;
 import com.kd.insuranceweb.mypage.dto.MarketingConsentDTO;
+import com.kd.insuranceweb.mypage.dto.PaymentDto;
 import com.kd.insuranceweb.mypage.mapper.MarketingConsentMapper;
 import com.kd.insuranceweb.mypage.mapper.MyContractMapper;
+import com.kd.insuranceweb.mypage.mapper.PaymentMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +31,7 @@ public class MypageService {
 	private final CustomerMapper customerMapper;
 	private final MarketingConsentMapper marketingConsentMapper;
 	private final MyContractMapper myContractMapper;
+	private final PaymentMapper paymentMapper;
 
 	// 고객정보 html로 전송
 	public CustomUserDetails getPersonAndCustomerInfo(CustomUserDetails loginUser) {
@@ -100,13 +105,14 @@ public class MypageService {
 			return marketingConsentMapper.updateMarketingConsent(dto);
 		}
 	}
-	// 상태 코드 → 한글 매핑
+	// 상태 코드 → 한글 매핑 (계약)
     private static final Map<String, String> STATUS_MAP = Map.of(
         "PENDING", "신청",
         "ACTIVE", "유지",
         "EXPIRED", "만료",
         "APPROVED", "승인",
-        "REJECTED", "반려"
+        "REJECTED", "반려",
+        "CANCELLED", "취소"
     );
 
     public List<ContractDto> getAllContracts(Integer customer_id) {
@@ -127,4 +133,32 @@ public class MypageService {
         return contracts;
     }
 	
+
+	// 상태 코드 → 한글 매핑 (납부)
+    private static final Map<String, String> PAY_STATUS_MAP = Map.of(
+        "P", "완납",
+        "A", "부분납부",
+        "U", "미납",
+        "O", "초과납부"
+    );
+    public List<PaymentDto> getPayments(Integer customer_id) {
+    	List<PaymentDto> payments = paymentMapper.selectPayments(customer_id);
+    	return translatePayStatus(payments);
+    }
+    // 공통 변환 메서드
+    private List<PaymentDto> translatePayStatus(List<PaymentDto> payments) {
+        YearMonth currentMonth = YearMonth.now();
+
+        payments.forEach(p -> {
+            LocalDate paymentDate = p.getPayment_date().toLocalDate();
+
+            YearMonth paymentMonth = YearMonth.from(paymentDate);
+
+            // 이번달 납입이 아니면 상태를 'U'로 변경
+            if (!paymentMonth.equals(currentMonth)) { p.setPay_status("U"); }
+            p.setPay_status(PAY_STATUS_MAP.getOrDefault(p.getPay_status(), p.getPay_status()));
+        });
+        return payments;
+    }
+    
 }

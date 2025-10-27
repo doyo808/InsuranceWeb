@@ -1,6 +1,6 @@
 .base-main {
 	width: 1200px;
-	margin: 0 auto;
+	margin: 0 auto 100px auto;
 }
 
 /* 상단의 현재위치 */
@@ -84,6 +84,8 @@ dd {
     border-bottom: 1px solid #eee;
     padding: 12px 10px;
     vertical-align: top;
+	text-align: center;
+	cursor: pointer;
 }
 
 .contract_table tbody td .subtext {
