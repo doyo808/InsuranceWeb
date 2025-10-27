@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kd.insuranceweb.mypage.mapper.PaymentMapper">
+
+    <select id="selectPayments" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.PaymentDto">
+        SELECT 
+            PRODUCT_NAME,
+            PAYMENT_DATE,
+            PAID_AMOUNT,
+            TOTAL_PREMIUM,
+            PAY_STATUS,
+            CONTRACT_ID
+        FROM (
+            SELECT
+                p.PRODUCT_NAME,
+                pay.PAYMENT_DATE,
+                pay.PAID_AMOUNT,
+                c.TOTAL_PREMIUM,
+                pay.PAY_STATUS,
+                pay.CONTRACT_ID,
+                ROW_NUMBER() OVER (PARTITION BY pay.CONTRACT_ID ORDER BY pay.PAYMENT_DATE DESC) AS rn
+            FROM payments pay
+            JOIN insurance_contracts c 
+                ON pay.CONTRACT_ID = c.CONTRACT_ID
+            JOIN insurance_products p
+                ON c.PRODUCT_ID = p.PRODUCT_ID
+            WHERE  
+                pay.CUSTOMER_ID = #{customer_id}
+                AND c.STATUS = 'ACTIVE'
+        )
+        WHERE rn = 1
+        ORDER BY PAYMENT_DATE DESC
+    </select>
+	
+	<insert id="insertPayment">
+		insert into payments (payment_id, customer_id, contract_id, paid_amount, payment_date, pay_status, unpaid_id) 
+		values (
+				payment_seq.nextval, 
+				6, 
+				2004, 
+				90000, 
+				SYSDATE, 
+				'P', 
+				1
+			);
+	</insert>
+	
+</mapper>
