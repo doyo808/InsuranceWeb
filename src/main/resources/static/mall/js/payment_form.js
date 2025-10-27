@@ -37,7 +37,7 @@ function requestPay() {
             console.log("결제 성공! 검증을 시작합니다.");
 
             // 개발 환경이면 서버 검증 없이 바로 처리
-            if (profile === "dev1") {
+            if (profile === "dev") {
                 handlePaymentSuccess(rsp);
 				activateNextBtn();
                 return;

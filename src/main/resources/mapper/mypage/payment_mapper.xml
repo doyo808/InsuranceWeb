@@ -34,17 +34,17 @@
         ORDER BY PAYMENT_DATE DESC
     </select>
 	
-	<insert id="insertPayment">
+	<insert id="insertPayment" parameterType="map">
 		insert into payments (payment_id, customer_id, contract_id, paid_amount, payment_date, pay_status, unpaid_id) 
 		values (
 				payment_seq.nextval, 
-				6, 
-				2004, 
-				90000, 
+				#{customer_id}, 
+				#{contract_id}, 
+				#{paid_amount}, 
 				SYSDATE, 
 				'P', 
 				1
-			);
+			)
 	</insert>
 	
 </mapper>
