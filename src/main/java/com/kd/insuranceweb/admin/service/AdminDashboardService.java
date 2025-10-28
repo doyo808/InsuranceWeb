@@ -18,10 +18,10 @@ public interface AdminDashboardService {
 
     /**
      * 이번 달 청구 통계
-     * - totalAmount: 이번 달 총 청구금액 (만원 단위)
-     * - approvedAmount: 이번 달 승인된 청구금액 (만원 단위)
+     * - newClaims: 이번 달 접수된 신규청구 건 (START_DATE 기준)
+     * - endClaims: 이번 달 지급완료된 청구 건 (END_DATE 기준)
      */
-    Map<String, Integer> getMonthlyClaimStats();     
+    Map<String, Object> getClaimStats();  
 
     List<Map<String, Object>> getRecentActivities();
 }

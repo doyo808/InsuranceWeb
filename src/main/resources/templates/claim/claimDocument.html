@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/common/layout.html}">
+	layout:decorate="~{common/layout.html}">
 
 <head>
 	<meta charset="UTF-8">
@@ -75,6 +75,8 @@
 		}
 
 		.button-area {
+			display: flex;
+			justify-content: space-around;
 			text-align: center;
 			margin: 40px 0;
 		}
@@ -87,8 +89,8 @@
 			font-weight: bold;
 			padding: 14px 28px;
 			border-radius: 8px;
-			text-decoration: none;
 			border: none;
+			cursor: pointer;
 		}
 
 		.btn-primary:hover {
@@ -104,27 +106,30 @@
 			<section class="section">
 				<h2>서류를 등록해 주세요</h2>
 
-				<!-- ✅ form 추가 -->
-				<form th:action="@{/claim/uploadDocuments}" method="post" enctype="multipart/form-data">
+				<form th:action="@{/claim/uploadDocuments}" method="post" enctype="multipart/form-data" id="documentForm">
 
 					<div class="file-upload">
-						<label for="receipt">필수 병원 진료비 영수증(최대 3MB)</label>
-						<input type="file" id="receipt" name="receipt" accept="application/pdf,image/png,image/jpeg">
+						<label for="receipt">*필수 병원 진료비 영수증(최대 3MB)</label>
+						<input type="file" id="receipt" name="receipt"
+							accept="application/pdf,image/png,image/jpeg,text/plain">
 						<p class="desc">진료비 납입확인서와 카드 매출전표는 등록할 수 없습니다.</p>
 					</div>
 
 					<div class="file-upload">
-						<label for="details">필수 진료비 세부내역서(최대 3MB)</label>
-						<input type="file" id="details" name="details" accept="application/pdf,image/png,image/jpeg">
+						<label for="details">*필수 진료비 세부내역서(최대 3MB)</label>
+						<input type="file" id="details" name="details"
+							accept="application/pdf,image/png,image/jpeg,text/plain">
 					</div>
 
 					<div class="file-upload">
 						<label for="etc">선택 기타 서류 (진단서, 수술기록지, 약제비영수증, 처방전 등) (최대 3MB)</label>
-						<input type="file" id="etc" name="etc" accept="application/pdf,image/png,image/jpeg">
+						<input type="file" id="etc" name="etc" accept="application/pdf,image/png,image/jpeg,text/plain">
 					</div>
 
+
 					<div class="button-area">
-						<button type="submit" id="nextBtn" class="btn-primary">다음</button>
+						<a th:href="@{/claim/accidentInfo}" class="btn-primary" style="background:#6c757d;">이전</a>
+						<button type="submit" class="btn-primary">다음</button>
 					</div>
 
 				</form>
@@ -136,7 +141,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<script>
 			let goingNext = false;
 
@@ -176,6 +181,19 @@
 				validateFileSize(this);
 			});
 		</script>
+		<script>
+			document.getElementById("documentForm").addEventListener("submit", function (e) {
+				const receipt = document.getElementById("receipt").files.length;
+				const details = document.getElementById("details").files.length;
+
+				if (receipt === 0 || details === 0) {
+					e.preventDefault(); // 폼 전송 막기
+					alert("필수 서류(진료비 영수증과 세부내역서)를 모두 등록해 주세요.");
+					return false;
+				}
+			});
+		</script>
+
 	</main>
 </body>
 

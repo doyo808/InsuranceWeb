@@ -1,5 +1,6 @@
 package com.kd.insuranceweb.admin.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,11 +40,11 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
     }
 
     @Override
-    public Map<String, Integer> getMonthlyClaimStats() {
-        return Map.of(
-            "totalAmount", mapper.sumClaimsThisMonth(),
-            "approvedAmount", mapper.sumApprovedClaimsThisMonth()
-        );
+    public Map<String, Object> getClaimStats() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("newClaims", mapper.countNewClaimsThisMonth());
+        result.put("approvedClaims", mapper.countApprovedClaimsThisMonth());
+        return result;
     }
 
     @Override

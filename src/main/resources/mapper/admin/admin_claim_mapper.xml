@@ -3,14 +3,11 @@
 
 
 	<select id="findClaimList" parameterType="map"
-		resultType="claimList"> 
-		SELECT c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE,
-		c.ACCIDENT_DATE, c.CLAIM_DATE, c.CLAIM_STATUS 
-		FROM CLAIMS c 
-		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
-        JOIN customers cu ON ic.customer_id = cu.customer_id
-        JOIN persons p ON cu.person_id = p.person_id
-		<where>
+		resultType="claimList"> SELECT c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE,
+		c.ACCIDENT_DATE, c.CLAIM_DATE, c.CLAIM_STATUS FROM CLAIMS c JOIN
+		insurance_contracts ic ON ic.contract_id = c.contract_id JOIN customers
+		cu ON ic.customer_id = cu.customer_id JOIN persons p ON cu.person_id =
+		p.person_id <where>
 			<if test="c.q != null and c.q != ''">
 				AND (LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
 				OR TO_CHAR(c.CLAIM_ID) LIKE '%' || #{c.q} || '%')
@@ -60,37 +57,53 @@
 		ip.product_name
 		FROM CLAIMS c
 		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
-        JOIN customers cu ON ic.customer_id = cu.customer_id
-        JOIN persons p ON cu.person_id = p.person_id
+		JOIN customers cu ON ic.customer_id = cu.customer_id
+		JOIN persons p ON cu.person_id = p.person_id
 		JOIN insurance_products ip ON ic.product_id = ip.product_id
 		WHERE c.CLAIM_ID = #{claimId}
 	</select>
 
-	<update id="approveClaim" parameterType="int">
+	<select id="findClaimCoverages" resultType="coverageItem">
+		SELECT
+		cd.COVER_NAME,
+		cd.COVER_DESC,
+		cd.COVERAGE_AMOUNT
+		FROM CLAIMS c
+		JOIN INSURANCE_CONTRACTS ic
+		ON c.CONTRACT_ID = ic.CONTRACT_ID
+		JOIN CONTRACT_COVERAGE_ITEMS cci
+		ON ic.CONTRACT_ID = cci.CONTRACT_ID
+		JOIN COVERAGE_DEFINITIONS cd
+		ON cci.COVERAGE_ID = cd.COVERAGE_ID
+		WHERE c.CLAIM_ID = #{claimId}
+	</select>
+
+
+	<update id="approveClaim">
 		UPDATE CLAIMS
 		SET CLAIM_STATUS = 2,
-		REJECTION_REASON = null,
-		COMPLETION_DATE = SYSDATE
+		REJECTION_REASON = NULL,
+		COMPLETION_DATE = SYSDATE,
+		TOTAL_PAID_AMOUNT = #{totalPaidAmount}
 		WHERE CLAIM_ID = #{claimId}
 	</update>
+
 
 	<update id="rejectClaim">
 		UPDATE CLAIMS
 		SET CLAIM_STATUS = 3,
 		REJECTION_REASON = #{reason},
-		COMPLETION_DATE = SYSDATE
+		COMPLETION_DATE = SYSDATE,
+		TOTAL_PAID_AMOUNT = NULL
 		WHERE CLAIM_ID = #{claimId}
 	</update>
 
 	<select id="findClaimsPage" parameterType="map"
 		resultType="claimList"> SELECT * FROM ( SELECT inner_q.*, ROWNUM AS rnum
 		FROM ( SELECT c.CLAIM_ID, p.PERSON_NAME, c.CLAIM_TYPE, c.ACCIDENT_DATE,
-		c.CLAIM_DATE, c.CLAIM_STATUS 
-		FROM CLAIMS c 
-		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
-        JOIN customers cu ON ic.customer_id = cu.customer_id
-        JOIN persons p ON cu.person_id = p.person_id
-		<where>
+		c.CLAIM_DATE, c.CLAIM_STATUS FROM CLAIMS c JOIN insurance_contracts ic
+		ON ic.contract_id = c.contract_id JOIN customers cu ON ic.customer_id =
+		cu.customer_id JOIN persons p ON cu.person_id = p.person_id <where>
 			<if test="c.q != null and c.q != ''">
 				AND (
 				LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'
@@ -109,18 +122,15 @@
 			<if test="c.toExclusive != null">
 				AND c.CLAIM_DATE <![CDATA[<]]> #{c.toExclusive, jdbcType=DATE}
 			</if>
-		</where>
-		ORDER BY c.CLAIM_ID DESC ) inner_q WHERE ROWNUM &lt;= #{c.offset} +
-		#{c.size} ) WHERE rnum &gt; #{c.offset} </select>
+		</where> ORDER BY
+		c.CLAIM_ID DESC ) inner_q WHERE ROWNUM &lt;= #{c.offset} + #{c.size} )
+		WHERE rnum &gt; #{c.offset} </select>
 
 
-	<select id="countClaims" parameterType="map" resultType="int"> 
-		SELECT COUNT(*) 
-		FROM CLAIMS c 
-		JOIN insurance_contracts ic ON ic.contract_id = c.contract_id
-        JOIN customers cu ON ic.customer_id = cu.customer_id
-        JOIN persons p ON cu.person_id = p.person_id
-		<where>
+	<select id="countClaims" parameterType="map" resultType="int"> SELECT
+		COUNT(*) FROM CLAIMS c JOIN insurance_contracts ic ON ic.contract_id =
+		c.contract_id JOIN customers cu ON ic.customer_id = cu.customer_id JOIN
+		persons p ON cu.person_id = p.person_id <where>
 			<if test="c.q != null and c.q != ''">
 				AND (
 				LOWER(p.PERSON_NAME) LIKE '%' || LOWER(#{c.q}) || '%'

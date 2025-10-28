@@ -36,6 +36,7 @@ import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
 import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
+import com.kd.insuranceweb.admin.dto.CoverageItemDTO;
 import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
 import com.kd.insuranceweb.admin.dto.UiPathNoticeDto;
 import com.kd.insuranceweb.admin.service.AdminActivityService;
@@ -92,7 +93,7 @@ public class AdminController {
 	    
 	    // 이번 달 계약 / 청구 통계
         model.addAttribute("contractStats", adminDashboardService.getMonthlyContractStats());
-        model.addAttribute("claimStats", adminDashboardService.getMonthlyClaimStats());
+        model.addAttribute("claimStats", adminDashboardService.getClaimStats());
         
         // 최근 관리자 활동
 	    List<AdminActivityLogDTO> recentActivities = activityService.getRecentActivities();
@@ -216,8 +217,13 @@ public class AdminController {
 	@GetMapping("/claimDetail")
 	public String claimDetail(@RequestParam("claimId") Integer claimId, Model model) {
 	    ClaimDetailDTO detail = claimService.getClaimDetail(claimId);
-	    model.addAttribute("detail", detail);
 
+	 // 2. 보장 항목 리스트
+	    List<CoverageItemDTO> coverages = claimService.getClaimCoverages(claimId);
+	    detail.setCoverages(coverages); // ClaimDetailDTO에 List<CoverageItemDTO> 필드 있어야 함
+
+	    model.addAttribute("detail", detail);
+	    
 	    model.addAttribute("detailFileName",  extractFileName(detail.getDetail_file_path()));
 	    model.addAttribute("receiptFileName", extractFileName(detail.getReceipt_file_path()));
 	    model.addAttribute("etcFileName",     extractFileName(detail.getEtc_file_path()));
@@ -227,8 +233,11 @@ public class AdminController {
 	//승인
 	@PostMapping("/claim/{claimId}/approve")
 	@AdminActionLog(type="CLAIM", value="보험 청구 승인")
-	public String approve(@PathVariable("claimId") Integer claimId, RedirectAttributes ra) {
-		claimService.approveClaim(claimId);
+	public String approve(@PathVariable("claimId") Integer claimId, 
+						  RedirectAttributes ra, 
+						  @RequestParam("totalPaidAmount") Long totalPaidAmount) {
+		claimService.approveClaim(claimId, totalPaidAmount);
+		
 		ra.addFlashAttribute("success", "청구가 승인되었습니다.");
 		// 상세로 되돌아가려면 ID를 함께 리다이렉트!
 		return "redirect:/admin/claimDetail?claimId=" + claimId;

@@ -21,6 +21,7 @@
     	  
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimDetailDTO" alias="claimDetail"></typeAlias>
     	  <typeAlias type="com.kd.insuranceweb.admin.dto.ClaimListRowDTO" alias="claimList"></typeAlias>
+    	  <typeAlias type="com.kd.insuranceweb.admin.dto.CoverageItemDTO" alias="coverageItem"></typeAlias>
     	  
           <typeAlias type="com.kd.insuranceweb.admin.dto.ProductListRowDTO" alias="productList"></typeAlias>
           

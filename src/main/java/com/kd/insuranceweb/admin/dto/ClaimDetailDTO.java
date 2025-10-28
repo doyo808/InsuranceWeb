@@ -1,6 +1,7 @@
 package com.kd.insuranceweb.admin.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Data;
 
@@ -39,6 +40,8 @@ public class ClaimDetailDTO {
   
   // insurance_contract table -> insurance_products table
    private String  product_name;
+   
+   private List<CoverageItemDTO> coverages;
 
 }
 
