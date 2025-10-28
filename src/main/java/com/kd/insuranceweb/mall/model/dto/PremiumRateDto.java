@@ -2,6 +2,11 @@ package com.kd.insuranceweb.mall.model.dto;
 
 import lombok.Data;
 
+/***
+ * 상품등록시에만 사용.
+ * 
+ * 실제 데이터 조회에서는 아직 사용하지않음.
+ */
 @Data
 public class PremiumRateDto {
 	// rateRowId는 INSERT ALL로 DB에서 생성되므로 DTO에 없어도 무방.

@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.kd.insuranceweb.mall.model.dto.CoverageDto;
 import com.kd.insuranceweb.mall.model.dto.PremiumRateDto;
+import com.kd.insuranceweb.mall.model.dto.ProductDTO;
 import com.kd.insuranceweb.mall.model.dto.ProductRequestDTO;
 
 @Mapper
@@ -17,4 +18,7 @@ public interface ProductMapper {
     
     // 3. 요율들 일괄 INSERT ALL
     int insertPremiumRateRow(PremiumRateDto product);
+    
+    // 상품 가입시 필요한 데이터 조회(담보와 간단한 상품정보)
+    ProductDTO selectProductWithCoverages(Long id);
 }

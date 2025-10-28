@@ -32,5 +32,45 @@
         (SEQ_PREMIUM_RATE_ROWS.NEXTVAL, #{product_id},
          #{age_from}, #{age_to}, #{gender}, #{age_weight}, #{gender_weight}, #{is_smoker})
     </insert>
+	
+	<!-- Product + Coverage 복합 매핑 -->
+    <resultMap id="ProductWithCoveragesResultMap" type="com.kd.insuranceweb.mall.model.dto.ProductDTO">
+        <!-- 기본 필드 매핑 -->
+        <id property="product_id" column="product_id"/>
+        <result property="product_name" column="product_name"/>
+        <result property="product_desc" column="product_desc"/>
+        <result property="thumbnail" column="thumbnail_url"/>
 
+        <!-- 1:N 관계 매핑 -->
+        <collection property="coverages" ofType="com.kd.insuranceweb.mall.model.dto.CoverageDto">
+            <id property="coverage_id" column="coverage_id"/>
+            <result property="product_id" column="product_id"/>
+            <result property="cover_name" column="cover_name"/>
+            <result property="cover_desc" column="cover_desc"/>
+            <result property="coverage_amount" column="coverage_amount"/>
+            <result property="base_premium" column="base_premium"/>
+            <result property="cover_required" column="cover_required"/>
+        </collection>
+    </resultMap>
+    
+    <!-- 상품 ID로 상세조회 (JOIN) -->
+    <select id="selectProductWithCoverages" parameterType="long"
+            resultMap="ProductWithCoveragesResultMap">
+        SELECT
+            p.product_id,
+            p.product_name,
+            p.product_desc,
+            p.thumbnail_url,
+            c.coverage_id,
+            c.cover_name,
+            c.cover_desc,
+            c.coverage_amount,
+            c.base_premium,
+            c.cover_required
+        FROM insurance_products p
+        LEFT JOIN coverage_definitions c
+            ON p.product_id = c.product_id
+        WHERE p.product_id = #{productId}
+        ORDER BY c.coverage_id
+    </select>
 </mapper>

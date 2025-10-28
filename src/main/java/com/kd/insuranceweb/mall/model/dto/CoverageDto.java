@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class CoverageDto {
 	// coverageId는 INSERT ALL로 DB에서 생성되므로 DTO에 없어도 무방.
+	private long coverage_id;
 	private long product_id;
 	private String cover_name;
     private String cover_desc;

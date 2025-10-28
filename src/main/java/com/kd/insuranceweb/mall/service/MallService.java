@@ -12,6 +12,14 @@ import com.kd.insuranceweb.mall.mapper.PremiumRateRowMapper;
 
 import lombok.RequiredArgsConstructor;
 
+/***
+ * 
+ * 미사용 클래스.
+ * 추후에 추가 개발한다면 사용할것.
+ * 
+ * 고객에 대한 정보에 맞춰서 맞는 담보 및 보험료를 계산해주는 클래스
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class MallService {

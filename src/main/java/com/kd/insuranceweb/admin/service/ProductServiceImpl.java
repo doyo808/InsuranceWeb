@@ -19,6 +19,7 @@ import com.kd.insuranceweb.admin.mapper.AdminProductMapper;
 import com.kd.insuranceweb.mall.mapper.ProductMapper;
 import com.kd.insuranceweb.mall.model.dto.CoverageDto;
 import com.kd.insuranceweb.mall.model.dto.PremiumRateDto;
+import com.kd.insuranceweb.mall.model.dto.ProductDTO;
 import com.kd.insuranceweb.mall.model.dto.ProductRequestDTO;
 
 @Service
@@ -49,6 +50,12 @@ public class ProductServiceImpl implements ProductService {
 	 public int countProductsOnSale() {
 		return mapper.countProductsOnSale();
 	 }
+	 
+	 public ProductDTO getProduct(Long id) {
+		 
+		 return productMapper.selectProductWithCoverages(id);
+	 }
+	 
 	 @Transactional
 	 public void registerProduct(ProductRequestDTO dto, MultipartFile thumb, MultipartFile con) {
 		 try {
