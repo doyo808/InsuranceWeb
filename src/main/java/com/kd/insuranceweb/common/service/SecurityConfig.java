@@ -57,8 +57,13 @@ public class SecurityConfig {
             .securityMatcher("/admin/**") // 이 필터 체인은 /admin/으로 시작하는 경로에만 적용
             .authenticationProvider(adminAuthenticationProvider) // 관리자용 인증 Provider 사용
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(whiteList).permitAll() // 관리자 로그인 페이지는 허용
+                .requestMatchers(whiteList).permitAll() 	 // 관리자 로그인 페이지는 허용
+                .requestMatchers("/admin/role/roles").hasRole("MASTER_ADMIN")
+                .requestMatchers("/admin/product/**").hasAnyRole("PRODUCT_EDIT", "MASTER_ADMIN", "DEPT_MANAGER")
+                .requestMatchers("/admin/contract/**").hasAnyRole("CONTRACT_VIEW", "MASTER_ADMIN", "DEPT_MANAGER")
+                .requestMatchers("/admin/claim/**").hasAnyRole("CLAIM_EDIT", "MASTER_ADMIN", "DEPT_MANAGER")
                 .anyRequest().hasRole("ADMIN")               // 그 외 모든 /admin/** 경로는 ADMIN 역할 필요
+                
             )
             .formLogin(form -> form
                 .loginPage("/admin/login")                   // 관리자 전용 로그인 페이지
