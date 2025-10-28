@@ -8,10 +8,10 @@
         <selectKey keyProperty="productId" resultType="long" order="BEFORE">
             SELECT SEQ_INSURANCE_PRODUCTS.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO insurance_products (product_id, product_types, product_name, product_desc, thumbnail_url, conditions_path, created_at)
+        INSERT INTO insurance_products (product_id, product_types, product_name, product_desc, start_date, thumbnail_url, conditions_path, created_at, updated_at)
         VALUES
             (#{productId}, #{product_type}, #{product_name}, #{product_desc},
-             #{thumbnail}, #{conditions}, SYSDATE)
+             #{start_date}, #{thumbnail}, #{conditions}, SYSDATE, SYSDATE)
     </insert>
 
     <!-- 2) 담보 일괄 INSERT ALL -->

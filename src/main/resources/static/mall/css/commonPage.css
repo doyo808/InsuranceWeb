@@ -265,6 +265,8 @@ body {
 
 .call-box {
   padding: 20px 0;
+  margin-bottom: 100px;
+  border-radius: 0.3em;
   text-align: center;
   background-color: #f5faff;
   font-weight: 700;

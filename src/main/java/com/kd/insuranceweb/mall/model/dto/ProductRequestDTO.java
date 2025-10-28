@@ -1,5 +1,6 @@
 package com.kd.insuranceweb.mall.model.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -11,6 +12,7 @@ public class ProductRequestDTO {
 	private String product_type;
     private String product_name;
     private String product_desc;
+    private Date start_date;
     private String thumbnail;
     private String conditions;
 	
