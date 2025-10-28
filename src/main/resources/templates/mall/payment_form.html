@@ -13,16 +13,33 @@
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 <body>
-<main layout:fragment="content">
+<main layout:fragment="content"	
+		  th:data-product-name="${productName}"
+	      th:data-customer-name="${customerName}"
+	      th:data-premium="${premium}">
+		  
 	<div class="payment_wrapper">
 		<h1>보험료 <span th:text="|${#numbers.formatInteger(premium,0,'COMMA')} 원|">0원</span>에 대한<br> 결제를 진행합니다</h1>
 		
 		<button onclick="requestPay()">보험료 결제하기 테스트버튼</button>
-	
+		<button onclick="activateNextBtn()">결제완료</button>
+		
 		<form id="cardForm" th:action="@{/mall2/payment}" method="POST">		
 	
-	
-	
+		<table class="custom-table">
+				<tr><th>카드소유자</th>
+					<td>고객님 본인 명의의 신용/체크 카드만 가능</td>
+				</tr>
+				<tr><th>카드 이름</th>
+					<td><input type="text" id="card_name" name="card_name" placeholder="VISA, Master 등"></td>
+				</tr>
+				<tr><th>카드 번호</th>
+					<td><input type="text" id="card_number" name="card_number" placeholder="1234-5678-1234-5678"></td>
+				</tr>
+				<tr><th>유효 기간</th>
+					<td><input type="text" id="expiry" name="expiry" placeholder="MM/YY"></td>
+				</tr>
+			</table>
 		
 		<div class="button-wrap">
 			<button type="button" class="prev-btn" onclick="location.href=`${contextPath}mall2/notice`">이전</button>

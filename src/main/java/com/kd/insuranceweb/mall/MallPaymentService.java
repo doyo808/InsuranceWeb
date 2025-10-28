@@ -53,8 +53,8 @@ public class MallPaymentService {
     // DB에서 주문 정보를 가져오는 가상의 메소드
     private int getAmountFromDatabase(String merchantUid) {
         // 실제 구현에서는 DB와 연동하여 merchantUid에 해당하는 주문의 금액을 반환해야 함
-        // 여기서는 예제를 위해 고정된 금액 100원을 반환
-        System.out.println("DB 조회: " + merchantUid + "의 예정 금액은 100원");
-        return 100;
+        // 여기서는 예제를 위해 고정된 금액 1원을 반환
+        System.out.println("DB 조회: " + merchantUid + "의 예정 금액은 1원");
+        return 1;
     }
 }

@@ -1,59 +1,104 @@
-// 페이지가 로드되면 포트원 라이브러리를 초기화
-// "가맹점 식별코드"는 포트원 관리자 콘솔에서 확인 가능
-IMP.init("imp72048686"); 
-const isDevelopment = window.location.hostname === 'localhost';
+// ============================
+// 포트원 결제 JS
+// ============================
 
+// 페이지 로드 변수설정
+IMP.init("imp72048686"); //  (실서비스용)
+// IMP.init("imp10391932"); // 포트원 공식 테스트 ID
+
+
+const profile = document.body.dataset.profile;
+const productName = document.querySelector("main").dataset.productName;
+const customerName = document.querySelector("main").dataset.customerName;
+const premium = profile === "dev" ? 1 : parseInt(document.querySelector("main").dataset.premium, 10);
+
+const tokenMeta = document.querySelector('meta[name="_csrf"]');
+const headerMeta = document.querySelector('meta[name="_csrf_header"]');
+const token = tokenMeta ? tokenMeta.content : '';
+const header = headerMeta ? headerMeta.content : '';
+
+// ============================
+// 결제 요청 함수
+// ============================
 function requestPay() {
-    // 1. 고유한 주문번호와 빌링키(고객번호) 생성
-    // 실제로는 회원 ID나 UUID 등을 조합하여 유니크하게 만들어야 함
-    const merchant_uid = "ORD" + new Date().getTime(); // 예: ORD17275996...
+    const merchant_uid = "ORD" + new Date().getTime(); // 유니크 주문번호
 
-    // 2. IMP.request_pay(param, callback) 호출
-    IMP.request_pay({
-        pg: "html5_inicis",           // PG사 (테스트: html5_inicis)
-        pay_method: "card",           // 결제수단
-        merchant_uid: merchant_uid,   // 영수증 번호 (고유해야 함)
-        name: "든든 건강보험 (첫 결제)", // 주문명
-        amount: 100,                  // 결제금액 (테스트용)
-        buyer_name: "홍길동",
-        buyer_tel: "010-1234-5678",
-    }, function (rsp) { // callback
+    const paymentParams = {		
+        pg: "html5_inicis",          		 // 테스트 PG
+        pay_method: "card",          		 // 결제 수단
+        merchant_uid: merchant_uid,  		 // 주문번호
+        name: productName, 			 		 // 주문명
+        amount: premium,               		 // 테스트 결제금액
+        buyer_name: customerName
+    };
+
+    IMP.request_pay(paymentParams, async function(rsp) {
         if (rsp.success) {
-            // 3. 결제 성공 시, 백엔드에 결제 검증 요청
             console.log("결제 성공! 검증을 시작합니다.");
-            verifyPaymentOnServer(rsp.imp_uid, rsp.merchant_uid);
-			
+
+            // 개발 환경이면 서버 검증 없이 바로 처리
+            if (profile === "dev") {
+                handlePaymentSuccess(rsp);
+				activateNextBtn();
+                return;
+            }
+
+            // 운영 환경이면 서버 검증 호출
+			const verified = await verifyPaymentOnServer(rsp.imp_uid, rsp.merchant_uid, rsp.amount);
+			if (verified) { activateNextBtn(); } 
         } else {
             alert("결제에 실패했습니다. 에러: " + rsp.error_msg);
         }
     });
 }
 
-// 백엔드 서버에 결제 검증을 요청하는 함수
-async function verifyPaymentOnServer(imp_uid, merchant_uid) {
+// ============================
+// 서버 검증 함수
+// ============================
+async function verifyPaymentOnServer(imp_uid, merchant_uid, amount) {
     try {
-		if (isDevelopment) {return true;}
-		
-        const response = await fetch('/payment/verify', {
+        const response = await fetch('payment/verify', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                imp_uid: imp_uid,
-                merchant_uid: merchant_uid
-            })
+            headers: { 
+				'Content-Type': 'application/json',
+				[header]: token
+			},
+            body: JSON.stringify({ imp_uid, merchant_uid, amount })
         });
 
         const isVerified = await response.json();
 
         if (isVerified) {
-            alert("결제 성공 및 검증 완료!");
-            // TODO: 결제 성공 페이지로 이동 또는 UI 업데이트
+            handlePaymentSuccess({ imp_uid, merchant_uid, amount });
         } else {
-            alert("결제는 성공했으나 서버 검증에 실패했습니다. 관리자에게 문의하세요.");
-            // TODO: 위변조 의심 상황이므로 결제 취소 API를 호출하는 등의 후속 조치 필요
+            handlePaymentFailure("서버 검증 실패. 관리자에게 문의하세요.");
         }
     } catch (error) {
-        console.error('서버 통신 중 오류 발생:', error);
-        alert('서버와 통신 중 오류가 발생했습니다.');
+        console.error('서버 통신 오류:', error);
+        handlePaymentFailure("서버와 통신 중 오류 발생");
     }
+}
+
+// ============================
+// 결제 성공 처리
+// ============================
+function handlePaymentSuccess(rsp) {
+    alert("결제 성공 및 검증 완료!");
+    console.log("결제 정보:", rsp);
+    // TODO: 결제 성공 페이지 이동 또는 UI 업데이트
+}
+
+// ============================
+// 결제 실패 처리
+// ============================
+function handlePaymentFailure(message) {
+    alert("결제 실패: " + message);
+    // TODO: 필요 시 결제 취소 API 호출 등 후속 조치
+}
+
+// 계약완료버튼 활성화
+function activateNextBtn() {
+	const nextBtn = document.querySelector(".next-btn");
+	nextBtn.disabled = false;
+	nextBtn.style.cursor = 'pointer';
 }

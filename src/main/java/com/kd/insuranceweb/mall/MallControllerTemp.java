@@ -1,6 +1,8 @@
 package com.kd.insuranceweb.mall;
 
 import java.math.BigDecimal;
+
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.PersonDTO;
 import com.kd.insuranceweb.common.mapper.PersonMapper;
 import com.kd.insuranceweb.mall.dto.InsuranceApplyDto;
 import com.kd.insuranceweb.mall.dto.MallInsuredDetailDTO;
 import com.kd.insuranceweb.mall.dto.MallPersonalBasicDTO;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MallControllerTemp {
 	
+	private final Environment env;
 	private final MallServiceTemp mallServiceTemp;
 	private final MallPaymentService mallPaymentService;
 	private final PersonMapper personMapper;
@@ -132,13 +137,19 @@ public class MallControllerTemp {
 	@GetMapping("/payment")
 	public String paymentForm(HttpSession session, Model model) {
 		InsuranceApplyDto applyDto = (InsuranceApplyDto) session.getAttribute("init");
-		if (applyDto == null) { return "redirect:/mall2/init"; }
-		BigDecimal premium = new BigDecimal(applyDto.getTotalPremium());
-		model.addAttribute("premium", premium);
+		MallPersonalBasicDTO mpbDTO = (MallPersonalBasicDTO) session.getAttribute("MallPersonalBasicDTO");
+		if (applyDto == null || mpbDTO == null) { return "redirect:/mall2/init"; }
+		
+		model.addAttribute("premium", applyDto.getTotalPremium());
+		model.addAttribute("productName", applyDto.getProductName());
+		model.addAttribute("customerName", mpbDTO.getCustomer_name());
+
 		return "mall/payment_form";
 	}
+	
 	@PostMapping("/payment")
 	public String paymentComplete(HttpSession session) {
+		
 		MallPersonalBasicDTO mpbDTO = (MallPersonalBasicDTO) session.getAttribute("MallPersonalBasicDTO");
 		MallInsuredDetailDTO midDTO = (MallInsuredDetailDTO) session.getAttribute("MallInsuredDetailDTO");
 		InsuranceApplyDto iaDto = (InsuranceApplyDto) session.getAttribute("init");

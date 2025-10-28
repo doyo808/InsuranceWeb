@@ -5,12 +5,170 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>계약상세</title>
+	
+	<style>
+		/* 전체 컨테이너 */
+		.contract-detail {
+		    max-width: 1200px;
+		    margin: 200px auto;
+		    padding: 30px;
+		    color: #333;
+		}
+
+		/* 타이틀 영역 */
+		.title-row {
+		    margin-bottom: 30px;
+		}
+
+		.page-title {
+		    font-size: 28px;
+		    font-weight: 700;
+		    color: #2c3e50;
+		    border-left: 5px solid rgb(77, 158, 240);
+		    padding-left: 10px;
+		}
+
+		/* 섹션 타이틀 */
+		.section__title {
+		    font-size: 22px;
+		    font-weight: 600;
+		    margin-bottom: 5px;
+		    color: #34495e;
+		}
+
+		.section__desc {
+		    font-size: 14px;
+		    color: #666;
+		    margin-bottom: 15px;
+		}
+
+		/* 각 항목 */
+		.item {
+		    display: flex;
+		    margin-bottom: 10px;
+		    align-items: center;
+		}
+
+		.item label {
+		    width: 150px;
+		    font-weight: 500;
+		    color: #555;
+		}
+
+		.item .value {
+		    flex: 1;
+		    padding: 6px 10px;
+		    background-color: #fff;
+		    border-radius: 4px;
+		    border: 1px solid #ddd;
+		}
+
+		/* 구분선 */
+		.divider {
+		    border: none;
+		    border-top: 1px solid #ddd;
+		    margin: 20px 0;
+		}
+
+
+	</style>
 </head>
 <body>
 	<main layout:fragment="content">
 		
-		<h3>계약상세페이지</h3>
-		<p th:text="${contract_id}"></p>
+		<section class="contract-detail">
+			<!-- 타이틀 -->
+			<div class="title-row">
+				<h2 class="page-title">
+					보험계약 상세 내역
+				</h2>
+			</div>
+
+			<div class="section">
+				<h3 class="section__title">상품 정보</h3>
+				<p class="section__desc">고객이 가입한 상품정보입니다.</p>
+				<div class="item">
+					<label>상품명</label>
+					<div class="value" th:text="${detail.product_name}"></div>
+				</div>
+				<div class="item">
+					<label>상품 유형</label>
+					<div class="value" th:text="${detail.product_types}"></div>
+				</div>
+				<div class="item">
+					<label>계약 시작일</label>
+					<div class="value" th:text="${#temporals.format(detail.start_date,'yyyy-MM-dd')}"></div>
+				</div>
+				<div class="item">
+					<label>계약 종료일</label>
+					<div class="value" th:text="${#temporals.format(detail.end_date,'yyyy-MM-dd')}"></div>
+				</div>
+
+				<div class="item">
+					<label>월 보험료</label>
+					<div class="value" 
+					     th:text="${detail.total_premium != null} ? ${detail.total_premium} + '원' : '-'"></div>
+				</div>
+
+				<hr class="divider" />
+
+				<!-- 고객 정보 -->
+				<div class="section">
+					<h3 class="section__title">고객 정보</h3>
+					<p class="section__desc">보험계약자의 개인 정보입니다.</p>
+					<div class="item">
+						<label>고객명</label>
+						<div class="value" th:text="${detail.customer_name}"></div>
+					</div>
+					<div class="item">
+						<label>고객 연락처</label>
+						<div class="value" th:text="${detail.phone_number}"></div>
+					</div>
+					<div class="item">
+						<label>이메일</label>
+						<div class="value" th:text="${detail.email}"></div>
+					</div>
+
+					<hr class="divider" />
+
+					<!-- 피보험자 정보 -->
+					<div class="section">
+						<h3 class="section__title">피보험자 정보</h3>
+						<p class="section__desc">피보험자의 개인 정보입니다.</p>
+						<div class="item">
+							<label>피보험자명</label>
+							<div class="value" th:text="${detail.insured_name}"></div>
+						</div>
+						<div class="item">
+							<label>성별</label>
+							<div class="value" th:text="${detail.gender}"></div>
+						</div>
+
+						<div class="item">
+							<label>흡연여부</label>
+							<div class="value" th:text="${detail.is_smoker}"></div>
+						</div>
+						<div class="item">
+							<label>음주여부</label>
+							<div class="value" th:text="${detail.drinks}"></div>
+						</div>
+						<div class="item">
+							<label>운전상태</label>
+							<div class="value" th:text="${detail.driving_status}"></div>
+						</div>
+						<div class="item">
+							<label>병력</label>
+							<div class="value" th:text="${#strings.isEmpty(detail.medical_history) ? '병력없음' : detail.medical_history}"></div>
+						</div>
+					</div>
+
+					<hr class="divider" />
+
+	
+
+				
+
+		</section>
 		
 	</main>
 </body>

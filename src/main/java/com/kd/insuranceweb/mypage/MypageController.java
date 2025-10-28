@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
+import com.kd.insuranceweb.admin.service.ContractService;
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.CustomerDTO;
 import com.kd.insuranceweb.mypage.dto.ContractDto;
 import com.kd.insuranceweb.mypage.dto.MarketingConsentDTO;
+import com.kd.insuranceweb.mypage.dto.PaymentDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,29 +26,39 @@ import lombok.RequiredArgsConstructor;
 public class MypageController {
 	
 	private final MypageService mypageService;
+	private final ContractService contractService;
 	
 	// 계약내용 확인
 	@GetMapping("/MPDG0070")
 	public String chkContracts(@AuthenticationPrincipal CustomUserDetails loginUser, Model model) {
 		List<ContractDto> dataList = mypageService.getAllContracts(loginUser.getCustomer_id());
 		List<ContractDto> dataListActive = mypageService.getActiveContracts(loginUser.getCustomer_id());
-		System.out.println("!!!!!!!!!!!리스트확인중" + dataListActive);
         model.addAttribute("dataList", dataList);
         model.addAttribute("dataListActive", dataListActive);
 		return "mypage/chkContracts";
 	}
-	
 	// 계약 상세정보
 	@GetMapping("/MPDG0071/{id}")
 	public String contractDetail(@PathVariable("id") Integer contract_id, Model model) {
-		model.addAttribute("contract_id", contract_id);
+		ContractDetailDTO detail = contractService.getContractDetail(contract_id);
+		model.addAttribute("detail", detail);
+		
 		return "mypage/contractDetail";
 	}
 	
 	// 보험료 납입
 	@GetMapping("/MPDG0080")
-	public String payPremium() {
-		return "mypage/payPremium";
+	public String payPremium(@AuthenticationPrincipal CustomUserDetails loginUser, Model model) {
+		List<PaymentDto> dataListPayment = mypageService.getPayments(loginUser.getCustomer_id());
+		model.addAttribute("dataListPayment", dataListPayment);
+		return "mypage/payPremium2";
+	}
+	@GetMapping("/MPDG0080/{id}")
+	public String payPremiumDetail(@PathVariable("id") Integer contract_id, Model model) {
+		ContractDetailDTO detail = contractService.getContractDetail(contract_id);
+		model.addAttribute("detail", detail);
+		
+		return "mypage/payPremium2Detail";
 	}
 	
 	// 내 정보 확인/변경

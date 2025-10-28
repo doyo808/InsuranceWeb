@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout.html}">
+<head>
+	<meta charset="UTF-8" />
+	<title>보험료납입</title>
+	
+	
+</head>
+<body>
+	<main layout:fragment="content">
+		
+		<div class="item">
+			<label>상품명</label>
+			<div class="value" th:text="${detail.product_name}"></div>
+		</div>
+		
+	</main>
+</body>
+</html>

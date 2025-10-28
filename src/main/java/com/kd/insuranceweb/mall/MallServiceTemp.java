@@ -20,6 +20,7 @@ import com.kd.insuranceweb.mall.dto.MallPersonalBasicDTO;
 import com.kd.insuranceweb.mall.mapper.ContractMapper;
 import com.kd.insuranceweb.mall.mapper.CoverageMapper;
 import com.kd.insuranceweb.mall.mapper.InsuredMapper;
+import com.kd.insuranceweb.mypage.mapper.PaymentMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,7 @@ public class MallServiceTemp {
 	private final InsuredMapper insuredMapper;
 	private final ContractMapper contractMapper;
 	private final CoverageMapper coverageMapper;
+	private final PaymentMapper paymentMapper;
 	
 	// 계약완료(피보험자 기본정보, 상세정보 등록 -> 계약 등록 -> 보장항목 등록)
 	@Transactional
@@ -42,19 +44,22 @@ public class MallServiceTemp {
 		int insured_id = insertInsured(person_id, "M", 30, midDTO);
 		
 		// 계약내용과 보장항목 추가
-		insertContractAndCoverages(iaDto, customer_id, insured_id);
+		int contract_id = insertContractAndCoverages(iaDto, customer_id, insured_id);
+		
+		// 결제정보 추가
+		insertPayment(customer_id, contract_id, iaDto);
 		return 1;
 	}
 	
 	// 등록된 사람여부 확인
-	public int personExists(String insured_email) {
+	int personExists(String insured_email) {
 		PersonDTO person = personMapper.selectByEmail(insured_email);
 		if (person == null) {
 			return -1;
 		} else return person.getPerson_id();
 	}
 	// 없다면 등록하기
-	public int insertPerson(MallPersonalBasicDTO mpbDTO) {
+	int insertPerson(MallPersonalBasicDTO mpbDTO) {
 		PersonDTO person = new PersonDTO();
 		person.setPerson_name(mpbDTO.getInsured_name());
 		person.setPhone_number(mpbDTO.getInsured_phone_number());
@@ -65,7 +70,7 @@ public class MallServiceTemp {
 	}
 	
 	// 피보험자 등록하고 id를 반환
-	public int insertInsured(
+	int insertInsured(
 			Integer person_id, String gender, Integer age, MallInsuredDetailDTO midDTO) {
 		InsuredDTO insured = new InsuredDTO();
 		insured.setPerson_id(person_id);
@@ -80,7 +85,7 @@ public class MallServiceTemp {
 	}
 
 	// 계약과 보장항목들 넣기
-	public int insertContractAndCoverages(InsuranceApplyDto iaDto, Integer customer_id, Integer insured_id) {
+	int insertContractAndCoverages(InsuranceApplyDto iaDto, Integer customer_id, Integer insured_id) {
 		 // 1. MyBatis에 전달할 파라미터를 담을 Map을 생성합니다.
 	    Map<String, Object> contractParams = new HashMap<>();
 	    contractParams.put("product_id", iaDto.getProductId());
@@ -114,11 +119,19 @@ public class MallServiceTemp {
 	        insertedCount++; // 계약 1건 + 담보 n건 = 총 INSERT된 수
 	    }
 	    
-	    return insertedCount;
+	    return contract_id;
 	}
 
-	
-	
+	// 첫 보험료 결제 insert
+	int insertPayment(int customer_id, int contract_id, InsuranceApplyDto iaDto) {
+		Map<String, Object> paymentParams = new HashMap<>();
+		paymentParams.put("customer_id", customer_id);
+		paymentParams.put("contract_id", contract_id);
+		paymentParams.put("paid_amount", iaDto.getTotalPremium());
+		
+		paymentMapper.insertPayment(paymentParams);
+		return 1;
+	}
 
 	
 }

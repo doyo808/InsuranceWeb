@@ -16,7 +16,7 @@
 	<th:block layout:fragment="extraHead"></th:block>
 </head>
 
-<body class="admin-root">
+<body class="admin-root" th:data-profile="${profile}">
 
 	<!-- 헤더 (공통 프래그먼트) -->
 	<header th:replace="~{admin/common/fragments/header :: headerFragment}"></header>
@@ -39,6 +39,9 @@
 	
 	<!-- 전역 스크립트 (모듈화) -->
 	<script th:inline="javascript">
+		const profileFromDataset = document.body.dataset.profile;
+		if (profileFromDataset === "dev") { console.log("개발환경용 JS 실행"); }
+		
 		const contextPath = /*[[@{/}]]*/ '';
 	</script>
 

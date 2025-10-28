@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title layout:title-pattern="$CONTENT_TITLE - 보험가입">공통 타이틀</title>
 	<link rel="stylesheet" th:href="@{/common/css/customTable.css}" />
 	<link rel="stylesheet" th:href="@{/common/css/customButton.css}" />
@@ -24,7 +26,7 @@
 		}
 	</style>
 </head>
-<body>
+<body th:data-profile="${profile}">
     <!-- 헤더 -->
     <header th:replace="~{mall/layout/header_mall :: headerFragment}"></header>
 
@@ -34,6 +36,9 @@
     </main>
 
 	<script th:inline="javascript">
+		const profileFromDataset = document.body.dataset.profile;
+		if (profileFromDataset === "dev") { console.log("개발환경용 JS 실행"); }
+		
 	  const contextPath = /*[[@{/}]]*/ '';
 	</script>
 </body>

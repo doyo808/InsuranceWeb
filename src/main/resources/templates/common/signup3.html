@@ -37,11 +37,53 @@
            border-radius: 8px;
            cursor: pointer;
        }
+	   
+
+	   /* 성공 아이콘 (SVG) 스타일 */
+	   .success-icon {
+	   	width: 80px;
+	   	height: 80px;
+	   	margin-bottom: 20px;
+	   }
+
+	   .success-icon .circle {
+	   	stroke-dasharray: 166;
+	   	stroke-dashoffset: 166;
+	   	stroke-width: 2;
+	   	stroke-miterlimit: 10;
+	   	stroke: #7ac142;
+	   	fill: none;
+	   	animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+	   }
+
+	   .success-icon .checkmark {
+	   	stroke-dasharray: 48;
+	   	stroke-dashoffset: 48;
+	   	stroke-width: 2;
+	   	stroke-linecap: round;
+	   	stroke-miterlimit: 10;
+	   	stroke: #7ac142;
+	   	fill: none;
+	   	animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+	   }
+
+	   @keyframes stroke {
+	   	100% {
+	   		stroke-dashoffset: 0;
+	   	}
+	   }
+
    </style>
 </head>
 <body>
 	<main layout:fragment="content">
 		<div class="container">
+			<svg class="success-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+				<circle class="circle" cx="26" cy="26" r="25" fill="none"/>
+				<path class="checkmark" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+			</svg>
+			
+			
 		    <h1>회원가입이 완료되었습니다!</h1>
 		    <p>환영합니다! 지금 바로 로그인하여<br>모든 서비스를 이용해 보세요.</p>
 		    <button id="login-btn" th:data-login-url="@{/login}">로그인 페이지로 이동</button>
