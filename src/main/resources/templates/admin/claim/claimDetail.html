@@ -98,7 +98,7 @@
 				</div>
 				<div class="item" th:if="${detail.claim_status} == 2">
 					<label>총 지급 금액</label>
-					<div class="value pre-wrap" th:text="${detail.total_paid_amount} + '원'">1000000원</div>
+					<div class="value pre-wrap" th:text="${#numbers.formatInteger(detail.total_paid_amount, 3, 'COMMA')} + '원'">1000000원</div>
 				</div>
 
 				<div class="item" th:if="${detail.claim_status} == 3">
@@ -212,8 +212,9 @@
 						<h3 class="modal__title">총 지급금액 입력</h3>
 						<p class="modal__desc">지급할 총 금액을 입력해 주세요.</p>
 
-						<input type="number" name="totalPaidAmount" id="totalPaidAmountInput" required
-							style="font-size:18px;" placeholder="총 지급금액을 입력하세요 (원 단위)">
+						<input type="text" name="totalPaidAmount" id="totalPaidAmountInput"
+							style="font-size:18px; text-align:right; padding:10px; border-radius:8px; border:1px solid #ccc;"
+							placeholder="총 지급금액을 입력하세	요 (원 단위)">
 						<div class="muted" style="font-size:18px;">※ 담보 선택 합계: <span id="coverageSumDisplay">0원</span>
 						</div>
 
@@ -254,29 +255,46 @@
 		</section>
 
 		<script>
-			// ✅ 승인 모달 로직
-			document.addEventListener('DOMContentLoaded', () => {
-				const openApproveBtn = document.getElementById('openApprove');
-				const approveDialog = document.getElementById('approveDialog');
-				const cancelApprove = document.getElementById('cancelApprove');
-				const totalPaidAmountInput = document.getElementById('totalPaidAmountInput');
-				const coverageSumDisplay = document.getElementById('coverageSumDisplay');
-				const totalAmountEl = document.getElementById('totalAmount');
+		document.addEventListener('DOMContentLoaded', () => {
+			const openApproveBtn = document.getElementById('openApprove');
+			const approveDialog = document.getElementById('approveDialog');
+			const cancelApprove = document.getElementById('cancelApprove');
+			const totalPaidAmountInput = document.getElementById('totalPaidAmountInput');
+			const coverageSumDisplay = document.getElementById('coverageSumDisplay');
+			const totalAmountEl = document.getElementById('totalAmount');
 
-				openApproveBtn?.addEventListener('click', () => {
-					const totalText = totalAmountEl?.textContent?.replace(/[^\d]/g, '') || '0';
-					const total = parseInt(totalText, 10) || 0;
+			// 🔹 승인 버튼 클릭 시 모달 열기
+			openApproveBtn?.addEventListener('click', () => {
+				const totalText = totalAmountEl?.textContent?.replace(/[^\d]/g, '') || '0';
+				const total = parseInt(totalText, 10) || 0;
 
-					totalPaidAmountInput.placeholder = `${total.toLocaleString('ko-KR')}원`;
-					coverageSumDisplay.textContent = `${total.toLocaleString('ko-KR')}원`;
+				totalPaidAmountInput.placeholder = `${total.toLocaleString('ko-KR')}원`;
+				coverageSumDisplay.textContent = `${total.toLocaleString('ko-KR')}원`;
 
-					approveDialog.showModal();
-					totalPaidAmountInput.focus();
-				});
-
-				cancelApprove?.addEventListener('click', () => approveDialog.close());
+				approveDialog.showModal();
+				totalPaidAmountInput.focus();
 			});
+
+			cancelApprove?.addEventListener('click', () => approveDialog.close());
+
+			// 🔹 금액 입력 시 자동 콤마(,) 추가
+			totalPaidAmountInput?.addEventListener('input', e => {
+				let value = e.target.value.replace(/[^\d]/g, ''); // 숫자만 남김
+				if (value) {
+					e.target.value = Number(value).toLocaleString('ko-KR'); // 콤마 추가
+				} else {
+					e.target.value = '';
+				}
+			});
+
+			// 🔹 폼 제출 시 콤마 제거 후 전송 (서버는 순수 숫자만 받음)
+			const approveForm = document.getElementById('approveForm');
+			approveForm?.addEventListener('submit', () => {
+				totalPaidAmountInput.value = totalPaidAmountInput.value.replaceAll(',', '');
+			});
+		});
 		</script>
+
 
 		<script>
 			(function () {
