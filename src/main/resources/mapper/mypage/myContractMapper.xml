@@ -3,39 +3,62 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kd.insuranceweb.mypage.mapper.MyContractMapper">
-    <select id="selectAllContracts" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
-        SELECT 
-            contract_id,
-            product_name,
-            customer_name,
-            insured_name,
-            start_date,
-            end_date,
-            total_premium,
-            status
-        FROM contract_view
-        WHERE 
-		    customer_id = #{customer_id}
-		    AND ((start_date IS NULL OR start_date >= ADD_MONTHS(SYSDATE, -36))
-		         OR status = 'ACTIVE')
+   <select id="selectAllContracts" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
+	    SELECT 
+	        c.contract_id,
+	        p.product_name,
+	        cust_person.person_name AS customer_name,
+	        ins_person.person_name AS insured_name,
+	        c.start_date,
+	        c.end_date,
+	        c.total_premium,
+	        c.status
+	    FROM insurance_contracts c
+	    JOIN insurance_products p
+	        ON c.product_id = p.product_id
+	    JOIN customers cust
+	        ON c.customer_id = cust.customer_id
+	    JOIN persons cust_person
+	        ON cust.person_id = cust_person.person_id
+	    JOIN insureds ins
+	        ON c.insured_id = ins.insured_id
+	    JOIN persons ins_person
+	        ON ins.person_id = ins_person.person_id
+	    WHERE 
+	        c.customer_id = #{customer_id}
+	        AND (
+	            (c.start_date IS NULL OR c.start_date >= ADD_MONTHS(SYSDATE, -36))
+	            OR c.status = 'ACTIVE'
+	        )
+	    ORDER BY c.start_date DESC
+	</select>
 
-        ORDER BY start_date DESC
-    </select>
     
-    <select id="selectActiveContracts" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
-        SELECT 
-            contract_id,
-            product_name,
-            customer_name,
-            insured_name,
-            start_date,
-            end_date,
-            total_premium,
-            status
-        FROM contract_view
-        WHERE  
-        	customer_id = #{customer_id}
-        	AND status = 'ACTIVE' 
-        ORDER BY start_date DESC
-    </select>
+	<select id="selectActiveContracts" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.ContractDto">
+	    SELECT 
+	        c.contract_id,
+	        p.product_name,
+	        cust_person.person_name AS customer_name,
+	        ins_person.person_name AS insured_name,
+	        c.start_date,
+	        c.end_date,
+	        c.total_premium,
+	        c.status
+	    FROM insurance_contracts c
+	    JOIN insurance_products p
+	        ON c.product_id = p.product_id
+	    JOIN customers cust
+	        ON c.customer_id = cust.customer_id
+	    JOIN persons cust_person
+	        ON cust.person_id = cust_person.person_id
+	    JOIN insureds ins
+	        ON c.insured_id = ins.insured_id
+	    JOIN persons ins_person
+	        ON ins.person_id = ins_person.person_id
+	    WHERE  
+	        c.customer_id = #{customer_id}
+	        AND c.status = 'ACTIVE'
+	    ORDER BY c.start_date DESC
+	</select>
+
 </mapper>

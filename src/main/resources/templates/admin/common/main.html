@@ -79,44 +79,61 @@
 
 			<!-- 보험뉴스 요약 섹션 -->
 			<section class="news-summary">
-			    <h3 th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' 보험뉴스 요약'"></h3>
+				<h3 th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' 보험뉴스 요약'"></h3>
 				<p th:utext="${#strings.replace(uiPath_notice_content, '\n', '<br/>')}"></p>
 			</section>
-			
+
 
 			<!-- Chart Script -->
 			<script th:inline="javascript">
-			document.addEventListener("DOMContentLoaded", function () {
-			  const contractStats = /*[[${contractStats}]]*/ {};
-			  const claimStats = /*[[${claimStats}]]*/ {};
+				document.addEventListener("DOMContentLoaded", function () {
+					const contractStats = /*[[${contractStats}]]*/ {};
+					const claimStats = /*[[${claimStats}]]*/ {};
 
-			  new Chart(document.getElementById("contractChart"), {
-			    type: "bar",
-			    data: {
-			      labels: ["신규 계약", "해지 계약"],
-			      datasets: [{
-			        label: "계약 건수",
-			        data: [contractStats.newContracts, contractStats.endedContracts],
-			        backgroundColor: ["rgba(17,115,212,0.7)", "rgba(240,70,70,0.7)"]
-			      }]
-			    },
-			    options: { responsive: true, plugins: { legend: { display: false } } }
-			  });
+					new Chart(document.getElementById("contractChart"), {
+						type: "bar",
+						data: {
+							labels: ["신규 계약", "해지 계약"],
+							datasets: [{
+								label: "계약 건수",
+								data: [contractStats.newContracts, contractStats.endedContracts],
+								backgroundColor: ["rgba(17,115,212,0.7)", "rgba(240,70,70,0.7)"]
+							}]
+						},
+						options: {
+							responsive: true,
+							plugins: {legend: {display: false}},
+							scales: {
+								y: {
+									beginAtZero: true,
+									max: Math.max(contractStats.newContracts, contractStats.endedContracts) * 1.5
+								}
+							}
+						}
+					});
 
-			  // ✅ 청구 그래프 수정
-			  new Chart(document.getElementById("claimChart"), {
-			    type: "bar",
-			    data: {
-			      labels: ["신규 청구", "지급 완료"],
-			      datasets: [{
-			        label: "청구 건수",
-			        data: [claimStats.newClaims, claimStats.approvedClaims],
-			        backgroundColor: ["rgba(255,206,86,0.7)", "rgba(75,192,192,0.7)"]
-			      }]
-			    },
-			    options: { responsive: true, plugins: { legend: { display: false } } }
-			  });
-			});
+					// ✅ 청구 그래프 수정
+					new Chart(document.getElementById("claimChart"), {
+						type: "bar",
+						data: {
+							labels: ["신규 청구", "지급 완료"],
+							datasets: [{
+								label: "청구 건수",
+								data: [claimStats.newClaims, claimStats.approvedClaims],
+								backgroundColor: ["rgba(255,206,86,0.7)", "rgba(75,192,192,0.7)"]
+							}]
+						},
+						options: {
+							responsive: true, plugins: {legend: {display: false}},
+							scales: {
+								y: {
+									beginAtZero: true,
+									suggestedMax: Math.max(claimStats.newClaims, claimStats.approvedClaims) *1.5 // 여유 추가
+								}
+							}
+						}
+					});
+				});
 			</script>
 
 		</main>
