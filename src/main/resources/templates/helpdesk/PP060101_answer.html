@@ -4,10 +4,11 @@
 
     <!-- FAQ 리스트 -->
     <div th:each="faq : ${faqs}">
-		<div class="faq-question">
-			<span th:text="'Q [' + ${faq.category} + '] ' + ${faq.question}"></span>
-	    </div>
-        <div class="faq-answer" th:text="${faq.answer}"></div>
+        <div class="faq-question">
+            <span th:text="'Q [' + ${faq.category} + '] ' + ${faq.question}"></span>
+        </div>
+        <!-- HTML 렌더링을 위해 th:utext 사용 -->
+        <div class="faq-answer" th:utext="${faq.answer}"></div>
     </div>
 
     <!-- 페이지네이션 (10개씩 표시) -->

@@ -36,21 +36,22 @@
 	</select>
 
 
-	<!-- 💰 이번 달 청구 통계 -->
-	<select id="sumClaimsThisMonth" resultType="int">
-		SELECT NVL(SUM(CLAIM_AMOUNT), 0) / 10000
+	<!-- 💰 이번 달 청구 통계: 건수 기준으로 변경 -->
+	<select id="countNewClaimsThisMonth" resultType="int">
+		SELECT COUNT(*)
 		FROM CLAIMS
 		WHERE EXTRACT(YEAR FROM CLAIM_DATE) = EXTRACT(YEAR FROM SYSDATE)
 		AND EXTRACT(MONTH FROM CLAIM_DATE) = EXTRACT(MONTH FROM SYSDATE)
 	</select>
 
-	<select id="sumApprovedClaimsThisMonth" resultType="int">
-		SELECT NVL(SUM(CLAIM_AMOUNT), 0) / 10000
+	<select id="countApprovedClaimsThisMonth" resultType="int">
+		SELECT COUNT(*)
 		FROM CLAIMS
 		WHERE CLAIM_STATUS = 2
 		AND EXTRACT(YEAR FROM CLAIM_DATE) = EXTRACT(YEAR FROM SYSDATE)
 		AND EXTRACT(MONTH FROM CLAIM_DATE) = EXTRACT(MONTH FROM SYSDATE)
 	</select>
+
 
 	<!-- 🕓 최근 관리자 활동 -->
 	<select id="selectRecentActivities" resultType="map">

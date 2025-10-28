@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/common/layout.html}">
+	layout:decorate="~{common/layout.html}">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,56 +8,78 @@
 	<title>포인트 적립/사용내역 확인 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
 	<link rel="stylesheet" th:href="@{/club/css/club_common.css}">
 	<link rel="stylesheet" th:href="@{/club/css/PP050401_001.css}">
-	
+
 	<style>
-	  /* 테이블 기본 정렬 보정 */
-	  table.tbl-base {
-	    width: 100%;
-	    border-collapse: collapse;
-	
-	  }
+		/* 테이블 기본 정렬 보정 */
+		table.tbl-base {
+			width: 100%;
+			border-collapse: collapse;
 
-	  table.tbl-base th,
-	  table.tbl-base td {
-	    text-align: center;
-	    vertical-align: middle; /* ✅ 버튼이 세로 중앙정렬되게 */
-	    padding: 14px 10px;
-	  }
-	  
-	  table.tbl-base td { font-size: 18px; }
+		}
 
-	  /* 선택 버튼 스타일 */
-	  .choice button {
-	    display: inline-block;
-	    padding: 8px 16px;
-	    font-size: 17px;
-	    border: 1px solid #007bff;
-	    border-radius: 6px;
-	    background-color: #007bff;
-	    color: #fff;
-	    cursor: pointer;
-	    transition: all 0.2s ease;
-		white-space: nowrap;
-	  }
+		table.tbl-base th,
+		table.tbl-base td {
+			text-align: center;
+			vertical-align: middle;
+			/* ✅ 버튼이 세로 중앙정렬되게 */
+			padding: 14px 10px;
+		}
 
-	  .choice button:hover {
-	    background-color: #0056b3;
-	    border-color: #0056b3;
-	  }
+		table.tbl-base td {
+			font-size: 18px;
+		}
 
-	  /* 버튼이 너무 위쪽/아래쪽에 붙지 않도록 */
-	  .choice {
-	    height: 60px; /* 테이블 높이 균일화 */
-	  }
+		/* 선택 버튼 스타일 */
+		.choice button {
+			display: inline-block;
+			padding: 8px 16px;
+			font-size: 17px;
+			border: 1px solid #007bff;
+			border-radius: 6px;
+			background-color: #007bff;
+			color: #fff;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			white-space: nowrap;
+		}
 
-	  /* 테이블 행 hover 효과 (선택하기 편하게) */
-	  table.tbl-base tr:hover {
-	    background-color: #f9f9f9;
-	  }
+		.choice button:hover {
+			background-color: #0056b3;
+			border-color: #0056b3;
+		}
 
+		/* 버튼이 너무 위쪽/아래쪽에 붙지 않도록 */
+		.choice {
+			height: 60px;
+			/* 테이블 높이 균일화 */
+		}
+
+		/* 테이블 행 hover 효과 (선택하기 편하게) */
+		table.tbl-base tr:hover {
+			background-color: #f9f9f9;
+		}
+
+		.button-area {
+			display: flex;
+			justify-content: space-around;
+			text-align: center;
+			margin: 40px 0;
+		}
+
+		.btn-primary {
+			display: inline-block;
+			background: #007bff;
+			color: white;
+			font-size: 16px;
+			font-weight: bold;
+			padding: 14px 28px;
+			border-radius: 8px;
+			border: none;
+			cursor: pointer;
+		}
 	</style>
 
-	
+
 </head>
 
 <body>
@@ -111,6 +133,9 @@
 								</tbody>
 							</table>
 						</form>
+
+						<a th:href="@{/claim/claimpage1}" class="btn-primary" style="background:#6c757d;">이전</a>
+
 					</div>
 				</div>
 			</section>

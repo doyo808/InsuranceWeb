@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kd.insuranceweb.admin.dto.ClaimDetailDTO;
 import com.kd.insuranceweb.admin.dto.ClaimListRowDTO;
 import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
+import com.kd.insuranceweb.admin.dto.CoverageItemDTO;
 import com.kd.insuranceweb.admin.mapper.AdminClaimMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -48,8 +49,8 @@ public class ClaimServiceImpl implements ClaimService {
 
     @Override
     @Transactional
-    public void approveClaim(Integer claimId) {
-        mapper.approveClaim(claimId);
+    public void approveClaim(Integer claimId, Long totalPaidAmount) {
+        mapper.approveClaim(claimId , totalPaidAmount);
     }
 
     @Override
@@ -57,6 +58,13 @@ public class ClaimServiceImpl implements ClaimService {
     public void rejectClaim(Integer claimId, String reason) {
         mapper.rejectClaim(claimId, reason);
     }
+
+	@Override
+	public List<CoverageItemDTO> getClaimCoverages(Integer claimId) {
+		return mapper.findClaimCoverages(claimId);
+	}
+
+	
 }
 
 

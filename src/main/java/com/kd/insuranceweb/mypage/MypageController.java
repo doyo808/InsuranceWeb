@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.service.ContractService;
+import com.kd.insuranceweb.club.service.AnypointService;
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.CustomerDTO;
 import com.kd.insuranceweb.mypage.dto.ContractDto;
@@ -27,6 +29,7 @@ public class MypageController {
 	
 	private final MypageService mypageService;
 	private final ContractService contractService;
+	private final AnypointService anypointService;
 	
 	// 계약내용 확인
 	@GetMapping("/MPDG0070")
@@ -53,13 +56,32 @@ public class MypageController {
 		model.addAttribute("dataListPayment", dataListPayment);
 		return "mypage/payPremium2";
 	}
-	@GetMapping("/MPDG0080/{id}")
-	public String payPremiumDetail(@PathVariable("id") Integer contract_id, Model model) {
-		ContractDetailDTO detail = contractService.getContractDetail(contract_id);
-		model.addAttribute("detail", detail);
-		
-		return "mypage/payPremium2Detail";
-	}
+   @PostMapping("/MPDG0080/{id}")
+    public String payPremiumDetail(
+            @PathVariable("id") Integer contract_id,
+            @RequestParam("product_name") String product_name,
+            @RequestParam("payment_date") String payment_date,
+            @RequestParam("paid_amount") int paid_amount,
+            @RequestParam("total_premium") int total_premium,
+            @RequestParam("pay_status") String pay_status,
+            @AuthenticationPrincipal CustomUserDetails loginUser,
+            Model model
+    ) {
+        
+	   if (pay_status.equals("미납")) { paid_amount = 0; }
+	   
+        model.addAttribute("contract_id", contract_id);
+        model.addAttribute("product_name", product_name);
+        model.addAttribute("payment_date", payment_date);
+        model.addAttribute("paid_amount", paid_amount);
+        model.addAttribute("total_premium", total_premium);
+        model.addAttribute("pay_status", pay_status);
+        
+        int userPoints = (int)anypointService.findBalance((long) loginUser.getCustomer_id()); 
+        model.addAttribute("userPoints", userPoints);
+        
+        return "mypage/payPremium2Detail";
+    }
 	
 	// 내 정보 확인/변경
 	@GetMapping("/MPDG0093")

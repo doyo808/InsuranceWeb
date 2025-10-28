@@ -10,11 +10,11 @@
     <selectKey
 			keyProperty="claim_id" resultType="int" order="AFTER">
 			SELECT CLAIMS_SEQ.CURRVAL FROM DUAL
-		</selectKey> INSERT
-		INTO CLAIMS ( CLAIM_ID, CONTRACT_ID, CLAIM_TYPE, CLAIM_DATE,
-		ACCIDENT_DATE, ACCIDENT_DESCRIPTION, BENEFICIARY_NAME, BANK_ACCOUNT,
-		BANK_NAME, BENEFICIARY_EMAIL, CLAIM_STATUS, COMPLETION_DATE,
-		TOTAL_PAID_AMOUNT, DETAIL_FILE_PATH, RECEIPT_FILE_PATH, ETC_FILE_PATH,
+		</selectKey> INSERT INTO
+		CLAIMS ( CLAIM_ID, CONTRACT_ID, CLAIM_TYPE, CLAIM_DATE, ACCIDENT_DATE,
+		ACCIDENT_DESCRIPTION, BENEFICIARY_NAME, BANK_ACCOUNT, BANK_NAME,
+		BENEFICIARY_EMAIL, CLAIM_STATUS, COMPLETION_DATE, TOTAL_PAID_AMOUNT,
+		DETAIL_FILE_PATH, RECEIPT_FILE_PATH, ETC_FILE_PATH,
 		BENEFICIARY_POSTCODE, BENEFICIARY_ADDRESS, MEDICAL_BENEFITS,
 		ACCIDENT_TYPE ) VALUES ( CLAIMS_SEQ.NEXTVAL, #{contract_id,
 		jdbcType=NUMERIC}, #{claim_type, jdbcType=VARCHAR}, #{claim_date,
@@ -116,5 +116,42 @@
 		JOIN persons p ON c.person_id = p.person_id
 		WHERE c.customer_id = #{customer_id}
 	</select>
+
+
+	<!-- 개월 단위 조회 -->
+	<select id="selectClaimsByMonths" resultType="claim">
+		SELECT
+		c.claim_id,
+		c.claim_date,
+		c.accident_type,
+		c.claim_status,
+		p1.person_name AS insured_name,
+		c.beneficiary_name
+		FROM CLAIMS c
+		JOIN INSURANCE_CONTRACTS ic ON c.contract_id = ic.contract_id
+		JOIN CUSTOMERS cu ON ic.customer_id = cu.customer_id
+		JOIN PERSONS p1 ON cu.person_id = p1.person_id
+		WHERE cu.customer_id = #{customerId}
+		AND c.claim_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{months})
+		ORDER BY c.claim_date DESC
+	</select>
+
+	<!-- 날짜 직접입력 조회 -->
+	<select id="selectClaimsByDates" resultType="claim"> 
+	SELECT c.claim_id,
+		c.claim_date, c.accident_type, c.claim_status, p1.person_name AS
+		insured_name, c.beneficiary_name 
+		FROM CLAIMS c 
+		JOIN INSURANCE_CONTRACTS ic ON c.contract_id = ic.contract_id 
+		JOIN CUSTOMERS cu ON ic.customer_id	= cu.customer_id 
+		JOIN PERSONS p1 ON cu.person_id = p1.person_id 
+		WHERE cu.customer_id = #{customerId} 
+		
+			AND c.claim_date &gt;= #{start}
+		
+			AND c.claim_date &lt;= #{end}
+		
+		ORDER BY c.claim_date DESC </select>
+
 
 </mapper>

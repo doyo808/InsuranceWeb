@@ -26,6 +26,11 @@ public interface ReviewService {
 
     // 후기 삭제
     int deleteReview(Long reviewId);
+    
+    // 관리자용
+    List<ReviewDto> getReviewListForAdmin(Map<String, Object> params);
+    
+    int getReviewCountForAdmin(Map<String, Object> params);
 	
 
 }

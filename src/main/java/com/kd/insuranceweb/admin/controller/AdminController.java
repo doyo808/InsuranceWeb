@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ import com.kd.insuranceweb.admin.dto.ClaimSearchCriteria;
 import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
+import com.kd.insuranceweb.admin.dto.CoverageItemDTO;
 import com.kd.insuranceweb.admin.dto.ProductSearchCriteria;
 import com.kd.insuranceweb.admin.dto.UiPathNoticeDto;
 import com.kd.insuranceweb.admin.service.AdminActivityService;
@@ -92,7 +94,7 @@ public class AdminController {
 	    
 	    // 이번 달 계약 / 청구 통계
         model.addAttribute("contractStats", adminDashboardService.getMonthlyContractStats());
-        model.addAttribute("claimStats", adminDashboardService.getMonthlyClaimStats());
+        model.addAttribute("claimStats", adminDashboardService.getClaimStats());
         
         // 최근 관리자 활동
 	    List<AdminActivityLogDTO> recentActivities = activityService.getRecentActivities();
@@ -216,8 +218,13 @@ public class AdminController {
 	@GetMapping("/claimDetail")
 	public String claimDetail(@RequestParam("claimId") Integer claimId, Model model) {
 	    ClaimDetailDTO detail = claimService.getClaimDetail(claimId);
-	    model.addAttribute("detail", detail);
 
+	 // 2. 보장 항목 리스트
+	    List<CoverageItemDTO> coverages = claimService.getClaimCoverages(claimId);
+	    detail.setCoverages(coverages); // ClaimDetailDTO에 List<CoverageItemDTO> 필드 있어야 함
+
+	    model.addAttribute("detail", detail);
+	    
 	    model.addAttribute("detailFileName",  extractFileName(detail.getDetail_file_path()));
 	    model.addAttribute("receiptFileName", extractFileName(detail.getReceipt_file_path()));
 	    model.addAttribute("etcFileName",     extractFileName(detail.getEtc_file_path()));
@@ -227,8 +234,11 @@ public class AdminController {
 	//승인
 	@PostMapping("/claim/{claimId}/approve")
 	@AdminActionLog(type="CLAIM", value="보험 청구 승인")
-	public String approve(@PathVariable("claimId") Integer claimId, RedirectAttributes ra) {
-		claimService.approveClaim(claimId);
+	public String approve(@PathVariable("claimId") Integer claimId, 
+						  RedirectAttributes ra, 
+						  @RequestParam("totalPaidAmount") Long totalPaidAmount) {
+		claimService.approveClaim(claimId, totalPaidAmount);
+		
 		ra.addFlashAttribute("success", "청구가 승인되었습니다.");
 		// 상세로 되돌아가려면 ID를 함께 리다이렉트!
 		return "redirect:/admin/claimDetail?claimId=" + claimId;
@@ -303,45 +313,152 @@ public class AdminController {
 	
 	// 윤한식 ===== 고객가입후기 =====
 	@GetMapping("/review")
-	public String reviewList(
+	public String reviewListAdmin(
 	        @RequestParam(value = "category", required = false) String category,
-	        @RequestParam(value = "searchType", required = false) String searchType,
+	        @RequestParam(value = "subCategory", required = false) String subCategory,
 	        @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+	        @RequestParam(value = "author_name", required = false) String author_name,
+	        @RequestParam(value = "is_visible", required = false) String is_visible,
+	        @RequestParam(value = "from", required = false) String from,
+	        @RequestParam(value = "to", required = false) String to,
+	        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
 	        Model model) {
-	
+
+	    int pageSize = 10;
+	    int startRow = (page - 1) * pageSize + 1;
+	    int endRow = page * pageSize;
+
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("category", category);
-	    params.put("searchType", searchType);
+	    params.put("subCategory", subCategory);
 	    params.put("searchKeyword", searchKeyword);
-	    // 페이징 없이 전체 표시 (필요 시 startRow, endRow 추가)
-	    params.put("startRow", 1);
-	    params.put("endRow", 1000);
-	
-	    List<ReviewDto> reviewList = reviewService.getReviewList(params);
+	    params.put("author_name", author_name);
+	    params.put("is_visible", is_visible);
+	    params.put("from", from);
+	    params.put("to", to);
+	    params.put("startRow", startRow);
+	    params.put("endRow", endRow);
+
+	    List<ReviewDto> reviewList = reviewService.getReviewListForAdmin(params);
+	    int totalCount = reviewService.getReviewCountForAdmin(params);
+
 	    model.addAttribute("reviewList", reviewList);
-	
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("pageSize", pageSize);
+
+	    // 검색 조건 유지
+	    model.addAttribute("category", category);
+	    model.addAttribute("subCategory", subCategory);
+	    model.addAttribute("searchKeyword", searchKeyword);
+	    model.addAttribute("author_name", author_name);
+	    model.addAttribute("is_visible", is_visible);
+	    model.addAttribute("from", from);
+	    model.addAttribute("to", to);
+
 	    return "admin/review/reviewList";
 	}
+
+
+
+
+
+
+
 	
 	// 윤한식 ===== NOTICE =====
 	@GetMapping("/notice")
-	public String noticeList(Model model) {
-		// DB에서 전체 공지 조회 (관리자용)
-		List<NoticeDto> noticeList = noticeService.getAllNotices(null, 0, 100);
-        model.addAttribute("noticeList", noticeList);
-        return "admin/notice/noticeList";
+	public String noticeList(
+	        @RequestParam(value = "keyword", required = false) String keyword,
+	        @RequestParam(value = "writer", required = false) String writer,
+	        @RequestParam(value = "is_visible", required = false) String isVisible,
+	        @RequestParam(value = "from", required = false) String from,
+	        @RequestParam(value = "to", required = false) String to,
+	        @RequestParam(value = "page", defaultValue = "1") int page,
+	        Model model) {
+
+	    int pageSize = 10; // 한 페이지 표시 개수
+	    int offset = (page - 1) * pageSize;	   
+
+	    Map<String, Object> search = new HashMap<>();
+	    search.put("keyword", keyword);
+	    search.put("writer", writer);
+	    search.put("is_visible", isVisible);
+	    search.put("from", from);
+	    search.put("to", to);
+	    search.put("offset", offset);
+	    search.put("limit", pageSize);
+
+	    // 관리자 전용 메서드 호출
+	    List<NoticeDto> noticeList = noticeService.getAdminNoticeList(search);
+	    int totalCount = noticeService.getAdminNoticeCount(search);
+	    int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+
+	    // ★ 전체 row 기준 시작 번호 계산
+	    int startNo = totalCount - offset;
+
+	    model.addAttribute("noticeList", noticeList);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPage", totalPage);
+	    model.addAttribute("startNo", startNo); // ★ 추가
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("writer", writer);
+	    model.addAttribute("is_visible", isVisible);
+	    model.addAttribute("from", from);
+	    model.addAttribute("to", to);
+
+	    return "admin/notice/noticeList";
 	}
+
+
+	// 신규
+	@GetMapping("/notice/new")
+	public String newNotice(Model model, Principal principal) {
+	    model.addAttribute("noticeDto", new NoticeDto());
+	    model.addAttribute("isNew", true);
+	    
+	    // 로그인 아이디를 모델에 추가
+	    model.addAttribute("loginId", principal.getName());
+	    
+	    return "admin/notice/noticeDetail";
+	}
+
+
+    // 상세/수정
+	@GetMapping("/notice/detail/{id}")
+	public String noticeDetail(@PathVariable("id") Long notice_id, Model model, Principal principal) {
+	    NoticeDto notice = noticeService.getNoticeDetail(notice_id);
+	    model.addAttribute("noticeDto", notice);
+	    model.addAttribute("isNew", false);
+	    
+	    // 로그인 아이디를 모델에 추가
+	    model.addAttribute("loginId", principal.getName());
+	    
+	    return "admin/notice/noticeDetail";
+	}
+
+
+    // 저장/수정
+    @PostMapping("/notice/save")
+    public String saveNotice(@ModelAttribute NoticeDto noticeDto) {
+        if (noticeDto.getNotice_id() == null) {
+            noticeService.createNotice(noticeDto);
+        } else {
+            noticeService.updateNotice(noticeDto);
+        }
+        return "redirect:/admin/notice";
+    }
+
+    // 삭제
+    @PostMapping("/notice/{id}/delete")
+    public String deleteNotice(@PathVariable("id") Long id) {
+        noticeService.deleteNotice(id);
+        return "redirect:/admin/notice";
+    }
 	
-	// 윤한식 ===== FAQ =====
-//	@GetMapping("/faq")
-//	public String faqList(Model model) {
-//        int startRow = 1;
-//        int endRow = 20; // 예시로 20개 표시
-//        List<FaqDto> faqList = faqService.getAllFaqs(startRow, endRow);
-//        model.addAttribute("faqList", faqList);
-//        return "admin/faq/faqList";
-//    }
 	
+	
+	// 윤한식 ===== FAQ =====	
 	@GetMapping("/faq")
     public String faqList(
             @RequestParam(value = "category", required = false, defaultValue = "") String category,
@@ -352,12 +469,11 @@ public class AdminController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             Model model) {
 
-        int pageSize = 20; 
+        int pageSize = 10; 
         int startRow = (page - 1) * pageSize + 1;
         int endRow = page * pageSize;
 
-        List<FaqDto> faqList = faqService.getAdminFaqListPaged(
-                category, keyword, writer, fromDate, toDate, startRow, endRow);
+        List<FaqDto> faqList = faqService.getAdminFaqListPaged(category, keyword, writer, fromDate, toDate, startRow, endRow);
 
         int faqCount = faqService.getAdminFaqCount(category, keyword, writer, fromDate, toDate);
         int totalPages = (int) Math.ceil(faqCount / (double) pageSize);
@@ -376,12 +492,21 @@ public class AdminController {
     }
 	
 	//** 신규 등록 페이지 **/
-    @GetMapping("/faq/new")
-    public String newFaqForm(Model model) {
-        model.addAttribute("faq", new FaqDto());
-        model.addAttribute("isNew", true);
-        return "admin/faq/faqDetail";
-    }
+	@GetMapping("/faq/new")
+	public String newFaqForm(Model model, Principal principal) {
+	    model.addAttribute("faq", new FaqDto());
+	    model.addAttribute("isNew", true);
+
+	    // 로그인 아이디를 작성자로 모델에 추가
+	    if (principal != null) {
+	        model.addAttribute("loginId", principal.getName());
+	    } else {
+	        model.addAttribute("loginId", ""); // 비로그인 시 기본값
+	    }
+
+	    return "admin/faq/faqDetail";
+	}
+
 
     /** 상세 보기 (수정용) **/
     @GetMapping("/faq/{id}")

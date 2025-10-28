@@ -1,114 +1,160 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{admin/common/layout}">
 
+
 <head>
-	<meta charset="utf-8" />
-	<title>고객가입후기 관리</title>
-
+    <meta charset="utf-8" />
+    <title>고객가입후기 관리</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .field { margin-right: 1rem; display: inline-block; }
+        .field__label { display: block; margin-bottom: 0.3rem; font-weight: bold; }
+        .field__control { padding: 0.3rem; min-width: 120px; }
+        .btn { padding: 0.3rem 0.8rem; cursor: pointer; }
+        .btn--primary { background-color: #007bff; color: #fff; border: none; border-radius: 4px; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .table th, .table td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+        .table th { background-color: #f5f5f5; }
+        .row--hover:hover { background-color: #f9f9f9; }
+        .bold { font-weight: bold; }
+        .daterange__sep { margin: 0 0.5rem; }
+    </style>
 </head>
-
 <body>
-	<main layout:fragment="adminContent" class="admin-main">
-		<h1 class="page-title">고객가입후기 내역</h1>
-		<p class="section__title inquiry-subtitle">고객의 소중한 문의를 확인하고 신속하게 답변해주세요.</p>
+<main layout:fragment="adminContent" class="admin-main">
+    <h1 class="page-title">고객가입후기 내역</h1>
 
-		<!-- 상단 툴바 -->
-		<section class="toolbar card">
-			<div class="toolbar__row">
-				<div class="field toolbar__item">
-					<label class="field__label">검색어</label>
-					<input class="field__control" type="text" name="q" placeholder="고객명, 문의 내역으로 검색" />
-				</div>
+    <!-- 검색조건 툴바 -->
+	<form th:action="@{/admin/review}" method="get">
+    <section class="toolbar card">
+        <div class="toolbar__row">
+            <!-- 대분류 -->
+            <div class="field">
+                <label class="field__label">대분류</label>
+                <select class="field__control" id="categorySelect">
+                    <option value="">전체</option>
+                    <option value="자동차보험" th:selected="${category == '자동차보험'}">자동차보험</option>
+                    <option value="생활보험" th:selected="${category == '생활보험'}">생활보험</option>
+                </select>
+            </div>
+            <!-- 소분류 -->
+            <div class="field">
+                <label class="field__label">소분류</label>
+                <select class="field__control" id="subCategorySelect">
+                    <option value="">전체</option>
+                </select>
+            </div>
+            <!-- 내용 검색 -->
+            <div class="field">
+                <label class="field__label">내용</label>
+                <input class="field__control" type="text" id="searchKeyword" th:value="${searchKeyword}">
+            </div>
+            <!-- 작성자 -->
+            <div class="field">
+                <label class="field__label">작성자</label>
+                <input class="field__control" type="text" id="author_name" th:value="${author_name}">
+            </div>
+            <!-- 사용여부 -->
+            <div class="field">
+                <label class="field__label">사용</label>
+                <select class="field__control" id="is_visible">
+                    <option value="">전체</option>
+                    <option value="Y" th:selected="${is_visible == 'Y'}">Y</option>
+                    <option value="N" th:selected="${is_visible == 'N'}">N</option>
+                </select>
+            </div>
+            <!-- 작성일 -->
+            <div class="field">
+                <label class="field__label">작성일</label>
+                <input type="date" id="from" th:value="${from}"> ~
+                <input type="date" id="to" th:value="${to}">
+            </div>
+            <div class="field">
+                <button type="submit" class="btn btn--primary">조회</button>
+            </div>
+        </div>
+    </section>
+	</form>
 
-				<div class="field toolbar__item">
-					<label class="field__label">문의 유형</label>
-					<select class="field__control" name="status">
-						<option value="">문의 유형 전체</option>
-						<option value="">상품 문의</option>
-						<option value="">계약 변경</option>
-						<option value="">보험금 청구</option>
-						<option value="">기타</option>
-					</select>
-				</div>
+    <!-- 후기 테이블 -->
+    <section class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>번호</th><th>대분류</th><th>소분류</th><th>내용</th>
+                    <th>작성자</th><th>사용</th><th>별점</th>
+                    <th>작성일</th><th>수정일</th><th>상세</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="review : ${reviewList}">
+                    <td th:text="${review.review_id}"></td>
+                    <td th:text="${review.category}"></td>
+                    <td th:text="${review.subCategory}"></td>
+                    <td th:text="${review.content}" style="text-align: left;"></td>
+                    <td th:text="${review.author_name}" class="bold"></td>
+                    <td th:text="${review.is_visible == 'Y' ? '사용' : '미사용'}"></td>
+                    <td th:text="${review.rating}"></td>
+                    <td th:text="${#dates.format(review.created_at,'yyyy.MM.dd')}"></td>
+                    <td th:text="${review.updated_at != null ? #dates.format(review.updated_at,'yyyy.MM.dd') : '-'}"></td>
+                    <td><a th:href="@{/admin/review/detail(review_id=${review.review_id})}" class="btn btn--primary btn--xs">상세</a></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(reviewList)}">
+                    <td colspan="10">등록된 후기가 없습니다.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
 
-				<div class="field toolbar__item">
-					<label class="field__label">처리 상태</label>
-					<select class="field__control" name="status">
-						<option value="">처리 상태 전체</option>
-						<option value="">답변 완료</option>
-						<option value="">처리 중</option>
-						<option value="">미처리</option>
-						<option value="">기타</option>
-					</select>
-				</div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+const subCategoryMap = {
+    "자동차보험": ["자동차(개인)", "자동차(법인)", "자동차(영업용)", "이륜자동차", "원데이자동차", "자동차플랫폼(개인)"],
+    "생활보험": ["운전자보험", "주택화재보험", "건강보험(19세~70세)", "건강보험(16세~40세)", "건강(유병자)", "치아보험", "암보험", "착!easy암보험",
+                  "실손의료비", "실손(유병자)", "어린이보험", "Smart맞춤", "풍수해보험", "연금저축(유)", "저축보험",
+                  "해외여행/유착", "국내여행보험", "반려견보험", "반려묘보험", "골프보험", "자영업보험"]
+};
 
-				<div class="field toolbar__item toolbar__item--grow">
-					<label class="field__label">문의일자</label>
-					<div class="daterange" data-daterange>
-						<input class="field__control daterange__input" type="date" name="from"
-							> <!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
-						<span class="daterange__sep">~</span>
-						<input class="field__control daterange__input" type="date" name="to"
-							>
-					</div>
-				</div>
+function updateSubCategory(selectedSub){
+    const selectedCategory = $('#categorySelect').val();
+    const $sub = $('#subCategorySelect');
+    $sub.empty();
+    $sub.append('<option value="">전체</option>');
+    if(selectedCategory && subCategoryMap[selectedCategory]){
+        subCategoryMap[selectedCategory].forEach(function(item){
+            $sub.append('<option value="'+item+'">'+item+'</option>');
+        });
+    }
+    if(selectedSub) $sub.val(selectedSub);
+}
 
-				<div class="toolbar__spacer"></div>
+$(document).ready(function(){
+    const selectedSub = /*[[${subCategory}]]*/ '';
+    updateSubCategory(selectedSub);
 
-				<div class="toolbar__actions">
-					<button type="button" class="btn btn--primary">조회</button>
-				</div>
-			</div>
+    $('#categorySelect').on('change', function(){
+        updateSubCategory('');
+    });
 
-		</section>
-
-		<!-- 목록 테이블 -->
-		<section class="table-wrap mt-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>대분류</th>
-						<th>소분류</th>
-						<th>내용</th>
-						<th>작성자</th>
-						<th>사용</th>
-						<th>별점</th>
-						<th>작성일</th>
-						<th>수정일</th>
-						<th>상세</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="review : ${reviewList}" class="row--hover">
-						<td th:text="${review.review_id}"></td>
-						<td th:text="${review.category}"></td>
-						<td th:text="${review.subCategory}"></td>
-						<td th:text="${review.content}" style="text-align: left;"></td>
-						<td th:text="${review.author_name}" class="bold"></td>
-						<td th:text="${review.is_visible == 'Y' ? '사용' : '미사용'}"></td>
-						<td th:text="${review.rating}"></td>
-						<td th:text="${#dates.format(review.created_at, 'yyyy-MM-dd')}"></td>
-						<td th:text="${review.updated_at != null ? #dates.format(review.updated_at, 'yyyy-MM-dd') : '-'}">-</td>
-						<td class="text-center">
-							<a th:href="@{/admin/review/detail(review_id=${review.review_id})}"
-							   class="btn btn--primary btn--xs">상세</a>
-						</td>
-					</tr>
-	
-					<!-- 리스트가 비었을 경우 -->
-					<tr th:if="${#lists.isEmpty(reviewList)}">
-						<td colspan="9" class="text-center">등록된 후기가 없습니다.</td>
-					</tr>
-				</tbody>
-			</table>
-		</section>
-
-		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
-		</app-pagination>
-
-	</main>
+    $('#searchBtn').on('click', function(){
+        const params = {
+            category: $('#categorySelect').val(),
+            subCategory: $('#subCategorySelect').val(),
+            searchKeyword: $('#searchKeyword').val(),
+            author_name: $('#author_name').val(),
+            is_visible: $('#is_visible').val(),
+            from: $('#from').val(),
+            to: $('#to').val()
+        };
+        const query = $.param(params);
+        window.location.href = '/admin/review?' + query;
+    });
+});
+/*]]>*/
+</script>
 </body>
-
 </html>

@@ -1,0 +1,206 @@
+/* =========================================
+    보험료 납입 상세 (payPremium2Detail.css)
+   ========================================= */
+
+/* --- 1. 기본 레이아웃 --- */
+.payment-detail-wrapper {
+    max-width: 800px; /* 전체 컨텐츠 최대 넓이 */
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.base-content h1 {
+    font-size: 2rem; /* 32px */
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2.5rem; /* 40px */
+}
+
+/* --- 2. 카드 공통 스타일 --- */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 600;
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+    margin: 0;
+}
+
+/* --- 3. 계약 정보 카드 (.info-card) --- */
+.info-card .info-grid {
+    display: grid;
+    /* 2열 그리드, 1열은 라벨, 2열은 값 */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem; /* 24px */
+    padding: 1.5rem;
+}
+
+.info-grid .label {
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95rem; /* 15.2px */
+}
+
+.info-grid .value {
+    font-weight: 600;
+    color: #111;
+    font-size: 1rem; /* 16px */
+}
+
+/* --- 4. 상태 표시 태그 --- */
+.status-tag {
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.status-tag.status-partial {
+    background-color: #ffc107; /* 주황 (부분납부) */
+    color: #333;
+}
+.status-tag.status-unpaid {
+    background-color: #dc3545; /* 빨강 (미납) */
+}
+.status-tag.status-over {
+    background-color: #17a2b8; /* 파랑 (초과납부) */
+}
+.status-tag.status-paid {
+    background-color: #28a745; /* 초록 (완납) */
+}
+
+/* --- 5. 액션 카드 (결제/적립/완납) --- */
+.action-card .action-content {
+    padding: 1.5rem;
+}
+
+/* 5-1. 결제 카드 내부 행 (info-row) */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.05rem; /* 16.8px */
+    margin-bottom: 1rem;
+}
+.info-row .label { color: #555; }
+.info-row .value { color: #111; font-weight: 600; }
+
+/* '납부할 금액' 강조 */
+.info-row.highlight {
+    font-weight: 600;
+}
+.info-row.highlight .label {
+    font-size: 1.15rem; /* 18.4px */
+    color: #111;
+}
+.info-row.highlight .value {
+    font-size: 1.5rem; /* 24px */
+    color: #007bff; /* 메인 파란색 */
+}
+
+/* '최종 결제금액' 강조 */
+.info-row.final-amount {
+    margin-top: 1.5rem;
+    font-weight: 600;
+}
+.info-row.final-amount .label {
+    font-size: 1.25rem; /* 20px */
+    color: #111;
+}
+.info-row.final-amount .value {
+    font-size: 1.8rem; /* 28.8px */
+    color: #dc3545; /* 강조 빨강 */
+}
+
+/* 5-2. 구분선 */
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 1.5rem 0;
+}
+
+/* 5-3. 포인트 입력 그룹 */
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+.form-input {
+    flex-grow: 1; /* 남은 공간 모두 차지 */
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    -moz-appearance: textfield; /* Firefox 숫자 입력 화살표 제거 */
+}
+/* Chrome, Safari, Edge 숫자 입력 화살표 제거 */
+.form-input::-webkit-outer-spin-button,
+.form-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9rem; /* 14.4px */
+    margin-top: 0.5rem;
+    height: 1em; /* 레이아웃 밀림 방지 */
+}
+
+/* 5-4. 초과납부 / 완납 카드 설명 텍스트 */
+.description {
+    font-size: 1.1rem;
+    color: #333;
+    text-align: center;
+    margin: 1rem 0 2rem 0;
+}
+
+/* --- 6. 버튼 공통 스타일 --- */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s, border-color 0.2s;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #ffffff;
+}
+.btn-primary:hover { background-color: #0056b3; }
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+.btn-secondary:hover { background-color: #5a6268; }
+
+/* 100% 너비 버튼 (결제, 적립) */
+.btn-full {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+/* '목록으로' 버튼 래퍼 */
+.bottom-buttons {
+    text-align: center;
+    margin-top: 1rem;
+}
+
