@@ -52,7 +52,7 @@
             <div class="toolbar__spacer"></div>
 			<div class="toolbar__actions">
 			    <button type="submit" class="btn btn--primary">조회</button>
-			    <a th:href="@{/admin/faq/new}" class="btn btn--secondary">신규</a>
+			    <a th:href="@{/admin/faq/new}" class="btn btn--primary">신규</a>
 			</div>
         </form>
     </section>
@@ -71,29 +71,30 @@
                     <th>관리</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr th:each="faq, stat : ${faqList}" class="row--hover">
-                    <td th:text="${stat.count}">1</td>
-                    <td th:text="${faq.category}">분류</td>
-                    <td th:text="${faq.question}" style="text-align: left;">제목</td>
-                    <td th:text="${faq.writer}">작성자</td>
-                    <td th:text="${#dates.format(faq.created_at, 'yyyy-MM-dd')}">작성일</td>
-                    <td th:text="${#dates.format(faq.updated_at, 'yyyy-MM-dd')}">수정일</td>
-                    <td class="text-center">
-						<!-- faq_id를 사용해 상세 페이지 이동 -->
-						<a th:href="@{'/admin/faq/' + ${faq.faq_id}}" class="btn btn--primary btn--xs">상세</a>
-                    </td>
-                </tr>
+			<tbody>
+			    <tr th:each="faq, stat : ${faqList}" class="row--hover">
+			        <!-- 페이지 기준 순번 -->
+			        <td th:text="${(currentPage - 1) * 10 + stat.index + 1}">1</td>
+			        <td th:text="${faq.category}">분류</td>
+			        <td th:text="${faq.question}" style="text-align: left;">제목</td>
+			        <td th:text="${faq.writer}">작성자</td>
+			        <td th:text="${#dates.format(faq.created_at, 'yyyy-MM-dd')}">작성일</td>
+			        <td th:text="${faq.updated_at != null ? #dates.format(faq.updated_at, 'yyyy-MM-dd') : '-'}">수정일</td>
+			        <td class="text-center">
+			            <a th:href="@{'/admin/faq/' + ${faq.faq_id}}" class="btn btn--primary btn--xs">상세</a>
+			        </td>
+			    </tr>
 
-                <tr th:if="${#lists.isEmpty(faqList)}">
-                    <td class="cell--empty" colspan="7">
-                        <div class="empty">
-                            <div class="empty__title">표시할 FAQ가 없습니다</div>
-                            <div class="empty__desc">검색 조건을 변경해보세요.</div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+			    <!-- 데이터가 없을 때 -->
+			    <tr th:if="${#lists.isEmpty(faqList)}">
+			        <td class="cell--empty" colspan="7">
+			            <div class="empty">
+			                <div class="empty__title">표시할 FAQ가 없습니다</div>
+			                <div class="empty__desc">검색 조건을 변경해보세요.</div>
+			            </div>
+			        </td>
+			    </tr>
+			</tbody>
         </table>
     </section>	
 	<!-- 중앙정렬 페이징 -->

@@ -64,27 +64,81 @@
     	</if>
 	</select>
 	
+	<!-- 관리자용 전체 공지 리스트 -->
+	<select id="selectAdminNoticeList" parameterType="map" resultType="noticeDto">
+	    SELECT *
+	    FROM (
+	        SELECT a.*, ROWNUM rnum
+	        FROM (
+	            SELECT notice_id, title, writer, is_visible, created_at, updated_at
+	            FROM notice
+	            WHERE 1=1
+	            <if test="keyword != null and keyword != ''">
+	                AND title LIKE '%' || #{keyword} || '%'
+	            </if>
+	            <if test="writer != null and writer != ''">
+	                AND writer LIKE '%' || #{writer} || '%'
+	            </if>
+	            <if test="is_visible != null and is_visible != ''">
+	                AND is_visible = #{is_visible}
+	            </if>
+	            <if test="from != null and from != ''">
+	                AND created_at &gt;= TO_DATE(#{from}, 'YYYY-MM-DD')
+	            </if>
+	            <if test="to != null and to != ''">
+	                AND created_at &lt;= TO_DATE(#{to}, 'YYYY-MM-DD')
+	            </if>
+	            ORDER BY created_at DESC
+	        ) a
+	        WHERE ROWNUM &lt;= #{offset} + #{limit}
+	    )
+	    WHERE rnum &gt; #{offset}
+	</select>
+	
+	<!-- 관리자용 공지 개수 조회 -->
+	<select id="selectAdminNoticeCount" parameterType="map" resultType="int">
+	    SELECT COUNT(*)
+	    FROM notice
+	    WHERE 1=1
+	    <if test="keyword != null and keyword != ''">
+	        AND title LIKE '%' || #{keyword} || '%'
+	    </if>
+	    <if test="writer != null and writer != ''">
+	        AND writer LIKE '%' || #{writer} || '%'
+	    </if>
+	    <if test="is_visible != null and is_visible != ''">
+	        AND is_visible = #{is_visible}
+	    </if>
+	    <if test="from != null and from != ''">
+	        AND created_at &gt;= TO_DATE(#{from}, 'YYYY-MM-DD')
+	    </if>
+	    <if test="to != null and to != ''">
+	        AND created_at &lt;= TO_DATE(#{to}, 'YYYY-MM-DD')
+	    </if>
+	</select>
+	
+	
 	
 	<!-- 상세 조회 -->
 	<select id="selectNoticeDetail" parameterType="long" resultType="noticeDto">
 		SELECT notice_id, title, content, writer, is_visible, created_at, updated_at
 		FROM notice
-		WHERE notice_id = #{noticeId}
+		WHERE notice_id = #{notice_id}
 	</select>	
 	
 	<insert id="insertNotice" parameterType="noticeDto">
 		INSERT INTO NOTICE (notice_id, title, content, writer, is_visible, created_at)
-        VALUES (NOTICE_SEQ.NEXTVAL, #{title}, #{content}, #{writer}, #{isVisible}, SYSDATE)
+        VALUES (NOTICE_SEQ.NEXTVAL, #{title}, #{content}, #{writer}, #{is_visible}, SYSDATE)
 	</insert>
 	
 	<update id="updateNotice" parameterType="noticeDto">
 		UPDATE notice
-        SET title = #{title}, content = #{content}, is_visible = #{isVisible}, updated_at = SYSDATE
-        WHERE notice_id = #{noticeId}	
+        SET title = #{title}, content = #{content}, is_visible = #{is_visible,jdbcType=VARCHAR}, updated_at = SYSDATE
+        WHERE notice_id = #{notice_id}	
 	</update>
 	
 	<delete id="deleteNotice" parameterType="long">
-		DELETE FROM notice WHERE notice_id = #{noticeId}	
+		DELETE FROM notice WHERE notice_id = #{notice_id}	
 	</delete>
 	
 	

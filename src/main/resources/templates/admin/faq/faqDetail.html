@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
 
     <!-- Summernote 툴바/아이콘 충돌 방지 스타일 -->
-    <link rel="stylesheet" th:href="@{/css/faqDetail.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/faqDetail.css}">
 
     <!-- jQuery + Summernote JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -119,7 +119,7 @@
                 <button type="submit" class="btn btn--primary" th:text="${isNew} ? '저장' : '수정'"></button>
 				
 				<!-- 삭제 버튼 (기존 데이터일 때만 표시) -->
-				<button type="button" class="btn btn--danger" th:if="${!isNew}" th:onclick="'deleteFaq(' + ${faq.faq_id} + ');'">삭제</button>
+				<button type="button" class="btn btn--primary" th:if="${!isNew}" th:onclick="'deleteFaq(' + ${faq.faq_id} + ');'">삭제</button>
             </div>
         </form>
     </section>

@@ -74,46 +74,5 @@ public class NoticeController {
         model.addAttribute("keyword", keyword);
         return "helpdesk/PP060400_001";
     }
-
-    // 4. 관리자: 전체 공지 조회
-    @GetMapping("/admin/list")
-    @ResponseBody
-    public ResponseEntity<List<NoticeDto>> getAllNoticesAdmin(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "1") int page) {
-
-        int offset = (page - 1) * PAGE_SIZE;
-        List<NoticeDto> notices = noticeService.getAllNotices(keyword, offset, PAGE_SIZE);
-        return ResponseEntity.ok(notices);
-    }
-
-    // 5. 관리자 : 공지등록
-    @PostMapping("/admin")
-    @ResponseBody
-    public ResponseEntity<String> createNotice(@RequestBody NoticeDto notice) {
-        noticeService.createNotice(notice);
-        return ResponseEntity.ok("등록 성공");
-    }
-
-    // 6. 관리자 : 공지 수정
-    @PutMapping("/admin/{notice_id}")
-    @ResponseBody
-    public ResponseEntity<String> updateNotice(
-            @PathVariable("notice_id") Long noticeId,
-            @RequestBody NoticeDto notice) {
-
-        notice.setNotice_id(noticeId);
-        noticeService.updateNotice(notice);
-        return ResponseEntity.ok("수정 성공");
-    }
-
-    // 7. 관리자 : 공지 삭제
-    @DeleteMapping("/admin/{notice_id}")
-    @ResponseBody
-    public ResponseEntity<String> deleteNotice(
-            @PathVariable("notice_id") Long noticeId) {
-
-        noticeService.deleteNotice(noticeId);
-        return ResponseEntity.ok("삭제 성공");
-    }
+    
 }

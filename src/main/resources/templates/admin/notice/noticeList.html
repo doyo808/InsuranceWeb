@@ -1,106 +1,141 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/admin/common/layout}">
+      layout:decorate="~{/admin/common/layout}">
 
 <head>
-	<meta charset="utf-8" />
-	<title>공지사항</title>
-
+    <meta charset="utf-8" />
+    <title>공지사항 관리</title>
 </head>
 
 <body>
-	<main layout:fragment="adminContent" class="admin-main">
-		<h1 class="page-title">공지사항</h1>
-		<p class="section__title inquiry-subtitle">고객의 소중한 문의를 확인하고 신속하게 답변해주세요.</p>
+<main layout:fragment="adminContent" class="admin-main">
 
-		<!-- 상단 툴바 -->
-		<section class="toolbar card">
-			<div class="toolbar__row">
-				<div class="field toolbar__item">
-					<label class="field__label">검색어</label>
-					<input class="field__control" type="text" name="q" placeholder="고객명, 문의 내역으로 검색" />
-				</div>
+    <h1 class="page-title">공지사항</h1>
 
-				<div class="field toolbar__item">
-					<label class="field__label">문의 유형</label>
-					<select class="field__control" name="status">
-						<option value="">문의 유형 전체</option>
-						<option value="">상품 문의</option>
-						<option value="">계약 변경</option>
-						<option value="">보험금 청구</option>
-						<option value="">기타</option>
-					</select>
-				</div>
+    <p class="section__title inquiry-subtitle">
+        공지를 작성하실 때는 내용을 명확하게, 오해가 없도록 신중하게 작성해 주세요.<br>
+        중요한 안내일수록 게시 전 다시 한 번 확인하는 습관이 안전하고 효과적인 소통으로 이어집니다.
+    </p>
 
-				<div class="field toolbar__item">
-					<label class="field__label">처리 상태</label>
-					<select class="field__control" name="status">
-						<option value="">처리 상태 전체</option>
-						<option value="">답변 완료</option>
-						<option value="">처리 중</option>
-						<option value="">미처리</option>
-						<option value="">기타</option>
-					</select>
-				</div>
+    <!-- 🔹 검색 조건 Form -->
+    <form th:action="@{/admin/notice}" method="get">
+        <section class="toolbar card">
+            <div class="toolbar__row">
 
-				<div class="field toolbar__item toolbar__item--grow">
-					<label class="field__label">문의일자</label>
-					<div class="daterange" data-daterange>
-						<input class="field__control daterange__input" type="date" name="from"
-							> <!--예시: th:value="${#temporals.format(criteria.from, 'yyyy-MM-dd')}"-->
-						<span class="daterange__sep">~</span>
-						<input class="field__control daterange__input" type="date" name="to"
-							>
-					</div>
-				</div>
+                <!-- 검색어 -->
+                <div class="field toolbar__item">
+                    <label class="field__label">검색어</label>
+                    <input class="field__control" type="text" name="keyword"
+                           placeholder="제목으로 검색"
+                           th:value="${keyword}" />
+                </div>
 
-				<div class="toolbar__spacer"></div>
+                <!-- 작성자 -->
+                <div class="field toolbar__item">
+                    <label class="field__label">작성자</label>
+                    <input class="field__control" type="text" name="writer"
+                           placeholder="작성자로 검색"
+                           th:value="${writer}" />
+                </div>
 
-				<div class="toolbar__actions">
-					<button type="button" class="btn btn--primary">조회</button>
-				</div>
-			</div>
+                <!-- 사용여부 -->
+                <div class="field toolbar__item">
+                    <label class="field__label">사용</label>
+                    <select class="field__control" name="is_visible">
+                        <option value="">전체</option>
+                        <option value="Y" th:selected="${is_visible == 'Y'}">Y</option>
+                        <option value="N" th:selected="${is_visible == 'N'}">N</option>
+                    </select>
+                </div>
 
-		</section>
+                <!-- 작성일자 -->
+                <div class="field toolbar__item toolbar__item--grow">
+                    <label class="field__label">작성일자</label>
+                    <div class="daterange" data-daterange>
+                        <input class="field__control daterange__input" type="date" name="from"
+                               th:value="${from}">
+                        <span class="daterange__sep">~</span>
+                        <input class="field__control daterange__input" type="date" name="to"
+                               th:value="${to}">
+                    </div>
+                </div>
 
-		<!-- 목록 테이블 -->
-		<section class="table-wrap mt-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>사용</th>
-						<th>작성일</th>
-						<th>수정일</th>
-						<th>상세</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="notice, iterStat : ${noticeList}">
-				        <td th:text="${iterStat.count}">1</td>
-				        <td th:text="${notice.title}" style="text-align: left;">제목</td>
-				        <td th:text="${notice.writer}">작성자</td>
-				        <td th:text="${notice.is_visible}">Y</td>
-				        <td th:text="${#dates.format(notice.created_at, 'yyyy-MM-dd')}">2025-01-01</td>
-				        <td th:text="${notice.updated_at != null ? #dates.format(notice.updated_at, 'yyyy-MM-dd') : '-'}">-</td>
-				        <td>
-				            <a th:href="@{/admin/notice/detail/{id}(id=${notice.notice_id})}" class="btn btn--primary btn--xs">상세</a>
-				        </td>
-				    </tr>
-	
-				    <tr th:if="${#lists.isEmpty(noticeList)}">
-				        <td colspan="7" class="text-center">등록된 공지가 없습니다.</td>
-				    </tr>				
-				</tbody>
-			</table>
-		</section>
+                <div class="toolbar__spacer"></div>
 
-		<app-pagination current="1" total="10" href="/admin/contract/receipts?page={page}" preserve-query>
-		</app-pagination>
+                <!-- 조회 버튼 -->
+                <div class="toolbar__actions">
+                    <button type="submit" class="btn btn--primary">조회</button>
+					<!-- 신규 버튼 -->
+					<a th:href="@{/admin/notice/new}" class="btn btn--primary">신규</a>
+                </div>
+            </div>
+        </section>
+    </form>
 
-	</main>
+    <!-- 🔹 공지사항 목록 테이블 -->
+    <section class="table-wrap mt-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>사용</th>
+                <th>작성일</th>
+                <th>수정일</th>
+                <th>상세</th>
+            </tr>
+            </thead>
+			<tbody>
+			<tr th:each="notice, iterStat : ${noticeList}">
+			    <!-- 1부터 시작하는 순번 -->
+			    <td th:text="${(currentPage - 1) * 10 + iterStat.index + 1}">1</td>
+			    
+			    <td th:text="${notice.title}" style="text-align:left;">제목</td>
+			    <td th:text="${notice.writer}">작성자</td>
+			    <td th:text="${notice.is_visible}">Y</td>
+			    <td th:text="${#dates.format(notice.created_at, 'yyyy-MM-dd')}">2025-01-01</td>
+			    <td th:text="${notice.updated_at != null ? #dates.format(notice.updated_at, 'yyyy-MM-dd') : '-'}">-</td>
+			    <td>
+			        <a th:href="@{/admin/notice/detail/{id}(id=${notice.notice_id})}"
+			           class="btn btn--primary btn--xs">상세</a>
+			    </td>
+			</tr>
+
+			<!-- 데이터가 없을 때 -->
+			<tr th:if="${#lists.isEmpty(noticeList)}">
+			    <td colspan="7" class="text-center">등록된 공지가 없습니다.</td>
+			</tr>
+			</tbody>
+        </table>
+    </section>	
+	<!-- 중앙정렬 페이징 -->
+	<section class="pagination-wrap" style="display:flex; justify-content:center; margin-top:30px;">
+	    <ul class="pagination__list">
+	        <!-- 이전 -->
+	        <li>
+	            <a th:class="'pagination__page' + (${currentPage == 1} ? ' is-disabled' : '')"
+	               th:href="${currentPage == 1} ? '#' : @{/admin/notice(page=${currentPage-1}, keyword=${keyword}, writer=${writer}, is_visible=${is_visible}, from=${from}, to=${to})}">
+	               이전
+	            </a>
+	        </li>
+
+	        <!-- 페이지 번호 -->
+	        <li th:each="i : ${#numbers.sequence(1, totalPage)}">
+	            <a th:class="'pagination__page' + (${i == currentPage} ? ' is-active' : '')"
+	               th:href="@{|/admin/notice?page=${i}&keyword=${keyword}&writer=${writer}&is_visible=${is_visible}&from=${from}&to=${to}|}"
+	               th:text="${i}">1</a>
+	        </li>
+
+	        <!-- 다음 -->
+	        <li>
+	            <a th:class="'pagination__page' + (${currentPage == totalPage || totalPage == 0} ? ' is-disabled' : '')"
+	               th:href="${currentPage == totalPage || totalPage == 0} ? '#' : @{/admin/notice(page=${currentPage+1}, keyword=${keyword}, writer=${writer}, is_visible=${is_visible}, from=${from}, to=${to})}">
+	               다음
+	            </a>
+	        </li>
+	    </ul>
+	</section>
+</main>
 </body>
-
 </html>

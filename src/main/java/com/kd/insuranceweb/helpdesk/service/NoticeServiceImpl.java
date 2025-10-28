@@ -35,31 +35,42 @@ public class NoticeServiceImpl implements NoticeService {
 	    return sql.selectList("NoticeMapper.selectLatestNotices");
 	}
 	
-
-	// 관리자용: 전체 공지 조회
-	@Override
-	public List<NoticeDto> getAllNotices(String keyword, int offset, int limit) {
-		
-		Map<String, Object> params = new HashMap<>();
-        params.put("keyword", keyword);
-        params.put("offset", offset);
-        params.put("limit", limit);
-        return sql.selectList("NoticeMapper.selectAllNotices", params);
-	}
-	
 	@Override
 	public int getNoticeCount(String keyword) {
 		Map<String, Object>params = new HashMap<>();
 		params.put("keyword", keyword);
 		return sql.selectOne("NoticeMapper.countNotices", params);
 	}
+	
+	// 관리자용: 전체 공지 조회
+//	@Override
+//	public List<NoticeDto> getAllNotices(String keyword, int offset, int limit) {
+//		
+//		Map<String, Object> params = new HashMap<>();
+//        params.put("keyword", keyword);
+//        params.put("offset", offset);
+//        params.put("limit", limit);
+//        return sql.selectList("NoticeMapper.selectAllNotices", params);
+//	}
+	// 관리자용 확장
+    @Override
+    public List<NoticeDto> getAdminNoticeList(Map<String, Object> params) {
+        return sql.selectList("NoticeMapper.selectAdminNoticeList", params);
+    }
+
+    @Override
+    public int getAdminNoticeCount(Map<String, Object> params) {
+        return sql.selectOne("NoticeMapper.selectAdminNoticeCount", params);
+    }
+	
+	
 
 	//상세조회
 	@Override
 	public NoticeDto getNoticeDetail(Long notice_id) {
 		
 		return sql.selectOne("NoticeMapper.selectNoticeDetail", notice_id);
-	}
+	}	
 
 	@Override
 	@Transactional
