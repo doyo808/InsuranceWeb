@@ -93,7 +93,7 @@ public class AdminController {
 	    
 	    // 이번 달 계약 / 청구 통계
         model.addAttribute("contractStats", adminDashboardService.getMonthlyContractStats());
-        model.addAttribute("claimStats", adminDashboardService.getMonthlyClaimStats());
+        model.addAttribute("claimStats", adminDashboardService.getClaimStats());
         
         // 최근 관리자 활동
 	    List<AdminActivityLogDTO> recentActivities = activityService.getRecentActivities();

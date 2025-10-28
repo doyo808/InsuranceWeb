@@ -83,65 +83,42 @@
 				<p th:utext="${#strings.replace(uiPath_notice_content, '\n', '<br/>')}"></p>
 			</section>
 			
-			
-			<!-- Recent Activity -->
-			<section class="section mt-12" aria-label="최근 활동">
-				<h2 class="section__title">최근 활동</h2>
-				<div class="table-wrap">
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">시간</th>
-								<th scope="col">활동</th>
-								<th scope="col">관리자</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="log : ${recentActivities}">
-								<td th:text="${log.created_at}"></td>
-								<td th:text="${log.action_desc}"></td>
-								<td th:text="${log.employee_name}" class="bold"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</section>
-			
-
 
 			<!-- Chart Script -->
 			<script th:inline="javascript">
-			  document.addEventListener("DOMContentLoaded", function () {
-			    const contractStats = /*[[${contractStats}]]*/ {};
-			    const claimStats = /*[[${claimStats}]]*/ {};
+			document.addEventListener("DOMContentLoaded", function () {
+			  const contractStats = /*[[${contractStats}]]*/ {};
+			  const claimStats = /*[[${claimStats}]]*/ {};
 
-			    new Chart(document.getElementById("contractChart"), {
-			      type: "bar",
-			      data: {
-			        labels: ["신규 계약", "해지 계약"],
-			        datasets: [{
-			          label: "계약 건수",
-					  data: [contractStats.newContracts, contractStats.endedContracts],
-			          backgroundColor: ["rgba(17,115,212,0.7)", "rgba(240,70,70,0.7)"]
-			        }]
-			      },
-			      options: { responsive: true, plugins: { legend: { display: false } } }
-			    });
-
-			    new Chart(document.getElementById("claimChart"), {
-			      type: "bar",
-			      data: {
-			        labels: ["총 청구 금액", "지급 완료 금액"],
-			        datasets: [{
-			          label: "금액 (만원)",
-			          data: [claimStats.totalAmount, claimStats.approvedAmount],
-			          backgroundColor: ["rgba(255,206,86,0.7)", "rgba(75,192,192,0.7)"]
-			        }]
-			      },
-			      options: { responsive: true, plugins: { legend: { display: false } } }
-			    });
+			  new Chart(document.getElementById("contractChart"), {
+			    type: "bar",
+			    data: {
+			      labels: ["신규 계약", "해지 계약"],
+			      datasets: [{
+			        label: "계약 건수",
+			        data: [contractStats.newContracts, contractStats.endedContracts],
+			        backgroundColor: ["rgba(17,115,212,0.7)", "rgba(240,70,70,0.7)"]
+			      }]
+			    },
+			    options: { responsive: true, plugins: { legend: { display: false } } }
 			  });
+
+			  // ✅ 청구 그래프 수정
+			  new Chart(document.getElementById("claimChart"), {
+			    type: "bar",
+			    data: {
+			      labels: ["신규 청구", "지급 완료"],
+			      datasets: [{
+			        label: "청구 건수",
+			        data: [claimStats.newClaims, claimStats.approvedClaims],
+			        backgroundColor: ["rgba(255,206,86,0.7)", "rgba(75,192,192,0.7)"]
+			      }]
+			    },
+			    options: { responsive: true, plugins: { legend: { display: false } } }
+			  });
+			});
 			</script>
+
 		</main>
 	</main>
 </body>

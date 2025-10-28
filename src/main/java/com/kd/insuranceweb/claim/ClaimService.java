@@ -1,6 +1,6 @@
 package com.kd.insuranceweb.claim;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -48,8 +48,9 @@ public class ClaimService {
         return claimMapper.selectClaimsByCustomer(customerId, months, start, end);
     }
 
-    public List<Claim> getClaimsByDateRange(Integer customerId, Integer months, Date start, Date end) {
-        if (months != null && months > 0) {
+    public List<Claim> getClaimsByDateRange(Integer customerId, Integer months, LocalDate start, LocalDate end) {
+    	 log.info("📅 getClaimsByDateRange() - customerId={}, months={}, start={}, end={}", customerId, months, start, end);
+    	if (months != null && months > 0) {
             return claimMapper.selectClaimsByMonths(customerId, months);
         } else {
             return claimMapper.selectClaimsByDates(customerId, start, end);

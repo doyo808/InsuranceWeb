@@ -118,25 +118,22 @@
 					<div class="form-grid">
 						<label for="insuredName">성명</label>
 						<input type="text" id="insuredName" name="insuredName"
-							th:value="${personInfo != null ? personInfo.NAME : ''}" required>
+							th:value="${personInfo != null ? personInfo['NAME'] : ''}" required>
 
 						<label for="insuredId1">주민등록번호</label>
 						<div style="display:flex;align-items:center;">
 							<input type="text" id="insuredId1" name="insuredId1" maxlength="6" style="width:45%;"
-								th:value="${personInfo != null and personInfo.PERSONAL_ID != null
-						                   ? #strings.substring(personInfo.PERSONAL_ID, 0, 6) : ''}">
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.insuredId1 : ''}">
 							<span style="margin:0 8px;">-</span>
 							<input type="password" id="insuredId2" name="insuredId2" maxlength="7" style="width:55%;"
-								th:value="${personInfo != null and personInfo.PERSONAL_ID != null
-						                   ? #strings.substring(personInfo.PERSONAL_ID, 6, 13) : ''}">
+								th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.insuredId2 : ''}">
 						</div>
 
 						<label for="beneficiaryId1">연락처</label>
 						<div style="display: flex; align-items: center;">
 							<input type="text" id="phone" name="phone" maxlength="11" style="width:60%;"
-								th:value="${personInfo != null ? personInfo.PHONE_NUMBER : ''}">
+								th:value="${personInfo != null ? personInfo['PHONE_NUMBER'] : ''}">
 						</div>
-
 					</div>
 				</div>
 
@@ -148,18 +145,6 @@
 						<input type="text" id="beneficiaryName" name="beneficiaryName"
 							th:value="${session.beneficiaryInfo != null ? session.beneficiaryInfo.name : ''}" required>
 
-						<label for="beneficiaryId1">주민등록번호</label>
-						<div style="display: flex; align-items: center;">
-							<input type="text" id="beneficiaryId1" name="beneficiaryId1" maxlength="6" style="width: 45%;"
-								th:value="${session.beneficiaryInfo != null and session.beneficiaryInfo['personalId'] != null
-									? #strings.substring(session.beneficiaryInfo['personalId'], 0, 6) : ''}">
-							<span style="margin: 0 8px;">-</span>
-							<input type="password" id="beneficiaryId2" name="beneficiaryId2" maxlength="7" style="width: 55%;"
-								th:value="${session.beneficiaryInfo != null and session.beneficiaryInfo['personalId'] != null
-									and #strings.length(session.beneficiaryInfo['personalId']) >= 7
-									? #strings.substring(session.beneficiaryInfo['personalId'], 6)
-									: ''}">
-						</div>
 
 						<label for="relation">피보험자와 관계</label>
 						<input type="text" id="relation" name="relation" placeholder="예: 본인, 배우자, 자녀"

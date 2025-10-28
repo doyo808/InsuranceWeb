@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +28,6 @@ import com.kd.insuranceweb.claim.ClaimService;
 import com.kd.insuranceweb.claim.dto.Claim;
 import com.kd.insuranceweb.claim.dto.ContractDTO;
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
-import com.kd.insuranceweb.mypage.MypageService;
-import com.kd.insuranceweb.mypage.dto.ContractDto;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +42,6 @@ public class ClaimController {
 	@Value("${file.upload-dir}")
 	private String baseUploadDir;
 
-
     private final ClaimService claimService;
 
     private static final Set<String> ALLOWED_MIME_TYPES = Set.of(
@@ -57,14 +55,20 @@ public class ClaimController {
     @GetMapping("/claimList")
     public String getClaimList(
             @RequestParam(name = "months", required = false, defaultValue = "3") Integer months,
-            @RequestParam(name = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam(name = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(name = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(name = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @AuthenticationPrincipal CustomUserDetails user,
             Model model) {
 
         // 로그인한 사용자
         Integer customerId = user.getCustomer_id();
 
+     // --- 기간 계산 (months가 null이 아닌 경우)
+        if (months != null && months > 0) {
+            endDate = LocalDate.now();
+            startDate = endDate.minusMonths(months);
+        }
+        
         // 기간에 맞게 데이터 조회
         List<Claim> txns = claimService.getClaimsByDateRange(customerId, months, startDate, endDate);
 
@@ -170,8 +174,6 @@ public class ClaimController {
             @RequestParam("insuredId1") String insuredId1,
             @RequestParam("insuredId2") String insuredId2,
             @RequestParam("beneficiaryName") String beneficiaryName,
-            @RequestParam("beneficiaryId1") String beneficiaryId1,
-            @RequestParam("beneficiaryId2") String beneficiaryId2,
             @RequestParam(value = "relation", required = false) String relation,
             @RequestParam(value = "email1", required = false) String email1,
             @RequestParam(value = "email2", required = false) String email2,
@@ -196,7 +198,8 @@ public class ClaimController {
         // ✅ 수익자 정보 Map으로 세션에 별도 저장
         Map<String, Object> beneficiaryInfo = new HashMap<>();
         beneficiaryInfo.put("name", beneficiaryName);
-        beneficiaryInfo.put("personalId", beneficiaryId1 + beneficiaryId2);
+        beneficiaryInfo.put("insuredId1", insuredId1);
+        beneficiaryInfo.put("insuredId2", insuredId2);
         beneficiaryInfo.put("relation", relation);
         beneficiaryInfo.put("email1", email1);
         beneficiaryInfo.put("email2", email2);
@@ -392,8 +395,10 @@ public class ClaimController {
     private void addClaimToModel(HttpSession session, Model model) {
         Claim claim = (Claim) session.getAttribute("claim");
         Map<String, Object> personInfo = (Map<String, Object>) session.getAttribute("personInfo");
+        Map<String, Object> beneficiaryInfo = (Map<String, Object>) session.getAttribute("beneficiaryInfo");
 
         if (claim != null) model.addAttribute("claim", claim);
         if (personInfo != null) model.addAttribute("personInfo", personInfo);
+        if (beneficiaryInfo != null) model.addAttribute("beneficiaryInfo", beneficiaryInfo);
     }
 }

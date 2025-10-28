@@ -118,47 +118,40 @@
 	</select>
 
 
-    <!-- 개월 단위 조회 -->
-    <select id="selectClaimsByMonths" resultType="claim">
-        SELECT 
-            c.claim_id,
-            c.claim_date,
-            c.accident_type,
-            c.claim_status,
-            p1.person_name AS insured_name,
-            c.beneficiary_name
-        FROM CLAIMS c
-        JOIN INSURANCE_CONTRACTS ic ON c.contract_id = ic.contract_id
-        JOIN CUSTOMERS cu ON ic.customer_id = cu.customer_id
-        JOIN PERSONS p1 ON cu.person_id = p1.person_id
-        WHERE cu.customer_id = #{customerId}
-          AND c.claim_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{months})
-        ORDER BY c.claim_date DESC
-    </select>
+	<!-- 개월 단위 조회 -->
+	<select id="selectClaimsByMonths" resultType="claim">
+		SELECT
+		c.claim_id,
+		c.claim_date,
+		c.accident_type,
+		c.claim_status,
+		p1.person_name AS insured_name,
+		c.beneficiary_name
+		FROM CLAIMS c
+		JOIN INSURANCE_CONTRACTS ic ON c.contract_id = ic.contract_id
+		JOIN CUSTOMERS cu ON ic.customer_id = cu.customer_id
+		JOIN PERSONS p1 ON cu.person_id = p1.person_id
+		WHERE cu.customer_id = #{customerId}
+		AND c.claim_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{months})
+		ORDER BY c.claim_date DESC
+	</select>
 
-    <!-- 날짜 직접입력 조회 -->
-    <select id="selectClaimsByDates" resultType="claim">
-        SELECT 
-            c.claim_id,
-            c.claim_date,
-            c.accident_type,
-            c.claim_status,
-            p1.person_name AS insured_name,
-            c.beneficiary_name
-        FROM CLAIMS c
-        JOIN INSURANCE_CONTRACTS ic ON c.contract_id = ic.contract_id
-        JOIN CUSTOMERS cu ON ic.customer_id = cu.customer_id
-        JOIN PERSONS p1 ON cu.person_id = p1.person_id
-        WHERE cu.customer_id = #{customerId}
-        <if test="start != null">
-            AND c.claim_date &gt;= #{start}
-        </if>
-        <if test="end != null">
-            AND c.claim_date &lt;= #{end}
-        </if>
-        ORDER BY c.claim_date DESC
-    </select>
-
+	<!-- 날짜 직접입력 조회 -->
+	<select id="selectClaimsByDates" resultType="claim"> 
+	SELECT c.claim_id,
+		c.claim_date, c.accident_type, c.claim_status, p1.person_name AS
+		insured_name, c.beneficiary_name 
+		FROM CLAIMS c 
+		JOIN INSURANCE_CONTRACTS ic ON c.contract_id = ic.contract_id 
+		JOIN CUSTOMERS cu ON ic.customer_id	= cu.customer_id 
+		JOIN PERSONS p1 ON cu.person_id = p1.person_id 
+		WHERE cu.customer_id = #{customerId} 
+		
+			AND c.claim_date &gt;= #{start}
+		
+			AND c.claim_date &lt;= #{end}
+		
+		ORDER BY c.claim_date DESC </select>
 
 
 </mapper>

@@ -1,6 +1,6 @@
 package com.kd.insuranceweb.claim;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -39,16 +39,16 @@ public interface ClaimMapper {
     
     /** ✅ 개월 단위 조회 (3개월, 6개월, 1년 등) */
     List<Claim> selectClaimsByMonths(
-        @Param("customerId") Integer customerId,
-        @Param("months") Integer months
-    );
+            @Param("customerId") Integer customerId,
+            @Param("months") Integer months
+        );
 
     /** ✅ 날짜 직접입력 조회 (start~end 범위) */
     List<Claim> selectClaimsByDates(
-        @Param("customerId") Integer customerId,
-        @Param("start") Date start,
-        @Param("end") Date end
-    );
+            @Param("customerId") Integer customerId,
+            @Param("start") LocalDate start,
+            @Param("end") LocalDate end
+        );
 
 
 }

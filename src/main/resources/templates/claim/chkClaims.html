@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>포인트 적립/사용내역 확인 | 혜택/서비스 - 삼성화재 다이렉트 착</title>
+    <title>질병/상해 보험금청구 내역 - 내 보험 시스템</title>
 	<link rel="stylesheet" th:href="@{/club/css/club_common.css}">
 	<link rel="stylesheet" th:href="@{/club/css/PP050401_001.css}">
 	<link rel="stylesheet" th:href="@{/club/css/tip-box.css}">
@@ -18,15 +18,11 @@
 	  }
 
 	  table.tbl-base th, table.tbl-base td {
+		width: 150px;
 	    padding: 12px 8px;
 	    border-bottom: 1px solid #ddd;
-	    font-size: 14px;
 	  }
 
-	  table.tbl-base th {
-	    background-color: #f9fafc;
-	    font-weight: 600;
-	  }
 
 	  table.tbl-base tr:hover td {
 	    background-color: #f3f6ff;
@@ -45,9 +41,9 @@
 	<main layout:fragment="content">
     <div class="ui-tab-pnls">
         <section class="base-content">
-            <div class="content-layout ani-point"> <!--content 부분-->
+            <div class="content-layout ani-point"> 
 
-                <div class="content-title"> <!-- 제목 -->
+                <div class="content-title">
                     <h1>
                         상세 내역을 확인할 <br>
                         청구건을 선택해주세요
@@ -90,20 +86,26 @@
 					                     th:classappend="${months == 0} ? ' checked'">직접입력</label>
 					            </div>
 
-					            <div class="form-wrap date-wrap">
-					              <!-- 시작일 -->
-					              <div class="ui-datepicker inp-date-wrap only-pick">
-					                <input type="date" class="inp-base" title="시작일 입력" id="start-datepicker"
-					                       name="start" th:value="${start}" placeholder="YYYY-MM-DD" min="2010-01-01">
-					              </div>
-					              <!-- 종료일 -->
-					              <div class="ui-datepicker inp-date-wrap only-pick">
-					                <input type="date" class="inp-base" title="종료일 입력" id="end-datepicker"
-					                       name="end" th:value="${end}" placeholder="YYYY-MM-DD">
-					              </div>
+								<div class="form-wrap date-wrap" data-daterange>
+								  <!-- 시작일 -->
+								  <div class="ui-datepicker inp-date-wrap only-pick">
+									<input type="date" class="inp-base"
+									       id="start-datepicker"
+									       name="start"
+									       th:value="${start != null ? #temporals.format(start, 'yyyy-MM-dd') : ''}"
+									       placeholder="YYYY-MM-DD">
+								  </div>
+								  <!-- 종료일 -->
+								  <div class="ui-datepicker inp-date-wrap only-pick">
+									<input type="date" class="inp-base"
+									       id="end-datepicker"
+									       name="end"
+									       th:value="${end != null ? #temporals.format(end, 'yyyy-MM-dd') : ''}"
+									       placeholder="YYYY-MM-DD">
+								  </div>
 
-					              <button type="submit" class="btn-normal">확인</button>
-					            </div>
+								  <button type="submit" class="btn-normal">확인</button>
+								</div>
 					          </td>
 					        </tr>
 					      </tbody>
@@ -134,7 +136,9 @@
 						    <td th:text="${#dates.format(c.claim_date, 'yyyy.MM.dd')}">2025.09.12</td>
 						    <td th:text="${c.insured_name}">홍길동</td>
 						    <td th:text="${c.beneficiary_name}">김수익</td>
-						    <td th:text="${c.accident_type}">질병</td>
+						    <td th:text="${c.accident_type == 'injury' ? '상해' 
+							: (c.accident_type == 'traffic' ? '교통사고'
+							: (c.accident_type == 'disease' ? '질병' : '기타'))}">질병</td>
 						    <td th:text="${c.claim_status == 0 ? '접수중' : (c.claim_status == 1 ? '심사중' : (c.claim_status == 2 ? '지급완료' : '반려'))}">접수중</td>
 						  </tr>
 
@@ -142,21 +146,12 @@
 						    <td colspan="5" class="none none-icon">보험금을 청구한 내역이 없습니다.</td>
 						  </tr>
 						</tbody>
-
-
-
-
                     </table>
-                </div>
-                
-
-
-            </div>
+                </div>            </div>
         </section>
     </div>
 
 	<script>
-	  // --- 엘리먼트 참조
 	  const startInput = document.getElementById('start-datepicker');
 	  const endInput   = document.getElementById('end-datepicker');
 
@@ -164,48 +159,27 @@
 	    'month-radio-minus3': 3,
 	    'month-radio-minus6': 6,
 	    'month-radio-minusyear': 12,
-	    'month-radio-minusSelect': null   // 직접입력
+	    'month-radio-minusSelect': null
 	  };
 
-	  // --- 유틸
 	  const pad = n => String(n).padStart(2, '0');
 	  const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 
-	  // 말일 보정 포함: 3/31 - 1개월 => 2/29(윤년)/2/28(평년)
 	  function shiftMonths(fromDate, months) {
 	    const y = fromDate.getFullYear();
-	    const m = fromDate.getMonth();    // 0~11
+	    const m = fromDate.getMonth();
 	    const d = fromDate.getDate();
-	    const t = new Date(y, m - months, 1); // 목표월의 1일
+	    const t = new Date(y, m - months, 1);
 	    const lastDay = new Date(t.getFullYear(), t.getMonth()+1, 0).getDate();
 	    t.setDate(Math.min(d, lastDay));
 	    return t;
 	  }
 
-	  function todayStr() {
-	    return fmt(new Date());
-	  }
-
-	  function clampDates() {
-	    // end는 오늘을 넘지 않게
-	    const today = todayStr();
-	    if (endInput.value && endInput.value > today) endInput.value = today;
-
-	    // start <= end 보장
-	    if (startInput.value && endInput.value && startInput.value > endInput.value) {
-	      // 사용자가 시작일을 뒤로 보냈다면 종료일을 맞춰줌
-	      endInput.value = startInput.value;
-	    }
-	  }
-
 	  function setRangeByMonths(months) {
 	    const end = new Date();
 	    const start = shiftMonths(end, months);
-
-	    endInput.max   = fmt(end);
 	    endInput.value = fmt(end);
 	    startInput.value = fmt(start);
-	    clampDates();
 	  }
 
 	  function updateRadioStyles() {
@@ -216,53 +190,41 @@
 	    });
 	  }
 
-	  // --- 초기 세팅
 	  document.addEventListener('DOMContentLoaded', () => {
-	    // 종료일 max=오늘, 값 비어있으면 오늘로
-	    const today = todayStr();
-	    if (!endInput.value) endInput.value = today;
-	    endInput.max = today;
-	    if (!startInput.value) startInput.value = today;
+	    // ✅ 서버값이 이미 있으면 기본 3개월 덮어쓰기 금지
+	    const hasServerDate = startInput.value && endInput.value;
 
-	    // 처음 체크된 라디오 기준으로 날짜 세팅(기본: 3개월)
-	    const checked = document.querySelector('.month-radio:checked')?.id || 'month-radio-minus3';
-	    const months = radios[checked];
-	    if (months) setRangeByMonths(months);
+	    if (!hasServerDate) {
+	      const checked = document.querySelector('.month-radio:checked')?.id || 'month-radio-minus3';
+	      const months = radios[checked];
+	      if (months) setRangeByMonths(months);
+	    }
+
 	    updateRadioStyles();
 
-	    // date 클릭 시 네이티브 피커 열기(지원 브라우저에서만)
-	    const tryOpen = el => () => { try { el.showPicker(); } catch(_) {} };
-	    startInput.addEventListener('focus', tryOpen(startInput));
-	    startInput.addEventListener('click',  tryOpen(startInput));
-	    endInput.addEventListener('focus',   tryOpen(endInput));
-	    endInput.addEventListener('click',   tryOpen(endInput));
-	  });
-
-	  // --- 라디오 변경 시 날짜 자동 맞춤
-	  document.querySelectorAll('.month-radio').forEach(r => {
-	    r.addEventListener('change', (e) => {
-	      const months = radios[e.target.id];
-	      if (months) setRangeByMonths(months);
-	      // 직접입력은 날짜를 건드리지 않음
-	      updateRadioStyles();
+	    // ✅ 라디오 변경 시만 기간 변경
+	    document.querySelectorAll('.month-radio').forEach(r => {
+	      r.addEventListener('change', e => {
+	        const months = radios[e.target.id];
+	        if (months) setRangeByMonths(months);
+	        updateRadioStyles();
+	      });
 	    });
-	  });
 
-	  // --- 날짜를 직접 바꾸면 '직접입력' 라디오로 전환
-	  function onManualDateChange() {
-	    clampDates();
-	    const custom = document.getElementById('month-radio-minusSelect');
-	    if (!custom.checked) {
-	      custom.checked = true;
-	      updateRadioStyles();
+	    // ✅ 직접입력하면 자동으로 ‘직접입력’ 라디오 선택
+	    function onManualDateChange() {
+	      const custom = document.getElementById('month-radio-minusSelect');
+	      if (!custom.checked) {
+	        custom.checked = true;
+	        updateRadioStyles();
+	      }
 	    }
-	  }
-	  startInput.addEventListener('input', onManualDateChange);
-	  startInput.addEventListener('change', onManualDateChange);
-	  endInput.addEventListener('input', onManualDateChange);
-	  endInput.addEventListener('change', onManualDateChange);
+	    startInput.addEventListener('change', onManualDateChange);
+	    endInput.addEventListener('change', onManualDateChange);
+	  });
 	</script>
-
+	<script th:src="@{/admin/js/dateRange.js}"></script>
+	
 	</main>
 </body>
 

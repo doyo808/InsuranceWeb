@@ -14,8 +14,8 @@ public interface AdminDashboardMapper {
 
     int countNewContractsThisMonth();
     int countEndedContractsThisMonth(); 
-    int sumClaimsThisMonth();
-    int sumApprovedClaimsThisMonth();
+    int countNewClaimsThisMonth();
+    int countApprovedClaimsThisMonth();
 
     List<Map<String, Object>> selectRecentActivities();
 }
