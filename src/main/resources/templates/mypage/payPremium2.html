@@ -36,13 +36,18 @@
 					<tbody>
 						<!-- 데이터가 있을 경우 -->
 						<tr th:each="item, stat : ${dataListPayment}" th:if="${dataListPayment != null and !dataListPayment.isEmpty()}"
-						th:data-contract-id="${item.contract_id}"
-						class="contract-row">
-							<td th:text="|${item.product_name}(${item.contract_id})|"></td>
-							<td th:text="${item.payment_date}"></td>
-							<td th:text="|${#numbers.formatInteger(item.paid_amount,0,'COMMA')} 원|"></td>
-							<td th:text="|${#numbers.formatInteger(item.total_premium,0,'COMMA')} 원|"></td>
-							<td th:text="${item.pay_status}"></td>
+							th:data-contract-id="${item.contract_id}"
+						    th:data-product-name="${item.product_name}"
+						    th:data-payment-date="${item.payment_date}"
+						    th:data-paid-amount="${item.paid_amount}"
+						    th:data-total-premium="${item.total_premium}"
+						    th:data-pay-status="${item.pay_status}"
+						    class="contract-row">
+								<td th:text="|${item.product_name}(${item.contract_id})|"></td>
+								<td th:text="${item.payment_date}"></td>
+								<td th:text="|${#numbers.formatInteger(item.paid_amount,0,'COMMA')} 원|"></td>
+								<td th:text="|${#numbers.formatInteger(item.total_premium,0,'COMMA')} 원|"></td>
+								<td th:text="${item.pay_status}"></td>
 					    </tr>
 					
 					    <!-- 데이터가 없을 경우 -->

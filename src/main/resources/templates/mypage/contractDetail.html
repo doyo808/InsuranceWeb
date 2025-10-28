@@ -70,7 +70,22 @@
 		    margin: 20px 0;
 		}
 
-
+		/* 목록으로 버튼 */
+		.info-submit-button {
+			color: #FFFFFF;
+			border: 1px solid #2C7FDF;
+			background: #2C7FDF;
+			min-width: 90px;
+			padding: 11px 30px 9px;
+			border-radius: 6px;
+			font-size: 16px;
+			font-weight: 500;
+			height: 45px;
+			line-height: 20px;
+			margin: 30px 0 0 520px;
+			white-space: nowrap;
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
@@ -164,7 +179,9 @@
 
 					<hr class="divider" />
 
-	
+					
+					<button class="info-submit-button"
+							th:onclick="|location.href='@{/mypage/MPDG0070}'|">목록으로</button>
 
 				
 

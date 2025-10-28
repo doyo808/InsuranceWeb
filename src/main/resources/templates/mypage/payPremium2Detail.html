@@ -1,21 +1,239 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{common/layout.html}">
+      layout:decorate="~{common/layout.html}"> 
 <head>
-	<meta charset="UTF-8" />
-	<title>보험료납입</title>
-	
-	
+    <meta charset="UTF-8" />
+    <title>보험료 납입 상세</title>
+
+    <link rel="stylesheet" th:href="@{/mypage/css/payPremium2Detail.css}" />
 </head>
 <body>
-	<main layout:fragment="content">
-		
-		<div class="item">
-			<label>상품명</label>
-			<div class="value" th:text="${detail.product_name}"></div>
-		</div>
-		
-	</main>
+<main layout:fragment="content">
+
+    <div class="base-main payment-detail-wrapper">
+
+
+        <section class="base-content">
+            
+            <h1>보험료 납입 상세</h1>
+
+            <!-- 1. 공통 계약 정보 카드 -->
+            <div class="card info-card">
+                <h2 class="card-title">계약 정보</h2>
+                <div class="info-grid">
+                    <div>
+                        <span class="label">상품명</span>
+                        <span class="value" th:text="${product_name}">자동차 종합보험(16)</span>
+                    </div>
+                    <div>
+                        <span class="label">계약번호</span>
+                        <span class="value" th:text="${contract_id}">16</span>
+                    </div>
+                    <div>
+                        <span class="label">상태</span>
+                        <span class="value">
+                            <span class="status-tag" 
+                                  th:text="${pay_status}"
+                                  th:classappend="|status-${pay_status == '부분납부' ? 'partial' : (pay_status == '초과납부' ? 'over' : (pay_status == '미납' ? 'unpaid' : 'paid'))}|">
+                                부분납부
+                            </span>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="label">최종납입일</span>
+                        <span class="value" th:text="${payment_date}">2025-10-02</span>
+                    </div>
+                    <div>
+                        <span class="label">월 보험료</span>
+                        <span class="value" th:text="|${#numbers.formatInteger(total_premium, 0, 'COMMA')} 원|">50,000 원</span>
+                    </div>
+                    <div>
+                        <span class="label">기 납입금액</span>
+                        <span class="value" th:text="|${#numbers.formatInteger(paid_amount, 0, 'COMMA')} 원|">30,000 원</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 납입 상태별 분기 처리 -->
+            <div th:switch="${pay_status}">
+
+                <!-- ===== [시나리오 1: 부분납부]  ===== -->
+                <div th:case="'부분납부'" th:with="unpaid_amount=${total_premium - paid_amount}">
+                    <div class="card action-card payment-action-card">
+                        <div id="payment-module" 
+                             th:data-unpaid-amount="${unpaid_amount}" 
+                             th:data-available-points="${userPoints}">
+                        </div>
+            
+                        <h2 class="card-title">부족 금액 납부</h2>
+                        <div class="action-content">
+                            
+                            <!-- 1. 결제할 금액 -->
+                            <div class="info-row highlight">
+                                <span class="label">납부할 금액</span>
+                                <span class="value" th:text="|${#numbers.formatInteger(unpaid_amount, 0, 'COMMA')} 원|">20,000 원</span>
+                            </div>
+                            
+                            <hr class="divider" />
+            
+                            <!-- 2. 포인트 사용 -->
+                            <div class="info-row">
+                                <span class="label">보유 포인트</span>
+                                <span class="value" th:text="|${#numbers.formatInteger(userPoints, 0, 'COMMA')} P|">10,000 P</span>
+                            </div>
+                            <div class="input-group">
+                                <input type="number" id="points-to-use" class="form-input" placeholder="사용할 포인트 입력" />
+                                <button type="button" id="use-all-points-btn" class="btn btn-secondary">전액사용</button>
+                            </div>
+                            <p id="point-error-msg" class="error-message"></p>
+            
+                            <hr class="divider" />
+            
+                            <!-- 3. 최종 결제 금액 -->
+                            <div class="info-row final-amount">
+                                <span class="label">최종 결제금액</span>
+                                <span class="value" id="final-payment-amount" th:text="|${#numbers.formatInteger(unpaid_amount, 0, 'COMMA')} 원|">
+                                    20,000 원
+                                </span>
+                            </div>
+                            
+                            <!-- 4. 결제 버튼 -->
+                            <form id="payment-form" th:action="@{/payment/proceed}" method="POST">
+                                <!-- CSRF 토큰 -->
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <!-- 결제에 필요한 정보들 -->
+                                <input type="hidden" id="form-contract-id" name="contractId" th:value="${contract_id}" />
+                                <input type="hidden" id="form-points-used" name="pointsUsed" value="0" />
+                                <input type="hidden" id="form-payment-amount" name="paymentAmount" th:value="${unpaid_amount}" />
+                                
+                                <button type="submit" id="payment-submit-btn" class="btn btn-primary btn-full">
+                                    <span id="payment-btn-text" th:text="|${#numbers.formatInteger(unpaid_amount, 0, 'COMMA')} 원 결제하기|">20,000 원 결제하기</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ===== [시나리오 2: 미납]  ===== -->
+                <div th:case="'미납'" th:with="unpaid_amount=${total_premium - paid_amount}"> <!-- 미납 시 paid_amount는 0일 수 있음 -->
+                     <div class="card action-card payment-action-card">
+                        <div id="payment-module" 
+                             th:data-unpaid-amount="${unpaid_amount}" 
+                             th:data-available-points="${userPoints}">
+                        </div>
+            
+                        <h2 class="card-title">미납 보험료 납부</h2>
+                        <div class="action-content">
+                            
+                            <!-- 1. 결제할 금액 -->
+                            <div class="info-row highlight">
+                                <span class="label">납부할 금액</span>
+                                <span class="value" th:text="|${#numbers.formatInteger(unpaid_amount, 0, 'COMMA')} 원|">20,000 원</span>
+                            </div>
+                            
+                            <hr class="divider" />
+            
+                            <!-- 2. 포인트 사용 -->
+                            <div class="info-row">
+                                <span class="label">보유 포인트</span>
+                                <span class="value" th:text="|${#numbers.formatInteger(userPoints, 0, 'COMMA')} P|">10,000 P</span>
+                            </div>
+                            <div class="input-group">
+                                <input type="number" id="points-to-use" class="form-input" placeholder="사용할 포인트 입력" />
+                                <button type="button" id="use-all-points-btn" class="btn btn-secondary">전액사용</button>
+                            </div>
+                            <p id="point-error-msg" class="error-message"></p>
+            
+                            <hr class="divider" />
+            
+                            <!-- 3. 최종 결제 금액 -->
+                            <div class="info-row final-amount">
+                                <span class="label">최종 결제금액</span>
+                                <span class="value" id="final-payment-amount" th:text="|${#numbers.formatInteger(unpaid_amount, 0, 'COMMA')} 원|">
+                                    20,000 원
+                                </span>
+                            </div>
+                            
+                            <!-- 4. 결제 버튼 -->
+                            <form id="payment-form" th:action="@{/payment/proceed}" method="POST">
+                                <!-- CSRF 토큰 -->
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <!-- 결제에 필요한 정보들 -->
+                                <input type="hidden" id="form-contract-id" name="contractId" th:value="${contract_id}" />
+                                <input type="hidden" id="form-points-used" name="pointsUsed" value="0" />
+                                <input type="hidden" id="form-payment-amount" name="paymentAmount" th:value="${unpaid_amount}" />
+                                
+                                <button type="submit" id="payment-submit-btn" class="btn btn-primary btn-full">
+                                    <span id="payment-btn-text" th:text="|${#numbers.formatInteger(unpaid_amount, 0, 'COMMA')} 원 결제하기|">20,000 원 결제하기</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== [시나리오 3: 초과납부] ===== -->
+                <div th:case="'초과납부'" th:with="overpaid_amount=${paid_amount - total_premium}">
+                    <div class="card action-card overpaid-action-card">
+                        <h2 class="card-title">초과 납부 금액 처리</h2>
+                        <div class="action-content">
+                            <div class="info-row highlight">
+                                <span class="label">초과 납부액 (적립 예정 포인트)</span>
+                                <span class="value" th:text="|${#numbers.formatInteger(overpaid_amount, 0, 'COMMA')} P|">10,000 P</span>
+                            </div>
+                            <p class="description">
+                                초과 납부된 보험료는 포인트로 적립됩니다.
+                            </p>
+                            <form th:action="@{/mypage/points/add}" method="POST">
+                                <!-- CSRF 토큰 (필요시) -->
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <input type="hidden" name="pointsToAdd" th:value="${overpaid_amount}" />
+                                <input type="hidden" name="contractId" th:value="${contract_id}" />
+                                <button type="submit" class="btn btn-primary btn-full">포인트로 적립하기</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== [시나리오 4: 완납] ===== -->
+                <div th:case="'완납'">
+                    <div class="card action-card paid-action-card">
+                        <h2 class="card-title">납입 완료</h2>
+                        <div class="action-content">
+                            <p class="description">
+                                해당 월의 보험료가 정상적으로 납입되었습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ===== [시나리오 5: 기타 상태 (예: default)] ===== -->
+                <div th:case="*">
+                     <div class="card action-card">
+                        <h2 class="card-title">알림</h2>
+                        <div class="action-content">
+                            <p class="description" th:text="|납입 상태를 확인할 수 없습니다. (상태: ${pay_status})|">
+                                납입 상태를 확인할 수 없습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- th:switch 끝 -->
+
+            <!-- 3. 하단 버튼 -->
+            <div class="button-wrap bottom-buttons">
+                <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/mypage/MPDG0080}'|">
+                    목록으로
+                </button>
+            </div>
+
+        </section>
+    </div>
+
+    <!-- 4단계에서 생성할 JS 파일 연결 -->
+    <script th:src="@{/mypage/js/payPremium2Detail.js}"></script>
+</main>
 </body>
 </html>
+
