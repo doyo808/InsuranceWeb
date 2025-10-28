@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kd.insuranceweb.club.mapper.AnypointMapper;
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.CustomerDTO;
 import com.kd.insuranceweb.common.dto.PersonDTO;
@@ -32,6 +33,7 @@ public class MypageService {
 	private final MarketingConsentMapper marketingConsentMapper;
 	private final MyContractMapper myContractMapper;
 	private final PaymentMapper paymentMapper;
+	private final AnypointMapper anypointMapper;
 
 	// 고객정보 html로 전송
 	public CustomUserDetails getPersonAndCustomerInfo(CustomUserDetails loginUser) {
@@ -159,6 +161,43 @@ public class MypageService {
             p.setPay_status(PAY_STATUS_MAP.getOrDefault(p.getPay_status(), p.getPay_status()));
         });
         return payments;
+    }
+    
+    
+    // =======================
+    //      보험료 납부 처리
+    // =======================
+    
+    // 초과결제
+    @Transactional
+    public int addPointsAndUpdatePayment(int pointsToAdd, int customerId, int paymentId, int premium) {
+    	int step1 = addPoints(pointsToAdd, customerId);
+    	int step2 = updateOverPaidPayment(paymentId, premium);
+    	return step1 + step2;
+    }
+    // 초과결제분 포인트 전환
+    private int addPoints(int pointsToAdd, int customerId) {
+    	return anypointMapper.insertTxnEarn(customerId, pointsToAdd);
+    }
+    // 초과결제분 결제정보 수정
+    private int updateOverPaidPayment(int paymentId, int premium) {
+    	return paymentMapper.updatePaymentToPaid(paymentId, premium);
+    }
+    
+    // 부분결제
+    @Transactional
+    public int usePointsAndUpdatePayment(int pointsToUse, int customerId, int paymentId, int premium) {
+       	int step1 = usePoints(pointsToUse, customerId);
+    	int step2 = updatePartialPayment(paymentId, premium);
+    	return step1 + step2;
+    }
+    // 부분결제 포인트 사용
+    private int usePoints(int pointsToUse, int customerId) {
+    	return anypointMapper.insertTxnUse(customerId, pointsToUse);
+    }
+    // 부분결제 결제정보 수정
+    private int updatePartialPayment(int paymentId, int premium) {
+    	return paymentMapper.updatePaymentToPaid(paymentId, premium);
     }
     
 }

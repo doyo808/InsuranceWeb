@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 3. dataset의 값들을 hidden input으로 생성하여 form에 추가
             const fields = {
+				'payment_id': dataset.paymentId,
                 'product_name': dataset.productName,
                 'payment_date': dataset.paymentDate,
                 'paid_amount': dataset.paidAmount,

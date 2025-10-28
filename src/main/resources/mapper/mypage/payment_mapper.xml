@@ -6,6 +6,7 @@
 
     <select id="selectPayments" parameterType="Integer" resultType="com.kd.insuranceweb.mypage.dto.PaymentDto">
         SELECT 
+        	PAYMENT_ID,
             PRODUCT_NAME,
             PAYMENT_DATE,
             PAID_AMOUNT,
@@ -14,6 +15,7 @@
             CONTRACT_ID
         FROM (
             SELECT
+            	pay.PAYMENT_ID,
                 p.PRODUCT_NAME,
                 pay.PAYMENT_DATE,
                 pay.PAID_AMOUNT,
@@ -46,5 +48,13 @@
 				1
 			)
 	</insert>
+	
+	<update id="updatePaymentToPaid">
+	  UPDATE PAYMENTS
+	     SET paid_amount = #{paid_amount},
+	         payment_date = SYSDATE,
+	         pay_status = 'P'
+	   WHERE payment_id = #{paymentId}
+	</update>
 	
 </mapper>
