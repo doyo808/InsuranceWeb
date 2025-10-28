@@ -60,7 +60,7 @@
     	SELECT review_id, category, subcategory, content, author_name, author_id, is_visible, rating, created_at
     	FROM review	
     	WHERE review_id = #{review_id}
-    </select>
+    </select>    
     
     <!-- 등록 -->
     <insert id="insertReview" parameterType="reviewDto">
@@ -92,6 +92,86 @@
         WHERE review_id = #{reviewId}
     </delete>
     
+    
+    <!-- 관리자용 후기 목록 조회 -->
+	<select id="selectReviewListForAdmin" parameterType="map" resultType="reviewDto">
+	    SELECT *
+	    FROM (
+	        SELECT ROWNUM AS RNUM, A.*
+	        FROM (
+	            SELECT review_id, category, subCategory, content, author_name, author_id, is_visible, rating, created_at, updated_at
+	            FROM review
+	            WHERE 1=1
+	            <if test="category != null and category != ''">
+	                AND category = #{category}
+	            </if>
+	            <if test="subCategory != null and subCategory != ''">
+	                AND subCategory = #{subCategory}
+	            </if>
+	            <if test="searchType != null and searchKeyword != null and searchKeyword != ''">
+	                <choose>
+	                    <when test="searchType == 'content'">
+	                        AND content LIKE '%' || #{searchKeyword} || '%'
+	                    </when>
+	                    <when test="searchType == 'author_name'">
+	                        AND author_name LIKE '%' || #{searchKeyword} || '%'
+	                    </when>
+	                </choose>
+	            </if>
+	            <if test="author_name != null and author_name != ''">
+	                AND author_name LIKE '%' || #{author_name} || '%'
+	            </if>
+	            <if test="isVisible != null and isVisible != ''">
+	                AND is_visible = #{isVisible}
+	            </if>
+	            <if test="fromDate != null and fromDate != ''">
+	                AND created_at &gt;= TO_DATE(#{fromDate}, 'YYYY-MM-DD')
+	            </if>
+	            <if test="toDate != null and toDate != ''">
+	                AND created_at &lt;= TO_DATE(#{toDate}, 'YYYY-MM-DD')
+	            </if>
+	            ORDER BY created_at DESC
+	        ) A
+	        WHERE ROWNUM &lt;= #{endRow}
+	    )
+	    WHERE RNUM &gt;= #{startRow}
+	</select>
+	
+	<!-- 관리자용 후기 총 개수 -->
+	<select id="selectReviewCountForAdmin" parameterType="map" resultType="int">
+	    SELECT COUNT(*)
+	    FROM review
+	    WHERE 1=1
+	    <if test="category != null and category != ''">
+	        AND category = #{category}
+	    </if>
+	    <if test="subCategory != null and subCategory != ''">
+	        AND subCategory = #{subCategory}
+	    </if>
+	    <if test="searchType != null and searchKeyword != null and searchKeyword != ''">
+	        <choose>
+	            <when test="searchType == 'content'">
+	                AND content LIKE '%' || #{searchKeyword} || '%'
+	            </when>
+	            <when test="searchType == 'author_name'">
+	                AND author_name LIKE '%' || #{searchKeyword} || '%'
+	            </when>
+	        </choose>
+	    </if>
+	    <if test="author_name != null and author_name != ''">
+	        AND author_name LIKE '%' || #{author_name} || '%'
+	    </if>
+	    <if test="isVisible != null and isVisible != ''">
+	        AND is_visible = #{isVisible}
+	    </if>
+	    <if test="fromDate != null and fromDate != ''">
+	        AND created_at &gt;= TO_DATE(#{fromDate}, 'YYYY-MM-DD')
+	    </if>
+	    <if test="toDate != null and toDate != ''">
+	        AND created_at &lt;= TO_DATE(#{toDate}, 'YYYY-MM-DD')
+	    </if>
+	</select>
+
   	
   	
   </mapper>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/common/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지 등록/수정</title>
+
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+
+    <!-- 페이지 전용 CSS -->
+    <link rel="stylesheet" th:href="@{/admin/css/noticeDetail.css}">
+
+    <!-- jQuery + Summernote JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+    <script th:inline="javascript">
+        $(function() {
+            $('#summernote').summernote({
+                placeholder: '내용을 입력하세요.',
+                height: 320,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview']]
+                ]
+            });
+        });
+
+        // ✅ layout.html CSRF 메타 기준으로 삭제 함수
+        function deleteNotice(noticeId) {
+            if (!confirm("정말 삭제하시겠습니까?")) return;
+
+            // contextPath 포함 URL 생성
+            const deleteUrl = /*[[@{/admin/notice/}]]*/ '' + noticeId + '/delete';
+            const listUrl   = /*[[@{/admin/notice}]]*/ '';
+
+            // layout.html의 CSRF 메타에서 가져오기
+            const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+            // POST 요청
+            fetch(deleteUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    [csrfHeader]: csrfToken
+                },
+                body: ''
+            })
+            .then(res => {
+                if (res.ok) {
+                    alert('삭제되었습니다.');
+                    location.href = listUrl;
+                } else {
+                    alert('삭제 실패 (' + res.status + ')');
+                }
+            })
+            .catch(err => alert('오류 발생: ' + err));
+        }
+    </script>
+
+    <th:block layout:fragment="extraHead"></th:block>
+</head>
+
+<body>
+<main layout:fragment="adminContent" class="admin-main">
+    <section style="max-width:1000px; margin:32px auto;">
+        <h1 class="page-title" th:text="${isNew} ? '공지 등록' : '공지 상세/수정'">공지 등록/수정</h1>
+
+        <form th:action="@{/admin/notice/save}" method="post" class="card" style="padding:20px;">
+            <!-- CSRF는 layout.html 메타에서 처리하므로 form 안에서는 생략 가능 -->
+            <input type="hidden" name="notice_id" th:value="${noticeDto.notice_id}" />
+
+            <!-- 노출 여부 -->
+            <div class="field" style="margin-bottom:12px;">
+                <label>사용자화면 표시여부</label>
+                <select name="is_visible" class="field__control">
+                    <option value="Y" th:selected="${noticeDto.is_visible=='Y'}">노출</option>
+                    <option value="N" th:selected="${noticeDto.is_visible=='N'}">숨김</option>
+                </select>
+            </div>
+
+            <!-- 제목 -->
+            <div class="field" style="margin-bottom:12px;">
+                <label>제목</label>
+                <input class="field__control" type="text" name="title"
+                       th:value="${noticeDto.title}" required/>
+            </div>
+
+            <!-- 내용 -->
+            <div class="field" style="margin-bottom:12px;">
+                <label>내용</label>
+                <textarea id="summernote" name="content" th:utext="${noticeDto.content}"></textarea>
+            </div>
+
+            <!-- 작성자 -->
+            <div class="field" style="margin-bottom:12px;">
+                <label>작성자</label>
+                <input class="field__control" type="text" name="writer"
+                       th:value="${noticeDto != null && noticeDto.writer != null ? noticeDto.writer : loginId}" readonly />
+            </div>
+
+            <!-- 버튼 영역 -->
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;">
+                <a th:href="@{/admin/notice}" class="btn btn--secondary">목록</a>
+                <button type="submit" class="btn btn--primary" th:text="${isNew} ? '저장' : '수정'"></button>
+                <button type="button" class="btn btn--primary" th:if="${!isNew}"
+                        th:onclick="'deleteNotice(' + ${noticeDto.notice_id} + ');'">삭제</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

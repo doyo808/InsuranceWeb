@@ -51,5 +51,16 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		return sql.delete("ReviewMapper.deleteReview", reviewId);
 	}
+	
+	// 관리자용
+    @Override
+    public List<ReviewDto> getReviewListForAdmin(Map<String, Object> params) {
+        return sql.selectList("ReviewMapper.selectReviewListForAdmin", params);
+    }
+
+    @Override
+    public int getReviewCountForAdmin(Map<String, Object> params) {
+        return sql.selectOne("ReviewMapper.selectReviewCountForAdmin", params);
+    }
 
 }
