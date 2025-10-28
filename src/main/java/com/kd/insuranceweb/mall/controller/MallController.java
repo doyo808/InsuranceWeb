@@ -19,10 +19,10 @@ public class MallController {
 	
 	// 단순히 mall/상품번호(or이름)으로 통일한다
 	
-	@GetMapping("/{productID}")
-	public String product(@PathVariable("productID") String productID) {
+	@GetMapping("/{pageNum}")
+	public String product(@PathVariable("pageNum") String pageNum) {
 		
-		return "mall/products/"+productID;
+		return "mall/products/"+pageNum;
 	}
 	
 	@GetMapping("/ria/{id}")

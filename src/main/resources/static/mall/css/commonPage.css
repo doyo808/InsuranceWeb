@@ -253,6 +253,8 @@ body {
 
 .section-plus {
   padding: 20px 0;
+  margin: 0 auto;
+  width: 1200px;
   display: flex;
   justify-content: space-between;
 }
