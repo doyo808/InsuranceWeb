@@ -111,6 +111,19 @@ public class MypageController {
 	    
    		return "mypage/payCompletePartial";
    	}
+   	// 미납
+	@PostMapping("/payment/unpaid")
+   	public String paymentUnpaid(        
+   	        @RequestParam("pointsUsed") int pointsUsed,
+   	        @RequestParam("paymentAmount") int paymentAmount,
+   	        @RequestParam("contractId") int contractId,
+   	        @RequestParam("total_premium") int totalPremium,
+   	        @AuthenticationPrincipal CustomUserDetails loginUser) {
+
+	    mypageService.usePointsAndInsertPayment(pointsUsed, loginUser.getCustomer_id(), contractId, totalPremium);
+	    
+   		return "mypage/payCompletePartial";
+   	}
    
    
    

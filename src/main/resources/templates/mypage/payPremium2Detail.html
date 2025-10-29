@@ -157,14 +157,15 @@
                             </div>
                             
                             <!-- 4. 결제 버튼 -->
-                            <form id="payment-form" th:action="@{/payment/proceed}" method="POST">
+                            <form id="payment-form" th:action="@{/mypage/payment/unpaid}" method="POST">
                                 <!-- CSRF 토큰 -->
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 <!-- 결제에 필요한 정보들 -->
                                 <input type="hidden" id="form-contract-id" name="contractId" th:value="${contract_id}" />
                                 <input type="hidden" id="form-points-used" name="pointsUsed" value="0" />
                                 <input type="hidden" id="form-payment-amount" name="paymentAmount" th:value="${unpaid_amount}" />
-                                
+								<input type="hidden" name="total_premium" th:value="${total_premium}" />
+								
                                 <button type="submit" id="payment-submit-btn" class="btn btn-primary btn-full">
                                     <span id="payment-btn-text" th:text="|${#numbers.formatInteger(unpaid_amount, 0, 'COMMA')} 원 결제하기|">20,000 원 결제하기</span>
                                 </button>

@@ -3,6 +3,7 @@ package com.kd.insuranceweb.mypage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -168,7 +169,7 @@ public class MypageService {
     //      보험료 납부 처리
     // =======================
     
-    // 초과결제
+    // 초과결제 ============
     @Transactional
     public int addPointsAndUpdatePayment(int pointsToAdd, int customerId, int paymentId, int premium) {
     	int step1 = addPoints(pointsToAdd, customerId);
@@ -184,7 +185,7 @@ public class MypageService {
     	return paymentMapper.updatePaymentToPaid(paymentId, premium);
     }
     
-    // 부분결제
+    // 부분결제 ============
     @Transactional
     public int usePointsAndUpdatePayment(int pointsToUse, int customerId, int paymentId, int premium) {
        	int step1 = usePoints(pointsToUse, customerId);
@@ -199,5 +200,26 @@ public class MypageService {
     private int updatePartialPayment(int paymentId, int premium) {
     	return paymentMapper.updatePaymentToPaid(paymentId, premium);
     }
+    
+    // 미납 ============
+    @Transactional
+    public int usePointsAndInsertPayment(int pointsToUse, int customerId, int contractId, int premium) {
+       	int step1 = usePointsToUnpaid(pointsToUse, customerId);
+    	int step2 = insertUnpaid(customerId, contractId, premium);
+    	return step1 + step2;
+    }
+    // 미납 포인트 사용
+    private int usePointsToUnpaid(int pointsToUse, int customerId) {
+    	return anypointMapper.insertTxnUse(customerId, pointsToUse);
+    }
+    // 미납 결제정보 수정
+    private int insertUnpaid(int customerId, int contractId, int premium) {
+		Map<String, Object> paymentParams = new HashMap<>();
+		paymentParams.put("customer_id", customerId);
+		paymentParams.put("contract_id", contractId);
+		paymentParams.put("paid_amount", premium);
+    	return paymentMapper.insertPayment(paymentParams);
+    }
+    
     
 }
