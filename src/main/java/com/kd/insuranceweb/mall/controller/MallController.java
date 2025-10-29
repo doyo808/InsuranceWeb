@@ -22,12 +22,12 @@ public class MallController {
 	@GetMapping("/{pageNum}")
 	public String product(@PathVariable("pageNum") String pageNum) {
 		
-		return "/mall/products/"+pageNum;
+		return "mall/products/"+pageNum;
 	}
 	
 	@GetMapping("/ria/{id}")
 	public String insuranceJoin(@PathVariable("id") String id, HttpSession session) {
 		session.setAttribute("productId", id);
-		return "/mall/calculate/selectCover";
+		return "mall/calculate/selectCover";
 	}
 }
