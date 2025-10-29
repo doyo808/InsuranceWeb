@@ -26,7 +26,7 @@ public class ProductController {
 
     private final ProductServiceImpl productService;
 
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<?> getProductData(HttpSession session) {
     	// 세션에서 상품 id를 가져온다
     	Long id = Long.parseLong(session.getAttribute("productId").toString());
@@ -43,10 +43,17 @@ public class ProductController {
             @RequestPart(value = "conditions", required = false) MultipartFile conditions) {
         try {
             // 서비스에서 db에 대한 처리를함
-        	
-            productService.registerProduct(requestData, thumbnail, conditions);
+        	if(thumbnail != null && conditions != null) {
+        		// 데이터가 제대로 들어있을경우
+                productService.registerProduct(requestData, thumbnail, conditions);
+        	} else {
+        		// 첨부 파일이 없을경우 테스트
+        		// 비어있는 담보나 파일이 있어도 NullPointerExceptin을 발생시키지않음
+        		productService.registerProductTest(requestData);
+        	}
             return ResponseEntity.created(URI.create("/api/products/")).body(Map.of("message", "상품 등록 완료"));
         } catch (NullPointerException ex1) {
+        	// 위의 예외상황을 테스트용으로 if로 분기해놔서 작동하지 않는코드
         	return ResponseEntity.status(410).body(Map.of("blankForm", "입력된 폼에 비어있는 값이 있습니다"));
         } catch (Exception e) {
 //            e.printStackTrace();

@@ -57,6 +57,39 @@ public class ProductServiceImpl implements ProductService {
 	 }
 	 
 	 @Transactional
+	 public void registerProductTest(ProductRequestDTO dto) {
+		 try {
+			// 1) 상품 insert -> dto.productId에 시퀀스값 채워짐
+			 
+			 productMapper.insertInsuranceProduct(dto);
+			 // 나중에 id값이 필요할때 사용
+			 Long productId = dto.getProductId();
+			 // 전달받은 담보,요율 데이터들
+			 List<CoverageDto> cover = dto.getCoverages();
+			 List<PremiumRateDto> premium = dto.getPremiumRates();
+			 
+			// 2) 담보 insert all
+			 // productId는 mapper에서 #{productId}로 사용하므로 dto에 그대로 둠
+			 if(cover != null && premium != null) {
+				 for (CoverageDto c : cover) {
+					 c.setProduct_id(productId);
+					 productMapper.insertCoverageDefinition(c);
+				 }
+				 
+				 // 3) 요율 insert all
+				 for (PremiumRateDto p : premium) {
+					 p.setProduct_id(productId);
+					 productMapper.insertPremiumRateRow(p);	    		 
+				 }				 
+			 }
+		 } catch (Exception e) {
+			 e.printStackTrace();
+			 System.out.println("ProductServiceImple의 registerProductTest()에서 문제가 생김");
+		 }
+		 
+	 }
+	 
+	 @Transactional
 	 public void registerProduct(ProductRequestDTO dto, MultipartFile thumb, MultipartFile con) {
 		 try {
 			 // (1) DB에 등록
@@ -75,15 +108,17 @@ public class ProductServiceImpl implements ProductService {
 			 List<PremiumRateDto> premium = dto.getPremiumRates();
 			 // 2) 담보 insert all
 			 // productId는 mapper에서 #{productId}로 사용하므로 dto에 그대로 둠
-			 for (CoverageDto c : cover) {
-				 c.setProduct_id(productId);
-				 productMapper.insertCoverageDefinition(c);
-			 }
-			 
-			 // 3) 요율 insert all
-			 for (PremiumRateDto p : premium) {
-				 p.setProduct_id(productId);
-				 productMapper.insertPremiumRateRow(p);	    		 
+			 if(cover != null && premium != null) {
+				 for (CoverageDto c : cover) {
+					 c.setProduct_id(productId);
+					 productMapper.insertCoverageDefinition(c);
+				 }
+				 
+				 // 3) 요율 insert all
+				 for (PremiumRateDto p : premium) {
+					 p.setProduct_id(productId);
+					 productMapper.insertPremiumRateRow(p);	    		 
+				 }
 			 }
 			 
 			 // (2) 트랜잭션 커밋 후 실행할 작업 등록
@@ -98,6 +133,7 @@ public class ProductServiceImpl implements ProductService {
 					 } catch (IOException e) {
 						 // 로깅/알림 처리
 //						 e.printStackTrace();
+						 System.out.println("ProductServiceImple의 registerProduct()의 afterCommit()에서 문제가 생김");
 					 }
 				 }
 			 });
@@ -110,6 +146,7 @@ public class ProductServiceImpl implements ProductService {
                 fileService.deleteTempFile(dto.getConditions());
             } catch (IOException ex) {
 //                ex.printStackTrace();
+            	System.out.println("ProductServiceImple의 registerProduct()에서 문제가 생김");
             }
             throw e; // 트랜잭션 롤백
 		 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{admin/common/layout}">
+	layout:decorate="~{/admin/common/layout}">
 
 <head>
 	<meta charset="utf-8" />
@@ -108,7 +108,7 @@
 
 		<!-- 6) 페이지네이션: 한 페이지 8개, preserve-query로 검색조건 유지 -->
 		<app-pagination th:attr="current=${page}, total-items=${totalCount}, per-page=${perPage}"
-			href="/admin/product?page={page}" preserve-query window="5">
+			href="/kdinsuranceTeam/admin/product?page={page}" preserve-query window="5">
 		</app-pagination>
 
 		<!-- 초기화 JS: 목록은 그대로 두고, 입력만 지움 -->

@@ -92,7 +92,7 @@ public class SecurityConfig {
     	String[] whiteList = {
     			"/", "/index.html", "/login", "/common/login.html", "/home",
     			"/signup/**", "/common/error/**",
-    			"/*/css/**", "/*/js/**", "/*/images/**",
+    			"/*/css/**", "/*/js/**", "/*/images/**", "/mall/**", "/api/products/get",
     			"/api/auth/status", "/cert/**",
     			"/helpdesk/**", "/terms/**", "/club/PP050101_001",
     			"/club/PP050301_001","/club/PP050401_001", "/club/PP060701_001","/club/event/index", "/club/event/analysis",

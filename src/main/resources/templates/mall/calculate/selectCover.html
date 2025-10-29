@@ -246,7 +246,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // --- DB 데이터 시뮬레이션 (원래는 서버에서 fetch) ---
 			
-			fetch('/kdInsuranceTeam/api/products', {
+			fetch('/kdInsuranceTeam/api/products/get', {
 				method: 'GET',
 				header: 'application/json'
 			}).then((res) => {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layout.html}">
+	  layout:decorate="~{/common/layout.html}">
 	  
 <head>
   <meta charset="UTF-8">
@@ -23,8 +23,10 @@
           <div class="title">
             영업용자동차보험 <span class="badge">전화가입</span>
           </div>
-          <div class="subtitle">영업용자동차보험도 전화로 간편하게 가입가능</div>
-          <div class="description">대상 : 개인소유화물차</div>
+          <div class="subtitle"></div>
+          <div class="desc">
+			<div class="desc-text">영업용자동차보험도 전화로 간편하게 가입가능</div>
+		  </div>
           <a class="btn" th:href="@{/mall/ria/1}">상담 신청하기 tel: 0000-0000</a>
         </div>
       </div>

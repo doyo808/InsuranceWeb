@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.mall;
+package com.kd.insuranceweb.mall.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

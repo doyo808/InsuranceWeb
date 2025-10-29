@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layout.html}">
+	  layout:decorate="~{/common/layout.html}">
 
 <head>
 	<title>오토바이 전용 운전자보험</title>
@@ -27,7 +27,7 @@
 						<div class="desc-text">자동차보험만으로 충분하지 않은 오토바이 운전자를 위한 보장</div>
 						<div class="desc-text">삼성화재 자동차보험 고객 매월 5% 할인</div>
 					</div>
-					<a class="btn" href="@{/mall/ria/3">보험료 계산</a>
+					<a class="btn" th:href="@{/mall/ria/3}">보험료 계산</a>
 				</div>
 			</div>
 		</div>

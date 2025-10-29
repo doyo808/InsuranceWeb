@@ -1,4 +1,4 @@
-package com.kd.insuranceweb.mall;
+package com.kd.insuranceweb.mall.controller;
 
 import java.math.BigDecimal;
 
@@ -18,6 +18,8 @@ import com.kd.insuranceweb.common.mapper.PersonMapper;
 import com.kd.insuranceweb.mall.dto.InsuranceApplyDto;
 import com.kd.insuranceweb.mall.dto.MallInsuredDetailDTO;
 import com.kd.insuranceweb.mall.dto.MallPersonalBasicDTO;
+import com.kd.insuranceweb.mall.service.MallPaymentService;
+import com.kd.insuranceweb.mall.service.MallServiceTemp;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

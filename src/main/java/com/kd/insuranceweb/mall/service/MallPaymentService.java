@@ -1,8 +1,10 @@
-package com.kd.insuranceweb.mall;
+package com.kd.insuranceweb.mall.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.kd.insuranceweb.mall.controller.MallControllerTemp;
+import com.kd.insuranceweb.mall.controller.MallControllerTemp.PaymentCallbackRequest;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
