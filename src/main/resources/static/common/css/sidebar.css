@@ -1,111 +1,88 @@
+/* ─────────────────────────────
+   공통 설정
+───────────────────────────── */
 * {
 	box-sizing: border-box;
 }
 
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+/* ─────────────────────────────
+   사이드바
+───────────────────────────── */
 .sidebar {
 	position: fixed;
 	top: 0;
 	right: 0;
-	/* 오른쪽에 붙이기 */
 	width: 200px;
 	height: 100%;
-	background: white;
+	background: #fff;
 	border-left: 1px solid #e6e6e6;
-
 	transition: transform 0.8s ease;
 	z-index: 2000;
 }
 
-.sidebar ul {
-	list-style: none;
-	padding: 0 25px;
-}
-
-.sidebar ul li {
-	margin: 20px 0;
-}
-
 .sidebar.closed {
 	transform: translateX(100%);
-	/* 화면 밖으로 밀어내기 */
 }
 
 .sidebar.open {
 	transform: translateX(80px);
 }
 
+.sidebar ul {
+	list-style: none;
+	padding: 0 25px;
+	margin: 0;
+}
+
+.sidebar ul li {
+	margin: 20px 0;
+}
+
+/* ─────────────────────────────
+   사이드바 토글 버튼
+───────────────────────────── */
 .toggle-btn {
-	background-color: white;
 	position: absolute;
 	top: 200px;
-	left: -30px;
-	transform: translateY(-50%);
-	width: fit-content;
-	height: fit-content;
-	border: none;
+	left: -27px; /* 사이드바 테두리에 딱 맞춤 */
+	width: 26px;
+	height: 80px;
+	background-color: #fff;
+	border: 1px solid #e6e6e6;
+	border-right: none;
+	border-radius: 8px 0 0 8px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.3s ease, transform 0.3s ease;
+	z-index: 2001;
 }
 
-.toggle-btn img {
-	display: block;
-	
-}
 
-.side_menu:before {
-	display: block;
-	content: '';
-	clear: both;
-	margin: 3px 15px;
-	width: 40px;
-	height: 40px;
-	background-image: url(/kdInsuranceTeam/common/images/sideBar.png);
-	background-repeat: no-repeat;
-}
 
-#side_menu1:before {
-	background-position: -240px -40px;
-}
 
-#side_menu1:hover:before {
-	background-position: -280px -40px;
-}
-
-#side_menu2:before {
-	background-position: 0px 0px;
-}
-
-#side_menu2:hover:before {
-	background-position: -40px 0px;
-}
-
-#side_menu3:before {
-	background-position: -80px 0px;
-}
-
-#side_menu3:hover:before {
-	background-position: -120px 0px;
-}
-
-#side_menu4:before {
-	background-position: -160px 0px;
-}
-
-#side_menu4:hover:before {
-	background-position: -200px 0px;
-}
-
-#side_menu5:before {
-	background-position: -80px -40px;
-}
-
-#side_menu5:hover:before {
-	background-position: -120px -40px;
-}
-
-.side_menu:hover {
+.toggle-btn .arrow {
+	font-size: 20px;
 	font-weight: bold;
+	color: #3498db;
+	transition: transform 0.3s ease;
 }
 
+/* 사이드바 열렸을 때 > 방향 전환 */
+.sidebar.open + .toggle-btn .arrow {
+	transform: rotate(180deg);
+}
+
+/* ─────────────────────────────
+   메뉴 아이콘 & 항목
+───────────────────────────── */
 .side_menu {
 	width: fit-content;
 	font-size: 13px;
@@ -113,26 +90,57 @@
 	align-items: center;
 }
 
+.side_menu:hover {
+	font-weight: bold;
+}
+
+.side_menu::before {
+	display: block;
+	content: '';
+	margin: 3px 15px;
+	width: 40px;
+	height: 40px;
+	background-image: url(/kdInsuranceTeam/common/images/sideBar.png);
+	background-repeat: no-repeat;
+}
+
+/* 각 메뉴 아이콘 위치 */
+#side_menu1::before { background-position: -240px -40px; }
+#side_menu1:hover::before { background-position: -280px -40px; }
+
+#side_menu2::before { background-position: 0 0; }
+#side_menu2:hover::before { background-position: -40px 0; }
+
+#side_menu3::before { background-position: -80px 0; }
+#side_menu3:hover::before { background-position: -120px 0; }
+
+#side_menu4::before { background-position: -160px 0; }
+#side_menu4:hover::before { background-position: -200px 0; }
+
+#side_menu5::before { background-position: -80px -40px; }
+#side_menu5:hover::before { background-position: -120px -40px; }
+
+/* ─────────────────────────────
+   GUIDE 텍스트
+───────────────────────────── */
 #side_guide {
-	align-content: center;
 	padding: 10px;
 }
 
-#side_guide>div {
+#side_guide > div {
 	font-size: 13px;
 	width: 50px;
 	height: 35px;
 	padding-left: 6px;
 	padding-bottom: 20px;
 	margin: 5px 25px;
-	border-bottom: 1PX rgb(179, 179, 179) solid;
+	border-bottom: 1px solid rgb(179, 179, 179);
+	text-align: center;
 }
 
-a {
-	text-decoration-line: none;
-	color: inherit;
-}
-
+/* ─────────────────────────────
+   배경 컨테이너 (optional)
+───────────────────────────── */
 #baseContainer3 {
 	background-color: rgb(255, 236, 212);
 	position: fixed;
@@ -143,7 +151,9 @@ a {
 	z-index: 1999;
 }
 
-/* /common/css/drawer.css */
+/* ─────────────────────────────
+   Drawer (별도 모듈용)
+───────────────────────────── */
 :root {
 	--sidebar-width: 64px;
 }
@@ -152,7 +162,6 @@ a {
 	position: fixed;
 	top: 0;
 	right: var(--sidebar-width);
-	left: auto;
 	width: min(880px, 95vw);
 	height: 100vh;
 	margin: 0;
@@ -161,7 +170,7 @@ a {
 }
 
 .drawer::backdrop {
-	background: rgba(0, 0, 0, .45);
+	background: rgba(0, 0, 0, 0.45);
 }
 
 .drawer-head {
