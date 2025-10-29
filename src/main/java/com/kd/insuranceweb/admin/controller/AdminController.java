@@ -142,6 +142,10 @@ public class AdminController {
 	@GetMapping("/contractDetail")
 	public String contractDetail(@RequestParam("contractId") Integer contractId, Model model) {
 		ContractDetailDTO detail = contractService.getContractDetail(contractId);
+		
+		List<CoverageItemDTO> coverages = contractService.getContractCoverages(contractId);
+	    detail.setCoverages(coverages); // ClaimDetailDTO에 List<CoverageItemDTO> 필드 있어야 함
+		
 		model.addAttribute("detail", detail);
 		
 	    return "admin/contract/contractDetail";

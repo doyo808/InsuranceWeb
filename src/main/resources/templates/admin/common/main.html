@@ -38,7 +38,7 @@
 							<span class="material-symbols-outlined" aria-hidden>description</span>
 						</div>
 						<p class="shortcut__label">보험 계약 접수</p>
-						<p class="kpi-card__value" th:text="'접수된 계약 ' + ${contractsPendingCount} + '건'"></p>
+						<p class="kpi-card__value" th:text="'접수중인 계약 ' + ${contractsPendingCount} + '건'"></p>
 					</a>
 
 					<a th:href="@{/admin/claim}" class="shortcut">
@@ -46,7 +46,7 @@
 							<span class="material-symbols-outlined" aria-hidden>paid</span>
 						</div>
 						<p class="shortcut__label">보험금 청구</p>
-						<p class="kpi-card__value" th:text="'신규 청구 ' + ${claimsPendingCount} + '건'"></p>
+						<p class="kpi-card__value" th:text="'접수중인 청구 ' + ${claimsPendingCount} + '건'"></p>
 					</a>
 
 					<a th:href="@{/admin/inquiry}" class="shortcut">
@@ -60,18 +60,18 @@
 
 			<!-- 📊 이번 달 계약/청구 통계 그래프 -->
 			<section class="section mt-12" aria-label="이번 달 계약/청구 통계">
-				<h2 class="section__title">이번 달 계약 / 청구 통계</h2>
+				<h2 class="section__title">계약 / 청구 통계</h2>
 
 				<div class="chart-grid">
 					<!-- 계약 그래프 -->
 					<div class="chart-card">
-						<h3 class="text-lg font-semibold text-gray-800 mb-3">계약 현황</h3>
+						<h3 class="text-lg font-semibold text-gray-800 mb-3">이번 달 계약 현황</h3>
 						<canvas id="contractChart"></canvas>
 					</div>
 
 					<!-- 청구 그래프 -->
 					<div class="chart-card">
-						<h3 class="text-lg font-semibold text-gray-800 mb-3">청구 현황</h3>
+						<h3 class="text-lg font-semibold text-gray-800 mb-3">이번 달 청구 현황</h3>
 						<canvas id="claimChart"></canvas>
 					</div>
 				</div>

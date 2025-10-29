@@ -37,6 +37,7 @@
 						<!-- 데이터가 있을 경우 -->
 						<tr th:each="item, stat : ${dataListPayment}" th:if="${dataListPayment != null and !dataListPayment.isEmpty()}"
 							th:data-contract-id="${item.contract_id}"
+							th:data-payment-id="${item.payment_id}"
 						    th:data-product-name="${item.product_name}"
 						    th:data-payment-date="${item.payment_date}"
 						    th:data-paid-amount="${item.paid_amount}"

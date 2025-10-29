@@ -8,6 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title layout:title-pattern="$CONTENT_TITLE - 관리자 시스템">관리자 시스템</title>
 
+	<link rel="icon" type="image/png" th:href="@{/common/images/favicon.png(v=${#dates.createNow().getTime()})}">
+	
 	<!-- 공통 CSS (모듈화) -->
 	<link rel="stylesheet" th:href="@{/admin/css/admin.css}" />
 	<link rel="stylesheet" th:href="@{/admin/css/list.css}" />

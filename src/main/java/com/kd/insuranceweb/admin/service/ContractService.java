@@ -5,6 +5,7 @@ import java.util.List;
 import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
+import com.kd.insuranceweb.admin.dto.CoverageItemDTO;
 
 public interface ContractService {
 
@@ -18,4 +19,6 @@ public interface ContractService {
 	void rejectContract(Integer contractId, String reason);
 
 	int getPendingCount();   // 접수(PENDING) 건수
+	
+	List<CoverageItemDTO> getContractCoverages(Integer contractId);
 }

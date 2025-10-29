@@ -8,6 +8,7 @@ import com.kd.insuranceweb.admin.annotation.AdminActionLog;
 import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
+import com.kd.insuranceweb.admin.dto.CoverageItemDTO;
 import com.kd.insuranceweb.admin.mapper.AdminContractMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,11 @@ public class ContractServiceImpl implements ContractService {
     public int getPendingCount() {
         return mapper.countPendingContracts();
     }
+
+	@Override
+	public List<CoverageItemDTO> getContractCoverages(Integer contractId) {
+		return mapper.findContractCoverages(contractId);
+	}
 	
 	
 }

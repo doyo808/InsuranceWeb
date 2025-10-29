@@ -136,7 +136,7 @@
 	<!-- 계약 승인 -->
 	<update id="approveContract" parameterType="int">
 		UPDATE insurance_contracts
-		SET status = 'APPROVED'
+		SET status = 'ACTIVE'
 		WHERE contract_id = #{contractId}
 	</update>
 
@@ -151,6 +151,19 @@
 		SELECT COUNT(*)
 		FROM insurance_contracts
 		WHERE status = 'PENDING'
+	</select>
+
+	<select id="findContractCoverages" resultType="coverageItem">
+		SELECT
+		cd.COVER_NAME,
+		cd.COVER_DESC,
+		cd.COVERAGE_AMOUNT
+		FROM INSURANCE_CONTRACTS ic
+		JOIN CONTRACT_COVERAGE_ITEMS cci
+		ON ic.CONTRACT_ID = cci.CONTRACT_ID
+		JOIN COVERAGE_DEFINITIONS cd
+		ON cci.COVERAGE_ID = cd.COVERAGE_ID
+		WHERE ic.contract_id = #{contractId}
 	</select>
 
 </mapper>

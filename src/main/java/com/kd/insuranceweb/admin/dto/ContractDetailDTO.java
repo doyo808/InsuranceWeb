@@ -1,6 +1,7 @@
 package com.kd.insuranceweb.admin.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Data;
 
@@ -40,5 +41,7 @@ public class ContractDetailDTO {
 	  private Long total_premium; // 한달 납입 보험료
 	  
 	  private String status; // 계약 상태
+	  
+	  private List<CoverageItemDTO> coverages;
 	
 }
