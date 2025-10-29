@@ -12,4 +12,5 @@ import com.kd.insuranceweb.mypage.dto.PaymentDto;
 public interface PaymentMapper {
 	List<PaymentDto> selectPayments(@Param("customer_id") Integer customer_id);
 	int insertPayment(Map<String, Object> params);
+    int updatePaymentToPaid(@Param("paymentId") int paymentId, @Param("paid_amount") int paid_amount);
 }

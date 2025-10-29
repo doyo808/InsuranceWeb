@@ -16,6 +16,7 @@ import com.kd.insuranceweb.admin.service.ContractService;
 import com.kd.insuranceweb.club.service.AnypointService;
 import com.kd.insuranceweb.common.dto.CustomUserDetails;
 import com.kd.insuranceweb.common.dto.CustomerDTO;
+import com.kd.insuranceweb.mall.MallPaymentService;
 import com.kd.insuranceweb.mypage.dto.ContractDto;
 import com.kd.insuranceweb.mypage.dto.MarketingConsentDTO;
 import com.kd.insuranceweb.mypage.dto.PaymentDto;
@@ -49,7 +50,9 @@ public class MypageController {
 		return "mypage/contractDetail";
 	}
 	
-	// 보험료 납입
+	// ==================
+	//      보험료 납입
+	// ==================
 	@GetMapping("/MPDG0080")
 	public String payPremium(@AuthenticationPrincipal CustomUserDetails loginUser, Model model) {
 		List<PaymentDto> dataListPayment = mypageService.getPayments(loginUser.getCustomer_id());
@@ -59,6 +62,7 @@ public class MypageController {
    @PostMapping("/MPDG0080/{id}")
     public String payPremiumDetail(
             @PathVariable("id") Integer contract_id,
+            @RequestParam("payment_id") String payment_id,
             @RequestParam("product_name") String product_name,
             @RequestParam("payment_date") String payment_date,
             @RequestParam("paid_amount") int paid_amount,
@@ -67,10 +71,10 @@ public class MypageController {
             @AuthenticationPrincipal CustomUserDetails loginUser,
             Model model
     ) {
-        
 	   if (pay_status.equals("미납")) { paid_amount = 0; }
 	   
         model.addAttribute("contract_id", contract_id);
+        model.addAttribute("payment_id", payment_id);
         model.addAttribute("product_name", product_name);
         model.addAttribute("payment_date", payment_date);
         model.addAttribute("paid_amount", paid_amount);
@@ -82,6 +86,48 @@ public class MypageController {
         
         return "mypage/payPremium2Detail";
     }
+   // 초과결제 포인트전환
+   	@PostMapping("/points/add")
+   	public String pointsAdd(        
+   			@RequestParam("pointsToAdd") int pointsToAdd,
+   	        @RequestParam("paymentId") int paymentId,
+   	        @RequestParam("total_premium") int premium,
+   	        @AuthenticationPrincipal CustomUserDetails loginUser) {
+   		
+   		mypageService.addPointsAndUpdatePayment(pointsToAdd, loginUser.getCustomer_id(), paymentId, premium);
+   		
+   		return "mypage/payCompletePointsAdd";
+   	}
+   	// 부분결제
+	@PostMapping("/payment/proceed")
+   	public String paymentProceed(        
+   	        @RequestParam("pointsUsed") int pointsUsed,
+   	        @RequestParam("paymentAmount") int paymentAmount,
+   	        @RequestParam("paymentId") int paymentId,
+   	        @RequestParam("total_premium") int totalPremium,
+   	        @AuthenticationPrincipal CustomUserDetails loginUser) {
+
+	    mypageService.usePointsAndUpdatePayment(pointsUsed, loginUser.getCustomer_id(), paymentId, totalPremium);
+	    
+   		return "mypage/payCompletePartial";
+   	}
+   	// 미납
+	@PostMapping("/payment/unpaid")
+   	public String paymentUnpaid(        
+   	        @RequestParam("pointsUsed") int pointsUsed,
+   	        @RequestParam("paymentAmount") int paymentAmount,
+   	        @RequestParam("contractId") int contractId,
+   	        @RequestParam("total_premium") int totalPremium,
+   	        @AuthenticationPrincipal CustomUserDetails loginUser) {
+
+	    mypageService.usePointsAndInsertPayment(pointsUsed, loginUser.getCustomer_id(), contractId, totalPremium);
+	    
+   		return "mypage/payCompletePartial";
+   	}
+   
+   
+   
+   
 	
 	// 내 정보 확인/변경
 	@GetMapping("/MPDG0093")

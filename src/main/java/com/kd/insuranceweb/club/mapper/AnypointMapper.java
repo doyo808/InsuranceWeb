@@ -14,4 +14,7 @@ public interface AnypointMapper {
 			@Param("end") LocalDate end);
 
 	Long selectBalance(@Param("customerId") Long customerId);
+	
+	int insertTxnEarn(@Param("customerId") int customerId, @Param("amount") int amount);
+	int insertTxnUse(@Param("customerId") int customerId, @Param("amount") int amount);
 }

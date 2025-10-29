@@ -31,4 +31,38 @@
     WHERE customer_id = #{customerId}
   </select>
 
+	<insert id="insertTxnEarn">
+	  INSERT INTO ANYPOINT_TRANSACTION (
+	    txn_id,
+	    customer_id,
+	    txn_type,
+	    amount,
+	    description,
+	    txn_date
+	  ) VALUES (
+	    SEQ_ANYPOINT_TRANSACTION.nextval,
+	    #{customerId},
+	    'EARN',
+	    #{amount},
+	    '초과납부 포인트 전환',
+	    SYSDATE
+	  )
+	</insert>
+	<insert id="insertTxnUse">
+	  INSERT INTO ANYPOINT_TRANSACTION (
+	    txn_id,
+	    customer_id,
+	    txn_type,
+	    amount,
+	    description,
+	    txn_date
+	  ) VALUES (
+	    SEQ_ANYPOINT_TRANSACTION.nextval,
+	    #{customerId},
+	    'USE',
+	    #{amount},
+	    '보험료 결제',
+	    SYSDATE
+	  )
+	</insert>
 </mapper>
