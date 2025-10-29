@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.kd.insuranceweb.admin.dto.ContractDetailDTO;
 import com.kd.insuranceweb.admin.dto.ContractListRowDTO;
 import com.kd.insuranceweb.admin.dto.ContractSearchCriteria;
+import com.kd.insuranceweb.admin.dto.CoverageItemDTO;
 
 @Mapper
 public interface AdminContractMapper {
@@ -25,6 +26,8 @@ public interface AdminContractMapper {
 		int rejectContract(@Param("contractId") Integer contract_id, @Param("reason") String reason);
 		
 		int countPendingContracts();
+		
+		List<CoverageItemDTO> findContractCoverages(Integer contract_id);
 	    
 }
 

@@ -66,8 +66,6 @@
 <select id="countProductsOnSale" resultType="int">
   SELECT COUNT(*)
   FROM insurance_products p
-  WHERE p.start_date &lt;= TRUNC(SYSDATE)
-    AND p.end_date   &gt;= TRUNC(SYSDATE)
 </select>
 
 </mapper>
