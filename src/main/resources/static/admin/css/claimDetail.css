@@ -275,3 +275,68 @@
 		color: #111827;
 	}
 }
+
+/* =========================
+   Summary Grid (계약 상세 상단 요약)
+   ========================= */
+.summary-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 16px;
+	margin: 24px 0 16px;
+}
+
+.summary-grid .card {
+	background: color-mix(in srgb, var(--color-surface, #fff) 90%, transparent);
+	border: 1px solid var(--color-border, rgba(0, 0, 0, .08));
+	border-radius: var(--radius, 12px);
+	box-shadow: var(--shadow, 0 4px 16px rgba(0, 0, 0, .06));
+	padding: 16px 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-grid .card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.summary-grid .label {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--color-text-weak, #6b7280);
+	margin-bottom: 4px;
+	text-transform: none;
+}
+
+.summary-grid .value {
+	font-size: 18px;
+	font-weight: 800;
+	color: var(--color-text, #111827);
+	word-break: keep-all;
+}
+
+
+/* 반응형 */
+@media (max-width: 768px) {
+	.summary-grid {
+		grid-template-columns: 1fr 1fr;
+		gap: 12px;
+	}
+
+	.summary-grid .card {
+		padding: 14px;
+	}
+
+	.summary-grid .value {
+		font-size: 16px;
+	}
+}
+
+@media (max-width: 480px) {
+	.summary-grid {
+		grid-template-columns: 1fr;
+	}
+}

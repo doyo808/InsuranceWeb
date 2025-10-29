@@ -32,12 +32,15 @@
 
 
 	<!-- 필요한 경우에만 사용 -->
-	<select id="getContractsByCustomer" resultType="contractChoice"> SELECT
-		c.contract_id, ip.product_name, c.start_date, c.end_date, c.status FROM
-		insurance_contracts c JOIN insurance_products ip ON c.product_id =
-		ip.product_id JOIN customers cu ON c.customer_id = cu.customer_id WHERE
-		cu.customer_id = #{customer_id} <if
-			test="months != null">
+	<select id="getContractsByCustomer" resultType="contractChoice"> 
+	SELECT
+		c.contract_id, ip.product_name, c.start_date, c.end_date, c.status 
+		FROM insurance_contracts c 
+		JOIN insurance_products ip ON c.product_id = ip.product_id 
+		JOIN customers cu ON c.customer_id = cu.customer_id 
+		WHERE cu.customer_id = #{customer_id} 
+			AND c.status = 'ACTIVE'
+		<if test="months != null">
 			AND c.start_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{months})
 		</if>
 		ORDER BY c.contract_id DESC </select>
